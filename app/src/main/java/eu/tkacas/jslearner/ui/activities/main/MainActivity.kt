@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner
+package eu.tkacas.jslearner.ui.activities.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
