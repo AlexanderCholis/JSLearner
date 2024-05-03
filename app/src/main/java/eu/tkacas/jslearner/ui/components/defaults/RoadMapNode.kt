@@ -31,7 +31,7 @@ import eu.tkacas.jslearner.data.models.StrokeParameters
 
 
 @Composable
-fun TimelineNode(
+fun RoadMapNode(
     position: RoadMapNodePosition,
     circleParameters: CircleParameters,
     lineParameters: LineParameters? = null,
@@ -109,7 +109,7 @@ private fun RoadMapPreview() {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            TimelineNode(
+            RoadMapNode(
                 position = RoadMapNodePosition.FIRST,
                 circleParameters = CircleParametersDefaults.circleParameters(
                     backgroundColor = Color.LightGray
@@ -120,7 +120,7 @@ private fun RoadMapPreview() {
                 )
             ) { modifier -> MessageBubble(modifier, containerColor = Color.LightGray) }
 
-            TimelineNode(
+            RoadMapNode(
                 position = RoadMapNodePosition.MIDDLE,
                 circleParameters = CircleParametersDefaults.circleParameters(
                     backgroundColor = Color.Blue
@@ -132,7 +132,7 @@ private fun RoadMapPreview() {
                 )
             ) { modifier -> MessageBubble(modifier, containerColor = Color.Blue) }
 
-            TimelineNode(
+            RoadMapNode(
                 RoadMapNodePosition.LAST,
                 circleParameters = CircleParametersDefaults.circleParameters(
                     backgroundColor = Color.Red,
