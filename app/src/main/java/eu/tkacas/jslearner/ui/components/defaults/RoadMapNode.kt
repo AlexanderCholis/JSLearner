@@ -156,13 +156,13 @@ fun MessageBubble(modifier: Modifier, containerColor: Color, text: String) {
             .height(30.dp),
         colors = CardDefaults.cardColors(containerColor = containerColor)
     ) {
-        Box( // Use a Box for layout flexibility
-            modifier = Modifier.fillMaxSize(), // Box fills the entire Card
-            contentAlignment = Alignment.Center // Align content to the center
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 text = text,
-                textAlign = TextAlign.Center // Also center horizontally
+                textAlign = TextAlign.Center
             )
         }
     }
