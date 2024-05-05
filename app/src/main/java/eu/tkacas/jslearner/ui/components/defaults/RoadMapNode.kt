@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -20,19 +23,21 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.data.models.CircleParameters
-import eu.tkacas.jslearner.data.models.LineParameters
-import eu.tkacas.jslearner.data.models.RoadMapNodePosition
-import eu.tkacas.jslearner.data.models.StrokeParameters
+import eu.tkacas.jslearner.data.models.roadmap.CircleParameters
+import eu.tkacas.jslearner.data.models.roadmap.LineParameters
+import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.data.models.roadmap.StrokeParameters
 
 
 @Composable
 fun RoadMapNode(
-    position: RoadMapNodePosition,
+    nodeState: RoadMapNodeState,
     circleParameters: CircleParameters,
     lineParameters: LineParameters? = null,
     contentStartOffset: Dp = 16.dp,
@@ -94,7 +99,7 @@ fun RoadMapNode(
                 .defaultMinSize(minHeight = circleParameters.radius * 2)
                 .padding(
                     start = circleParameters.radius * 2 + contentStartOffset,
-                    bottom = if (position != RoadMapNodePosition.LAST) spacer else 0.dp
+                    bottom = if (nodeState.position != RoadMapNodePosition.LAST) spacer else 0.dp
                 )
         )
     }
@@ -102,7 +107,7 @@ fun RoadMapNode(
 
 @Preview(showBackground = true)
 @Composable
-private fun RoadMapPreview() {
+fun RoadMapPreview() {
 
         Column(
             modifier = Modifier
@@ -110,7 +115,7 @@ private fun RoadMapPreview() {
                 .padding(16.dp)
         ) {
             RoadMapNode(
-                position = RoadMapNodePosition.FIRST,
+                nodeState = RoadMapNodeState(RoadMapNodeStatus.COMPLETED, RoadMapNodePosition.FIRST, "something"),
                 circleParameters = CircleParametersDefaults.circleParameters(
                     backgroundColor = Color.LightGray
                 ),
@@ -118,10 +123,10 @@ private fun RoadMapPreview() {
                     startColor = Color.LightGray,
                     endColor = Color.Blue
                 )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.LightGray) }
+            ) { modifier -> MessageBubble(modifier, containerColor = Color.LightGray, "test 3") }
 
             RoadMapNode(
-                position = RoadMapNodePosition.MIDDLE,
+                nodeState = RoadMapNodeState(RoadMapNodeStatus.LOCKED, RoadMapNodePosition.MIDDLE, "something 2"),
                 circleParameters = CircleParametersDefaults.circleParameters(
                     backgroundColor = Color.Blue
                 ),
@@ -130,25 +135,35 @@ private fun RoadMapPreview() {
                     startColor = Color.Blue,
                     endColor = Color.Red
                 )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.Blue) }
+            ) { modifier -> MessageBubble(modifier, containerColor = Color.Blue, "test 2") }
 
             RoadMapNode(
-                RoadMapNodePosition.LAST,
+                nodeState = RoadMapNodeState(RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.LAST, "something 3"),
                 circleParameters = CircleParametersDefaults.circleParameters(
                     backgroundColor = Color.Red,
                     stroke = StrokeParameters(color = Color.Red, width = 2.dp),
                     //icon = R.drawable.ic_launcher_background
                 )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.Red) }
+            ) { modifier -> MessageBubble(modifier, containerColor = Color.Red, "test 1") }
         }
 }
 
 @Composable
-private fun MessageBubble(modifier: Modifier, containerColor: Color) {
+fun MessageBubble(modifier: Modifier, containerColor: Color, text: String) {
     Card(
         modifier = modifier
-            .width(200.dp)
-            .height(100.dp),
+            .width(300.dp)
+            .height(30.dp),
         colors = CardDefaults.cardColors(containerColor = containerColor)
-    ) {}
+    ) {
+        Box( // Use a Box for layout flexibility
+            modifier = Modifier.fillMaxSize(), // Box fills the entire Card
+            contentAlignment = Alignment.Center // Align content to the center
+        ) {
+            Text(
+                text = text,
+                textAlign = TextAlign.Center // Also center horizontally
+            )
+        }
+    }
 }

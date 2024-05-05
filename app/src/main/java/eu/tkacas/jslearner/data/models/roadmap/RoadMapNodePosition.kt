@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.data.models
+package eu.tkacas.jslearner.data.models.roadmap
 
 enum class RoadMapNodePosition {
     FIRST,

@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.data.models
+package eu.tkacas.jslearner.data.models.roadmap
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
