@@ -1,5 +1,7 @@
 package eu.tkacas.jslearner.ui.components.defaults
 
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -123,7 +125,9 @@ fun RoadMapPreview() {
                     startColor = Color.LightGray,
                     endColor = Color.Blue
                 )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.LightGray, "test 3") }
+            ) { modifier -> MessageBubble(modifier, containerColor = Color.LightGray, "test 3", onClick = {
+                println("Hello")
+            } )}
 
             RoadMapNode(
                 nodeState = RoadMapNodeState(RoadMapNodeStatus.LOCKED, RoadMapNodePosition.MIDDLE, "something 2"),
@@ -135,7 +139,9 @@ fun RoadMapPreview() {
                     startColor = Color.Blue,
                     endColor = Color.Red
                 )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.Blue, "test 2") }
+            ) { modifier -> MessageBubble(modifier, containerColor = Color.Blue, "test 2", onClick = {
+                println("Hello")
+            } )}
 
             RoadMapNode(
                 nodeState = RoadMapNodeState(RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.LAST, "something 3"),
@@ -144,16 +150,19 @@ fun RoadMapPreview() {
                     stroke = StrokeParameters(color = Color.Red, width = 2.dp),
                     //icon = R.drawable.ic_launcher_background
                 )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.Red, "test 1") }
+            ) { modifier -> MessageBubble(modifier, containerColor = Color.Red, "test 1", onClick = {
+                println("Hello")
+            } )}
         }
 }
 
 @Composable
-fun MessageBubble(modifier: Modifier, containerColor: Color, text: String) {
+fun MessageBubble(modifier: Modifier, containerColor: Color, text: String, onClick: () -> Unit) {
     Card(
         modifier = modifier
             .width(300.dp)
-            .height(30.dp),
+            .height(30.dp)
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = containerColor)
     ) {
         Box(

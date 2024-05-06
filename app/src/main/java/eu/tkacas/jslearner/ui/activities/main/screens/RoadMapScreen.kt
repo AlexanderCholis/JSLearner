@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.ui.activities.main.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -32,6 +33,7 @@ internal fun RoadMapScreen() {
     val viewModel: RoadMapViewModel = viewModel(factory = RoadMapViewModel.provideFactory(roadmapRepository))
     val uiState by viewModel.uiState.collectAsState()
 
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -83,7 +85,10 @@ internal fun RoadMapScreen() {
                                         MessageBubble(
                                             modifier,
                                             containerColor = node.status.getColor(),
-                                            text = it
+                                            text = it,
+                                            onClick = {
+                                                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                                            }
                                         )
                                     }
                                 }
