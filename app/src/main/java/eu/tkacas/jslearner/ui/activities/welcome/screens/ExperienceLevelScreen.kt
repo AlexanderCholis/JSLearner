@@ -33,17 +33,17 @@ fun ExperienceLevelScreen() {
                 .padding(bottom = 20.dp)
         )
         ExperienceLevelCard(
-            icon = R.drawable.star,
+            image = R.drawable.star_1,
             text = R.string.no_experience
         )
         Spacer(modifier = Modifier.height(16.dp))
         ExperienceLevelCard(
-            icon = R.drawable.star,
+            image = R.drawable.stars_2,
             text = R.string.some_experience
         )
         Spacer(modifier = Modifier.height(16.dp))
         ExperienceLevelCard(
-            icon = R.drawable.star,
+            image = R.drawable.stars_3,
             text = R.string.a_lot_of_experience
         )
     }
