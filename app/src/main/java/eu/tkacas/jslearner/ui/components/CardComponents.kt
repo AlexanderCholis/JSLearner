@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.tkacas.jslearner.R
 
 @Composable
 fun ExperienceLevelCard(
@@ -45,7 +46,7 @@ fun ExperienceLevelCard(
             ) {
                 Image(
                     painter = painterResource(id = image),
-                    contentDescription = null,
+                    contentDescription = stringResource(id = text),
                     modifier = Modifier
                         .size(110.dp)
                 )
@@ -59,6 +60,38 @@ fun ExperienceLevelCard(
                     fontSize = 16.sp
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun LearningReasonCard(
+    image : Int,
+    text : Int
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = cardColors(containerColor = Color.White),
+        elevation = cardElevation(defaultElevation = 4.dp)
+    ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Image(
+                painter = painterResource(id = image),
+                contentDescription = stringResource(id = text),
+                modifier = Modifier
+                    .size(48.dp)
+            )
+            Text(
+                text = stringResource(id = text),
+                modifier = Modifier
+                    .padding(start = 16.dp)
+            )
         }
     }
 }

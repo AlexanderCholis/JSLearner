@@ -4,4 +4,11 @@
     <string name="no_experience">No experience</string>
     <string name="some_experience">Some experience</string>
     <string name="a_lot_of_experience">A lot of experience</string>
+    <string name="finding_your_path">Finding your path</string>
+    <string name="why_do_you_want_to_learn">Why do you want to learn JavaScript?</string>
+    <string name="gain_skills">Gain skills for my current job</string>
+    <string name="just_for_fun">Just for fun</string>
+    <string name="change_career">Change my career</string>
+    <string name="develop_games">Develop games</string>
+    <string name="build_an_application_or_website">Build an application or website</string>
 </resources>
