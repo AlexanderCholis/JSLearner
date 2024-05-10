@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">JSLearner</string>
+    <string name="experience_level_until_now">How much experience do you have with coding so far?</string>
+    <string name="no_experience">No experience</string>
+    <string name="some_experience">Some experience</string>
+    <string name="a_lot_of_experience">A lot of experience</string>
 </resources>

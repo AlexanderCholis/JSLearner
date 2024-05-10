@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,7 +25,7 @@ fun ExperienceLevelScreen() {
             .padding(top = 30.dp, start = 16.dp, end = 16.dp)
     ) {
         Text(
-            text = "How much experience do you have with coding so far?",
+            text = stringResource(id = R.string.experience_level_until_now),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -33,17 +34,17 @@ fun ExperienceLevelScreen() {
         )
         ExperienceLevelCard(
             icon = R.drawable.star,
-            text = "No experience"
+            text = R.string.no_experience
         )
         Spacer(modifier = Modifier.height(16.dp))
         ExperienceLevelCard(
             icon = R.drawable.star,
-            text = "Some experience"
+            text = R.string.some_experience
         )
         Spacer(modifier = Modifier.height(16.dp))
         ExperienceLevelCard(
             icon = R.drawable.star,
-            text = "A lot of experience"
+            text = R.string.a_lot_of_experience
         )
     }
 }
