@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,13 +11,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
@@ -92,6 +96,57 @@ fun LearningReasonCard(
                 modifier = Modifier
                     .padding(start = 16.dp)
             )
+        }
+    }
+}
+
+@Composable
+fun PathModuleCard(
+    moduleTitleText : String,
+    moduleDescriptionText : String,
+    isExpanded: MutableState<Boolean>
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = cardColors(containerColor = Color.White),
+        elevation = cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = moduleTitleText,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+                IconButton(
+                    onClick = { isExpanded.value = !isExpanded.value }
+                ) {
+                    Image(
+                        painter = if(isExpanded.value) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
+                        contentDescription = null
+                    )
+                }
+            }
+            if(isExpanded.value) {
+                Row(
+                    modifier = Modifier
+                        .padding(bottom = 6.dp, start = 4.dp)
+                ) {
+                    Text(
+                        text = moduleDescriptionText
+                    )
+                }
+            }
         }
     }
 }

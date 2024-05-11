@@ -11,4 +11,6 @@
     <string name="change_career">Change my career</string>
     <string name="develop_games">Develop games</string>
     <string name="build_an_application_or_website">Build an application or website</string>
+    <string name="your_path">Your path</string>
+    <string name="your_path_description">Follow this path to learn more!</string>
 </resources>
