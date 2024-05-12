@@ -15,4 +15,24 @@
     <string name="your_path_description">Follow this path to learn more!</string>
     <string name="welcome_text">Welcome to JSLearner!\n\n\nUnlock the power of JavaScript with our comprehensive learning platform. Dive into interactive lessons, challenging quizzes, and track your progress with our leaderboard feature. Whether you\'re a beginner or looking to brush up your skills, JSLearner is your go-to destination for mastering JavaScript. Get ready to embark on an exciting learning journey and become a JavaScript pro!</string>
     <string name="creators">Created by @thkox, @ApostolisSiampanis, @Alexander Cholis</string>
+    <string name="create_an_account">Create an Account</string>
+    <string name="first_name">First Name</string>
+    <string name="first_name_hint">Enter your first name</string>+
+    <string name="last_name">Last Name</string>
+    <string name="last_name_hint">Enter your last name</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="terms_and_conditions">By continuing you accept our\u00A0</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="and">\u00A0and\u00A0</string>
+    <string name="terms_of_use">Terms of Use.</string>
+    <string name="register">Register</string>
+    <string name="or">or</string>
+    <string name="already_have_an_account">Already have an account?\u00A0</string>
+    <string name="login">Login</string>
+    <string name="dont_have_an_account_yet">Don’t have an account yet?\u00A0</string>
 </resources>
