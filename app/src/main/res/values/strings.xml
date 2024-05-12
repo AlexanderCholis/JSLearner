@@ -35,4 +35,5 @@
     <string name="already_have_an_account">Already have an account?\u00A0</string>
     <string name="login">Login</string>
     <string name="dont_have_an_account_yet">Don’t have an account yet?\u00A0</string>
+    <string name="welcome_to_jslearner_app">Welcome to \nJSLearner!</string>
 </resources>
