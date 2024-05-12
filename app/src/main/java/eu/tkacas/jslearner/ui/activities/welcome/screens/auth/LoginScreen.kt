@@ -29,14 +29,13 @@ import eu.tkacas.jslearner.ui.components.AuthTextFieldComponent
 import eu.tkacas.jslearner.ui.components.DividerTextComponent
 import eu.tkacas.jslearner.ui.components.HaveAnAccountOrNotClickableTextComponent
 import eu.tkacas.jslearner.ui.components.PasswordTextFieldComponent
-import eu.tkacas.jslearner.ui.components.TermsCheckboxComponent
-import eu.tkacas.jslearner.ui.events.SignUpFormEvent
+import eu.tkacas.jslearner.ui.events.LoginFormEvent
 import eu.tkacas.jslearner.ui.viewModel.BaseAuthViewModel
-import eu.tkacas.jslearner.ui.viewModel.SignUpViewModel
+import eu.tkacas.jslearner.ui.viewModel.LoginViewModel
 
 @Composable
-fun SignUpScreen() {
-    val viewModel = viewModel<SignUpViewModel>()
+fun LoginScreen() {
+    val viewModel = viewModel<LoginViewModel>()
     val state = viewModel.state
     val context = LocalContext.current
 
@@ -46,7 +45,7 @@ fun SignUpScreen() {
                 is BaseAuthViewModel.ValidationEvent.Success -> {
                     Toast.makeText(
                         context,
-                        "Registration successful",
+                        "Login successful",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -65,30 +64,10 @@ fun SignUpScreen() {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            AuthHeadingTextComponent(value = stringResource(id = R.string.create_an_account))
-            AuthTextFieldComponent(
-                value = state.firstName,
-                onValueChange = { viewModel.onEvent(SignUpFormEvent.FirstNameChanged(it)) },
-                labelValue = stringResource(id = R.string.first_name),
-                painterResource = painterResource(id = R.drawable.person),
-                contentDescription = stringResource(id = R.string.first_name_hint),
-                keyboardType = KeyboardType.Text,
-                supportedTextValue = state.firstNameError ?: "",
-                errorStatus = state.firstNameError != null
-            )
-            AuthTextFieldComponent(
-                value = state.lastName,
-                onValueChange = { viewModel.onEvent(SignUpFormEvent.LastNameChanged(it)) },
-                labelValue = stringResource(id = R.string.last_name),
-                painterResource = painterResource(id = R.drawable.person),
-                contentDescription = stringResource(id = R.string.last_name_hint),
-                keyboardType = KeyboardType.Text,
-                supportedTextValue = state.lastNameError ?: "",
-                errorStatus = state.lastNameError != null
-            )
+            AuthHeadingTextComponent(value = stringResource(id = R.string.welcome_to_jslearner_app))
             AuthTextFieldComponent(
                 value = state.email,
-                onValueChange = { viewModel.onEvent(SignUpFormEvent.EmailChanged(it)) },
+                onValueChange = { viewModel.onEvent(LoginFormEvent.EmailChanged(it)) },
                 labelValue = stringResource(id = R.string.email),
                 painterResource = painterResource(id = R.drawable.email),
                 contentDescription = stringResource(id = R.string.email_hint),
@@ -98,23 +77,10 @@ fun SignUpScreen() {
             )
             PasswordTextFieldComponent(
                 value = state.password,
-                onValueChange = { viewModel.onEvent(SignUpFormEvent.PasswordChanged(it)) },
+                onValueChange = { viewModel.onEvent(LoginFormEvent.PasswordChanged(it)) },
                 labelValue = stringResource(id = R.string.password),
                 supportedTextValue = state.passwordError ?: "",
                 errorStatus = state.passwordError != null
-            )
-            TermsCheckboxComponent(
-                checkedValue = state.acceptedTerms,
-                onCheckedChange = { viewModel.onEvent(SignUpFormEvent.AcceptTerms(it)) },
-                onTextSelected = {
-                    if (it == "Privacy Policy") {
-                        //TODO: Navigate to Privacy Policy Screen
-                    } else if (it == "Terms of Use.") {
-                        //TODO: Navigate to Terms of Use Screen
-                    }
-                },
-                errorMessageValue = state.termsError ?: "",
-                errorStatus = state.termsError != null
             )
 
             Column(
@@ -126,21 +92,21 @@ fun SignUpScreen() {
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
-                ){
+                ) {
                     AuthButtonComponent(
-                        value = stringResource(R.string.register),
+                        value = stringResource(R.string.login),
                         onButtonClicked = {
-                            viewModel.onEvent(SignUpFormEvent.Submit)
+                            viewModel.onEvent(LoginFormEvent.Submit)
                         }
                     )
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 DividerTextComponent()
                 HaveAnAccountOrNotClickableTextComponent(
-                    alreadyHaveAnAccount = true,
+                    alreadyHaveAnAccount = false,
                     onTextSelected = {
-                        if (it == "Login") {
-                            //TODO: Navigate to Login Screen
+                        if (it == "Register") {
+                            //TODO: Navigate to SignUp Screen
                         }
                     }
                 )
@@ -151,6 +117,6 @@ fun SignUpScreen() {
 
 @Preview
 @Composable
-fun PreviewSignUpScreen() {
-    SignUpScreen()
+fun PreviewLoginScreen() {
+    LoginScreen()
 }
