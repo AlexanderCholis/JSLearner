@@ -3,7 +3,6 @@ package eu.tkacas.jslearner.ui.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.tkacas.jslearner.domain.use_case.ValidateEmail
 import eu.tkacas.jslearner.domain.use_case.ValidateFirstName
@@ -12,8 +11,6 @@ import eu.tkacas.jslearner.domain.use_case.ValidatePassword
 import eu.tkacas.jslearner.domain.use_case.ValidateTerms
 import eu.tkacas.jslearner.ui.events.SignUpFormEvent
 import eu.tkacas.jslearner.ui.states.SignUpFormState
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
@@ -22,11 +19,8 @@ class SignUpViewModel(
     private val validateEmail: ValidateEmail = ValidateEmail(),
     private val validatePassword: ValidatePassword = ValidatePassword(),
     private val validateTerms: ValidateTerms = ValidateTerms()
-): ViewModel() {
+): BaseAuthViewModel() {
     var state by mutableStateOf(SignUpFormState())
-
-    private val validationEventChannel = Channel<ValidationEvent>()
-    val validationEvents = validationEventChannel.receiveAsFlow()
 
     fun onEvent(event: SignUpFormEvent) {
         when(event) {
@@ -55,7 +49,7 @@ class SignUpViewModel(
         val firstNameResult = validateFirstName.execute(state.firstName)
         val lastNameResult = validateLastName.execute(state.lastName)
         val emailResult = validateEmail.execute(state.email)
-        val passwordResult = validatePassword.execute(state.password)
+        val passwordResult = validatePassword.execute(state.password, isLogin = false)
         val termsResult = validateTerms.execute(state.acceptedTerms)
 
         val hasError = listOf(
@@ -79,9 +73,5 @@ class SignUpViewModel(
         viewModelScope.launch {
             validationEventChannel.send(ValidationEvent.Success)
         }
-    }
-
-    sealed class ValidationEvent {
-        object Success: ValidationEvent()
     }
 }
