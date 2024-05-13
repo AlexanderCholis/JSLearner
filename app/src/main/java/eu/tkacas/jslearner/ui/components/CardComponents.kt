@@ -2,7 +2,6 @@ package eu.tkacas.jslearner.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,11 +12,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.ui.theme.SkyBlue
 
 @Composable
@@ -79,7 +82,7 @@ fun LearningReasonCard(
     isSelected: Boolean,
     onSelected: () -> Unit
 ) {
-    var cardColor = if (isSelected) SkyBlue else Color.White
+    val cardColor = if (isSelected) SkyBlue else Color.White
 
     Card(
         modifier = Modifier
@@ -102,6 +105,80 @@ fun LearningReasonCard(
             )
             Text(
                 text = stringResource(id = text),
+                modifier = Modifier
+                    .padding(start = 16.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun MultipleChoiceSingleCard(
+    text: String,
+    isSelected: Boolean,
+    onSelected: () -> Unit
+) {
+    val cardColor = if (isSelected) SkyBlue else Color.White
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onSelected),
+        colors = cardColors(containerColor = cardColor),
+        elevation = cardElevation(defaultElevation = 4.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            RadioButton(
+                selected = isSelected,
+                onClick = onSelected,
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = PrussianBlue
+                )
+            )
+            Text(
+                text = text,
+                modifier = Modifier
+                    .padding(start = 16.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun MultipleChoiceMultipleCard(
+    text: String,
+    isSelected: MutableState<Boolean>,
+    onSelected: () -> Unit
+) {
+    val cardColor = if (isSelected.value) SkyBlue else Color.White
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onSelected),
+        colors = cardColors(containerColor = cardColor),
+        elevation = cardElevation(defaultElevation = 4.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Checkbox(
+                checked = isSelected.value,
+                onCheckedChange = { isSelected.value = it },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = PrussianBlue
+                )
+            )
+            Text(
+                text = text,
                 modifier = Modifier
                     .padding(start = 16.dp)
             )
