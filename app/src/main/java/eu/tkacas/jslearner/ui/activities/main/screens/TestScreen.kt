@@ -15,7 +15,10 @@ fun TestScreen(
         totalQuestions = 10,
         remainingTime = "10:00",
         questionLayout = {
-            Text("What is the capital of France?")
+            QuestionLayout(
+                questionText = "What is the capital of France?",
+                userOptions = listOf("Paris", "London", "Berlin", "Madrid")
+            )
         },
         onNextClick = {},
         onHelpClick = {}
