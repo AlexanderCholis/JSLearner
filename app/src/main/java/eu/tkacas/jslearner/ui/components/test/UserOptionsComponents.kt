@@ -156,22 +156,13 @@ fun TrueFalse(
     isTrue: Boolean?,
     onTrueFalseSelected: (Boolean) -> Unit
 ) {
-    Column {
-        Row {
-            RadioButton(
-                selected = isTrue == true,
-                onClick = { onTrueFalseSelected(true) }
-            )
-            Text(text = "True")
+    MultipleChoiceSingleAnswer(
+        options = listOf("True", "False"),
+        initialSelectedOption = if (isTrue == true) "True" else if (isTrue == false) "False" else null,
+        onOptionSelected = { option ->
+            onTrueFalseSelected(option == "True")
         }
-        Row {
-            RadioButton(
-                selected = isTrue == false,
-                onClick = { onTrueFalseSelected(false) }
-            )
-            Text(text = "False")
-        }
-    }
+    )
 }
 
 @Composable

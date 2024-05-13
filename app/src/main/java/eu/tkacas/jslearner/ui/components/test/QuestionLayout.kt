@@ -35,11 +35,10 @@ fun QuestionLayout(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = questionText)
-            MultipleChoiceSingleAnswer(
-                options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
-                initialSelectedOption = null,
-                onOptionSelected = { option ->
-                    println("Option '$option' is now selected")
+            TrueFalse(
+                isTrue = null,
+                onTrueFalseSelected = { isSelected ->
+                    println("The selected option is now ${if (isSelected) "True" else "False"}")
                 }
             )
         }
