@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import eu.tkacas.jslearner.ui.activities.main.screens.TestScreen
 import eu.tkacas.jslearner.ui.activities.welcome.screens.ExperienceLevelScreen
 import eu.tkacas.jslearner.ui.activities.welcome.screens.ExploringPathScreen
 import eu.tkacas.jslearner.ui.theme.JSLearnerTheme
+import eu.tkacas.jslearner.ui.viewModel.TestViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +23,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     //Navigation()
-                    ExploringPathScreen()
+                    val viewModel = TestViewModel()
+                    TestScreen(viewModel)
                 }
             }
         }
