@@ -28,6 +28,7 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
@@ -44,7 +45,8 @@ fun MultipleChoiceSingleCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onSelected),
+            .clickable(onClick = onSelected)
+            .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -52,7 +54,7 @@ fun MultipleChoiceSingleCard(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(3.dp)
         ) {
             RadioButton(
                 selected = isSelected,
@@ -81,7 +83,8 @@ fun MultipleChoiceMultipleCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onSelected),
+            .clickable(onClick = onSelected)
+            .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -89,7 +92,7 @@ fun MultipleChoiceMultipleCard(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(3.dp)
         ) {
             Checkbox(
                 checked = isSelected.value,
@@ -109,18 +112,21 @@ fun MultipleChoiceMultipleCard(
 
 @Composable
 fun MultipleChoiceSingleAnswer(
-    question: String,
     options: List<String>,
-    selectedOption: String?,
+    initialSelectedOption: String?,
     onOptionSelected: (String) -> Unit
 ) {
+    var selectedOption by remember { mutableStateOf(initialSelectedOption) }
+
     Column {
-        Text(text = question)
         options.forEach { option ->
             MultipleChoiceSingleCard(
                 text = option,
                 isSelected = option == selectedOption,
-                onSelected = { onOptionSelected(option) }
+                onSelected = {
+                    selectedOption = option
+                    onOptionSelected(option)
+                }
             )
         }
     }
@@ -128,18 +134,18 @@ fun MultipleChoiceSingleAnswer(
 
 @Composable
 fun MultipleChoiceMultipleAnswers(
-    question: String,
     options: List<String>,
-    selectedOptions: Set<String>,
+    selectedOptions: Set<String>?,
     onOptionSelected: (String, Boolean) -> Unit
 ) {
+    val safeSelectedOptions = selectedOptions ?: emptySet()
+
     Column {
-        Text(text = question)
         options.forEach { option ->
             MultipleChoiceMultipleCard(
                 text = option,
-                isSelected = remember { mutableStateOf(option in selectedOptions) },
-                onSelected = { onOptionSelected(option, option !in selectedOptions) }
+                isSelected = remember { mutableStateOf(option in safeSelectedOptions) },
+                onSelected = { onOptionSelected(option, option !in safeSelectedOptions) }
             )
         }
     }
@@ -147,12 +153,10 @@ fun MultipleChoiceMultipleAnswers(
 
 @Composable
 fun TrueFalse(
-    question: String,
     isTrue: Boolean?,
     onTrueFalseSelected: (Boolean) -> Unit
 ) {
     Column {
-        Text(text = question)
         Row {
             RadioButton(
                 selected = isTrue == true,
@@ -172,13 +176,11 @@ fun TrueFalse(
 
 @Composable
 fun FillInTheBlankMatching(
-    question: String,
     blanks: List<String>,
     userAnswers: List<String>,
     onBlankFilled: (Int, String) -> Unit
 ) {
     Column {
-        Text(text = question)
         blanks.forEachIndexed { index, blank ->
             TextField(
                 value = userAnswers[index],
@@ -190,14 +192,12 @@ fun FillInTheBlankMatching(
 
 @Composable
 fun SequenceHotspot(
-    question: String,
     items: List<String>,
     sequence: List<Int>,
     userSequence: List<Int>,
     onSequenceChanged: (Int, Int) -> Unit
 ) {
     Column {
-        Text(text = question)
         items.forEachIndexed { index, item ->
             var offsetX by remember { mutableStateOf(0f) }
             var offsetY by remember { mutableStateOf(0f) }
@@ -223,17 +223,15 @@ fun SequenceHotspot(
 
 @Composable
 fun DragTheWords(
-    question: String,
     words: List<String>,
     targetWords: List<String>,
     userAnswers: List<String>,
     onWordDropped: (Int, String) -> Unit
 ) {
     Column {
-        Text(text = question)
         words.forEach { word ->
-            var offsetX by remember { mutableStateOf(0f) }
-            var offsetY by remember { mutableStateOf(0f) }
+            var offsetX by remember { mutableFloatStateOf(0f) }
+            var offsetY by remember { mutableFloatStateOf(0f) }
 
             Box(
                 modifier = Modifier

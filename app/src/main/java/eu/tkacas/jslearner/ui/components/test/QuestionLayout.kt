@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun QuestionLayout(
     questionText: String,
-    userOptions: List<String>
 ) {
     Surface(
         modifier = Modifier
@@ -36,26 +35,14 @@ fun QuestionLayout(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = questionText)
-            //userOptions()
+            MultipleChoiceSingleAnswer(
+                options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
+                initialSelectedOption = null,
+                onOptionSelected = { option ->
+                    println("Option '$option' is now selected")
+                }
+            )
         }
     }
-}
-
-
-@Composable
-fun UserOptions(
-    options: List<String>,
-    onOptionSelected: (String) -> Unit
-) {
-    // Implementation goes here
-}
-
-@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
-@Composable
-fun QuestionLayoutPreview() {
-    QuestionLayout(
-        questionText = "What is the capital of France?",
-        userOptions = listOf("Paris", "London", "Berlin", "Madrid")
-    )
 }
 

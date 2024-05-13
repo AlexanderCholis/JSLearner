@@ -17,7 +17,6 @@ fun TestScreen(
         questionLayout = {
             QuestionLayout(
                 questionText = "What is the capital of France?",
-                userOptions = listOf("Paris", "London", "Berlin", "Madrid")
             )
         },
         onNextClick = {},
