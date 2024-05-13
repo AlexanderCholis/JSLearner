@@ -22,11 +22,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.data.models.LearningReason
+import eu.tkacas.jslearner.data.models.LearningReasonItem
 import eu.tkacas.jslearner.ui.components.LearningReasonCard
 
 @Composable
 fun LearningReasonScreen() {
     val selectedReason = remember { mutableStateOf<LearningReason?>(null) }
+
+    val reasons = listOf(
+        LearningReasonItem(R.drawable.career, R.string.gain_skills, LearningReason.GAIN_SKILLS),
+        LearningReasonItem(R.drawable.work, R.string.change_career, LearningReason.CHANGE_CAREER),
+        LearningReasonItem(R.drawable.`fun`, R.string.just_for_fun, LearningReason.JUST_FOR_FUN),
+        LearningReasonItem(R.drawable.games, R.string.develop_games, LearningReason.DEVELOP_GAMES),
+        LearningReasonItem(R.drawable.application, R.string.build_an_application_or_website, LearningReason.BUILD_APP_OR_WEBSITE)
+    )
 
     Surface(
         color = Color.White,
@@ -56,40 +65,17 @@ fun LearningReasonScreen() {
                 modifier = Modifier
                     .padding(bottom = 20.dp)
             )
-            LearningReasonCard(
-                image = R.drawable.career,
-                text = R.string.gain_skills,
-                isSelected = selectedReason.value == LearningReason.GAIN_SKILLS,
-                onSelected = { selectedReason.value = LearningReason.GAIN_SKILLS }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            LearningReasonCard(
-                image = R.drawable.work,
-                text = R.string.change_career,
-                isSelected = selectedReason.value == LearningReason.CHANGE_CAREER,
-                onSelected = { selectedReason.value = LearningReason.CHANGE_CAREER }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            LearningReasonCard(
-                image = R.drawable.`fun`,
-                text = R.string.just_for_fun,
-                isSelected = selectedReason.value == LearningReason.JUST_FOR_FUN,
-                onSelected = { selectedReason.value = LearningReason.JUST_FOR_FUN }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            LearningReasonCard(
-                image = R.drawable.games,
-                text = R.string.develop_games,
-                isSelected = selectedReason.value == LearningReason.DEVELOP_GAMES,
-                onSelected = { selectedReason.value = LearningReason.DEVELOP_GAMES }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            LearningReasonCard(
-                image = R.drawable.application,
-                text = R.string.build_an_application_or_website,
-                isSelected = selectedReason.value == LearningReason.BUILD_APP_OR_WEBSITE,
-                onSelected = { selectedReason.value = LearningReason.BUILD_APP_OR_WEBSITE }
-            )
+            reasons.forEachIndexed { index, item ->
+                LearningReasonCard(
+                    image = item.image,
+                    text = item.text,
+                    isSelected = selectedReason.value == item.reason,
+                    onSelected = { selectedReason.value = item.reason }
+                )
+                if (index < reasons.size - 1) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+            }
         }
     }
 }
