@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.ui.components.test
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,7 +14,6 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -26,14 +26,19 @@ import eu.tkacas.jslearner.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.ui.theme.SkyBlue
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import kotlin.math.roundToInt
 
@@ -177,8 +182,8 @@ fun SequenceHotspot(
 ) {
     Column {
         items.forEachIndexed { index, item ->
-            var offsetX by remember { mutableStateOf(0f) }
-            var offsetY by remember { mutableStateOf(0f) }
+            var offsetX by remember { mutableFloatStateOf(0f) }
+            var offsetY by remember { mutableFloatStateOf(0f) }
 
             Box(
                 modifier = Modifier
@@ -188,7 +193,8 @@ fun SequenceHotspot(
                             change.consume()
                             offsetX += dragAmount.x
                             offsetY += dragAmount.y
-                            val newIndex = ((index + offsetX).roundToInt()).coerceIn(0, items.size - 1)
+                            val newIndex =
+                                ((index + offsetX).roundToInt()).coerceIn(0, items.size - 1)
                             onSequenceChanged(index, newIndex)
                         }
                     }
@@ -198,7 +204,6 @@ fun SequenceHotspot(
         }
     }
 }
-
 @Composable
 fun DragTheWords(
     words: List<String>,
@@ -206,38 +211,121 @@ fun DragTheWords(
     userAnswers: List<String>,
     onWordDropped: (Int, String) -> Unit
 ) {
-    Column {
-        Column{
-            words.forEach { word ->
-                var offsetX by remember { mutableFloatStateOf(0f) }
-                var offsetY by remember { mutableFloatStateOf(0f) }
+    val droppedWords = remember { mutableStateOf(List(words.size) { "Drop Me here" }) }
+    val offsets = remember { words.map { mutableStateOf(Offset.Zero) } }
+    var boxHeight by remember { mutableStateOf(0f) }
+
+    // State hoisting for better composability
+    var draggingIndex by remember { mutableStateOf<Int?>(null) }
+
+    Row(Modifier.fillMaxWidth()) {
+        Column(Modifier.weight(1f)) {
+            targetWords.forEachIndexed { index, _ ->
+                TargetWordBox(text = userAnswers[index])
+            }
+        }
+
+        Column(Modifier.weight(1f)) {
+            droppedWords.value.forEachIndexed { index, word ->
+                DroppedWordBox(
+                    text = word,
+                    onHeightMeasured = { height ->
+                        boxHeight = height.toFloat()
+                    }
+                )
+            }
+        }
+
+        Column(Modifier.weight(1f)) {
+            words.forEachIndexed { index, word ->
+                val offset by offsets[index]
 
                 Box(
                     modifier = Modifier
-                        .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                        .onGloballyPositioned { coordinates ->
+                            boxHeight = coordinates.size.height.toFloat()
+                        }
+                        .offset { IntOffset(offset.x.roundToInt(), offset.y.roundToInt()) }
                         .pointerInput(Unit) {
-                            detectDragGestures { change, dragAmount ->
-                                change.consume() // Consume the gesture so it doesn't propagate to other views
-                                offsetX += dragAmount.x
-                                offsetY += dragAmount.y
-                                val newIndex = ((words.indexOf(word) + offsetX).roundToInt()).coerceIn(0, words.size - 1)
-                                onWordDropped(newIndex, word)
-                            }
+                            detectDragGestures(
+                                onDragStart = {
+                                    draggingIndex = index
+                                },
+                                onDrag = { change, dragAmount ->
+                                    change.consume()
+                                    offsets[index].value += dragAmount
+                                },
+                                onDragEnd = {
+                                    if (draggingIndex == index) {
+                                        val newIndex = calculateDropIndex(offset.y, boxHeight, words.size)
+                                        onWordDropped(newIndex, word)
+                                        droppedWords.value = droppedWords.value.toMutableList().also { it[newIndex] = word }
+                                        offsets[index].value = Offset.Zero
+                                    }
+                                    draggingIndex = null
+                                }
+                            )
                         }
                 ) {
-                    Text(text = word)
+                    DraggableWordCard(text = word, isDragging = draggingIndex == index)
                 }
             }
         }
-        Column {
-            targetWords.forEachIndexed { index, targetWord ->
-                Box(
-                    modifier = Modifier.background(Color.LightGray)
-                ) {
-                    Text(text = userAnswers[index])
-                }
-            }
-        }
-
     }
+}
+
+fun calculateDropIndex(yOffset: Float, boxHeight: Float, wordsSize: Int): Int {
+    // Calculate drop index based on the position relative to the top edges of the drop areas
+    val approximateIndex = (yOffset / boxHeight).toInt()
+    return if (approximateIndex < 0) 0 else if (approximateIndex >= wordsSize) wordsSize - 1 else approximateIndex
+}
+
+@Composable
+fun TargetWordBox(text: String) {
+    Surface(shape = RoundedCornerShape(8.dp), color = MaterialTheme.colorScheme.inversePrimary, modifier = Modifier.padding(4.dp)) {
+        Text(text = text, modifier = Modifier.padding(8.dp))
+    }
+}
+
+@Composable
+fun DroppedWordBox(text: String = "Drop Here", onHeightMeasured: (Int) -> Unit) {
+    val heightState = remember { mutableStateOf(0) }
+
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        border = BorderStroke(2.dp, Color.Black),
+        modifier = Modifier
+            .padding(4.dp)
+            .height(37.dp)
+            .onGloballyPositioned {
+                heightState.value = it.size.height
+                onHeightMeasured(it.size.height)
+            }
+    ) {
+        Text(text = text, modifier = Modifier.padding(8.dp))
+    }
+}
+
+@Composable
+fun DraggableWordCard(text: String, isDragging: Boolean) {
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
+            .padding(4.dp)
+            .background(if (isDragging) Color.LightGray else Color.White)
+            .shadow(if (isDragging) 8.dp else 0.dp), // Add shadow when dragging
+    ) {
+        Text(text = text, modifier = Modifier.padding(8.dp))
+    }
+}
+
+@Preview
+@Composable
+fun DragTheWordsPreview() {
+    DragTheWords(
+        words = listOf("Word 1", "Word 2", "Word 3"),
+        targetWords = listOf("Target 1", "Target 2", "Target 3"),
+        userAnswers = listOf("Answer 1", "Answer 2", "Answer 3"),
+        onWordDropped = { index, word -> println("Word $word dropped at index $index") }
+    )
 }
