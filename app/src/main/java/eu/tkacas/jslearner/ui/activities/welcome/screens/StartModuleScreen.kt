@@ -26,10 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.ui.components.AuthButtonComponent
+import eu.tkacas.jslearner.ui.components.BulletText
 import eu.tkacas.jslearner.ui.theme.componentShapes
 
 @Composable
-fun StartQuizScreen() {
+fun StartModuleScreen() {
+    val subsections = listOf("Subsection 1", "Subsection 2", "Subsection 3", "Subsection 4")
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -38,16 +41,8 @@ fun StartQuizScreen() {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
         ) {
-            Text(
-                text = "Fundamentals",
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(bottom = 40.dp)
-            )
             Surface(
                 color = Color.Gray,
                 modifier = Modifier
@@ -57,21 +52,25 @@ fun StartQuizScreen() {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(top = 16.dp, start = 12.dp, end = 12.dp, bottom = 16.dp)
+                        .padding(top = 16.dp, start = 36.dp, end = 36.dp, bottom = 16.dp)
                 ) {
-                    Text(
-                        text = "10 questions",
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = "This quiz will test your knowledge of the fundamentals of JavaScript.",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "Time: 10 minutes"
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Fundamentals",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(bottom = 40.dp)
+                        )
+                    }
+                    subsections.forEach {
+                        BulletText(value = it)
+                    }
                     Spacer(modifier = Modifier.height(100.dp))
 
                     Row(
@@ -93,9 +92,10 @@ fun StartQuizScreen() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Ready to test your Knowledge?",
+                            text = "Ready to learn about the fundamentals of JavaScript?",
                             fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
                         )
                     }
                     Column(
@@ -104,7 +104,7 @@ fun StartQuizScreen() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         AuthButtonComponent(
-                            value = "Start Quiz",
+                            value = "Start Module",
                             onButtonClicked = { }
                         )
                     }
@@ -116,6 +116,6 @@ fun StartQuizScreen() {
 
 @Preview
 @Composable
-fun StartQuizScreenPreview() {
-    StartQuizScreen()
+fun StartModuleScreenPreview() {
+    StartModuleScreen()
 }

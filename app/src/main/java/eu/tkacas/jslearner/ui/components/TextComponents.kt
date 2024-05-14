@@ -58,3 +58,13 @@ fun AuthDividerTextComponent(value: String) {
         color = GrayColor
     )
 }
+
+@Composable
+fun BulletText(value: String) {
+    Text(
+        text = "• $value",
+        style = TextStyle(
+            fontSize = 16.sp
+        )
+    )
+}
