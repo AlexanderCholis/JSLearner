@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,6 @@ import eu.tkacas.jslearner.R
 @Composable
 fun CircularLeader1Component(image: Int) {
     Box(
-        //contentAlignment = Alignment.Center,
         modifier = Modifier
             .size(126.dp)
     ) {
@@ -86,4 +84,6 @@ fun CircularLeader3Component(image: Int) {
         )
     }
 }
+
+
 
