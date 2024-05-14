@@ -45,7 +45,6 @@ fun WelcomeScreen() {
     }
 
 
-
 }
 
 @Preview
