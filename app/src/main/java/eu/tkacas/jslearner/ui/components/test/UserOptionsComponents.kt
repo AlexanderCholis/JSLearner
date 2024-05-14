@@ -29,7 +29,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import kotlin.math.roundToInt
@@ -166,22 +169,6 @@ fun TrueFalse(
 }
 
 @Composable
-fun FillInTheBlankMatching(
-    blanks: List<String>,
-    userAnswers: List<String>,
-    onBlankFilled: (Int, String) -> Unit
-) {
-    Column {
-        blanks.forEachIndexed { index, blank ->
-            TextField(
-                value = userAnswers[index],
-                onValueChange = { onBlankFilled(index, it) }
-            )
-        }
-    }
-}
-
-@Composable
 fun SequenceHotspot(
     items: List<String>,
     sequence: List<Int>,
@@ -220,32 +207,37 @@ fun DragTheWords(
     onWordDropped: (Int, String) -> Unit
 ) {
     Column {
-        words.forEach { word ->
-            var offsetX by remember { mutableFloatStateOf(0f) }
-            var offsetY by remember { mutableFloatStateOf(0f) }
+        Column{
+            words.forEach { word ->
+                var offsetX by remember { mutableFloatStateOf(0f) }
+                var offsetY by remember { mutableFloatStateOf(0f) }
 
-            Box(
-                modifier = Modifier
-                    .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-                    .pointerInput(Unit) {
-                        detectDragGestures { change, dragAmount ->
-                            change.consume() // Consume the gesture so it doesn't propagate to other views
-                            offsetX += dragAmount.x
-                            offsetY += dragAmount.y
-                            val newIndex = ((words.indexOf(word) + offsetX).roundToInt()).coerceIn(0, words.size - 1)
-                            onWordDropped(newIndex, word)
+                Box(
+                    modifier = Modifier
+                        .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                        .pointerInput(Unit) {
+                            detectDragGestures { change, dragAmount ->
+                                change.consume() // Consume the gesture so it doesn't propagate to other views
+                                offsetX += dragAmount.x
+                                offsetY += dragAmount.y
+                                val newIndex = ((words.indexOf(word) + offsetX).roundToInt()).coerceIn(0, words.size - 1)
+                                onWordDropped(newIndex, word)
+                            }
                         }
-                    }
-            ) {
-                Text(text = word)
+                ) {
+                    Text(text = word)
+                }
             }
         }
-        targetWords.forEachIndexed { index, targetWord ->
-            Box(
-                modifier = Modifier.background(Color.LightGray)
-            ) {
-                Text(text = userAnswers[index])
+        Column {
+            targetWords.forEachIndexed { index, targetWord ->
+                Box(
+                    modifier = Modifier.background(Color.LightGray)
+                ) {
+                    Text(text = userAnswers[index])
+                }
             }
         }
+
     }
 }
