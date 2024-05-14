@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
@@ -232,6 +233,41 @@ fun PathModuleCard(
                         text = moduleDescriptionText
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun CoursesPathCard(
+    moduleTitleText : String,
+    isEnabled: Boolean
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = cardColors(containerColor = Color.White),
+        elevation = cardElevation(defaultElevation = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = moduleTitleText,
+                fontWeight = if (isEnabled) FontWeight.Bold else FontWeight.Normal,
+                color = if (isEnabled) Color.Black else Color.Gray,
+                fontSize = 20.sp
+            )
+            if(!isEnabled) {
+                Icon(
+                    painter = painterResource(id = R.drawable.lock),
+                    contentDescription = null,
+                    tint = Color.Gray
+                )
             }
         }
     }
