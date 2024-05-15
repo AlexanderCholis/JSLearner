@@ -1,8 +1,5 @@
 package eu.tkacas.jslearner.ui.activities.welcome.navigation.actions
 
-interface ISignUpActions {
+interface IWelcomeActions {
     fun navigateToLogin()
-    fun navigateToTerms()
-    fun navigateToPrivacy()
-
 }
