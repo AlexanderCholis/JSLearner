@@ -30,13 +30,15 @@ import eu.tkacas.jslearner.ui.components.DividerTextComponent
 import eu.tkacas.jslearner.ui.components.HaveAnAccountOrNotClickableTextComponent
 import eu.tkacas.jslearner.ui.components.PasswordTextFieldComponent
 import eu.tkacas.jslearner.ui.events.LoginFormEvent
-import eu.tkacas.jslearner.ui.viewModel.BaseAuthViewModel
-import eu.tkacas.jslearner.ui.viewModel.LoginViewModel
+import eu.tkacas.jslearner.ui.states.LoginFormState
+import eu.tkacas.jslearner.ui.viewModel.auth.BaseAuthViewModel
+import eu.tkacas.jslearner.ui.viewModel.auth.LoginViewModel
 
 @Composable
-fun LoginScreen() {
-    val viewModel = viewModel<LoginViewModel>()
-    val state = viewModel.state
+fun LoginScreen(
+    viewModel: LoginViewModel,
+    state: LoginFormState
+) {
     val context = LocalContext.current
 
     LaunchedEffect(key1 = context) {
@@ -106,7 +108,7 @@ fun LoginScreen() {
                     alreadyHaveAnAccount = false,
                     onTextSelected = {
                         if (it == "Register") {
-                            //TODO: Navigate to SignUp Screen
+                            viewModel.loginActions.navigateToSignUp()
                         }
                     }
                 )
@@ -117,6 +119,10 @@ fun LoginScreen() {
 
 @Preview
 @Composable
-fun PreviewLoginScreen() {
-    LoginScreen()
+fun LoginScreenPreview() {
+    val viewModel = viewModel<LoginViewModel>()
+    LoginScreen(
+        viewModel = viewModel,
+        state = LoginFormState()
+    )
 }

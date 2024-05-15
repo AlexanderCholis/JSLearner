@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.ui.viewModel
+package eu.tkacas.jslearner.ui.viewModel.auth
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.channels.Channel

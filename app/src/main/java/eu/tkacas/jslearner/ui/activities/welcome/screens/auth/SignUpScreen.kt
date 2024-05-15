@@ -31,8 +31,8 @@ import eu.tkacas.jslearner.ui.components.HaveAnAccountOrNotClickableTextComponen
 import eu.tkacas.jslearner.ui.components.PasswordTextFieldComponent
 import eu.tkacas.jslearner.ui.components.TermsCheckboxComponent
 import eu.tkacas.jslearner.ui.events.SignUpFormEvent
-import eu.tkacas.jslearner.ui.viewModel.BaseAuthViewModel
-import eu.tkacas.jslearner.ui.viewModel.SignUpViewModel
+import eu.tkacas.jslearner.ui.viewModel.auth.BaseAuthViewModel
+import eu.tkacas.jslearner.ui.viewModel.auth.SignUpViewModel
 
 @Composable
 fun SignUpScreen() {

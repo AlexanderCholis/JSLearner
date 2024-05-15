@@ -1,19 +1,23 @@
-package eu.tkacas.jslearner.ui.viewModel
+package eu.tkacas.jslearner.ui.viewModel.auth
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import eu.tkacas.jslearner.domain.use_case.ValidateEmail
 import eu.tkacas.jslearner.domain.use_case.ValidatePassword
+import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.ILoginActions
 import eu.tkacas.jslearner.ui.events.LoginFormEvent
 import eu.tkacas.jslearner.ui.states.LoginFormState
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val validateEmail: ValidateEmail = ValidateEmail(),
-    private val validatePassword: ValidatePassword = ValidatePassword()
-): BaseAuthViewModel() {
+    private val validatePassword: ValidatePassword = ValidatePassword(),
+    val loginActions: ILoginActions
+): BaseAuthViewModel()  {
     var state by mutableStateOf(LoginFormState())
 
     fun onEvent(event: LoginFormEvent) {
@@ -48,6 +52,24 @@ class LoginViewModel(
         }
         viewModelScope.launch {
             validationEventChannel.send(ValidationEvent.Success)
+        }
+    }
+
+    companion object {
+        fun provideFactory(
+            validateEmail: ValidateEmail,
+            validatePassword: ValidatePassword,
+            loginActions: ILoginActions
+        ): ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+                        @Suppress("UNCHECKED_CAST")
+                        return LoginViewModel(validateEmail, validatePassword, loginActions) as T
+                    }
+                    throw IllegalArgumentException("Unknown ViewModel class")
+                }
+            }
         }
     }
 }
