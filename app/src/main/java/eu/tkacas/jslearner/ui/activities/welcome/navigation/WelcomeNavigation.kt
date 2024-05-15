@@ -11,14 +11,22 @@ import eu.tkacas.jslearner.domain.use_case.ValidateLastName
 import eu.tkacas.jslearner.domain.use_case.ValidatePassword
 import eu.tkacas.jslearner.domain.use_case.ValidateTerms
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.ILoginActions
+import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.IPrivacyPolicyActions
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.ISignUpActions
+import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.ITermsAndConditionsActions
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.IWelcomeActions
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.objects.Login
+import eu.tkacas.jslearner.ui.activities.welcome.navigation.objects.PrivacyPolicy
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.objects.SignUp
+import eu.tkacas.jslearner.ui.activities.welcome.navigation.objects.TermsAndConditions
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.objects.Welcome
+import eu.tkacas.jslearner.ui.activities.welcome.screens.PrivacyPolicyScreen
+import eu.tkacas.jslearner.ui.activities.welcome.screens.TermsAndConditionsScreen
 import eu.tkacas.jslearner.ui.activities.welcome.screens.WelcomeScreen
 import eu.tkacas.jslearner.ui.activities.welcome.screens.auth.LoginScreen
 import eu.tkacas.jslearner.ui.activities.welcome.screens.auth.SignUpScreen
+import eu.tkacas.jslearner.ui.viewModel.PrivacyPolicyViewModel
+import eu.tkacas.jslearner.ui.viewModel.TermsAndConditionsViewModel
 import eu.tkacas.jslearner.ui.viewModel.WelcomeViewModel
 import eu.tkacas.jslearner.ui.viewModel.auth.LoginViewModel
 import eu.tkacas.jslearner.ui.viewModel.auth.SignUpViewModel
@@ -74,11 +82,11 @@ internal fun WelcomeNavigation() {
                     }
 
                     override fun navigateToTerms() {
-                        TODO("Not yet implemented")
+                        navController.navigate(TermsAndConditions)
                     }
 
                     override fun navigateToPrivacy() {
-                        TODO("Not yet implemented")
+                        navController.navigate(PrivacyPolicy)
                     }
                 }
             ))
@@ -86,6 +94,30 @@ internal fun WelcomeNavigation() {
             SignUpScreen(
                 viewModel = viewModel,
                 state = state
+            )
+        }
+        composable<TermsAndConditions> {
+            val viewModel: TermsAndConditionsViewModel = viewModel(factory = TermsAndConditionsViewModel.provideFactory(
+                termsAndConditionsActions = object : ITermsAndConditionsActions {
+                    override fun navigateToSignUp() {
+                        navController.navigate(SignUp)
+                    }
+                }
+            ))
+            TermsAndConditionsScreen(
+                viewModel = viewModel
+            )
+        }
+        composable<PrivacyPolicy> {
+            val viewModel: PrivacyPolicyViewModel = viewModel(factory = PrivacyPolicyViewModel.provideFactory(
+                privacyPolicyActions = object : IPrivacyPolicyActions {
+                    override fun navigateToSignUp() {
+                        navController.navigate(SignUp)
+                    }
+                }
+            ))
+            PrivacyPolicyScreen(
+                viewModel = viewModel
             )
         }
     }

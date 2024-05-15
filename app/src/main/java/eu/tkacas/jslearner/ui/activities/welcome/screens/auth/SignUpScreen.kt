@@ -108,9 +108,9 @@ fun SignUpScreen(
                 onCheckedChange = { viewModel.onEvent(SignUpFormEvent.AcceptTerms(it)) },
                 onTextSelected = {
                     if (it == "Privacy Policy") {
-                        //TODO: Navigate to Privacy Policy Screen
+                        viewModel.signUpActions.navigateToPrivacy()
                     } else if (it == "Terms of Use.") {
-                        //TODO: Navigate to Terms of Use Screen
+                        viewModel.signUpActions.navigateToTerms()
                     }
                 },
                 errorMessageValue = state.termsError ?: "",
