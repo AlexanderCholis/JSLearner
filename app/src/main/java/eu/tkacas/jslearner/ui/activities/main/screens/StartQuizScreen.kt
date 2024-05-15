@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.ui.activities.welcome.screens
+package eu.tkacas.jslearner.ui.activities.main.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
