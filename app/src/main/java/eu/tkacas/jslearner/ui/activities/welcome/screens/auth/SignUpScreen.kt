@@ -31,13 +31,15 @@ import eu.tkacas.jslearner.ui.components.HaveAnAccountOrNotClickableTextComponen
 import eu.tkacas.jslearner.ui.components.PasswordTextFieldComponent
 import eu.tkacas.jslearner.ui.components.TermsCheckboxComponent
 import eu.tkacas.jslearner.ui.events.SignUpFormEvent
+import eu.tkacas.jslearner.ui.states.SignUpFormState
 import eu.tkacas.jslearner.ui.viewModel.auth.BaseAuthViewModel
 import eu.tkacas.jslearner.ui.viewModel.auth.SignUpViewModel
 
 @Composable
-fun SignUpScreen() {
-    val viewModel = viewModel<SignUpViewModel>()
-    val state = viewModel.state
+fun SignUpScreen(
+    viewModel: SignUpViewModel,
+    state: SignUpFormState
+) {
     val context = LocalContext.current
 
     LaunchedEffect(key1 = context) {
@@ -140,17 +142,11 @@ fun SignUpScreen() {
                     alreadyHaveAnAccount = true,
                     onTextSelected = {
                         if (it == "Login") {
-                            //TODO: Navigate to Login Screen
+                            viewModel.signUpActions.navigateToLogin()
                         }
                     }
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewSignUpScreen() {
-    SignUpScreen()
 }
