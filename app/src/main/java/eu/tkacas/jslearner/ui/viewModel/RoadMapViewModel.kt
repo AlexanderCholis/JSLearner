@@ -3,7 +3,7 @@ package eu.tkacas.jslearner.ui.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.models.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.data.repositories.RoadmapRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

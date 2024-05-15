@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.data.models.LearningReason
-import eu.tkacas.jslearner.data.models.LearningReasonItem
+import eu.tkacas.jslearner.models.LearningReason
+import eu.tkacas.jslearner.models.LearningReasonItem
 import eu.tkacas.jslearner.ui.components.LearningReasonCard
 
 @Composable

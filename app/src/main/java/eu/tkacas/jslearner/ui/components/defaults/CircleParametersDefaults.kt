@@ -4,8 +4,8 @@ import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.data.models.roadmap.CircleParameters
-import eu.tkacas.jslearner.data.models.roadmap.StrokeParameters
+import eu.tkacas.jslearner.models.roadmap.CircleParameters
+import eu.tkacas.jslearner.models.roadmap.StrokeParameters
 
 
 object CircleParametersDefaults {

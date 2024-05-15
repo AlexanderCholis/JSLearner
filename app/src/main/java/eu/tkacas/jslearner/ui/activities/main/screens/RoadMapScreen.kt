@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.ui.viewModel.RoadMapViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.jslearner.JSLearner
-import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodePosition
-import eu.tkacas.jslearner.data.models.roadmap.StrokeParameters
-import eu.tkacas.jslearner.data.models.roadmap.getColor
-import eu.tkacas.jslearner.data.models.roadmap.getIcon
+import eu.tkacas.jslearner.models.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.models.roadmap.StrokeParameters
+import eu.tkacas.jslearner.models.roadmap.getColor
+import eu.tkacas.jslearner.models.roadmap.getIcon
 import eu.tkacas.jslearner.ui.components.defaults.CircleParametersDefaults
 import eu.tkacas.jslearner.ui.components.defaults.LineParametersDefaults
 import eu.tkacas.jslearner.ui.components.defaults.MessageBubble

@@ -1,8 +1,8 @@
 package eu.tkacas.jslearner.data.sources
 
-import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodePosition
-import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodeState
-import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.models.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.models.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.models.roadmap.RoadMapNodeStatus
 
 class RoadmapDataSource {
     val nodes = listOf(

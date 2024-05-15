@@ -29,12 +29,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.data.models.roadmap.CircleParameters
-import eu.tkacas.jslearner.data.models.roadmap.LineParameters
-import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodePosition
-import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodeState
-import eu.tkacas.jslearner.data.models.roadmap.RoadMapNodeStatus
-import eu.tkacas.jslearner.data.models.roadmap.StrokeParameters
+import eu.tkacas.jslearner.models.roadmap.CircleParameters
+import eu.tkacas.jslearner.models.roadmap.LineParameters
+import eu.tkacas.jslearner.models.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.models.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.models.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.models.roadmap.StrokeParameters
 
 
 @Composable

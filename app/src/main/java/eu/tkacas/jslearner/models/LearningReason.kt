@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.data.models
+package eu.tkacas.jslearner.models
 
 enum class LearningReason {
     GAIN_SKILLS,
