@@ -102,6 +102,10 @@ internal fun WelcomeNavigation() {
                     override fun navigateToSignUp() {
                         navController.navigate(SignUp)
                     }
+
+                    override fun navigateGoBack() {
+                        navController.navigateUp()
+                    }
                 }
             ))
             TermsAndConditionsScreen(
@@ -113,6 +117,10 @@ internal fun WelcomeNavigation() {
                 privacyPolicyActions = object : IPrivacyPolicyActions {
                     override fun navigateToSignUp() {
                         navController.navigate(SignUp)
+                    }
+
+                    override fun navigateGoBack() {
+                        navController.navigateUp()
                     }
                 }
             ))
