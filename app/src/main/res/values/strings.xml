@@ -37,4 +37,7 @@
     <string name="dont_have_an_account_yet">Don’t have an account yet?\u00A0</string>
     <string name="welcome_to_jslearner_app">Welcome to \nJSLearner!</string>
     <string name="courses">Courses</string>
+    <string name="go_back">Go Back</string>
+    <string name="terms_and_conditions_header">Terms of Use</string>
+    <string name="privacy_policy_header">Privacy Policy</string>
 </resources>
