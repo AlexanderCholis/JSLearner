@@ -1,14 +1,17 @@
-package eu.tkacas.jslearner.ui.viewModel
+package eu.tkacas.jslearner.ui.viewModel.auth
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import eu.tkacas.jslearner.domain.use_case.ValidateEmail
 import eu.tkacas.jslearner.domain.use_case.ValidateFirstName
 import eu.tkacas.jslearner.domain.use_case.ValidateLastName
 import eu.tkacas.jslearner.domain.use_case.ValidatePassword
 import eu.tkacas.jslearner.domain.use_case.ValidateTerms
+import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.ISignUpActions
 import eu.tkacas.jslearner.ui.events.SignUpFormEvent
 import eu.tkacas.jslearner.ui.states.SignUpFormState
 import kotlinx.coroutines.launch
@@ -18,7 +21,8 @@ class SignUpViewModel(
     private val validateLastName: ValidateLastName = ValidateLastName(),
     private val validateEmail: ValidateEmail = ValidateEmail(),
     private val validatePassword: ValidatePassword = ValidatePassword(),
-    private val validateTerms: ValidateTerms = ValidateTerms()
+    private val validateTerms: ValidateTerms = ValidateTerms(),
+    val signUpActions: ISignUpActions
 ): BaseAuthViewModel() {
     var state by mutableStateOf(SignUpFormState())
 
@@ -72,6 +76,27 @@ class SignUpViewModel(
         }
         viewModelScope.launch {
             validationEventChannel.send(ValidationEvent.Success)
+        }
+    }
+
+    companion object {
+        fun provideFactory(
+            validateFirstName: ValidateFirstName,
+            validateLastName: ValidateLastName,
+            validateEmail: ValidateEmail,
+            validatePassword: ValidatePassword,
+            validateTerms: ValidateTerms,
+            signUpActions: ISignUpActions
+        ): ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
+                        @Suppress("UNCHECKED_CAST")
+                        return SignUpViewModel(validateFirstName, validateLastName, validateEmail, validatePassword, validateTerms, signUpActions) as T
+                    }
+                    throw IllegalArgumentException("Unknown ViewModel class")
+                }
+            }
         }
     }
 }

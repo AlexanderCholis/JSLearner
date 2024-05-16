@@ -19,9 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.ui.components.AuthButtonComponent
 import eu.tkacas.jslearner.ui.components.AuthHeadingTextComponent
@@ -30,13 +28,15 @@ import eu.tkacas.jslearner.ui.components.DividerTextComponent
 import eu.tkacas.jslearner.ui.components.HaveAnAccountOrNotClickableTextComponent
 import eu.tkacas.jslearner.ui.components.PasswordTextFieldComponent
 import eu.tkacas.jslearner.ui.events.LoginFormEvent
-import eu.tkacas.jslearner.ui.viewModel.BaseAuthViewModel
-import eu.tkacas.jslearner.ui.viewModel.LoginViewModel
+import eu.tkacas.jslearner.ui.states.LoginFormState
+import eu.tkacas.jslearner.ui.viewModel.auth.BaseAuthViewModel
+import eu.tkacas.jslearner.ui.viewModel.auth.LoginViewModel
 
 @Composable
-fun LoginScreen() {
-    val viewModel = viewModel<LoginViewModel>()
-    val state = viewModel.state
+fun LoginScreen(
+    viewModel: LoginViewModel,
+    state: LoginFormState
+) {
     val context = LocalContext.current
 
     LaunchedEffect(key1 = context) {
@@ -106,17 +106,11 @@ fun LoginScreen() {
                     alreadyHaveAnAccount = false,
                     onTextSelected = {
                         if (it == "Register") {
-                            //TODO: Navigate to SignUp Screen
+                            viewModel.loginActions.navigateToSignUp()
                         }
                     }
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewLoginScreen() {
-    LoginScreen()
 }

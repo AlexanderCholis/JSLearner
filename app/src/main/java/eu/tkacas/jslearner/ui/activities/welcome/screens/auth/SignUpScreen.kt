@@ -19,9 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.ui.components.AuthButtonComponent
 import eu.tkacas.jslearner.ui.components.AuthHeadingTextComponent
@@ -31,13 +29,15 @@ import eu.tkacas.jslearner.ui.components.HaveAnAccountOrNotClickableTextComponen
 import eu.tkacas.jslearner.ui.components.PasswordTextFieldComponent
 import eu.tkacas.jslearner.ui.components.TermsCheckboxComponent
 import eu.tkacas.jslearner.ui.events.SignUpFormEvent
-import eu.tkacas.jslearner.ui.viewModel.BaseAuthViewModel
-import eu.tkacas.jslearner.ui.viewModel.SignUpViewModel
+import eu.tkacas.jslearner.ui.states.SignUpFormState
+import eu.tkacas.jslearner.ui.viewModel.auth.BaseAuthViewModel
+import eu.tkacas.jslearner.ui.viewModel.auth.SignUpViewModel
 
 @Composable
-fun SignUpScreen() {
-    val viewModel = viewModel<SignUpViewModel>()
-    val state = viewModel.state
+fun SignUpScreen(
+    viewModel: SignUpViewModel,
+    state: SignUpFormState
+) {
     val context = LocalContext.current
 
     LaunchedEffect(key1 = context) {
@@ -108,9 +108,9 @@ fun SignUpScreen() {
                 onCheckedChange = { viewModel.onEvent(SignUpFormEvent.AcceptTerms(it)) },
                 onTextSelected = {
                     if (it == "Privacy Policy") {
-                        //TODO: Navigate to Privacy Policy Screen
+                        viewModel.signUpActions.navigateToPrivacy()
                     } else if (it == "Terms of Use.") {
-                        //TODO: Navigate to Terms of Use Screen
+                        viewModel.signUpActions.navigateToTerms()
                     }
                 },
                 errorMessageValue = state.termsError ?: "",
@@ -140,17 +140,11 @@ fun SignUpScreen() {
                     alreadyHaveAnAccount = true,
                     onTextSelected = {
                         if (it == "Login") {
-                            //TODO: Navigate to Login Screen
+                            viewModel.signUpActions.navigateToLogin()
                         }
                     }
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewSignUpScreen() {
-    SignUpScreen()
 }
