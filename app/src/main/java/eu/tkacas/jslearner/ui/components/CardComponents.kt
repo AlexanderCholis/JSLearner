@@ -36,11 +36,13 @@ import eu.tkacas.jslearner.ui.theme.SkyBlue
 @Composable
 fun ExperienceLevelCard(
     image : Int,
-    text : Int
+    text : Int,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable { onClick() },
         colors = cardColors(containerColor = Color.White),
         elevation = cardElevation(defaultElevation = 4.dp)
     ) {
