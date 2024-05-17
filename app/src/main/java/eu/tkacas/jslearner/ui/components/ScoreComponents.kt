@@ -52,7 +52,7 @@ fun ScoreComponent(userScore: Int) {
 
 
 @Composable
-fun ScoreProgressBarComponent(userScore: Float, maxScore: Float) {
+fun ScoreProgressBarComponent(userScore: Int, maxScore: Float) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
