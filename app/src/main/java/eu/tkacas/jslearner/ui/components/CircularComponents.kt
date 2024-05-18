@@ -84,6 +84,3 @@ fun CircularLeader3Component(image: Int) {
         )
     }
 }
-
-
-
