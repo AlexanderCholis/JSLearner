@@ -23,7 +23,6 @@ fun LeaderboardComponent(userImage: Int, userName: String, userScore: Int) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .clip(RoundedCornerShape(30.dp))
-            //.background(Color.LightGray)
             .background(SkyBlue)
             .padding(16.dp)
     ) {
