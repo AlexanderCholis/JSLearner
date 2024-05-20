@@ -26,9 +26,9 @@ fun CircularLeader1Component(image: Int) {
     ) {
         Box(
             modifier = Modifier
-                .size(100.dp) // Size of Circle
+                .size(100.dp) //Size of Circle
                 .offset(x = 12.dp, y = 22.dp)
-                .clip(CircleShape) // Cut into circle shape
+                .clip(CircleShape) //Cut into circle shape
                 .border(4.dp, Color(0xFFD4AF37), CircleShape) //Gold outline
         ) {
             Image(
@@ -54,9 +54,9 @@ fun CircularLeader2Component(image: Int) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(100.dp) // Size of Circle
-            .clip(CircleShape) // Cut into circle shape
-            .border(4.dp, Color(0xFFA9A9A9), CircleShape) //Gold outline
+            .size(100.dp)
+            .clip(CircleShape)
+            .border(4.dp, Color(0xFFA9A9A9), CircleShape)
     ) {
         Image(
             painter = painterResource(id = image),
@@ -72,9 +72,9 @@ fun CircularLeader3Component(image: Int) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(100.dp) // Size of Circle
-            .clip(CircleShape) // Cut into circle shape
-            .border(4.dp, Color(0xFFCD7F32), CircleShape) //Gold outline
+            .size(100.dp)
+            .clip(CircleShape)
+            .border(4.dp, Color(0xFFCD7F32), CircleShape)
     ) {
         Image(
             painter = painterResource(id = image),
@@ -84,6 +84,3 @@ fun CircularLeader3Component(image: Int) {
         )
     }
 }
-
-
-

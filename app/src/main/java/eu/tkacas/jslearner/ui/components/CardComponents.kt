@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.ui.components
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,12 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -30,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.ui.theme.SkyBlue
 
 @Composable
@@ -87,7 +83,18 @@ fun LearningReasonCard(
 ) {
     val cardColor = if (isSelected) SkyBlue else Color.White
 
+//  val configuration = LocalConfiguration.current
+
     Card(
+//        modifier = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            Modifier
+//                .fillMaxWidth()
+//                .clickable(onClick = true),
+//        }else {
+//            Modifier
+//                .size(width = 650.dp, height = 65.dp)
+//                .clickable(onClick = true),
+//        },
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onSelected),
@@ -114,6 +121,9 @@ fun LearningReasonCard(
         }
     }
 }
+
+
+
 
 @Composable
 fun PathModuleCard(
