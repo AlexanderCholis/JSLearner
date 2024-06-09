@@ -82,5 +82,5 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     // Dagger Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
 }
