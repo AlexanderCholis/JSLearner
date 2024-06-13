@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,7 +33,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.I
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.PrivacyPolicy
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.TermsAndConditions
-import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
+import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.DividerTextComponent
@@ -92,89 +93,122 @@ fun SignUpScreen(
             .background(Color.White)
             .padding(start = 28.dp, end = 28.dp, top = 60.dp, bottom = 28.dp)
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            AuthHeadingTextComponent(value = stringResource(id = R.string.create_an_account))
-            AuthTextFieldComponent(
-                value = state.firstName,
-                onValueChange = { viewModel.onEvent(SignUpFormEvent.FirstNameChanged(it)) },
-                labelValue = stringResource(id = R.string.first_name),
-                painterResource = painterResource(id = R.drawable.person),
-                contentDescription = stringResource(id = R.string.first_name_hint),
-                keyboardType = KeyboardType.Text,
-                supportedTextValue = state.firstNameError ?: "",
-                errorStatus = state.firstNameError != null
-            )
-            AuthTextFieldComponent(
-                value = state.lastName,
-                onValueChange = { viewModel.onEvent(SignUpFormEvent.LastNameChanged(it)) },
-                labelValue = stringResource(id = R.string.last_name),
-                painterResource = painterResource(id = R.drawable.person),
-                contentDescription = stringResource(id = R.string.last_name_hint),
-                keyboardType = KeyboardType.Text,
-                supportedTextValue = state.lastNameError ?: "",
-                errorStatus = state.lastNameError != null
-            )
-            AuthTextFieldComponent(
-                value = state.email,
-                onValueChange = { viewModel.onEvent(SignUpFormEvent.EmailChanged(it)) },
-                labelValue = stringResource(id = R.string.email),
-                painterResource = painterResource(id = R.drawable.email),
-                contentDescription = stringResource(id = R.string.email_hint),
-                keyboardType = KeyboardType.Email,
-                supportedTextValue = state.emailError ?: "",
-                errorStatus = state.emailError != null
-            )
-            PasswordTextFieldComponent(
-                value = state.password,
-                onValueChange = { viewModel.onEvent(SignUpFormEvent.PasswordChanged(it)) },
-                labelValue = stringResource(id = R.string.password),
-                supportedTextValue = state.passwordError ?: "",
-                errorStatus = state.passwordError != null
-            )
-            TermsCheckboxComponent(
-                checkedValue = state.acceptedTerms,
-                onCheckedChange = { viewModel.onEvent(SignUpFormEvent.AcceptTerms(it)) },
-                onTextSelected = {
-                    if (it == "Privacy Policy") {
-                        viewModel.signUpActions.navigateToPrivacy()
-                    } else if (it == "Terms of Use.") {
-                        viewModel.signUpActions.navigateToTerms()
-                    }
-                },
-                errorMessageValue = state.termsError ?: "",
-                errorStatus = state.termsError != null
-            )
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom
-            ) {
+            item {
+                AuthHeadingTextComponent(value = stringResource(id = R.string.create_an_account))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
-                ){
-                    AuthButtonComponent(
-                        value = stringResource(R.string.register),
-                        onButtonClicked = {
-                            viewModel.onEvent(SignUpFormEvent.Submit)
+                ) {
+
+                    AuthTextFieldComponent(
+                        value = state.firstName,
+                        onValueChange = { viewModel.onEvent(SignUpFormEvent.FirstNameChanged(it)) },
+                        labelValue = stringResource(id = R.string.first_name),
+                        painterResource = painterResource(id = R.drawable.person),
+                        contentDescription = stringResource(id = R.string.first_name_hint),
+                        keyboardType = KeyboardType.Text,
+                        supportedTextValue = state.firstNameError ?: "",
+                        errorStatus = state.firstNameError != null
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    AuthTextFieldComponent(
+                        value = state.lastName,
+                        onValueChange = { viewModel.onEvent(SignUpFormEvent.LastNameChanged(it)) },
+                        labelValue = stringResource(id = R.string.last_name),
+                        painterResource = painterResource(id = R.drawable.person),
+                        contentDescription = stringResource(id = R.string.last_name_hint),
+                        keyboardType = KeyboardType.Text,
+                        supportedTextValue = state.lastNameError ?: "",
+                        errorStatus = state.lastNameError != null
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    AuthTextFieldComponent(
+                        value = state.email,
+                        onValueChange = { viewModel.onEvent(SignUpFormEvent.EmailChanged(it)) },
+                        labelValue = stringResource(id = R.string.email),
+                        painterResource = painterResource(id = R.drawable.email),
+                        contentDescription = stringResource(id = R.string.email_hint),
+                        keyboardType = KeyboardType.Email,
+                        supportedTextValue = state.emailError ?: "",
+                        errorStatus = state.emailError != null
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    PasswordTextFieldComponent(
+                        value = state.password,
+                        onValueChange = { viewModel.onEvent(SignUpFormEvent.PasswordChanged(it)) },
+                        labelValue = stringResource(id = R.string.password),
+                        supportedTextValue = state.passwordError ?: "",
+                        errorStatus = state.passwordError != null
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TermsCheckboxComponent(
+                        checkedValue = state.acceptedTerms,
+                        onCheckedChange = { viewModel.onEvent(SignUpFormEvent.AcceptTerms(it)) },
+                        onTextSelected = {
+                            if (it == "Privacy Policy") {
+                                viewModel.signUpActions.navigateToPrivacy()
+                            } else if (it == "Terms of Use.") {
+                                viewModel.signUpActions.navigateToTerms()
+                            }
+                        },
+                        errorMessageValue = state.termsError ?: "",
+                        errorStatus = state.termsError != null
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        GeneralButtonComponent(
+                            value = stringResource(R.string.register),
+                            onButtonClicked = {
+                                viewModel.onEvent(SignUpFormEvent.Submit)
+                            }
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(20.dp))
+                    DividerTextComponent()
+                    HaveAnAccountOrNotClickableTextComponent(
+                        alreadyHaveAnAccount = true,
+                        onTextSelected = {
+                            if (it == "Login") {
+                                viewModel.signUpActions.navigateToLogin()
+                            }
                         }
                     )
                 }
-                Spacer(modifier = Modifier.height(20.dp))
-                DividerTextComponent()
-                HaveAnAccountOrNotClickableTextComponent(
-                    alreadyHaveAnAccount = true,
-                    onTextSelected = {
-                        if (it == "Login") {
-                            viewModel.signUpActions.navigateToLogin()
-                        }
-                    }
-                )
             }
         }
     }

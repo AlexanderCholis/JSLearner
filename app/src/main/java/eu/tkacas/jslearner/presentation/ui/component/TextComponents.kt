@@ -35,7 +35,7 @@ fun AuthHeadingTextComponent(value: String) {
 }
 
 @Composable
-fun AuthButtonTextComponent(value: String) {
+fun GeneralButtonTextComponent(value: String) {
     Text(
         text = value,
         style = TextStyle(
