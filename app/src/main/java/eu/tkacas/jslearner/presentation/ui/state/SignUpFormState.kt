@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.presentation.ui.states
+package eu.tkacas.jslearner.presentation.ui.state
 
 data class SignUpFormState(
     val firstName: String = "",

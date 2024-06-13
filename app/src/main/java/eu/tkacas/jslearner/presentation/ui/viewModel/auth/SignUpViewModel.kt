@@ -13,7 +13,7 @@ import eu.tkacas.jslearner.domain.usecase.ValidatePassword
 import eu.tkacas.jslearner.domain.usecase.ValidateTerms
 import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.actions.ISignUpActions
 import eu.tkacas.jslearner.presentation.ui.events.SignUpFormEvent
-import eu.tkacas.jslearner.presentation.ui.states.SignUpFormState
+import eu.tkacas.jslearner.presentation.ui.state.SignUpFormState
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(

@@ -10,7 +10,7 @@ import eu.tkacas.jslearner.domain.usecase.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.ValidatePassword
 import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.actions.ILoginActions
 import eu.tkacas.jslearner.presentation.ui.events.LoginFormEvent
-import eu.tkacas.jslearner.presentation.ui.states.LoginFormState
+import eu.tkacas.jslearner.presentation.ui.state.LoginFormState
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
