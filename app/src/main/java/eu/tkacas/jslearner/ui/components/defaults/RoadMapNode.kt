@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.ui.components.defaults
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -29,12 +28,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.models.roadmap.CircleParameters
-import eu.tkacas.jslearner.models.roadmap.LineParameters
-import eu.tkacas.jslearner.models.roadmap.RoadMapNodePosition
-import eu.tkacas.jslearner.models.roadmap.RoadMapNodeState
-import eu.tkacas.jslearner.models.roadmap.RoadMapNodeStatus
-import eu.tkacas.jslearner.models.roadmap.StrokeParameters
+import eu.tkacas.jslearner.domain.entity.roadmap.CircleParameters
+import eu.tkacas.jslearner.domain.entity.roadmap.LineParameters
+import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.domain.entity.roadmap.StrokeParameters
 
 
 @Composable

@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.models.roadmap
+package eu.tkacas.jslearner.domain.entity.roadmap
 
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.Dp

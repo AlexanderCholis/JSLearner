@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.models.roadmap.LineParameters
+import eu.tkacas.jslearner.domain.entity.roadmap.LineParameters
 
 object LineParametersDefaults {
 

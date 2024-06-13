@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.models.roadmap
+package eu.tkacas.jslearner.domain.entity.roadmap
 
 data class RoadMapNodeState(
     val status: RoadMapNodeStatus,

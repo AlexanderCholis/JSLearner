@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.models
+package eu.tkacas.jslearner.domain.entity.learningreason
 
 data class LearningReasonItem(
     val image: Int,
