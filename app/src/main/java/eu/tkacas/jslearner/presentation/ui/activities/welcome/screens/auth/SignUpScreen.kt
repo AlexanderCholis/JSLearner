@@ -20,7 +20,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.usecase.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.ValidateFirstName
+import eu.tkacas.jslearner.domain.usecase.ValidateLastName
+import eu.tkacas.jslearner.domain.usecase.ValidatePassword
+import eu.tkacas.jslearner.domain.usecase.ValidateTerms
+import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.actions.ISignUpActions
+import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.objects.Login
+import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.objects.PrivacyPolicy
+import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.objects.TermsAndConditions
 import eu.tkacas.jslearner.presentation.ui.components.AuthButtonComponent
 import eu.tkacas.jslearner.presentation.ui.components.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.components.AuthTextFieldComponent
@@ -35,8 +46,28 @@ import eu.tkacas.jslearner.presentation.ui.viewModel.auth.SignUpViewModel
 
 @Composable
 fun SignUpScreen(
-    viewModel: SignUpViewModel,
-    state: SignUpFormState
+    navController: NavController,
+    viewModel: SignUpViewModel = viewModel(factory = SignUpViewModel.provideFactory(
+        validateFirstName = ValidateFirstName(),
+        validateLastName = ValidateLastName(),
+        validateEmail = ValidateEmail(),
+        validatePassword = ValidatePassword(),
+        validateTerms = ValidateTerms(),
+        signUpActions = object : ISignUpActions {
+            override fun navigateToLogin() {
+                navController.navigate(Login)
+            }
+
+            override fun navigateToTerms() {
+                navController.navigate(TermsAndConditions)
+            }
+
+            override fun navigateToPrivacy() {
+                navController.navigate(PrivacyPolicy)
+            }
+        }
+    )),
+    state: SignUpFormState = viewModel.state
 ) {
     val context = LocalContext.current
 

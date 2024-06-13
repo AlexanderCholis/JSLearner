@@ -11,13 +11,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.actions.ITermsAndConditionsActions
+import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.objects.SignUp
 import eu.tkacas.jslearner.presentation.ui.components.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.viewModel.TermsAndConditionsViewModel
 
 @Composable
 fun TermsAndConditionsScreen(
-    viewModel: TermsAndConditionsViewModel
+    navController: NavController,
+    viewModel: TermsAndConditionsViewModel = viewModel(factory = TermsAndConditionsViewModel.provideFactory(
+        termsAndConditionsActions = object : ITermsAndConditionsActions {
+            override fun navigateToSignUp() {
+                navController.navigate(SignUp)
+            }
+
+            override fun navigateGoBack() {
+                navController.navigateUp()
+            }
+        }
+    ))
 ) {
     Scaffold(
         modifier = Modifier

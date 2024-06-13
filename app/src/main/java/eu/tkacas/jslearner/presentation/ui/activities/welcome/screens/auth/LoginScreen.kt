@@ -20,7 +20,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.usecase.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.ValidatePassword
+import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.actions.ILoginActions
+import eu.tkacas.jslearner.presentation.ui.activities.welcome.navigation.objects.SignUp
 import eu.tkacas.jslearner.presentation.ui.components.AuthButtonComponent
 import eu.tkacas.jslearner.presentation.ui.components.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.components.AuthTextFieldComponent
@@ -34,8 +40,18 @@ import eu.tkacas.jslearner.presentation.ui.viewModel.auth.LoginViewModel
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel,
-    state: LoginFormState
+    navController: NavController,
+    viewModel: LoginViewModel = viewModel(factory =
+    LoginViewModel.provideFactory(
+        validateEmail = ValidateEmail(),
+        validatePassword = ValidatePassword(),
+        loginActions = object : ILoginActions {
+            override fun navigateToSignUp() {
+                navController.navigate(SignUp)
+            }
+        }
+    )),
+    state: LoginFormState = viewModel.state
 ) {
     val context = LocalContext.current
 
