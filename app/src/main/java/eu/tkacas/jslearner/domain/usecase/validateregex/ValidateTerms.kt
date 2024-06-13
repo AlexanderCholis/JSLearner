@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.usecase
+package eu.tkacas.jslearner.domain.usecase.validateregex
 
 class ValidateTerms {
     fun execute(acceptedTerms: Boolean): ValidateResult {

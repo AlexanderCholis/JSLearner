@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.usecase
+package eu.tkacas.jslearner.domain.usecase.validateregex
 
 class ValidateLastName {
     fun execute(lastName: String): ValidateResult {
