@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.use_case
+package eu.tkacas.jslearner.domain.usecase
 
 data class ValidateResult(
     val successful: Boolean,

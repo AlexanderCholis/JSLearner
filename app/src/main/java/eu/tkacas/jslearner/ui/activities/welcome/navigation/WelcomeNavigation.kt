@@ -5,11 +5,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import eu.tkacas.jslearner.domain.use_case.ValidateEmail
-import eu.tkacas.jslearner.domain.use_case.ValidateFirstName
-import eu.tkacas.jslearner.domain.use_case.ValidateLastName
-import eu.tkacas.jslearner.domain.use_case.ValidatePassword
-import eu.tkacas.jslearner.domain.use_case.ValidateTerms
+import eu.tkacas.jslearner.domain.usecase.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.ValidateFirstName
+import eu.tkacas.jslearner.domain.usecase.ValidateLastName
+import eu.tkacas.jslearner.domain.usecase.ValidatePassword
+import eu.tkacas.jslearner.domain.usecase.ValidateTerms
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.ILoginActions
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.IPrivacyPolicyActions
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.ISignUpActions
@@ -30,7 +30,6 @@ import eu.tkacas.jslearner.ui.viewModel.TermsAndConditionsViewModel
 import eu.tkacas.jslearner.ui.viewModel.WelcomeViewModel
 import eu.tkacas.jslearner.ui.viewModel.auth.LoginViewModel
 import eu.tkacas.jslearner.ui.viewModel.auth.SignUpViewModel
-import kotlinx.serialization.Serializable
 
 @Composable
 internal fun WelcomeNavigation() {

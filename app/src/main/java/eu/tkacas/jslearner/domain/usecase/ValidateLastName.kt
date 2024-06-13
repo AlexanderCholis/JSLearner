@@ -1,14 +1,14 @@
-package eu.tkacas.jslearner.domain.use_case
+package eu.tkacas.jslearner.domain.usecase
 
-class ValidateFirstName {
-    fun execute(firstName: String): ValidateResult {
-        if(firstName.isBlank()) {
+class ValidateLastName {
+    fun execute(lastName: String): ValidateResult {
+        if(lastName.isBlank()) {
             return ValidateResult(
                 successful = false,
                 errorMessage = "The firstname can't be blank"
             )
         }
-        val allLetters = firstName.all { it.isLetter() }
+        val allLetters = lastName.all { it.isLetter() }
         if(!allLetters) {
             return ValidateResult(
                 successful = false,

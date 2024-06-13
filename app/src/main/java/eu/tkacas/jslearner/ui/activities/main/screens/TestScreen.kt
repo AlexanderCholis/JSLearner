@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.ui.activities.main.screens
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import eu.tkacas.jslearner.ui.components.test.QuestionLayout
 import eu.tkacas.jslearner.ui.components.test.TestLayout

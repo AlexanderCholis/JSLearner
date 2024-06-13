@@ -2,7 +2,7 @@ package eu.tkacas.jslearner
 
 import android.app.Application
 import eu.tkacas.jslearner.data.repositories.RoadmapRepository
-import eu.tkacas.jslearner.data.sources.RoadmapDataSource
+import eu.tkacas.jslearner.data.remote.RoadmapDataSource
 
 class JSLearner : Application() {
     lateinit var roadmapRepository: RoadmapRepository

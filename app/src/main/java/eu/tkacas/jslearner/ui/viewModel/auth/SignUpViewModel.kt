@@ -6,11 +6,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import eu.tkacas.jslearner.domain.use_case.ValidateEmail
-import eu.tkacas.jslearner.domain.use_case.ValidateFirstName
-import eu.tkacas.jslearner.domain.use_case.ValidateLastName
-import eu.tkacas.jslearner.domain.use_case.ValidatePassword
-import eu.tkacas.jslearner.domain.use_case.ValidateTerms
+import eu.tkacas.jslearner.domain.usecase.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.ValidateFirstName
+import eu.tkacas.jslearner.domain.usecase.ValidateLastName
+import eu.tkacas.jslearner.domain.usecase.ValidatePassword
+import eu.tkacas.jslearner.domain.usecase.ValidateTerms
 import eu.tkacas.jslearner.ui.activities.welcome.navigation.actions.ISignUpActions
 import eu.tkacas.jslearner.ui.events.SignUpFormEvent
 import eu.tkacas.jslearner.ui.states.SignUpFormState
