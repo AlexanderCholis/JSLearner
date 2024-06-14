@@ -25,22 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.IWelcomeActions
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
 import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.WelcomeViewModel
 
 
 @Composable
 fun WelcomeScreen(
-    navController: NavController,
-    viewModel: WelcomeViewModel = viewModel(factory = WelcomeViewModel.provideFactory(
-        welcomeActions = object : IWelcomeActions {
-            override fun navigateToLogin() {
-                navController.navigate(Login)
-            }
-        }
-    ))
+    navController: NavController
 ) {
     Surface(
         color = Color.White,
@@ -83,7 +73,7 @@ fun WelcomeScreen(
                         AuthButtonComponent(
                             value = stringResource(R.string.login),
                             onButtonClicked = {
-                                viewModel.welcomeActions.navigateToLogin()
+                                navController.navigate("login")
                             }
                         )
                     }
