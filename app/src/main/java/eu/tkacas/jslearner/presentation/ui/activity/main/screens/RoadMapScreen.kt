@@ -28,7 +28,7 @@ import eu.tkacas.jslearner.presentation.ui.component.default.RoadMapNode
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun RoadMapScreen() {
-    val roadmapRepository = (LocalContext.current.applicationContext as JSLearner).roadmapRepository
+    /*val roadmapRepository = (LocalContext.current.applicationContext as JSLearner).roadmapRepository
     val viewModel: RoadMapViewModel = viewModel(factory = RoadMapViewModel.provideFactory(roadmapRepository))
     val uiState by viewModel.uiState.collectAsState()
 
@@ -100,5 +100,5 @@ internal fun RoadMapScreen() {
                 }
             }
         }
-    }
+    }*/
 }
