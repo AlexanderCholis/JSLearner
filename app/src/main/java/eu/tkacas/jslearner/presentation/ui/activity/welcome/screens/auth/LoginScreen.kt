@@ -20,13 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ILoginActions
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.SignUp
 import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
@@ -41,16 +36,7 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: LoginViewModel = viewModel(factory =
-    LoginViewModel.provideFactory(
-        validateEmail = ValidateEmail(),
-        validatePassword = ValidatePassword(),
-        loginActions = object : ILoginActions {
-            override fun navigateToSignUp() {
-                navController.navigate(SignUp)
-            }
-        }
-    )),
+    viewModel: LoginViewModel,
     state: LoginFormState = viewModel.state
 ) {
     val context = LocalContext.current
@@ -124,7 +110,7 @@ fun LoginScreen(
                     alreadyHaveAnAccount = false,
                     onTextSelected = {
                         if (it == "Register") {
-                            viewModel.loginActions.navigateToSignUp()
+                            navController.navigate("signUp")
                         }
                     }
                 )
