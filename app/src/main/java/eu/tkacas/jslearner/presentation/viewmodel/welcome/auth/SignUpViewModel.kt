@@ -3,26 +3,24 @@ package eu.tkacas.jslearner.presentation.viewmodel.welcome.auth
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateFirstName
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateLastName
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateTerms
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ISignUpActions
 import eu.tkacas.jslearner.presentation.ui.events.SignUpFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.SignUpFormState
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val validateFirstName: ValidateFirstName = ValidateFirstName(),
-    private val validateLastName: ValidateLastName = ValidateLastName(),
-    private val validateEmail: ValidateEmail = ValidateEmail(),
-    private val validatePassword: ValidatePassword = ValidatePassword(),
-    private val validateTerms: ValidateTerms = ValidateTerms(),
-    val signUpActions: ISignUpActions
+    private val authRepository: AuthRepository,
+    private val validateFirstName: ValidateFirstName,
+    private val validateLastName: ValidateLastName,
+    private val validateEmail: ValidateEmail,
+    private val validatePassword: ValidatePassword,
+    private val validateTerms: ValidateTerms
 ): BaseAuthViewModel() {
     var state by mutableStateOf(SignUpFormState())
 
@@ -76,27 +74,6 @@ class SignUpViewModel(
         }
         viewModelScope.launch {
             validationEventChannel.send(ValidationEvent.Success)
-        }
-    }
-
-    companion object {
-        fun provideFactory(
-            validateFirstName: ValidateFirstName,
-            validateLastName: ValidateLastName,
-            validateEmail: ValidateEmail,
-            validatePassword: ValidatePassword,
-            validateTerms: ValidateTerms,
-            signUpActions: ISignUpActions
-        ): ViewModelProvider.Factory {
-            return object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
-                        @Suppress("UNCHECKED_CAST")
-                        return SignUpViewModel(validateFirstName, validateLastName, validateEmail, validatePassword, validateTerms, signUpActions) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class")
-                }
-            }
         }
     }
 }

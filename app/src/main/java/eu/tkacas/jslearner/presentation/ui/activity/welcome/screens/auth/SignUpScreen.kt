@@ -20,18 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateFirstName
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateLastName
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateTerms
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ISignUpActions
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.PrivacyPolicy
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.TermsAndConditions
 import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
@@ -47,26 +37,7 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 @Composable
 fun SignUpScreen(
     navController: NavController,
-    viewModel: SignUpViewModel = viewModel(factory = SignUpViewModel.provideFactory(
-        validateFirstName = ValidateFirstName(),
-        validateLastName = ValidateLastName(),
-        validateEmail = ValidateEmail(),
-        validatePassword = ValidatePassword(),
-        validateTerms = ValidateTerms(),
-        signUpActions = object : ISignUpActions {
-            override fun navigateToLogin() {
-                navController.navigate(Login)
-            }
-
-            override fun navigateToTerms() {
-                navController.navigate(TermsAndConditions)
-            }
-
-            override fun navigateToPrivacy() {
-                navController.navigate(PrivacyPolicy)
-            }
-        }
-    )),
+    viewModel: SignUpViewModel,
     state: SignUpFormState = viewModel.state
 ) {
     val context = LocalContext.current
@@ -140,9 +111,9 @@ fun SignUpScreen(
                 onCheckedChange = { viewModel.onEvent(SignUpFormEvent.AcceptTerms(it)) },
                 onTextSelected = {
                     if (it == "Privacy Policy") {
-                        viewModel.signUpActions.navigateToPrivacy()
+                        navController.navigate("privacyPolicy")
                     } else if (it == "Terms of Use.") {
-                        viewModel.signUpActions.navigateToTerms()
+                        navController.navigate("termsAndConditions")
                     }
                 },
                 errorMessageValue = state.termsError ?: "",
@@ -172,7 +143,7 @@ fun SignUpScreen(
                     alreadyHaveAnAccount = true,
                     onTextSelected = {
                         if (it == "Login") {
-                            viewModel.signUpActions.navigateToLogin()
+                            navController.navigate("login")
                         }
                     }
                 )
