@@ -4,4 +4,6 @@ import androidx.navigation.NavController
 
 interface ILoginActions {
     fun navigateToSignUp(navController: NavController)
+    fun navigateToSignUp() // TODO("TO BE DELETED")
+
 }

@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import eu.tkacas.jslearner.domain.usecase.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.ValidatePassword
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ILoginActions
 import eu.tkacas.jslearner.presentation.ui.events.LoginFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.LoginFormState

@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.usecase.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.ValidatePassword
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ILoginActions
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.SignUp
 import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
@@ -46,8 +46,12 @@ fun LoginScreen(
         validateEmail = ValidateEmail(),
         validatePassword = ValidatePassword(),
         loginActions = object : ILoginActions {
+            override fun navigateToSignUp(navController: NavController) {
+                TODO("Not yet implemented")
+            }
+
             override fun navigateToSignUp() {
-                navController.navigate(SignUp)
+                TODO("Not yet implemented")
             }
         }
     )),
@@ -65,6 +69,8 @@ fun LoginScreen(
                         Toast.LENGTH_LONG
                     ).show()
                 }
+
+                BaseAuthViewModel.ValidationEvent.Error -> TODO()
             }
         }
     }
