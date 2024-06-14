@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 abstract class BaseAuthViewModel: ViewModel() {
     sealed class ValidationEvent {
         object Success: ValidationEvent()
+        object Error: ValidationEvent()
     }
 
     protected val validationEventChannel = Channel<ValidationEvent>()
