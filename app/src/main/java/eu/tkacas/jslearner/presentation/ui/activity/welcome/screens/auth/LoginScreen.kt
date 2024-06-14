@@ -46,12 +46,8 @@ fun LoginScreen(
         validateEmail = ValidateEmail(),
         validatePassword = ValidatePassword(),
         loginActions = object : ILoginActions {
-            override fun navigateToSignUp(navController: NavController) {
-                TODO("Not yet implemented")
-            }
-
             override fun navigateToSignUp() {
-                TODO("Not yet implemented")
+                navController.navigate(SignUp)
             }
         }
     )),
