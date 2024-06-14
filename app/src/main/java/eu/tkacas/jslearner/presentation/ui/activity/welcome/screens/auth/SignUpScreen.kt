@@ -23,11 +23,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.usecase.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.ValidateFirstName
-import eu.tkacas.jslearner.domain.usecase.ValidateLastName
-import eu.tkacas.jslearner.domain.usecase.ValidatePassword
-import eu.tkacas.jslearner.domain.usecase.ValidateTerms
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateFirstName
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateLastName
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateTerms
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ISignUpActions
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.PrivacyPolicy
@@ -81,6 +81,7 @@ fun SignUpScreen(
                         Toast.LENGTH_LONG
                     ).show()
                 }
+                is BaseAuthViewModel.ValidationEvent.Error -> TODO()
             }
         }
     }
