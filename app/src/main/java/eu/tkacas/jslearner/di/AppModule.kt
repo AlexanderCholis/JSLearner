@@ -18,5 +18,4 @@ interface AppModule {
     val validateEmail: ValidateEmail
     val validatePassword: ValidatePassword
     val validateTerms: ValidateTerms
-
 }

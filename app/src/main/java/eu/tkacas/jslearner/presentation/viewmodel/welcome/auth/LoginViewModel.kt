@@ -3,6 +3,7 @@ package eu.tkacas.jslearner.presentation.viewmodel.welcome.auth
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
@@ -15,7 +16,7 @@ class LoginViewModel(
     private val authRepository: AuthRepository,
     private val validateEmail: ValidateEmail,
     private val validatePassword: ValidatePassword
-): BaseAuthViewModel()  {
+): ViewModel()  {
     var state by mutableStateOf(LoginFormState())
 
     fun onEvent(event: LoginFormEvent) {
@@ -49,7 +50,7 @@ class LoginViewModel(
             return
         }
         viewModelScope.launch {
-            validationEventChannel.send(ValidationEvent.Success)
+
         }
     }
 }
