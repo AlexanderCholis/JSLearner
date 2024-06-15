@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -31,8 +32,8 @@ import eu.tkacas.jslearner.presentation.ui.component.PasswordTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.TermsCheckboxComponent
 import eu.tkacas.jslearner.presentation.ui.events.SignUpFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.SignUpFormState
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.BaseAuthViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
+import eu.tkacas.jslearner.domain.Result
 
 @Composable
 fun SignUpScreen(
@@ -42,17 +43,27 @@ fun SignUpScreen(
 ) {
     val context = LocalContext.current
 
-    LaunchedEffect(key1 = context) {
-        viewModel.validationEvents.collect { event ->
-            when(event) {
-                is BaseAuthViewModel.ValidationEvent.Success -> {
-                    Toast.makeText(
-                        context,
-                        "Registration successful",
-                        Toast.LENGTH_LONG
-                    ).show()
+    val authResult = viewModel?.signupFlow?.collectAsState()
+
+    LaunchedEffect(viewModel) {
+        viewModel?.signupFlow?.collect {
+            when (it) {
+                is Result.Error -> {
+                    Toast.makeText(context, it.exception.message.toString(), Toast.LENGTH_SHORT).show()
                 }
-                is BaseAuthViewModel.ValidationEvent.Error -> TODO()
+                is Result.Loading -> {
+                    Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Success<*> -> {
+                    /*LaunchedEffect(Unit) {
+                        navController.navigate(ROUTE_HOME) {
+                            popUpTo(ROUTE_SIGNUP) { inclusive = true }
+                        }
+                    }*/
+                    Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
+                }
+
+                null -> {}
             }
         }
     }
