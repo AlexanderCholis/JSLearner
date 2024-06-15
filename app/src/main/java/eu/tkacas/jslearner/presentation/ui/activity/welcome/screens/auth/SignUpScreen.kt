@@ -52,15 +52,11 @@ fun SignUpScreen(
                     Toast.makeText(context, it.exception.message.toString(), Toast.LENGTH_SHORT).show()
                 }
                 is Result.Loading -> {
-                    Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
                 }
                 is Result.Success<*> -> {
-                    /*LaunchedEffect(Unit) {
-                        navController.navigate(ROUTE_HOME) {
-                            popUpTo(ROUTE_SIGNUP) { inclusive = true }
-                        }
-                    }*/
                     Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
+
                 }
 
                 null -> {}
