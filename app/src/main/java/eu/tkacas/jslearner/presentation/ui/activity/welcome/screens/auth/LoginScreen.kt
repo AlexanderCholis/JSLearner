@@ -49,13 +49,11 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
 
-    val errorMessage = remember { mutableStateOf("") }
-
     LaunchedEffect(viewModel) {
-        viewModel?.loginFlow?.collect {
+        viewModel.loginFlow.collect {
             when (it) {
                 is Result.Error -> {
-                    errorMessage.value = it.exception.message.toString()
+
                 }
                 is Result.Loading -> {
                     //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
@@ -104,7 +102,7 @@ fun LoginScreen(
 
 
             Text(
-                text = errorMessage.value,
+                text = state.errorMessage ?: "",
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colorScheme.error

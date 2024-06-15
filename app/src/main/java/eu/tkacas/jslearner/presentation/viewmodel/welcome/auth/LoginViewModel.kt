@@ -72,6 +72,9 @@ class LoginViewModel(
     private fun loginUser(email: String, password: String) = viewModelScope.launch {
         _loginFlow.value = Result.Loading
         val result = authRepository.login(email, password)
+        if (result is Result.Error) {
+            _state = _state.copy(errorMessage = result.exception.message)
+        }
         _loginFlow.value = result
     }
 }
