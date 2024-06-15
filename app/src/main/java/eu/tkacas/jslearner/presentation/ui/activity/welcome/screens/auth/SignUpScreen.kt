@@ -48,13 +48,11 @@ fun SignUpScreen(
 ) {
     val context = LocalContext.current
 
-    val errorMessage = remember { mutableStateOf("") }
-
     LaunchedEffect(viewModel) {
-        viewModel?.signupFlow?.collect {
+        viewModel.signupFlow.collect {
             when (it) {
                 is Result.Error -> {
-                    errorMessage.value = it.exception.message.toString()
+                    // Toast.makeText(context, it.errorMessage, Toast.LENGTH_LONG).show()
                 }
                 is Result.Loading -> {
                     //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
@@ -134,7 +132,7 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = errorMessage.value,
+                text = state.errorMessage ?: "",
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colorScheme.error

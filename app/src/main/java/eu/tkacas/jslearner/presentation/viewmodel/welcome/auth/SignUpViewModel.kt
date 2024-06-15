@@ -87,6 +87,9 @@ class SignUpViewModel(
     private fun signupUser(firstName: String, lastName: String, email: String, password: String) = viewModelScope.launch {
         _signupFlow.value = Result.Loading
         val result = authRepository.signup(firstName, lastName, email, password)
+        if (result is Result.Error) {
+            _state = _state.copy(errorMessage = result.exception.message)
+        }
         _signupFlow.value = result
     }
 }
