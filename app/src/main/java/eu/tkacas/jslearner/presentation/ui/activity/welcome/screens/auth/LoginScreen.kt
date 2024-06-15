@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -30,8 +31,8 @@ import eu.tkacas.jslearner.presentation.ui.component.HaveAnAccountOrNotClickable
 import eu.tkacas.jslearner.presentation.ui.component.PasswordTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.events.LoginFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.LoginFormState
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.BaseAuthViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
+import eu.tkacas.jslearner.domain.Result
 
 @Composable
 fun LoginScreen(
@@ -41,18 +42,27 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
 
-    LaunchedEffect(key1 = context) {
-        viewModel.validationEvents.collect { event ->
-            when(event) {
-                is BaseAuthViewModel.ValidationEvent.Success -> {
-                    Toast.makeText(
-                        context,
-                        "Login successful",
-                        Toast.LENGTH_LONG
-                    ).show()
+    val authResult = viewModel?.loginFlow?.collectAsState()
+
+    LaunchedEffect(viewModel) {
+        viewModel?.loginFlow?.collect {
+            when (it) {
+                is Result.Error -> {
+                    Toast.makeText(context, it.exception.message.toString(), Toast.LENGTH_SHORT).show()
+                }
+                is Result.Loading -> {
+                    //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Success<*> -> {
+                    /*LaunchedEffect(Unit) {
+                        navController.navigate(ROUTE_HOME) {
+                            popUpTo(ROUTE_SIGNUP) { inclusive = true }
+                        }
+                    }*/
+                    Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show()
                 }
 
-                BaseAuthViewModel.ValidationEvent.Error -> TODO()
+                null -> {}
             }
         }
     }
