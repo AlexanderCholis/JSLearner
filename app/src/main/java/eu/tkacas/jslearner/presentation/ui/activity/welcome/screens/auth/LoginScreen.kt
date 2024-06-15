@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.auth
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,16 +11,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
@@ -42,24 +49,20 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
 
-    val authResult = viewModel?.loginFlow?.collectAsState()
+    val errorMessage = remember { mutableStateOf("") }
 
     LaunchedEffect(viewModel) {
         viewModel?.loginFlow?.collect {
             when (it) {
                 is Result.Error -> {
-                    Toast.makeText(context, it.exception.message.toString(), Toast.LENGTH_SHORT).show()
+                    errorMessage.value = it.exception.message.toString()
                 }
                 is Result.Loading -> {
                     //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
                 }
                 is Result.Success<*> -> {
-                    /*LaunchedEffect(Unit) {
-                        navController.navigate(ROUTE_HOME) {
-                            popUpTo(ROUTE_SIGNUP) { inclusive = true }
-                        }
-                    }*/
                     Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show()
+                    //navController.navigate("home")
                 }
 
                 null -> {}
@@ -95,6 +98,16 @@ fun LoginScreen(
                 labelValue = stringResource(id = R.string.password),
                 supportedTextValue = state.passwordError ?: "",
                 errorStatus = state.passwordError != null
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+
+            Text(
+                text = errorMessage.value,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.error
             )
 
             Column(
