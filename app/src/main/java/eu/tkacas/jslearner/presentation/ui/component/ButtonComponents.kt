@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 
 @Composable
-fun AuthButtonComponent(
+fun GeneralButtonComponent(
     value: String,
     onButtonClicked: () -> Unit
 ) {
@@ -38,7 +38,7 @@ fun AuthButtonComponent(
                 ),
             contentAlignment = Alignment.Center
         ) {
-            AuthButtonTextComponent(value = value)
+            GeneralButtonTextComponent(value = value)
         }
     }
 }

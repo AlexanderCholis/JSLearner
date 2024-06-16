@@ -14,7 +14,7 @@
     <string name="your_path">Your path</string>
     <string name="your_path_description">Follow this path to learn more!</string>
     <string name="welcome_text">Welcome to JSLearner!\n\n\nUnlock the power of JavaScript with our comprehensive learning platform. Dive into interactive lessons, challenging quizzes, and track your progress with our leaderboard feature. Whether you\'re a beginner or looking to brush up your skills, JSLearner is your go-to destination for mastering JavaScript. Get ready to embark on an exciting learning journey and become a JavaScript pro!</string>
-    <string name="creators">Created by @thkox, @ApostolisSiampanis, @Alexander Cholis</string>
+    <string name="creators">Created by @thkox, @ApostolisSiampanis, @AlexanderCholis</string>
     <string name="create_an_account">Create an Account</string>
     <string name="first_name">First Name</string>
     <string name="first_name_hint">Enter your first name</string>+
@@ -40,5 +40,14 @@
     <string name="go_back">Go Back</string>
     <string name="terms_and_conditions_header">Terms of Use</string>
     <string name="privacy_policy_header">Privacy Policy</string>
+    <string name="terms_of_use_intro">These Terms and Conditions govern your use of the JSLearner mobile application provided by TKACAS ("we," "us," or "our"). By downloading, installing, or using the App, you agree to comply with and be bound by these Terms and Conditions.</string>
+    <string name="terms_of_use_license">\n 1. License:\n We grant you a limited, non-exclusive, non-transferable, revocable license to use the App for your personal, non-commercial purposes. You may not sublicense, sell, or distribute the App.</string>
+    <string name="terms_of_use_conduct">\n 2. User Conduct:\n You agree to use the App in compliance with all applicable laws and regulations. You further agree not to:\n• Use the App for any unlawful purpose.\n• Interfere with or disrupt the operation of the App.\n• Attempt to gain unauthorized access to any part of the App.\n• Transmit any viruses, worms, or other harmful code through the App.\n• Use the App to infringe upon the rights of others.</string>
+    <string name="terms_of_use_ip">\n 3. Intellectual Property:\n All intellectual property rights in the App, including but not limited to copyrights, trademarks, and trade secrets, belong to us or our licensors. You may not copy, modify, or distribute any part of the App without our prior written consent.</string>
+    <string name="terms_of_use_liability">\n 4. Limitation of Liability:\n To the fullest extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or relating to your use of the App.</string>
+    <string name="terms_of_use_modifications">\n 5. Modifications:\n We reserve the right to modify or discontinue the App at any time without prior notice. We may also update these Terms and Conditions from time to time. Your continued use of the App after any such changes constitutes acceptance of the updated Terms and Conditions.</string>
+    <string name="terms_of_use_governing_law">\n 6. Governing Law:\n These Terms and Conditions shall be governed by and construed in accordance with the laws of Greece, without regard to its conflict of law principles.</string>
+    <string name="terms_of_use_contact_us">\n 7. Contact Us:\n If you have any questions or concerns about these Terms and Conditions, please contact us at info@jslearner.gr.</string>
+    <string name="terms_of_use_acknowledgement">\n By using the App, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.</string>
     <string name="an_error_occurred_please_try_again">An error occurred. Please try again.</string>
 </resources>

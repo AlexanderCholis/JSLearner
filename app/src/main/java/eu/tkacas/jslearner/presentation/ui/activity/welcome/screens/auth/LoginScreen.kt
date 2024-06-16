@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,6 +31,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.usecase.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.ValidatePassword
+import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ILoginActions
+import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.SignUp
+import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
@@ -75,67 +81,76 @@ fun LoginScreen(
             .background(Color.White)
             .padding(start = 28.dp, end = 28.dp, top = 60.dp, bottom = 28.dp)
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            AuthHeadingTextComponent(value = stringResource(id = R.string.welcome_to_jslearner_app))
-            AuthTextFieldComponent(
-                value = state.email,
-                onValueChange = { viewModel.onEvent(LoginFormEvent.EmailChanged(it)) },
-                labelValue = stringResource(id = R.string.email),
-                painterResource = painterResource(id = R.drawable.email),
-                contentDescription = stringResource(id = R.string.email_hint),
-                keyboardType = KeyboardType.Email,
-                supportedTextValue = state.emailError ?: "",
-                errorStatus = state.emailError != null
-            )
-            PasswordTextFieldComponent(
-                value = state.password,
-                onValueChange = { viewModel.onEvent(LoginFormEvent.PasswordChanged(it)) },
-                labelValue = stringResource(id = R.string.password),
-                supportedTextValue = state.passwordError ?: "",
-                errorStatus = state.passwordError != null
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-
-            Text(
-                text = state.errorMessage ?: "",
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.error
-            )
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom
-            ) {
+            item {
+                AuthHeadingTextComponent(value = stringResource(id = R.string.welcome_to_jslearner_app))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    AuthButtonComponent(
-                        value = stringResource(R.string.login),
-                        onButtonClicked = {
-                            viewModel.onEvent(LoginFormEvent.Submit)
-                        }
+                    AuthTextFieldComponent(
+                        value = state.email,
+                        onValueChange = { viewModel.onEvent(LoginFormEvent.EmailChanged(it)) },
+                        labelValue = stringResource(id = R.string.email),
+                        painterResource = painterResource(id = R.drawable.email),
+                        contentDescription = stringResource(id = R.string.email_hint),
+                        keyboardType = KeyboardType.Email,
+                        supportedTextValue = state.emailError ?: "",
+                        errorStatus = state.emailError != null
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    PasswordTextFieldComponent(
+                        value = state.password,
+                        onValueChange = { viewModel.onEvent(LoginFormEvent.PasswordChanged(it)) },
+                        labelValue = stringResource(id = R.string.password),
+                        supportedTextValue = state.passwordError ?: "",
+                        errorStatus = state.passwordError != null
                     )
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                DividerTextComponent()
-                HaveAnAccountOrNotClickableTextComponent(
-                    alreadyHaveAnAccount = false,
-                    onTextSelected = {
-                        if (it == "Register") {
-                            navController.navigate("signUp")
-                        }
+                            Text(
+                text = state.errorMessage ?: "",
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.error
+            )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        GeneralButtonComponent(
+                            value = stringResource(R.string.login),
+                            onButtonClicked = {
+                                viewModel.onEvent(LoginFormEvent.Submit)
+                            }
+                        )
                     }
-                )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    DividerTextComponent()
+                    HaveAnAccountOrNotClickableTextComponent(
+                        alreadyHaveAnAccount = false,
+                        onTextSelected = {
+                            if (it == "Register") {
+                                viewModel.loginActions.navigateToSignUp()
+                            }
+                        }
+                    )
+                }
             }
         }
     }
-}

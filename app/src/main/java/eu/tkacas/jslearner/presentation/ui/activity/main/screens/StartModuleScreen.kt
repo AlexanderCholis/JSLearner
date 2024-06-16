@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
+import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.BulletText
 import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
@@ -103,7 +103,7 @@ fun StartModuleScreen() {
                         verticalArrangement = Arrangement.Bottom,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        AuthButtonComponent(
+                        GeneralButtonComponent(
                             value = "Start Module",
                             onButtonClicked = { }
                         )

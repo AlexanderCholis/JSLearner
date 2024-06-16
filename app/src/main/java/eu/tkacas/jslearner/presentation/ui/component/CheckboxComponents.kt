@@ -32,7 +32,8 @@ fun TermsCheckboxComponent(
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(56.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             Checkbox(
                 checked = checkedValue,

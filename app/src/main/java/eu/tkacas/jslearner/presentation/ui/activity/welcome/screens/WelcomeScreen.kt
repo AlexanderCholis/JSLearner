@@ -25,8 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.IWelcomeActions
+import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
+import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.WelcomeViewModel
 import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
-
 
 @Composable
 fun WelcomeScreen(
@@ -70,7 +73,7 @@ fun WelcomeScreen(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        AuthButtonComponent(
+                        GeneralButtonComponent(
                             value = stringResource(R.string.login),
                             onButtonClicked = {
                                 navController.navigate("login")
