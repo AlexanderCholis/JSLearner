@@ -3,7 +3,7 @@ package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 import androidx.compose.runtime.Composable
 import eu.tkacas.jslearner.presentation.ui.component.test.QuestionLayout
 import eu.tkacas.jslearner.presentation.ui.component.test.TestLayout
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.TestViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.TestViewModel
 
 @Composable
 fun TestScreen(
