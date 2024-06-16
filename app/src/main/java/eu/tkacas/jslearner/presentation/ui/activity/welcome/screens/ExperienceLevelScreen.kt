@@ -15,13 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevel
-import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevelUiItem
 import eu.tkacas.jslearner.presentation.ui.component.ExperienceLevelCard
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewModel
 
@@ -58,7 +55,7 @@ fun ExperienceLevelScreen(
                     image = item.image,
                     text = item.text,
                     onClick = {
-                        // TODO navigate to correct screen based on the selected experience level
+                        navController.navigate("experienceText/${item.level}")
                     }
                 )
             }

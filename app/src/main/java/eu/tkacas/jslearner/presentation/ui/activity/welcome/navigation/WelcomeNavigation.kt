@@ -6,6 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.ExperienceLevelScreen
+import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.ExperienceTextScreen
+import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.LearningReasonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.PrivacyPolicyScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.TermsAndConditionsScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.WelcomeScreen
@@ -36,11 +38,15 @@ internal fun WelcomeNavigation(
         composable("termsAndConditions") { TermsAndConditionsScreen(navController = navController) }
         composable("privacyPolicy") { PrivacyPolicyScreen(navController = navController) }
         composable("experienceLevel") { ExperienceLevelScreen(navController = navController, viewModel = experienceLevelViewModel) }
+        composable("experienceText/{experienceLevel}") { backStackEntry ->
+            val experienceLevel = backStackEntry.arguments?.getString("experienceLevel")
+            ExperienceTextScreen(navController = navController, experienceLevel = experienceLevel!!)
+        }
+        composable("learningReason") { LearningReasonScreen(navController = navController) }
     }
 }
 
 fun determineStartDestination(authRepository: AuthRepository): String {
-
-
+    // TODO: Implement logic to determine the start destination
     return if (authRepository.currentUser != null) "experienceLevel" else "welcome"
 }
