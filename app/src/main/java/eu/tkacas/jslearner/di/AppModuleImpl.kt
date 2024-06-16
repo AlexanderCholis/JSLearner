@@ -2,6 +2,7 @@ package eu.tkacas.jslearner.di
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.jslearner.data.repository.AuthRepositoryImpl
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
@@ -17,8 +18,12 @@ class AppModuleImpl(
         return FirebaseAuth.getInstance()
     }
 
+    override fun getFirebaseDatabase(): FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
+    }
+
     override val authRepository: AuthRepository by lazy {
-        AuthRepositoryImpl(getFirebaseAuth())
+        AuthRepositoryImpl(getFirebaseAuth(), getFirebaseDatabase())
     }
 
     override val validateFirstName: ValidateFirstName by lazy {

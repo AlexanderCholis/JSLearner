@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateFirstName
@@ -10,6 +11,7 @@ import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateTerms
 
 interface AppModule {
     fun getFirebaseAuth(): FirebaseAuth
+    fun getFirebaseDatabase(): FirebaseDatabase
 
     val authRepository: AuthRepository
 
