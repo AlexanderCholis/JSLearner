@@ -22,7 +22,6 @@ fun ProgressIndicatorComponent(){
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
-            .fillMaxWidth()
             .padding(20.dp)
     ){
         CircularProgressIndicator(
