@@ -11,28 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.IPrivacyPolicyActions
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.SignUp
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.PrivacyPolicyViewModel
 
 @Composable
 fun PrivacyPolicyScreen(
-    navController: NavController,
-    viewModel: PrivacyPolicyViewModel = viewModel(factory = PrivacyPolicyViewModel.provideFactory(
-        privacyPolicyActions = object : IPrivacyPolicyActions {
-            override fun navigateToSignUp() {
-                navController.navigate(SignUp)
-            }
-
-            override fun navigateGoBack() {
-                navController.navigateUp()
-            }
-        }
-    ))
+    navController: NavController
 ) {
     Scaffold(
         modifier = Modifier
@@ -41,7 +26,7 @@ fun PrivacyPolicyScreen(
             BackAppTopBar(
                 title = stringResource(id = R.string.privacy_policy_header),
                 onBackClick = {
-                    viewModel.privacyPolicyActions.navigateGoBack()
+                    navController.navigateUp()
                 }
             )
         },

@@ -10,28 +10,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.usecase.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.ValidateFirstName
-import eu.tkacas.jslearner.domain.usecase.ValidateLastName
-import eu.tkacas.jslearner.domain.usecase.ValidatePassword
-import eu.tkacas.jslearner.domain.usecase.ValidateTerms
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ISignUpActions
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.PrivacyPolicy
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.TermsAndConditions
 import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
@@ -41,46 +37,31 @@ import eu.tkacas.jslearner.presentation.ui.component.PasswordTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.TermsCheckboxComponent
 import eu.tkacas.jslearner.presentation.ui.events.SignUpFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.SignUpFormState
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.BaseAuthViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
+import eu.tkacas.jslearner.domain.Result
 
 @Composable
 fun SignUpScreen(
     navController: NavController,
-    viewModel: SignUpViewModel = viewModel(factory = SignUpViewModel.provideFactory(
-        validateFirstName = ValidateFirstName(),
-        validateLastName = ValidateLastName(),
-        validateEmail = ValidateEmail(),
-        validatePassword = ValidatePassword(),
-        validateTerms = ValidateTerms(),
-        signUpActions = object : ISignUpActions {
-            override fun navigateToLogin() {
-                navController.navigate(Login)
-            }
-
-            override fun navigateToTerms() {
-                navController.navigate(TermsAndConditions)
-            }
-
-            override fun navigateToPrivacy() {
-                navController.navigate(PrivacyPolicy)
-            }
-        }
-    )),
+    viewModel: SignUpViewModel,
     state: SignUpFormState = viewModel.state
 ) {
     val context = LocalContext.current
 
-    LaunchedEffect(key1 = context) {
-        viewModel.validationEvents.collect { event ->
-            when(event) {
-                is BaseAuthViewModel.ValidationEvent.Success -> {
-                    Toast.makeText(
-                        context,
-                        "Registration successful",
-                        Toast.LENGTH_LONG
-                    ).show()
+    LaunchedEffect(viewModel) {
+        viewModel.signupFlow.collect {
+            when (it) {
+                is Result.Error -> {
+                    // Toast.makeText(context, it.errorMessage, Toast.LENGTH_LONG).show()
                 }
+                is Result.Loading -> {
+                    //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Success<*> -> {
+                    Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
+                }
+
+                null -> {}
             }
         }
     }
@@ -139,13 +120,22 @@ fun SignUpScreen(
                 onCheckedChange = { viewModel.onEvent(SignUpFormEvent.AcceptTerms(it)) },
                 onTextSelected = {
                     if (it == "Privacy Policy") {
-                        viewModel.signUpActions.navigateToPrivacy()
+                        navController.navigate("privacyPolicy")
                     } else if (it == "Terms of Use.") {
-                        viewModel.signUpActions.navigateToTerms()
+                        navController.navigate("termsAndConditions")
                     }
                 },
                 errorMessageValue = state.termsError ?: "",
                 errorStatus = state.termsError != null
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = state.errorMessage ?: "",
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.error
             )
 
             Column(
@@ -171,7 +161,7 @@ fun SignUpScreen(
                     alreadyHaveAnAccount = true,
                     onTextSelected = {
                         if (it == "Login") {
-                            viewModel.signUpActions.navigateToLogin()
+                            navController.navigate("login")
                         }
                     }
                 )

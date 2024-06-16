@@ -4,28 +4,29 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.PrivacyPolicy
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.SignUp
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.TermsAndConditions
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Welcome
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.PrivacyPolicyScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.TermsAndConditionsScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.WelcomeScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.auth.LoginScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.auth.SignUpScreen
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
+
 
 @Composable
-internal fun WelcomeNavigation() {
+internal fun WelcomeNavigation(
+    loginViewModel: LoginViewModel,
+    signUpViewModel: SignUpViewModel
+){
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Welcome
+        startDestination = "welcome"
     ) {
-        composable<Welcome> { WelcomeScreen(navController = navController) }
-        composable<Login> { LoginScreen(navController = navController) }
-        composable<SignUp> { SignUpScreen(navController = navController) }
-        composable<TermsAndConditions> { TermsAndConditionsScreen(navController = navController) }
-        composable<PrivacyPolicy> { PrivacyPolicyScreen(navController = navController) }
+        composable("welcome") { WelcomeScreen(navController = navController) }
+        composable("login") { LoginScreen(navController = navController,viewModel = loginViewModel) }
+        composable("signUp") { SignUpScreen(navController = navController, viewModel = signUpViewModel) }
+        composable("termsAndConditions") { TermsAndConditionsScreen(navController = navController) }
+        composable("privacyPolicy") { PrivacyPolicyScreen(navController = navController) }
     }
 }
