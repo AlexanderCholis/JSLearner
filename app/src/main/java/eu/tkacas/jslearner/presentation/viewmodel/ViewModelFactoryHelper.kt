@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.presentation.viewmodel.welcome
+package eu.tkacas.jslearner.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
