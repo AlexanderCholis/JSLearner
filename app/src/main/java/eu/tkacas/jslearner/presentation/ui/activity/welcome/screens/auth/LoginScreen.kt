@@ -58,7 +58,7 @@ fun LoginScreen(
 
                 is Result.Success<*> -> {
                     Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show()
-                    //navController.navigate("home")
+                    navController.navigate("experienceLevel")
                 }
 
                 null -> {}
