@@ -49,6 +49,7 @@ class WelcomeActivity : ComponentActivity() {
                     val experienceLevelViewModel = viewModel<ExperienceLevelViewModel>()
 
                     WelcomeNavigation(
+                        authRepository = JSLearner.appModule.authRepository,
                         loginViewModel = loginViewModel,
                         signUpViewModel = signUpViewModel,
                         experienceLevelViewModel = experienceLevelViewModel

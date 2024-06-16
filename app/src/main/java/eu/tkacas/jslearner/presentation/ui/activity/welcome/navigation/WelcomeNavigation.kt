@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.ExperienceLevelScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.PrivacyPolicyScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.TermsAndConditionsScreen
@@ -17,14 +18,17 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 
 @Composable
 internal fun WelcomeNavigation(
+    authRepository: AuthRepository,
     loginViewModel: LoginViewModel,
     signUpViewModel: SignUpViewModel,
     experienceLevelViewModel: ExperienceLevelViewModel
 ){
     val navController = rememberNavController()
+    val startDestination = determineStartDestination(authRepository)
+
     NavHost(
         navController = navController,
-        startDestination = "welcome"
+        startDestination = startDestination
     ) {
         composable("welcome") { WelcomeScreen(navController = navController) }
         composable("login") { LoginScreen(navController = navController,viewModel = loginViewModel) }
@@ -33,4 +37,10 @@ internal fun WelcomeNavigation(
         composable("privacyPolicy") { PrivacyPolicyScreen(navController = navController) }
         composable("experienceLevel") { ExperienceLevelScreen(navController = navController, viewModel = experienceLevelViewModel) }
     }
+}
+
+fun determineStartDestination(authRepository: AuthRepository): String {
+
+
+    return if (authRepository.currentUser != null) "experienceLevel" else "welcome"
 }
