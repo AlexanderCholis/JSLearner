@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevelItem
-import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevelUiItem
+import eu.tkacas.jslearner.presentation.model.ExperienceLevelUiItem
 
 class ExperienceLevelViewModel: ViewModel() {
     private val levels = listOf(
