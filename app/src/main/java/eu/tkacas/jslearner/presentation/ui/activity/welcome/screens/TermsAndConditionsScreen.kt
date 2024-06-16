@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
+import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
 fun TermsAndConditionsScreen(
@@ -28,6 +28,7 @@ fun TermsAndConditionsScreen(
         topBar = {
             BackAppTopBar(
                 title = stringResource(id = R.string.terms_and_conditions_header),
+                color = SkyBlue,
                 onBackClick = {
                     navController.navigateUp()
                 }

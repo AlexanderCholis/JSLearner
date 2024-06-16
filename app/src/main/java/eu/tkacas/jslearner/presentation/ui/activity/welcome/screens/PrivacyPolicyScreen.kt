@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
+import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
 fun PrivacyPolicyScreen(
@@ -25,6 +26,7 @@ fun PrivacyPolicyScreen(
         topBar = {
             BackAppTopBar(
                 title = stringResource(id = R.string.privacy_policy_header),
+                color = SkyBlue,
                 onBackClick = {
                     navController.navigateUp()
                 }
