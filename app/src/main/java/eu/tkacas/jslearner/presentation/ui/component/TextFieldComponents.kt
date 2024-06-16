@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -35,9 +37,12 @@ fun AuthTextFieldComponent(
     supportedTextValue: String,
     errorStatus: Boolean = false
 ) {
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
     OutlinedTextField(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(if (isLandscape) 0.3f else 1f) // custom weights depending on the orientation
             .clip(componentShapes.small),
         label = { Text(text = labelValue) },
         singleLine = true,
@@ -59,6 +64,10 @@ fun AuthTextFieldComponent(
                     text = supportedTextValue,
                     color = MaterialTheme.colorScheme.error
                 )
+            } else {
+                Text(
+                    text = ""
+                )
             }
         },
         isError = errorStatus
@@ -76,10 +85,12 @@ fun PasswordTextFieldComponent(
     val passwordVisible = remember {
         mutableStateOf(false)
     }
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     OutlinedTextField(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(if (isLandscape) 0.3f else 1f) //custom weights depending on the orientation
             .clip(componentShapes.small),
         label = { Text(text = labelValue) },
         singleLine = true,
@@ -121,6 +132,10 @@ fun PasswordTextFieldComponent(
                 Text(
                     text = supportedTextValue,
                     color = MaterialTheme.colorScheme.error
+                )
+            } else {
+                Text(
+                    text = ""
                 )
             }
         },

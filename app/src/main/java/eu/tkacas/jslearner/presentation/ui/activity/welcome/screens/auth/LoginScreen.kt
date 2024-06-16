@@ -3,6 +3,7 @@ package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.auth
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -115,36 +117,37 @@ fun LoginScreen(
                     modifier = Modifier.fillMaxWidth(),
                     color = MaterialTheme.colorScheme.error
                 )
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+        }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        GeneralButtonComponent(
+                            value = stringResource(R.string.login),
+                            onButtonClicked = {
+                                viewModel.onEvent(LoginFormEvent.Submit)
+                            }
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    DividerTextComponent()
+                    HaveAnAccountOrNotClickableTextComponent(
+                        alreadyHaveAnAccount = false,
+                        onTextSelected = {
+                            if (it == "Register") {
+                                navController.navigate("signUp")
+                            }
+                        }
+                    )
+                }
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                GeneralButtonComponent(
-                    value = stringResource(R.string.login),
-                    onButtonClicked = {
-                        viewModel.onEvent(LoginFormEvent.Submit)
-                    }
-                )
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-            DividerTextComponent()
-            HaveAnAccountOrNotClickableTextComponent(
-                alreadyHaveAnAccount = false,
-                onTextSelected = {
-                    if (it == "Register") {
-                        navController.navigate("signUp")
-                    }
-                }
-            )
-        }
-    }
-}
