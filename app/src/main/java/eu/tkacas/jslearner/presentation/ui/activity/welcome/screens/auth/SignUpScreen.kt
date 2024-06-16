@@ -153,7 +153,7 @@ fun SignUpScreen(
                             if (it == "Privacy Policy") {
                                 navController.navigate("privacyPolicy")
                             } else if (it == "Terms of Use.") {
-                                navController.navigate("termsOfUse")
+                                navController.navigate("termsAndConditions")
                             }
                         },
                         errorMessageValue = state.termsError ?: "",
