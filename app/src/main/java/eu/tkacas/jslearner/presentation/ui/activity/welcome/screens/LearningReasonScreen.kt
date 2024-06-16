@@ -20,13 +20,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.entity.learningreason.LearningReason
 import eu.tkacas.jslearner.domain.entity.learningreason.LearningReasonItem
 import eu.tkacas.jslearner.presentation.ui.component.LearningReasonCard
 
 @Composable
-fun LearningReasonScreen() {
+fun LearningReasonScreen(
+    navController: NavController
+) {
     val selectedReason = remember { mutableStateOf<LearningReason?>(null) }
 
     val reasons = listOf(
@@ -78,10 +81,4 @@ fun LearningReasonScreen() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun LearningReasonScreenPreview() {
-    LearningReasonScreen()
 }
