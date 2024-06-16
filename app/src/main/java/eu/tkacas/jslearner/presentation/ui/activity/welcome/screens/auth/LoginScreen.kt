@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.auth
 
-import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,10 +16,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -31,12 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.usecase.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.ValidatePassword
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ILoginActions
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.SignUp
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
-import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.DividerTextComponent
@@ -61,9 +51,11 @@ fun LoginScreen(
                 is Result.Error -> {
 
                 }
+
                 is Result.Loading -> {
                     //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
                 }
+
                 is Result.Success<*> -> {
                     Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show()
                     //navController.navigate("home")
@@ -117,12 +109,12 @@ fun LoginScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                            Text(
-                text = state.errorMessage ?: "",
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.error
-            )
+                Text(
+                    text = state.errorMessage ?: "",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.error
+                )
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),
@@ -146,7 +138,7 @@ fun LoginScreen(
                         alreadyHaveAnAccount = false,
                         onTextSelected = {
                             if (it == "Register") {
-                                viewModel.loginActions.navigateToSignUp()
+                                navController.navigate("signUp")
                             }
                         }
                     )
@@ -154,3 +146,4 @@ fun LoginScreen(
             }
         }
     }
+}

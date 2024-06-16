@@ -16,9 +16,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -29,17 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.usecase.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.ValidateFirstName
-import eu.tkacas.jslearner.domain.usecase.ValidateLastName
-import eu.tkacas.jslearner.domain.usecase.ValidatePassword
-import eu.tkacas.jslearner.domain.usecase.ValidateTerms
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ISignUpActions
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.PrivacyPolicy
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.TermsAndConditions
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
-import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.DividerTextComponent
@@ -65,9 +52,11 @@ fun SignUpScreen(
                 is Result.Error -> {
                     // Toast.makeText(context, it.errorMessage, Toast.LENGTH_LONG).show()
                 }
+
                 is Result.Loading -> {
                     //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
                 }
+
                 is Result.Success<*> -> {
                     Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
                 }
@@ -77,7 +66,7 @@ fun SignUpScreen(
         }
     }
 
-      Surface(
+    Surface(
         color = Color.White,
         modifier = Modifier
             .fillMaxSize()
@@ -162,24 +151,24 @@ fun SignUpScreen(
                         onCheckedChange = { viewModel.onEvent(SignUpFormEvent.AcceptTerms(it)) },
                         onTextSelected = {
                             if (it == "Privacy Policy") {
-                                viewModel.signUpActions.navigateToPrivacy()
+                                navController.navigate("privacyPolicy")
                             } else if (it == "Terms of Use.") {
-                                viewModel.signUpActions.navigateToTerms()
+                                navController.navigate("termsOfUse")
                             }
                         },
                         errorMessageValue = state.termsError ?: "",
                         errorStatus = state.termsError != null
                     )
                 }
-                
-                            Spacer(modifier = Modifier.height(20.dp))
 
-            Text(
-                text = state.errorMessage ?: "",
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.error
-            )
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = state.errorMessage ?: "",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.error
+                )
 
                 Column(
                     modifier = Modifier
@@ -204,7 +193,7 @@ fun SignUpScreen(
                         alreadyHaveAnAccount = true,
                         onTextSelected = {
                             if (it == "Login") {
-                                viewModel.signUpActions.navigateToLogin()
+                                navController.navigate("login")
                             }
                         }
                     )
@@ -212,3 +201,4 @@ fun SignUpScreen(
             }
         }
     }
+}
