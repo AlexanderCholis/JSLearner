@@ -4,29 +4,45 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import eu.tkacas.jslearner.domain.usecase.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.ValidatePassword
-import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.ILoginActions
+import com.google.firebase.auth.FirebaseUser
+import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.domain.repository.AuthRepository
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
 import eu.tkacas.jslearner.presentation.ui.events.LoginFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.LoginFormState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val validateEmail: ValidateEmail = ValidateEmail(),
-    private val validatePassword: ValidatePassword = ValidatePassword(),
-    val loginActions: ILoginActions
-): BaseAuthViewModel()  {
-    var state by mutableStateOf(LoginFormState())
+    private val authRepository: AuthRepository,
+    private val validateEmail: ValidateEmail,
+    private val validatePassword: ValidatePassword
+): ViewModel()  {
+    private var _state by mutableStateOf(LoginFormState())
+    val state: LoginFormState get() = _state
+
+    private val _loginFlow = MutableStateFlow<Result<FirebaseUser>?>(null)
+    val loginFlow: StateFlow<Result<FirebaseUser>?> = _loginFlow
+
+    private val currentUser: FirebaseUser?
+        get() = authRepository.currentUser
+
+    init {
+        if (currentUser != null) {
+            _loginFlow.value = Result.Success(authRepository.currentUser!!)
+        }
+    }
 
     fun onEvent(event: LoginFormEvent) {
         when(event) {
             is LoginFormEvent.EmailChanged -> {
-                state = state.copy(email = event.email)
+                _state = _state.copy(email = event.email)
             }
             is LoginFormEvent.PasswordChanged -> {
-                state = state.copy(password = event.password)
+                _state = _state.copy(password = event.password)
             }
             is LoginFormEvent.Submit -> {
                 submitData()
@@ -35,8 +51,8 @@ class LoginViewModel(
     }
 
     private fun submitData() {
-        val emailResult = validateEmail.execute(state.email)
-        val passwordResult = validatePassword.execute(state.password, isLogin = true)
+        val emailResult = validateEmail.execute(_state.email)
+        val passwordResult = validatePassword.execute(_state.password, isLogin = true)
 
         val hasError = listOf(
             emailResult,
@@ -44,32 +60,21 @@ class LoginViewModel(
         ).any { it.errorMessage != null }
 
         if(hasError) {
-            state = state.copy(
+            _state = _state.copy(
                 emailError = emailResult.errorMessage,
                 passwordError = passwordResult.errorMessage
             )
             return
         }
-        viewModelScope.launch {
-            validationEventChannel.send(ValidationEvent.Success)
-        }
+        loginUser(_state.email, _state.password)
     }
 
-    companion object {
-        fun provideFactory(
-            validateEmail: ValidateEmail,
-            validatePassword: ValidatePassword,
-            loginActions: ILoginActions
-        ): ViewModelProvider.Factory {
-            return object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-                        @Suppress("UNCHECKED_CAST")
-                        return LoginViewModel(validateEmail, validatePassword, loginActions) as T
-                    }
-                    throw IllegalArgumentException("Unknown ViewModel class")
-                }
-            }
+    private fun loginUser(email: String, password: String) = viewModelScope.launch {
+        _loginFlow.value = Result.Loading
+        val result = authRepository.login(email, password)
+        if (result is Result.Error) {
+            _state = _state.copy(errorMessage = result.exception.message)
         }
+        _loginFlow.value = result
     }
 }

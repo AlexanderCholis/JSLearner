@@ -49,4 +49,5 @@
     <string name="terms_of_use_governing_law">\n 6. Governing Law:\n These Terms and Conditions shall be governed by and construed in accordance with the laws of Greece, without regard to its conflict of law principles.</string>
     <string name="terms_of_use_contact_us">\n 7. Contact Us:\n If you have any questions or concerns about these Terms and Conditions, please contact us at info@jslearner.gr.</string>
     <string name="terms_of_use_acknowledgement">\n By using the App, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.</string>
+    <string name="an_error_occurred_please_try_again">An error occurred. Please try again.</string>
 </resources>

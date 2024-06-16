@@ -29,18 +29,11 @@ import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.actions.I
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.objects.Login
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.WelcomeViewModel
-
+import eu.tkacas.jslearner.presentation.ui.component.AuthButtonComponent
 
 @Composable
 fun WelcomeScreen(
-    navController: NavController,
-    viewModel: WelcomeViewModel = viewModel(factory = WelcomeViewModel.provideFactory(
-        welcomeActions = object : IWelcomeActions {
-            override fun navigateToLogin() {
-                navController.navigate(Login)
-            }
-        }
-    ))
+    navController: NavController
 ) {
     Surface(
         color = Color.White,
@@ -83,7 +76,7 @@ fun WelcomeScreen(
                         GeneralButtonComponent(
                             value = stringResource(R.string.login),
                             onButtonClicked = {
-                                viewModel.welcomeActions.navigateToLogin()
+                                navController.navigate("login")
                             }
                         )
                     }
