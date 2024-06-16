@@ -16,7 +16,7 @@ import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BackAppTopBar(
-    title: String,
+    title: String = "",
     color: Color,
     onBackClick: () -> Unit
 ){
