@@ -84,7 +84,6 @@ fun SignUpScreen(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-
                     AuthTextFieldComponent(
                         value = state.firstName,
                         onValueChange = { viewModel.onEvent(SignUpFormEvent.FirstNameChanged(it)) },
@@ -170,35 +169,36 @@ fun SignUpScreen(
                     color = MaterialTheme.colorScheme.error
                 )
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Bottom
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        GeneralButtonComponent(
-                            value = stringResource(R.string.register),
-                            onButtonClicked = {
-                                viewModel.onEvent(SignUpFormEvent.Submit)
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-                    DividerTextComponent()
-                    HaveAnAccountOrNotClickableTextComponent(
-                        alreadyHaveAnAccount = true,
-                        onTextSelected = {
-                            if (it == "Login") {
-                                navController.navigate("login")
-                            }
-                        }
-                    )
-                }
             }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                GeneralButtonComponent(
+                    value = stringResource(R.string.register),
+                    onButtonClicked = {
+                        viewModel.onEvent(SignUpFormEvent.Submit)
+                    }
+                )
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            DividerTextComponent()
+            HaveAnAccountOrNotClickableTextComponent(
+                alreadyHaveAnAccount = true,
+                onTextSelected = {
+                    if (it == "Login") {
+                        navController.navigate("login")
+                    }
+                }
+            )
         }
     }
 }

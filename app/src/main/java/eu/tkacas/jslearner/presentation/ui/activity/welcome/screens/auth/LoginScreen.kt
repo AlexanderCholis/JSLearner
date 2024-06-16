@@ -115,35 +115,36 @@ fun LoginScreen(
                     modifier = Modifier.fillMaxWidth(),
                     color = MaterialTheme.colorScheme.error
                 )
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Bottom
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        GeneralButtonComponent(
-                            value = stringResource(R.string.login),
-                            onButtonClicked = {
-                                viewModel.onEvent(LoginFormEvent.Submit)
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-                    DividerTextComponent()
-                    HaveAnAccountOrNotClickableTextComponent(
-                        alreadyHaveAnAccount = false,
-                        onTextSelected = {
-                            if (it == "Register") {
-                                navController.navigate("signUp")
-                            }
-                        }
-                    )
-                }
             }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                GeneralButtonComponent(
+                    value = stringResource(R.string.login),
+                    onButtonClicked = {
+                        viewModel.onEvent(LoginFormEvent.Submit)
+                    }
+                )
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            DividerTextComponent()
+            HaveAnAccountOrNotClickableTextComponent(
+                alreadyHaveAnAccount = false,
+                onTextSelected = {
+                    if (it == "Register") {
+                        navController.navigate("signUp")
+                    }
+                }
+            )
         }
     }
 }

@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -36,7 +37,7 @@ fun AuthTextFieldComponent(
 ) {
     OutlinedTextField(
         modifier = Modifier
-            .size(width = 500.dp, height = 70.dp)
+            .fillMaxWidth()
             .clip(componentShapes.small),
         label = { Text(text = labelValue) },
         singleLine = true,
@@ -78,7 +79,7 @@ fun PasswordTextFieldComponent(
 
     OutlinedTextField(
         modifier = Modifier
-            .size(width = 500.dp, height = 70.dp)
+            .fillMaxWidth()
             .clip(componentShapes.small),
         label = { Text(text = labelValue) },
         singleLine = true,
