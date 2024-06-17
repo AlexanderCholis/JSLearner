@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -75,14 +74,17 @@ fun ExperienceTextScreen(
                         verticalArrangement = Arrangement.Bottom,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        GeneralButtonComponent(value = "Next", onButtonClicked = {
-                            if (currentIndex < texts.size - 1) {
-                                currentIndex++
-                            } else {
-                                navController.navigate("learningReason")
+                        GeneralButtonComponent(
+                            value = "Next",
+                            onButtonClicked = {
+                                if (currentIndex < texts.size - 1) {
+                                    currentIndex++
+                                } else {
+                                    navController.navigate("learningReason/$experienceLevel")
+                                }
                             }
-                        })
-                        }
+                        )
+                    }
                 }
             }
         }
