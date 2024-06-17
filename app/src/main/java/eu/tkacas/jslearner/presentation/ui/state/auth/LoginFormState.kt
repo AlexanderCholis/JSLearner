@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.presentation.ui.state
+package eu.tkacas.jslearner.presentation.ui.state.auth
 
 data class LoginFormState (
     val email: String = "",
