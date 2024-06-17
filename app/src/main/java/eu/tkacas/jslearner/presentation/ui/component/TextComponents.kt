@@ -81,7 +81,7 @@ fun NormalText(@StringRes textId: Int) {
 }
 
 @Composable
-fun BoldText(@StringRes textId: Int) {
+fun BoldText(@StringRes textId: Int){
     Text(
         text = stringResource(id = textId),
         fontWeight = FontWeight.Bold,

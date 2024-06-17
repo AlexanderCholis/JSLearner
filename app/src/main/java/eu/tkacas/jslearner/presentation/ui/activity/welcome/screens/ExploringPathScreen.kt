@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.component.BoldText
+import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.ui.component.PathModuleCard
 
 @Composable
@@ -28,29 +30,17 @@ fun ExploringPathScreen() {
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 30.dp, start = 32.dp, end = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        //horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = stringResource(id = R.string.your_path),
-            fontSize = 16.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(bottom = 40.dp)
-        )
-        Text(
-            text = stringResource(id = R.string.your_path_description),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(bottom = 20.dp)
-        )
+        BoldText(textId = R.string.your_path)
+        NormalText(textId = R.string.your_path_description)
+        Spacer(modifier = Modifier.padding(8.dp))
         PathModuleCard(
             moduleTitleText = "Demo Module",
             moduleDescriptionText = "This is a demo module to show how the module card looks like",
             isExpanded = isExpandedModule1
         )
-        Spacer(modifier = Modifier.padding(16.dp))
+        Spacer(modifier = Modifier.padding(8.dp))
         PathModuleCard(
             moduleTitleText = "Demo Module2",
             moduleDescriptionText = "This is a demo module to show how the module card looks like for the second module",
