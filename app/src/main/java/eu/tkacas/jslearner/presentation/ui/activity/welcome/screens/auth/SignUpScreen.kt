@@ -146,6 +146,7 @@ fun SignUpScreen(
                         errorStatus = state.passwordError != null
                     )
                 }
+                Spacer(modifier = Modifier.height(10.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -165,19 +166,15 @@ fun SignUpScreen(
                         errorStatus = state.termsError != null
                     )
                 }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
+                Spacer(modifier = Modifier.height(15.dp))
                 Text(
                     text = state.errorMessage ?: "",
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                     color = MaterialTheme.colorScheme.error
                 )
-
             }
         }
-
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -195,7 +192,7 @@ fun SignUpScreen(
                     }
                 )
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             DividerTextComponent()
             HaveAnAccountOrNotClickableTextComponent(
                 alreadyHaveAnAccount = true,

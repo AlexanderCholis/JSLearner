@@ -2,14 +2,20 @@ package eu.tkacas.jslearner.presentation.ui.component
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
@@ -20,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -208,5 +215,54 @@ fun CoursesPathCard(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun CourseTopCard(points: Int, days: Int, answers: Int) {
+    val lightBeige = Color(0xFFF8EFE0)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(250.dp)
+            .clip(RoundedCornerShape(25.dp))
+            .background(lightBeige)
+            .padding(16.dp),
+        contentAlignment = Alignment.BottomStart
+    ) {
+
+        Image(
+            painter = painterResource(id = R.drawable.element_thinking),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxSize()
+                .offset(x = 28.dp)
+        )
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+        ) {
+            Text(text = "Points:")
+            Text(text = points.toString(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomEnd),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(text = "Days in a row:")
+            Text(text = days.toString(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopStart),
+        ) {
+            Text(text = "Correct Answers:")
+            Text(text = answers.toString(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        }
+
     }
 }
