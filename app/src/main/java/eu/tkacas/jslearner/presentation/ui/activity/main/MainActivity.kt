@@ -7,7 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import eu.tkacas.jslearner.JSLearner
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
+import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.viewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +24,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val roadMapViewModel = viewModel<RoadMapViewModel>(
+                        factory = viewModelFactory {
+                            RoadMapViewModel(
+                                getRoadMapUseCase = JSLearner.appModule.getRoadMapUseCase,
+                                authRepository = JSLearner.appModule.authRepository
+                            )
+                        }
+                    )
 
+                    RoadMapScreen(roadMapViewModel)
                 }
             }
         }
