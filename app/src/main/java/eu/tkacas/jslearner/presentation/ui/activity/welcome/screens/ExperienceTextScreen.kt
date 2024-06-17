@@ -1,7 +1,10 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -13,14 +16,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevel
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
+import eu.tkacas.jslearner.presentation.ui.component.BoldText
+import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
+import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewModel
 
 @Composable
@@ -54,20 +62,29 @@ fun ExperienceTextScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(top = 80.dp)
+                    .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
             ) {
                 Column {
-                    Text(text = stringResource(id = texts[currentIndex].boldText))
-                    Text(text = stringResource(id = texts[currentIndex].normalText))
-                    Button(onClick = {
-                        if (currentIndex < texts.size - 1) {
-                            currentIndex++
-                        } else {
-                            navController.navigate("learningReason")
+                    BoldText(textId = texts[currentIndex].boldText)
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    NormalText(textId = texts[currentIndex].normalText)
+                    Spacer(modifier = Modifier.padding(20.dp))
+                    Spacer(modifier = Modifier.weight(1f))
+                    Image(painter = painterResource(id = texts[currentIndex].image),contentDescription = null)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Bottom,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        GeneralButtonComponent(value = "Next", onButtonClicked = {
+                            if (currentIndex < texts.size - 1) {
+                                currentIndex++
+                            } else {
+                                navController.navigate("learningReason")
+                            }
+                        })
                         }
-                    }) {
-                        Text("Next")
-                    }
                 }
             }
         }
