@@ -34,7 +34,7 @@ import eu.tkacas.jslearner.presentation.ui.component.HaveAnAccountOrNotClickable
 import eu.tkacas.jslearner.presentation.ui.component.PasswordTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.TermsCheckboxComponent
 import eu.tkacas.jslearner.presentation.ui.events.SignUpFormEvent
-import eu.tkacas.jslearner.presentation.ui.state.SignUpFormState
+import eu.tkacas.jslearner.presentation.ui.state.auth.SignUpFormState
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 import eu.tkacas.jslearner.domain.Result
 

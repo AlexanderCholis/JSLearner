@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevel
-import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevelItem
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevelItem
 import eu.tkacas.jslearner.presentation.ui.component.ExperienceLevelCard
 
 @Composable
