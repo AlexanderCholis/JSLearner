@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.entity.experience
+package eu.tkacas.jslearner.domain.model.experience
 
 data class ExperienceLevelItem(
     val image: Int,
