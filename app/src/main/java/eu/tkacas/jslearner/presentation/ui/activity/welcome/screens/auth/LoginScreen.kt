@@ -17,6 +17,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +41,7 @@ import eu.tkacas.jslearner.presentation.ui.events.LoginFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.LoginFormState
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 
 @Composable
 fun LoginScreen(
@@ -46,25 +50,21 @@ fun LoginScreen(
     state: LoginFormState = viewModel.state
 ) {
     val context = LocalContext.current
+    val loginFlowState by viewModel.loginFlow.collectAsState()
 
-    LaunchedEffect(viewModel) {
-        viewModel.loginFlow.collect {
-            when (it) {
-                is Result.Error -> {
-
-                }
-
-                is Result.Loading -> {
-                    //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
-                }
-
-                is Result.Success<*> -> {
-                    Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show()
-                    //navController.navigate("home")
-                }
-
-                null -> {}
+    LaunchedEffect(loginFlowState) {
+        when (loginFlowState) {
+            is Result.Error -> {
+                // The error message is showed up into UI
             }
+            is Result.Loading -> {
+                // Loading state is handled in the UI below
+            }
+            is Result.Success<*> -> {
+                Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show()
+                navController.navigate("experienceLevel")
+            }
+            null -> {}
         }
     }
 
@@ -75,6 +75,12 @@ fun LoginScreen(
             .background(Color.White)
             .padding(start = 28.dp, end = 28.dp, top = 60.dp, bottom = 28.dp)
     ) {
+        when (loginFlowState) {
+            is Result.Loading -> {
+                ProgressIndicatorComponent()
+            }
+            else -> {}
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

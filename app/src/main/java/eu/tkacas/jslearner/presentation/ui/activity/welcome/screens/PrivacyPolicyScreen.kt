@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
+import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -28,6 +29,7 @@ fun PrivacyPolicyScreen(
         topBar = {
             BackAppTopBar(
                 title = stringResource(id = R.string.privacy_policy_header),
+                color = SkyBlue,
                 onBackClick = {
                     navController.navigateUp()
                 }

@@ -1,29 +1,7 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
-import android.widget.Toast
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.RoadMapViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import eu.tkacas.jslearner.JSLearner
-import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodePosition
-import eu.tkacas.jslearner.domain.entity.roadmap.StrokeParameters
-import eu.tkacas.jslearner.domain.entity.roadmap.getColor
-import eu.tkacas.jslearner.domain.entity.roadmap.getIcon
-import eu.tkacas.jslearner.presentation.ui.component.default.CircleParametersDefaults
-import eu.tkacas.jslearner.presentation.ui.component.default.LineParametersDefaults
-import eu.tkacas.jslearner.presentation.ui.component.default.MessageBubble
-import eu.tkacas.jslearner.presentation.ui.component.default.RoadMapNode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
