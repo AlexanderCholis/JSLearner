@@ -59,21 +59,21 @@
     <string name="privacy_policy_contact_us">\n 7. Contact Us:\nIf you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us at info@jslearner.gr.</string>
     <string name="privacy_policy_acknowledgement">By using the App, you consent to the collection, use, and disclosure of your information in accordance with this Privacy Policy.</string>
     <string name="an_error_occurred_please_try_again">An error occurred. Please try again.</string>
-    <string name="no_experience_no_problem">No experience, no problem.</string>
-    <string name="any_can_learn_to_code">Any can learn to code. In just 5 minutes or less per day, JSLearner will teach you how to code from the ground.</string>
+    <string name="no_experience_no_problem">No experience, no problem!</string>
+    <string name="any_can_learn_to_code">Anyone can learn to code. In just 5 minutes or less per day, JSLearner will teach you how to code from the ground.</string>
     <string name="what_is_code">What is code?</string>
     <string name="what_is_a_programming_language">What is a programming language?</string>
-    <string name="why_should_i_learn_to_code">Why should i learn to code?</string>
+    <string name="why_should_i_learn_to_code">Why should I learn to code?</string>
     <string name="a_new_way_to_learn_to_code">A new way to learn to code!</string>
     <string name="what_is_javascript">What is JavaScript?</string>
-    <string name="what_can_i_do_with_javascript">What can i do with JavaScript?</string>
+    <string name="what_can_i_do_with_javascript">What can I do with JavaScript?</string>
     <string name="what_will_jslearner_teach_me">What will JSLearner teach me?</string>
-    <string name="keep_your_skills_fresh">Keep your skills fresh</string>
+    <string name="keep_your_skills_fresh">Keep your skills fresh!</string>
     <string name="what_does_jslearner_teach">What does JSLearner teach?</string>
     <string name="why_use_jslearner">Why use JSLearner?</string>
-    <string name="how_much_will_i_learn">How much will i learn?</string>
+    <string name="how_much_will_i_learn">How much will I learn?</string>
     <string name="code_is_how_we_communicate_with_computers">Code is how we communicate with computers. Writing code is like writing a set of instructions that tell a computer what to do.</string>
-    <string name="with_jslearner_you_will_practice_fundamental_coding">With JSLearner, you will practice fundamental coding concepts through fun visual puzzles. In the process, you will build a website, create animations, write code to automate tasks, and even prepare for a programming interview</string>
+    <string name="with_jslearner_you_will_practice_fundamental_coding">With JSLearner, you will practice fundamental coding concepts through fun visual puzzles. In the process, you will build a website, create animations, write code to automate tasks, and even prepare for a programming interview.</string>
     <string name="a_programming_language_is_used_to_give_computers_instructions">A programming language is used to give computers instructions. There are many types of programming languages, just like there are many spoken languages.\n\n JSLearner teaches JavaScript, used by over 70% of professional coders. It can create websites, build phone apps, automate common office tasks, and much more.</string>
     <string name="perhaps_you_have_an_idea_you_d_like_to_make_a_reality">Perhaps you have an idea you\'d like to make a reality, or are looking to take the next step in your career, or maybe you are just curious. Learning to code can help you open up new paths and opportunities.</string>
     <string name="in_just_5_minutes_or_less_per_day_jslearner_will_help_you_take_the_next_step_in_your_coding_journey">In just 5 minutes or less per day, JSLearner will help you take the next step in your coding journey. Through quick visual puzzles, you\'ll learn the fundamentals of code.</string>
@@ -82,5 +82,5 @@
     <string name="javascript_is_valued_for_its_versatility">JavaScript is valued for its versatility. It can create websites, build phone apps, help you become more efficient at work, and much more. JSLearner itself is built with JavaScript.</string>
     <string name="jslearner_covers_fundamental_coding_concepts_using_fun_bite_size_puzzles">JSLearner covers fundamental coding concepts using fun, bite size puzzles. In the process, you will also learn how to build a website, create animations, automate common office tasks, and even prepare for a programming interview.</string>
     <string name="in_just_5_minutes_or_less_per_day_jslearner_will_help_you_keep_your_coding_skills_fresh">In just 5 minutes or less per day, JSLearner will help you keep your coding skills fresh. Through quick visual puzzles on your phone, you can refresh your coding knowledge on the go.</string>
-    <string name="in_5_minutes_or_less_per_day_jslearner_will_keep_your_coding_skills_sharp">In 5 minutes or less per day, JSLearner will keep your coding skills sharp, introduce JavaScript concepts, and help you level up your career or discover new paths on your coding journey.</string>
+    <string name="in_5_minutes_or_less_per_day_jslearner_will_keep_your_coding_skills_sharp">In 5 minutes or less per day, JSLearner will keep your coding skills sharp, introduce JavaScript concepts and help you level up your career or discover new paths on your coding journey.</string>
 </resources>

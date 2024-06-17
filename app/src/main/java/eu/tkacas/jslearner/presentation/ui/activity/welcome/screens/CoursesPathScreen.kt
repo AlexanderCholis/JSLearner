@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.CoursesPathCard
+import eu.tkacas.jslearner.presentation.ui.component.NormalText
 
 @Composable
 fun CoursesPathScreen() {
@@ -33,23 +34,20 @@ fun CoursesPathScreen() {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Fundamentals",
+                text = "Fundamentals", //move to TopBar
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(bottom = 40.dp)
             )
         }
-        Text(
-            text = stringResource(id = R.string.courses),
-            modifier = Modifier
-                .padding(bottom = 16.dp)
-        )
+        NormalText(textId = R.string.courses)
+        Spacer(modifier = Modifier.height(8.dp))
         CoursesPathCard(
             moduleTitleText = "Fundamentals",
             isEnabled = true
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         CoursesPathCard(
             moduleTitleText = "Fundamentals II",
             isEnabled = false

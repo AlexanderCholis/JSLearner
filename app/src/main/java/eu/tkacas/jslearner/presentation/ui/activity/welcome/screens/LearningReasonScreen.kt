@@ -1,36 +1,39 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.draw.clip
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.entity.learningreason.LearningReason
 import eu.tkacas.jslearner.domain.entity.learningreason.LearningReasonItem
+import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.LearningReasonCard
+import eu.tkacas.jslearner.presentation.ui.component.NormalText
 
 @Composable
 fun LearningReasonScreen(
     navController: NavController
 ) {
     val selectedReason = remember { mutableStateOf<LearningReason?>(null) }
+
+    val lightBeige = Color(0xFFF8EFE0)
 
     val reasons = listOf(
         LearningReasonItem(R.drawable.career, R.string.gain_skills, LearningReason.GAIN_SKILLS),
@@ -53,21 +56,19 @@ fun LearningReasonScreen(
                 .padding(start = 32.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(id = R.string.finding_your_path),
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
+            Image(
+                painter = painterResource(id = R.drawable.faq),
+                contentDescription = null,
                 modifier = Modifier
-                    .padding(bottom = 40.dp)
+                    .size(100.dp)
+                    .clip(CircleShape)
+                    .background(color = lightBeige)
             )
-            Text(
-                text = stringResource(id = R.string.why_do_you_want_to_learn),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(bottom = 20.dp)
-            )
+            NormalText(textId = R.string.finding_your_path)
+
+            Spacer(modifier = Modifier.height(8.dp))
+            BoldText(textId = R.string.why_do_you_want_to_learn)
+            Spacer(modifier = Modifier.height(8.dp))
             reasons.forEachIndexed { index, item ->
                 LearningReasonCard(
                     image = item.image,
