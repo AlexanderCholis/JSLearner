@@ -11,7 +11,7 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
 import eu.tkacas.jslearner.presentation.ui.events.LoginFormEvent
-import eu.tkacas.jslearner.presentation.ui.state.LoginFormState
+import eu.tkacas.jslearner.presentation.ui.state.auth.LoginFormState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
