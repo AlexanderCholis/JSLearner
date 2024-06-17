@@ -1,7 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.content.MediaType.Companion.Text
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +30,8 @@ fun ExperienceTextScreen(
 ) {
     val viewModel = viewModel<ExperienceTextViewModel>()
     val texts = viewModel.returnTexts(ExperienceLevel.valueOf(experienceLevel))
-    var currentIndex by remember { mutableStateOf(0) }
+    val previousRoute = navController.previousBackStackEntry?.destination?.route
+    var currentIndex by rememberSaveable { mutableStateOf(if (previousRoute == "experienceLevel") 0 else texts.size - 1) }
 
     Scaffold(
         modifier= Modifier
