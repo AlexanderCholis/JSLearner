@@ -1,61 +1,62 @@
 package eu.tkacas.jslearner.data.source.remote
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import eu.tkacas.jslearner.data.model.Course
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.Question
-import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodeState
 import kotlinx.coroutines.tasks.await
 
-class RoadMapDataSource {
+class RoadMapDataSource(private val db: FirebaseFirestore) {
 
-    private val db = FirebaseFirestore.getInstance()
-
-    fun getCourses(callback: (List<Course>) -> Unit) {
-        db.collection("courses")
-            .get()
-            .addOnSuccessListener { result ->
-                val courses = result.map { document ->
-                    document.toObject(Course::class.java).copy(id = document.id)
-                }
-                callback(courses)
+    suspend fun getCourses(): List<Course> {
+        return try {
+            val result = db.collection("courses").get().await()
+            result.map { document ->
+                document.toObject<Course>().copy(id = document.id)
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-                callback(emptyList())
-            }
+        } catch (e: Exception) {
+            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            emptyList()
+        }
     }
 
-    fun getLessons(courseId: String, callback: (List<Lesson>) -> Unit) {
-        db.collection("courses").document(courseId).collection("lessons")
-            .get()
-            .addOnSuccessListener { result ->
-                val lessons = result.map { document ->
-                    document.toObject(Lesson::class.java).copy(id = document.id)
-                }
-                callback(lessons)
+    suspend fun getLessons(courseId: String): List<Lesson> {
+        return try {
+            val result = db.collection("courses").document(courseId).collection("lessons").get().await()
+            result.map { document ->
+                document.toObject<Lesson>().copy(id = document.id)
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-                callback(emptyList())
-            }
+        } catch (e: Exception) {
+            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            emptyList()
+        }
     }
 
-    fun getQuestions(courseId: String, lessonId: String, callback: (List<Question>) -> Unit) {
-        db.collection("courses").document(courseId).collection("lessons").document(lessonId).collection("questions")
-            .get()
-            .addOnSuccessListener { result ->
-                val questions = result.map { document ->
-                    document.toObject(Question::class.java).copy(id = document.id)
-                }
-                callback(questions)
+    suspend fun getQuestions(courseId: String, lessonId: String): List<Question> {
+        return try {
+            val result = db.collection("courses").document(courseId)
+                .collection("lessons").document(lessonId)
+                .collection("questions").get().await()
+            result.map { document ->
+                document.toObject<Question>().copy(id = document.id)
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-                callback(emptyList())
+        } catch (e: Exception) {
+            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            emptyList()
+        }
+    }
+
+    suspend fun getUserCompletedCourses(userId: String): Map<String, List<String>> {
+        return try {
+            val result = db.collection("users").document(userId).collection("done_courses").get().await()
+            result.associate { document ->
+                document.id to (document["list_of_completed_lessons"] as List<String>)
             }
+        } catch (e: Exception) {
+            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            emptyMap()
+        }
     }
 }
-
