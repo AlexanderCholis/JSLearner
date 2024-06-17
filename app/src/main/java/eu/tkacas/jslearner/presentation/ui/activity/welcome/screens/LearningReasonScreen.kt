@@ -56,7 +56,6 @@ fun LearningReasonScreen(
                 .padding(start = 32.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            //add image
             Image(
                 painter = painterResource(id = R.drawable.faq),
                 contentDescription = null,
@@ -66,24 +65,10 @@ fun LearningReasonScreen(
                     .background(color = lightBeige)
             )
             NormalText(textId = R.string.finding_your_path)
-//            Text(
-//                text = stringResource(id = R.string.finding_your_path),
-//                fontSize = 16.sp,
-//                textAlign = TextAlign.Center,
-//                modifier = Modifier
-//                    .padding(bottom = 40.dp)
-//            )
+
             Spacer(modifier = Modifier.height(8.dp))
             BoldText(textId = R.string.why_do_you_want_to_learn)
             Spacer(modifier = Modifier.height(8.dp))
-//            Text(
-//                text = stringResource(id = R.string.why_do_you_want_to_learn),
-//                fontSize = 20.sp,
-//                fontWeight = FontWeight.Bold,
-//                textAlign = TextAlign.Center,
-//                modifier = Modifier
-//                    .padding(bottom = 20.dp)
-//            )
             reasons.forEachIndexed { index, item ->
                 LearningReasonCard(
                     image = item.image,
