@@ -1,11 +1,15 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -13,24 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.RoadMapViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import eu.tkacas.jslearner.JSLearner
-import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodePosition
-import eu.tkacas.jslearner.domain.entity.roadmap.StrokeParameters
-import eu.tkacas.jslearner.domain.entity.roadmap.getColor
-import eu.tkacas.jslearner.domain.entity.roadmap.getIcon
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
+import eu.tkacas.jslearner.domain.model.roadmap.getColor
+import eu.tkacas.jslearner.domain.model.roadmap.getIcon
 import eu.tkacas.jslearner.presentation.ui.component.default.CircleParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.LineParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.MessageBubble
 import eu.tkacas.jslearner.presentation.ui.component.default.RoadMapNode
+import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun RoadMapScreen() {
-    /*val roadmapRepository = (LocalContext.current.applicationContext as JSLearner).roadmapRepository
-    val viewModel: RoadMapViewModel = viewModel(factory = RoadMapViewModel.provideFactory(roadmapRepository))
+internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadRoadMapNodes()
+    }
 
     val context = LocalContext.current
     Scaffold(
@@ -100,5 +104,6 @@ internal fun RoadMapScreen() {
                 }
             }
         }
-    }*/
+    }
 }
+
