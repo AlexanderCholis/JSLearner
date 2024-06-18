@@ -1,10 +1,10 @@
 package eu.tkacas.jslearner.presentation.viewmodel.main
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodeState
-import eu.tkacas.jslearner.data.repository.RoadmapRepository
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.domain.repository.AuthRepository
+import eu.tkacas.jslearner.domain.usecase.roadmap.GetRoadMapUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,8 +12,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RoadMapViewModel(
-    private val roadmapRepository: RoadmapRepository
+    authRepository: AuthRepository,
+    private val getRoadMapUseCase: GetRoadMapUseCase
 ) : ViewModel() {
+
+    val user = authRepository.currentUser
 
     sealed class RoadMapUiState {
         object Loading : RoadMapUiState()
@@ -28,25 +31,13 @@ class RoadMapViewModel(
         loadRoadMapNodes()
     }
 
-    private fun loadRoadMapNodes() {
+    fun loadRoadMapNodes() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val nodes = roadmapRepository.getRoadMapNodes()
-                _uiState.value = RoadMapUiState.Success(nodes)
+                val nodes = user?.let { getRoadMapUseCase.execute(it.uid) }
+                _uiState.value = nodes?.let { RoadMapUiState.Success(it) }!!
             } catch (e: Exception) {
                 _uiState.value = RoadMapUiState.Error(e.message ?: "Unknown error")
-            }
-        }
-    }
-
-    companion object {
-        fun provideFactory(roadmapRepository: RoadmapRepository): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (modelClass.isAssignableFrom(RoadMapViewModel::class.java)) {
-                    return RoadMapViewModel(roadmapRepository) as T
-                }
-                throw IllegalArgumentException("Unknown ViewModel class")
             }
         }
     }

@@ -3,8 +3,13 @@ package eu.tkacas.jslearner.di
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.data.repository.AuthRepositoryImpl
+import eu.tkacas.jslearner.data.repository.RoadMapRepositoryImpl
+import eu.tkacas.jslearner.data.source.remote.RoadMapDataSource
 import eu.tkacas.jslearner.domain.repository.AuthRepository
+import eu.tkacas.jslearner.domain.repository.RoadMapRepository
+import eu.tkacas.jslearner.domain.usecase.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateFirstName
 import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateLastName
@@ -21,6 +26,22 @@ class AppModuleImpl(
     override fun getFirebaseDatabase(): FirebaseDatabase {
         return FirebaseDatabase.getInstance()
     }
+
+    override fun getFirestoreDatabase(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
+
+    private val dataSource = RoadMapDataSource(getFirestoreDatabase())
+
+    override val roadMapRepository: RoadMapRepository by lazy {
+        RoadMapRepositoryImpl(dataSource)
+    }
+    override val getRoadMapUseCase: GetRoadMapUseCase by lazy {
+        GetRoadMapUseCase(roadMapRepository)
+    }
+
+
 
     override val authRepository: AuthRepository by lazy {
         AuthRepositoryImpl(getFirebaseAuth(), getFirebaseDatabase())

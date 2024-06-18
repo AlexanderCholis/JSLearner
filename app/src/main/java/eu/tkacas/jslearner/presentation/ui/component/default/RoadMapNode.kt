@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -28,12 +30,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.domain.entity.roadmap.CircleParameters
-import eu.tkacas.jslearner.domain.entity.roadmap.LineParameters
-import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodePosition
-import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodeState
-import eu.tkacas.jslearner.domain.entity.roadmap.RoadMapNodeStatus
-import eu.tkacas.jslearner.domain.entity.roadmap.StrokeParameters
+import eu.tkacas.jslearner.domain.model.roadmap.CircleParameters
+import eu.tkacas.jslearner.domain.model.roadmap.LineParameters
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeCategory
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
+import eu.tkacas.jslearner.domain.model.roadmap.getColor
+import eu.tkacas.jslearner.domain.model.roadmap.getIcon
 
 
 @Composable
@@ -108,51 +113,50 @@ fun RoadMapNode(
 
 @Preview(showBackground = true)
 @Composable
-fun RoadMapPreview() {
+fun RoadMapNodePreview() {
+    val nodes = listOf(
+        RoadMapNodeState("1", RoadMapNodeStatus.COMPLETED, RoadMapNodePosition.FIRST, RoadMapNodeCategory.COURSE, "First Node"),
+        RoadMapNodeState("2", RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.MIDDLE, RoadMapNodeCategory.LESSON, "Middle Node"),
+        RoadMapNodeState("3", RoadMapNodeStatus.UNLOCKED, RoadMapNodePosition.MIDDLE, RoadMapNodeCategory.COURSE, "Middle Node"),
+        RoadMapNodeState("4", RoadMapNodeStatus.LOCKED, RoadMapNodePosition.LAST, RoadMapNodeCategory.COURSE, "Last Node")
+    )
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        itemsIndexed(nodes) { index, node ->
+            val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
+            val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
+                LineParametersDefaults.linearGradient(
+                    startColor = node.status.getColor(),
+                    endColor = nextNodeColor
+                )
+            } else null
+
             RoadMapNode(
-                nodeState = RoadMapNodeState(RoadMapNodeStatus.COMPLETED, RoadMapNodePosition.FIRST, "something"),
+                nodeState = node,
                 circleParameters = CircleParametersDefaults.circleParameters(
-                    backgroundColor = Color.LightGray
+                    backgroundColor = node.status.getColor(),
+                    stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
+                    icon = node.status.getIcon()
                 ),
-                lineParameters = LineParametersDefaults.linearGradient(
-                    startColor = Color.LightGray,
-                    endColor = Color.Blue
-                )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.LightGray, "test 3", onClick = {
-                println("Hello")
-            } )}
-
-            RoadMapNode(
-                nodeState = RoadMapNodeState(RoadMapNodeStatus.LOCKED, RoadMapNodePosition.MIDDLE, "something 2"),
-                circleParameters = CircleParametersDefaults.circleParameters(
-                    backgroundColor = Color.Blue
-                ),
-                contentStartOffset = 16.dp,
-                lineParameters = LineParametersDefaults.linearGradient(
-                    startColor = Color.Blue,
-                    endColor = Color.Red
-                )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.Blue, "test 2", onClick = {
-                println("Hello")
-            } )}
-
-            RoadMapNode(
-                nodeState = RoadMapNodeState(RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.LAST, "something 3"),
-                circleParameters = CircleParametersDefaults.circleParameters(
-                    backgroundColor = Color.Red,
-                    stroke = StrokeParameters(color = Color.Red, width = 2.dp),
-                    //icon = R.drawable.ic_launcher_background
-                )
-            ) { modifier -> MessageBubble(modifier, containerColor = Color.Red, "test 1", onClick = {
-                println("Hello")
-            } )}
+                lineParameters = lineParameters,
+                content = { modifier ->
+                    node.title?.let {
+                        MessageBubble(
+                            modifier,
+                            containerColor = node.status.getColor(),
+                            text = it,
+                            onClick = {
+                                // No action in preview
+                            }
+                        )
+                    }
+                }
+            )
         }
+    }
 }
 
 @Composable
