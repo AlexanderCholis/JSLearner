@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -24,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
@@ -38,6 +35,7 @@ import eu.tkacas.jslearner.presentation.ui.events.LoginFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.LoginFormState
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.presentation.ui.component.ErrorMessageText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 
 @Composable
@@ -114,12 +112,7 @@ fun LoginScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                Text(
-                    text = state.errorMessage ?: "",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.error
-                )
+                ErrorMessageText(errorMessage = state.errorMessage)
                 Spacer(modifier = Modifier.height(20.dp))
             }
         }

@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -86,5 +87,15 @@ fun BoldText(@StringRes textId: Int){
         text = stringResource(id = textId),
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp
+    )
+}
+
+@Composable
+fun ErrorMessageText(errorMessage: String?) {
+    Text(
+        text = errorMessage ?: "",
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.error
     )
 }
