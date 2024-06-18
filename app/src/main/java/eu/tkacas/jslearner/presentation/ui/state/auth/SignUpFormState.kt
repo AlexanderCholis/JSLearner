@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.presentation.ui.state
+package eu.tkacas.jslearner.presentation.ui.state.auth
 
 import com.google.firebase.auth.FirebaseUser
 

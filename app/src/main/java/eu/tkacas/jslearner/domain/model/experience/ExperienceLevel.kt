@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.entity.experience
+package eu.tkacas.jslearner.domain.model.experience
 
 enum class ExperienceLevel {
     NO_EXPERIENCE,

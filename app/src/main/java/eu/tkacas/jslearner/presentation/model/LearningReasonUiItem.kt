@@ -1,6 +1,6 @@
 package eu.tkacas.jslearner.presentation.model
 
-import eu.tkacas.jslearner.domain.entity.learningreason.LearningReason
+import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 
 data class LearningReasonUiItem(
     val image: Int,

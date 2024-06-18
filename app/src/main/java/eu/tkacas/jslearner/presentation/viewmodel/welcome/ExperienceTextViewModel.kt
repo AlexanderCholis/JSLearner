@@ -2,7 +2,7 @@ package eu.tkacas.jslearner.presentation.viewmodel.welcome
 
 import androidx.lifecycle.ViewModel
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevel
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.presentation.model.ExperienceTextUiItem
 
 class ExperienceTextViewModel: ViewModel() {
