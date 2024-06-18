@@ -80,7 +80,7 @@ fun ExploringPathScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         GeneralButtonComponent(
-                            value = "Looks good",
+                            valueId = R.string.looks_good,
                             onButtonClicked = {
                                 //TODO: Navigate to Roadmap screen - Intent to MainActivity and send data to firebase - firestore
                             }

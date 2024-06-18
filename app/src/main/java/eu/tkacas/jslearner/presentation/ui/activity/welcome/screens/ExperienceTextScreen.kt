@@ -81,7 +81,7 @@ fun ExperienceTextScreen(
                             } else {
                                 navController.navigate("learningReason/$experienceLevel")
                             }
-                        )
+                        })
                     }
                 }
             }

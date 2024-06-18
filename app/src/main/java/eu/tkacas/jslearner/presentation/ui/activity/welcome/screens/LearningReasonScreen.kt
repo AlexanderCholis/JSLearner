@@ -99,7 +99,7 @@ fun LearningReasonScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         GeneralButtonComponent(
-                            value = "Next",
+                            valueId = R.string.next,
                             onButtonClicked = {
                                 if (selectedReason.value != null) {
                                     navController.navigate("exploringPath/$experienceLevel/${selectedReason.value}")
