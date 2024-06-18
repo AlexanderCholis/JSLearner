@@ -84,7 +84,7 @@ internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
                                 ),
                                 lineParameters = lineParameters,
                                 content = { modifier ->
-                                    node.message?.let {
+                                    node.title?.let {
                                         MessageBubble(
                                             modifier,
                                             containerColor = node.status.getColor(),
