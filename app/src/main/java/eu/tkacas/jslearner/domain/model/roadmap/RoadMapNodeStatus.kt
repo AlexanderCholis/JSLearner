@@ -12,10 +12,10 @@ enum class RoadMapNodeStatus {
 
 fun RoadMapNodeStatus.getColor(): Color {
     return when (this) {
-        RoadMapNodeStatus.COMPLETED -> Color.Green
-        RoadMapNodeStatus.UNLOCKED -> Color.White
+        RoadMapNodeStatus.COMPLETED -> Color.Blue
+        RoadMapNodeStatus.UNLOCKED -> Color.Green
         RoadMapNodeStatus.IN_PROGRESS -> Color(0xFFFFA500) // Orange color in ARGB
-        RoadMapNodeStatus.LOCKED -> Color.Gray
+        RoadMapNodeStatus.LOCKED -> Color.Red
     }
 }
 
