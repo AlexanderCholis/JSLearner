@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.domain.usecase.roadmap
 
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeCategory
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeStatus
@@ -19,9 +20,14 @@ class GetRoadMapUseCase(private val repository: RoadMapRepository) {
             val isCourseCompleted = lessons.all { lesson -> completedCourses[course.id]?.contains(lesson.id) == true }
             val courseStatus = when {
                 isCourseCompleted -> RoadMapNodeStatus.COMPLETED
-                else -> RoadMapNodeStatus.IN_PROGRESS // or other logic to determine LOCKED status
+                else -> RoadMapNodeStatus.UNLOCKED // or other logic to determine LOCKED status
             }
-            roadMapNodes.add(RoadMapNodeState(courseStatus, RoadMapNodePosition.MIDDLE, course.title))
+            roadMapNodes.add(RoadMapNodeState(
+                id = course.id,
+                status = courseStatus,
+                position = RoadMapNodePosition.MIDDLE,
+                category = RoadMapNodeCategory.COURSE,
+                title = course.title))
 
             for (lesson in lessons) {
                 val isLessonCompleted = completedCourses[course.id]?.contains(lesson.id) == true
@@ -34,7 +40,12 @@ class GetRoadMapUseCase(private val repository: RoadMapRepository) {
                 } else {
                     RoadMapNodePosition.MIDDLE
                 }
-                roadMapNodes.add(RoadMapNodeState(lessonStatus, position, lesson.title))
+                roadMapNodes.add(RoadMapNodeState(
+                    id = lesson.id,
+                    status = lessonStatus,
+                    position = position,
+                    category = RoadMapNodeCategory.LESSON,
+                    title = lesson.title))
             }
         }
 
