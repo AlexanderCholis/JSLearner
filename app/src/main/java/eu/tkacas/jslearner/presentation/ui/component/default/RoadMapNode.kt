@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.domain.model.roadmap.CircleParameters
 import eu.tkacas.jslearner.domain.model.roadmap.LineParameters
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeCategory
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeStatus
@@ -110,95 +113,52 @@ fun RoadMapNode(
 
 @Preview(showBackground = true)
 @Composable
-fun RoadMapPreview() {
-
-    val nodeStates = listOf(
-        RoadMapNodeState(RoadMapNodeStatus.COMPLETED, RoadMapNodePosition.FIRST, "First Node"),
-        RoadMapNodeState(RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.MIDDLE, "Middle Node"),
-        RoadMapNodeState(RoadMapNodeStatus.LOCKED, RoadMapNodePosition.LAST, "Last Node")
+fun RoadMapNodePreview() {
+    val nodes = listOf(
+        RoadMapNodeState("1", RoadMapNodeStatus.COMPLETED, RoadMapNodePosition.FIRST, RoadMapNodeCategory.COURSE, "First Node"),
+        RoadMapNodeState("2", RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.MIDDLE, RoadMapNodeCategory.LESSON, "Middle Node"),
+        RoadMapNodeState("3", RoadMapNodeStatus.UNLOCKED, RoadMapNodePosition.MIDDLE, RoadMapNodeCategory.COURSE, "Middle Node"),
+        RoadMapNodeState("4", RoadMapNodeStatus.LOCKED, RoadMapNodePosition.LAST, RoadMapNodeCategory.COURSE, "Last Node")
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
     ) {
-        RoadMapNode(
-            nodeState = RoadMapNodeState(RoadMapNodeStatus.COMPLETED, RoadMapNodePosition.FIRST, "something"),
-            circleParameters = CircleParametersDefaults.circleParameters(
-                backgroundColor = Color.LightGray
-            ),
-            lineParameters = LineParametersDefaults.linearGradient(
-                startColor = Color.LightGray,
-                endColor = Color.Blue
-            )
-        ) { modifier -> MessageBubble(modifier, containerColor = Color.LightGray, "test 3", onClick = {
-            println("Hello")
-        } )}
+        itemsIndexed(nodes) { index, node ->
+            val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
+            val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
+                LineParametersDefaults.linearGradient(
+                    startColor = node.status.getColor(),
+                    endColor = nextNodeColor
+                )
+            } else null
 
-        RoadMapNode(
-            nodeState = RoadMapNodeState(RoadMapNodeStatus.LOCKED, RoadMapNodePosition.MIDDLE, "something 2"),
-            circleParameters = CircleParametersDefaults.circleParameters(
-                backgroundColor = Color.Blue
-            ),
-            contentStartOffset = 16.dp,
-            lineParameters = LineParametersDefaults.linearGradient(
-                startColor = Color.Blue,
-                endColor = Color.Red
-            )
-        ) { modifier -> MessageBubble(modifier, containerColor = Color.Blue, "test 2", onClick = {
-            println("Hello")
-        } )}
-
-        RoadMapNode(
-            nodeState = RoadMapNodeState(RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.LAST, "something 3"),
-            circleParameters = CircleParametersDefaults.circleParameters(
-                backgroundColor = Color.Red,
-                stroke = StrokeParameters(color = Color.Red, width = 2.dp),
-                //icon = R.drawable.ic_launcher_background
-            )
-        ) { modifier -> MessageBubble(modifier, containerColor = Color.Red, "test 1", onClick = {
-            println("Hello")
-        } )}
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun RoadMapPreview_2() {
-    val nodeStates = listOf(
-        RoadMapNodeState(RoadMapNodeStatus.COMPLETED, RoadMapNodePosition.FIRST, "First Node"),
-        RoadMapNodeState(RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.MIDDLE, "Middle Node"),
-        RoadMapNodeState(RoadMapNodeStatus.LOCKED, RoadMapNodePosition.LAST, "Last Node")
-    )
-    // Colors are not working correctly, needs handling
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        nodeStates.forEach { nodeState ->
             RoadMapNode(
-                nodeState = nodeState,
+                nodeState = node,
                 circleParameters = CircleParametersDefaults.circleParameters(
-                    backgroundColor = nodeState.status.getColor(),
-                    icon = nodeState.status.getIcon()
+                    backgroundColor = node.status.getColor(),
+                    stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
+                    icon = node.status.getIcon()
                 ),
-                lineParameters = if (nodeState.position != RoadMapNodePosition.LAST) {
-                    val nodeColor = nodeState.status.getColor()
-                    LineParametersDefaults.linearGradient(
-                        startColor = nodeColor,
-                        endColor = nodeColor
-                    )
-                } else null
-            ) { modifier ->
-                MessageBubble(modifier, containerColor = nodeState.status.getColor(), nodeState.message ?: "", onClick = {
-                    println("Clicked on ${nodeState.message}")
-                })
-            }
+                lineParameters = lineParameters,
+                content = { modifier ->
+                    node.title?.let {
+                        MessageBubble(
+                            modifier,
+                            containerColor = node.status.getColor(),
+                            text = it,
+                            onClick = {
+                                // No action in preview
+                            }
+                        )
+                    }
+                }
+            )
         }
     }
 }
+
 @Composable
 fun MessageBubble(modifier: Modifier, containerColor: Color, text: String, onClick: () -> Unit) {
     Card(
