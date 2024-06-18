@@ -31,7 +31,6 @@ class AppModuleImpl(
         return FirebaseFirestore.getInstance()
     }
 
-
     private val dataSource = RoadMapDataSource(getFirestoreDatabase())
 
     override val roadMapRepository: RoadMapRepository by lazy {

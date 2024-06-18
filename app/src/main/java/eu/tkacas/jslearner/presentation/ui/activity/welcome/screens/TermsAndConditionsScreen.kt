@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TermsAndConditionsScreen(
     navController: NavController

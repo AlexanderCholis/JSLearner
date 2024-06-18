@@ -4,6 +4,7 @@ import eu.tkacas.jslearner.data.model.Course
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.Question
 import eu.tkacas.jslearner.data.source.remote.RoadMapDataSource
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 
 class RoadMapRepositoryImpl(private val dataSource: RoadMapDataSource) : RoadMapRepository {
