@@ -104,7 +104,7 @@ fun StartQuizScreen() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         GeneralButtonComponent(
-                            value = "Start Quiz",
+                            valueId = R.string.start_quiz,
                             onButtonClicked = { }
                         )
                     }

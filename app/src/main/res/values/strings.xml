@@ -83,4 +83,11 @@
     <string name="jslearner_covers_fundamental_coding_concepts_using_fun_bite_size_puzzles">JSLearner covers fundamental coding concepts using fun, bite size puzzles. In the process, you will also learn how to build a website, create animations, automate common office tasks, and even prepare for a programming interview.</string>
     <string name="in_just_5_minutes_or_less_per_day_jslearner_will_help_you_keep_your_coding_skills_fresh">In just 5 minutes or less per day, JSLearner will help you keep your coding skills fresh. Through quick visual puzzles on your phone, you can refresh your coding knowledge on the go.</string>
     <string name="in_5_minutes_or_less_per_day_jslearner_will_keep_your_coding_skills_sharp">In 5 minutes or less per day, JSLearner will keep your coding skills sharp, introduce JavaScript concepts and help you level up your career or discover new paths on your coding journey.</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="finish">Finish</string>
+    <string name="back">Back</string>
+    <string name="start">Start</string>
+    <string name="start_module">Start Module</string>
+    <string name="start_quiz">Start Quiz</string>
 </resources>

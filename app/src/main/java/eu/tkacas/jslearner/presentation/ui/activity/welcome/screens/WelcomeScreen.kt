@@ -70,7 +70,7 @@ fun WelcomeScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         GeneralButtonComponent(
-                            value = stringResource(R.string.login),
+                            valueId = R.string.login,
                             onButtonClicked = {
                                 navController.navigate("login")
                             }

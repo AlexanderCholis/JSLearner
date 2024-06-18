@@ -104,7 +104,7 @@ fun StartModuleScreen() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         GeneralButtonComponent(
-                            value = "Start Module",
+                            valueId = R.string.start_module,
                             onButtonClicked = { }
                         )
                     }
