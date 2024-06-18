@@ -12,20 +12,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
 import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
 import eu.tkacas.jslearner.domain.model.roadmap.getColor
 import eu.tkacas.jslearner.domain.model.roadmap.getIcon
+import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
+import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import eu.tkacas.jslearner.presentation.ui.component.default.CircleParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.LineParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.MessageBubble
 import eu.tkacas.jslearner.presentation.ui.component.default.RoadMapNode
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,18 +42,28 @@ internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
     }
 
     val context = LocalContext.current
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    val navController = rememberNavController()
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                ),
-                title = {
-                    Text("Road Map")
-                }
+            MenuAppTopBar(
+                color = MaterialTheme.colorScheme.primaryContainer,
+                onMenuClick = {
+                      scope.launch {
+                          if(drawerState.isOpen) {
+                              drawerState.close()
+                          } else {
+                              drawerState.open()
+                          }
+                      }
+                    //Toast.makeText(context, "Menu clicked", Toast.LENGTH_SHORT).show()
+                },
+                title = "Road Map"
             )
         }
+
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -74,7 +89,6 @@ internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
                                     endColor = nextNodeColor
                                 )
                             } else null
-
                             RoadMapNode(
                                 nodeState = node,
                                 circleParameters = CircleParametersDefaults.circleParameters(
@@ -98,6 +112,7 @@ internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
                             )
                         }
                     }
+                    NavigationDrawer(navController = navController, drawerState = drawerState)
                 }
                 is RoadMapViewModel.RoadMapUiState.Error -> {
                     Text("Error: ${(uiState as RoadMapViewModel.RoadMapUiState.Error).message}", color = MaterialTheme.colorScheme.error)
