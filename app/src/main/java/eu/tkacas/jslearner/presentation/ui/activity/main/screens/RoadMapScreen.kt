@@ -85,13 +85,13 @@ internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
                                 lineParameters = lineParameters,
                                 content = { modifier ->
                                     val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
-                                    val displayText = "${node.title}\n$nodeInfo"
+                                    val displayText = "${node.title}"
                                     MessageBubble(
                                         modifier,
                                         containerColor = node.status.getColor(),
                                         text = displayText,
                                         onClick = {
-                                            Toast.makeText(context, displayText, Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
                                         }
                                     )
                                 }
