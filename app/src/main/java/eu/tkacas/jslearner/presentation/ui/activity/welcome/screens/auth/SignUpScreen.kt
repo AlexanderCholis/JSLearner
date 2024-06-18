@@ -186,7 +186,7 @@ fun SignUpScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 GeneralButtonComponent(
-                    value = stringResource(R.string.register),
+                    valueId = R.string.register,
                     onButtonClicked = {
                         viewModel.onEvent(SignUpFormEvent.Submit)
                     }
