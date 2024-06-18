@@ -34,13 +34,13 @@ fun TermsAndConditionsScreen(
                 }
             )
         },
-        content = {
+        content = { padding ->
             Surface(
                 color = Color.White,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
+                    .padding(start = 28.dp, end = 28.dp, top = 88.dp, bottom = 28.dp)
             ) {
                 LazyColumn(
                     modifier = Modifier

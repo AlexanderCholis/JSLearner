@@ -1,6 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
-import android.annotation.SuppressLint
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,7 +18,7 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
 @Composable
 fun PrivacyPolicyScreen(
     navController: NavController
@@ -35,13 +35,13 @@ fun PrivacyPolicyScreen(
                 }
             )
         },
-        content = {
+        content = { padding ->
             Surface(
                 color = Color.White,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
+                    .padding(start = 28.dp, end = 28.dp, top = 88.dp, bottom = 28.dp)
             ) {
                 LazyColumn(
                     modifier = Modifier
