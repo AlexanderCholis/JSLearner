@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevel
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
@@ -75,7 +76,7 @@ fun ExperienceTextScreen(
                         verticalArrangement = Arrangement.Bottom,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        GeneralButtonComponent(value = "Next", onButtonClicked = {
+                        GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
                             if (currentIndex < texts.size - 1) {
                                 currentIndex++
                             } else {
