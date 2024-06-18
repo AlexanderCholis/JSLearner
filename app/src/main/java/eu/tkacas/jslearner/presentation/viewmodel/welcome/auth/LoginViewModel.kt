@@ -27,15 +27,6 @@ class LoginViewModel(
     private val _loginFlow = MutableStateFlow<Result<FirebaseUser>?>(null)
     val loginFlow: StateFlow<Result<FirebaseUser>?> = _loginFlow
 
-    private val currentUser: FirebaseUser?
-        get() = authRepository.currentUser
-
-    init {
-        if (currentUser != null) {
-            _loginFlow.value = Result.Success(authRepository.currentUser!!)
-        }
-    }
-
     fun onEvent(event: LoginFormEvent) {
         when(event) {
             is LoginFormEvent.EmailChanged -> {

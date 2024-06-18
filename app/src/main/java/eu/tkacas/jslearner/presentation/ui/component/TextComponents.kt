@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -8,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -66,5 +68,23 @@ fun BulletText(value: String) {
         style = TextStyle(
             fontSize = 16.sp
         )
+    )
+}
+
+@Composable
+fun NormalText(@StringRes textId: Int) {
+    Text(
+        text = stringResource(id = textId),
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    )
+}
+
+@Composable
+fun BoldText(@StringRes textId: Int){
+    Text(
+        text = stringResource(id = textId),
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
     )
 }

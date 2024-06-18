@@ -15,21 +15,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
-import eu.tkacas.jslearner.domain.model.experience.ExperienceLevelItem
 import eu.tkacas.jslearner.presentation.ui.component.ExperienceLevelCard
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewModel
 
 @Composable
-fun ExperienceLevelScreen() {
-    val levels = listOf(
-        ExperienceLevelItem(R.drawable.star_1, R.string.no_experience, ExperienceLevel.NO_EXPERIENCE),
-        ExperienceLevelItem(R.drawable.stars_2, R.string.some_experience, ExperienceLevel.SOME_EXPERIENCE),
-        ExperienceLevelItem(R.drawable.stars_3, R.string.a_lot_of_experience, ExperienceLevel.A_LOT_OF_EXPERIENCE)
-    )
+fun ExperienceLevelScreen(
+    navController: NavController,
+    viewModel: ExperienceLevelViewModel
+) {
+    val uiLevels = viewModel.uiLevels
 
     Surface(
         color = Color.White,
@@ -51,22 +49,16 @@ fun ExperienceLevelScreen() {
                 modifier = Modifier
                     .padding(bottom = 20.dp)
             )
-            levels.forEachIndexed { _, item ->
+            uiLevels.forEachIndexed { _, item ->
                 Spacer(modifier = Modifier.height(16.dp))
                 ExperienceLevelCard(
                     image = item.image,
                     text = item.text,
                     onClick = {
-                        // TODO navigate to correct screen based on the selected experience level
+                        navController.navigate("experienceText/${item.level}")
                     }
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun ExperienceLevelScreenPreview() {
-    ExperienceLevelScreen()
 }

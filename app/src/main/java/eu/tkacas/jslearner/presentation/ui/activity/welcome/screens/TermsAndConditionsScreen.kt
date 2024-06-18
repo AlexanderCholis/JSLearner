@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
+import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
 fun TermsAndConditionsScreen(
@@ -28,17 +28,19 @@ fun TermsAndConditionsScreen(
         topBar = {
             BackAppTopBar(
                 title = stringResource(id = R.string.terms_and_conditions_header),
+                color = SkyBlue,
                 onBackClick = {
                     navController.navigateUp()
                 }
             )
         },
-        content = { padding ->
+        content = {
             Surface(
+                color = Color.White,
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(start = 28.dp, end = 28.dp, top = 60.dp, bottom = 28.dp)
+                    .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
             ) {
                 LazyColumn(
                     modifier = Modifier

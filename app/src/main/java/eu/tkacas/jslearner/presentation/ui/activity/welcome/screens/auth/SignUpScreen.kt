@@ -16,6 +16,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -37,6 +39,7 @@ import eu.tkacas.jslearner.presentation.ui.events.SignUpFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.auth.SignUpFormState
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 
 @Composable
 fun SignUpScreen(
@@ -45,24 +48,21 @@ fun SignUpScreen(
     state: SignUpFormState = viewModel.state
 ) {
     val context = LocalContext.current
+    val signupFlowState by viewModel.signupFlow.collectAsState()
 
-    LaunchedEffect(viewModel) {
-        viewModel.signupFlow.collect {
-            when (it) {
-                is Result.Error -> {
-                    // Toast.makeText(context, it.errorMessage, Toast.LENGTH_LONG).show()
-                }
-
-                is Result.Loading -> {
-                    //Toast.makeText(context, "Loading...", Toast.LENGTH_SHORT).show()
-                }
-
-                is Result.Success<*> -> {
-                    Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
-                }
-
-                null -> {}
+    LaunchedEffect(signupFlowState) {
+        when (signupFlowState) {
+            is Result.Error -> {
+                // The error message is showed up into UI
             }
+            is Result.Loading -> {
+                // Loading state is handled in the UI below
+            }
+            is Result.Success<*> -> {
+                Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
+                navController.navigate("experienceLevel")
+            }
+            null -> {}
         }
     }
 
@@ -73,6 +73,12 @@ fun SignUpScreen(
             .background(Color.White)
             .padding(start = 28.dp, end = 28.dp, top = 60.dp, bottom = 28.dp)
     ) {
+        when (signupFlowState) {
+            is Result.Loading -> {
+                ProgressIndicatorComponent()
+            }
+            else -> {}
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -153,7 +159,7 @@ fun SignUpScreen(
                             if (it == "Privacy Policy") {
                                 navController.navigate("privacyPolicy")
                             } else if (it == "Terms of Use.") {
-                                navController.navigate("termsOfUse")
+                                navController.navigate("termsAndConditions")
                             }
                         },
                         errorMessageValue = state.termsError ?: "",
