@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.entity.experience.ExperienceLevel
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
@@ -79,10 +79,10 @@ fun ExperienceTextScreen(
                             if (currentIndex < texts.size - 1) {
                                 currentIndex++
                             } else {
-                                navController.navigate("learningReason")
+                                navController.navigate("learningReason/$experienceLevel")
                             }
-                        })
-                        }
+                        )
+                    }
                 }
             }
         }

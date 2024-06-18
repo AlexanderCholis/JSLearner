@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.entity
+package eu.tkacas.jslearner.domain.model
 
 data class User(
     val firstName: String,

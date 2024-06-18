@@ -31,8 +31,8 @@ import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.DividerTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.HaveAnAccountOrNotClickableTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.PasswordTextFieldComponent
-import eu.tkacas.jslearner.presentation.ui.events.LoginFormEvent
-import eu.tkacas.jslearner.presentation.ui.state.LoginFormState
+import eu.tkacas.jslearner.presentation.ui.events.auth.LoginFormEvent
+import eu.tkacas.jslearner.presentation.ui.state.auth.LoginFormState
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.ErrorMessageText

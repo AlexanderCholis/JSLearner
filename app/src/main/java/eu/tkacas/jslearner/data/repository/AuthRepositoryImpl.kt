@@ -8,7 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.jslearner.data.await
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.Result
-import eu.tkacas.jslearner.domain.entity.User
+import eu.tkacas.jslearner.domain.model.User
 
 class AuthRepositoryImpl (
     private val firebaseAuth: FirebaseAuth,

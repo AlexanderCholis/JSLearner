@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.presentation.ui.events
+package eu.tkacas.jslearner.presentation.ui.events.auth
 
 sealed class SignUpFormEvent {
     data class FirstNameChanged(val firstName: String): SignUpFormEvent()
