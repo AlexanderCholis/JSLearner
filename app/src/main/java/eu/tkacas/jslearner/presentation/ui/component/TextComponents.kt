@@ -86,7 +86,8 @@ fun BoldText(@StringRes textId: Int){
     Text(
         text = stringResource(id = textId),
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
+        fontSize = 20.sp,
+        textAlign = TextAlign.Center
     )
 }
 
