@@ -8,19 +8,33 @@ import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 class GetRoadMapUseCase(private val repository: RoadMapRepository) {
 
     suspend fun execute(userId: String): List<RoadMapNodeState> {
+        val experienceLevel = "beginner" // TODO: get user experience level from repository
+
         val courses = repository.getCourses()
         val completedCourses = repository.getUserCompletedCourses(userId)
         val roadMapNodes = mutableListOf<RoadMapNodeState>()
 
-        for (course in courses) {
+        for ((index, course) in courses.withIndex()) {
             val lessons = repository.getLessons(course.id)
+            val isCourseCompleted = lessons.all { lesson -> completedCourses[course.id]?.contains(lesson.id) == true }
+            val courseStatus = when {
+                isCourseCompleted -> RoadMapNodeStatus.COMPLETED
+                else -> RoadMapNodeStatus.IN_PROGRESS // or other logic to determine LOCKED status
+            }
+            roadMapNodes.add(RoadMapNodeState(courseStatus, RoadMapNodePosition.MIDDLE, course.title))
+
             for (lesson in lessons) {
-                val isCompleted = completedCourses[course.id]?.contains(lesson.id) == true
-                val status = when {
-                    isCompleted -> RoadMapNodeStatus.COMPLETED
-                    else -> RoadMapNodeStatus.IN_PROGRESS // or other logic to determine LOCKED status
+                val isLessonCompleted = completedCourses[course.id]?.contains(lesson.id) == true
+                val lessonStatus = when {
+                    isLessonCompleted -> RoadMapNodeStatus.COMPLETED
+                    else -> RoadMapNodeStatus.LOCKED // or other logic to determine LOCKED status
                 }
-                roadMapNodes.add(RoadMapNodeState(status, RoadMapNodePosition.MIDDLE, lesson.title))
+                val position = if (index == courses.lastIndex && lesson == lessons.last()) {
+                    RoadMapNodePosition.LAST
+                } else {
+                    RoadMapNodePosition.MIDDLE
+                }
+                roadMapNodes.add(RoadMapNodeState(lessonStatus, position, lesson.title))
             }
         }
 
