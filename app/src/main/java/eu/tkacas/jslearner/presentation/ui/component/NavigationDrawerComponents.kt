@@ -120,7 +120,7 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                     )
                 }
                 Column(Modifier.fillMaxSize()) {
-                    val context = LocalContext.current
+                    //val context = LocalContext.current
                     Spacer(Modifier.weight(1f))
                     NavigationDrawerItem(
                         icon = { Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
