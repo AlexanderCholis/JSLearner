@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
 import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
 import eu.tkacas.jslearner.domain.model.roadmap.getColor
@@ -34,7 +33,10 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
+internal fun RoadMapScreen(
+    navController: NavController,
+    viewModel: RoadMapViewModel
+) {
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -44,7 +46,6 @@ internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
     val context = LocalContext.current
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val navController = rememberNavController()
 
     Scaffold(
         topBar = {
@@ -58,7 +59,6 @@ internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
                               drawerState.open()
                           }
                       }
-                    //Toast.makeText(context, "Menu clicked", Toast.LENGTH_SHORT).show()
                 },
                 title = "Road Map"
             )
