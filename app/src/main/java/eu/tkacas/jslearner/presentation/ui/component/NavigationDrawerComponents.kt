@@ -46,14 +46,21 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                     CourseTopCard(points = 500, days = 12, answers = 3) //should be given from the database
                     Spacer(Modifier.height(12.dp))
 
+//                    GeneralButtonComponent(valueId = R.string.login, onButtonClicked = {
+//                        navController.navigate("account")
+//                    })
+
                     NavigationDrawerItem(
                         icon = { Image(painter = painterResource(id = R.drawable.account), contentDescription = null) },
                         label = { Text("Account") },
                         selected = selectedItem.value == R.drawable.account,
                         onClick = {
+                            //navController.navigate("account")
                             scope.launch { drawerState.close() }
                             selectedItem.value = R.drawable.account
-                            navController.navigate("account")
+                            if (selectedItem.value == R.drawable.account) {
+                                navController.navigate("account")
+                            }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
@@ -92,6 +99,7 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
+
                     //this is for the drawer items
 //                    items.forEach { item ->
 //                        NavigationDrawerItem(

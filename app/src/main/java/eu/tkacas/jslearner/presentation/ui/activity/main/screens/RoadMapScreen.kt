@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
 import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
@@ -32,7 +33,6 @@ import eu.tkacas.jslearner.presentation.ui.component.default.RoadMapNode
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun RoadMapScreen(viewModel: RoadMapViewModel) {
     val uiState by viewModel.uiState.collectAsState()
