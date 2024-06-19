@@ -1,5 +1,7 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,10 +23,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.activity.welcome.WelcomeActivity
 import kotlinx.coroutines.launch
 
 @Composable
@@ -114,6 +120,7 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                     )
                 }
                 Column(Modifier.fillMaxSize()) {
+                    val context = LocalContext.current
                     Spacer(Modifier.weight(1f))
                     NavigationDrawerItem(
                         icon = { Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
@@ -122,7 +129,22 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                         onClick = {
                             scope.launch { drawerState.close() }
                             selectedItem.value = R.drawable.logout
-                            navController.navigate("logout")
+                            //Firebase.auth.signOut()
+
+                            //Navigate to WelcomeScreen through WelcomeActivity after logout
+
+                            // Start WelcomeActivity
+//                            val intent = Intent(context, WelcomeActivity::class.java)
+//                            context.startActivity(intent)
+
+                            // Finish the current activity (MainActivity) to prevent going back
+//                            (context as Activity).finish()
+
+//                            navController.navigate("welcome") { // Navigate to login after logout
+//                                popUpTo(0) {  // Clear backstack to prevent going back to logged-in screens
+//                                    inclusive = true
+//                                }
+//                            }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
