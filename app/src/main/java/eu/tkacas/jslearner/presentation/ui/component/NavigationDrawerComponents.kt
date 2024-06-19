@@ -43,7 +43,8 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
             R.drawable.stats,
             R.drawable.logout, //(change it to red color)
         )
-    val selectedItem = remember { mutableStateOf(items[0]) }
+    //val selectedItem = remember { mutableStateOf(items[0]) }
+    val selectedItem = remember { mutableStateOf(-1) }
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
