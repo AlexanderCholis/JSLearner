@@ -27,7 +27,6 @@ fun AccountScreen(
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val navController = rememberNavController()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(

@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -43,15 +44,22 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
             ModalDrawerSheet() {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
                     Spacer(Modifier.height(12.dp))
-                    CourseTopCard(points = 500, days = 12, answers = 3) //should be given from the database
+
+                    CourseTopCard(
+                        points = 500,
+                        days = 12,
+                        answers = 3
+                    ) //should be given from the database
+
                     Spacer(Modifier.height(12.dp))
 
-//                    GeneralButtonComponent(valueId = R.string.login, onButtonClicked = {
-//                        navController.navigate("account")
-//                    })
-
                     NavigationDrawerItem(
-                        icon = { Image(painter = painterResource(id = R.drawable.account), contentDescription = null) },
+                        icon = {
+                            Image(
+                                painter = painterResource(id = R.drawable.account),
+                                contentDescription = null
+                            )
+                        },
                         label = { Text("Account") },
                         selected = selectedItem.value == R.drawable.account,
                         onClick = {
@@ -66,31 +74,50 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                     )
 
                     NavigationDrawerItem(
-                        icon = { Image(painter = painterResource(id = R.drawable.settings), contentDescription = null) },
+                        icon = {
+                            Image(
+                                painter = painterResource(id = R.drawable.settings),
+                                contentDescription = null
+                            )
+                        },
                         label = { Text("Settings") },
                         selected = selectedItem.value == R.drawable.settings,
                         onClick = {
                             scope.launch { drawerState.close() }
                             selectedItem.value = R.drawable.settings
                             navController.navigate("settings")
+                            if (selectedItem.value == R.drawable.settings) {
+                                navController.navigate("settings")
+                            }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
 
                     NavigationDrawerItem(
-                        icon = { Image(painter = painterResource(id = R.drawable.stats), contentDescription = null) },
+                        icon = {
+                            Image(
+                                painter = painterResource(id = R.drawable.stats),
+                                contentDescription = null
+                            )
+                        },
                         label = { Text("Stats") },
                         selected = selectedItem.value == R.drawable.stats,
                         onClick = {
                             scope.launch { drawerState.close() }
                             selectedItem.value = R.drawable.stats
                             navController.navigate("stats")
+                            if (selectedItem.value == R.drawable.stats) {
+                                navController.navigate("stats")
+                            }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
+                }
+                Column(Modifier.fillMaxSize()) {
+                    Spacer(Modifier.weight(1f))
                     NavigationDrawerItem(
                         icon = { Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
-                        label = { Text("Logout") },
+                        label = { Text("Logout",  color = Color.Red) },
                         selected = selectedItem.value == R.drawable.logout,
                         onClick = {
                             scope.launch { drawerState.close() }
@@ -99,23 +126,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
-
-                    //this is for the drawer items
-//                    items.forEach { item ->
-//                        NavigationDrawerItem(
-//                            icon = { Image(painter = painterResource(id = item), contentDescription = null) },
-//                            label = { Text(item.toString()) },
-//                            selected = item == selectedItem.value,
-//                            onClick = {
-//                                scope.launch { drawerState.close() }
-//                                selectedItem.value = item
-//                                if (item == R.drawable.account) {
-//                                    navController.navigate("termsAndConditions")
-//                                }
-//                            },
-//                            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-//                        )
-//                    }
                 }
             }
         },
