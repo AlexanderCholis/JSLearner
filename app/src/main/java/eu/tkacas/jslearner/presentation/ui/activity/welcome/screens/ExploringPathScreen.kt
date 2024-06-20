@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,10 +15,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.activity.main.MainActivity
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
@@ -31,6 +34,7 @@ fun ExploringPathScreen(
     experienceLevel: String,
     selectedReason: String
 ) {
+    val context = LocalContext.current
     val viewModel = viewModel<ExploringPathViewModel>()
     val isExpandedModule1 = remember { mutableStateOf(false) }
     val isExpandedModule2 = remember { mutableStateOf(false) }
@@ -82,7 +86,9 @@ fun ExploringPathScreen(
                         GeneralButtonComponent(
                             valueId = R.string.looks_good,
                             onButtonClicked = {
-                                //TODO: Navigate to Roadmap screen - Intent to MainActivity and send data to firebase - firestore
+                                //TODO: Send data to firebase - firestore
+                                val intent = Intent(context, MainActivity::class.java)
+                                context.startActivity(intent)
                             }
                         )
                     }
