@@ -18,7 +18,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
                 document.toObject<Course>().copy(id = document.id)
             }
         } catch (e: Exception) {
-            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            Log.w("FirestoreDataSource", "Error getting documents.", e)
             emptyList()
         }
     }
@@ -30,7 +30,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
                 document.toObject<Lesson>().copy(id = document.id)
             }
         } catch (e: Exception) {
-            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            Log.w("FirestoreDataSource", "Error getting documents.", e)
             emptyList()
         }
     }
@@ -44,7 +44,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
                 document.toObject<Question>().copy(id = document.id)
             }
         } catch (e: Exception) {
-            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            Log.w("FirestoreDataSource", "Error getting documents.", e)
             emptyList()
         }
     }
@@ -56,7 +56,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
                 document.id to (document["list_of_completed_lessons"] as List<String>)
             }
         } catch (e: Exception) {
-            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            Log.w("FirestoreDataSource", "Error getting documents.", e)
             emptyMap()
         }
     }
@@ -71,7 +71,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
                 document.toObject<Course>().copy(id = document.id)
             }
         } catch (e: Exception) {
-            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            Log.w("FirestoreDataSource", "Error getting documents.", e)
             emptyList()
         }
     }
