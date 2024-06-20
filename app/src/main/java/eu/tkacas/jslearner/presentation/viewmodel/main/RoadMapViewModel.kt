@@ -18,7 +18,7 @@ class RoadMapViewModel(
 
     val user = authRepository.currentUser
 
-    sealed class RoadMapUiState {
+    sealed class RoadMapUiState { //TODO: Move to separate file
         object Loading : RoadMapUiState()
         data class Success(val nodes: List<RoadMapNodeState>) : RoadMapUiState()
         data class Error(val message: String) : RoadMapUiState()
