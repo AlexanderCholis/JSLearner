@@ -34,8 +34,6 @@ class MainActivity : ComponentActivity() {
                         }
                     )
 
-                    //RoadMapScreen(roadMapViewModel)
-
                     MainNavigation(roadMapViewModel = roadMapViewModel)
                 }
             }
