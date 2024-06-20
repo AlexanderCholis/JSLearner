@@ -51,7 +51,6 @@ class WelcomeActivity : ComponentActivity() {
                     val exploringPathViewModel = viewModel<ExploringPathViewModel>(
                         factory = viewModelFactory {
                             ExploringPathViewModel(
-                                exploringPathRepository = JSLearner.appModule.exploringPathRepository,
                                 getCoursesBasedOnExperienceUseCase = JSLearner.appModule.getCoursesBasedOnExperienceUseCase
                             )
                         }
