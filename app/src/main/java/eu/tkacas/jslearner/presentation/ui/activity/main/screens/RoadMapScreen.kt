@@ -25,6 +25,7 @@ import eu.tkacas.jslearner.domain.model.roadmap.getColor
 import eu.tkacas.jslearner.domain.model.roadmap.getIcon
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
+import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.ui.component.default.CircleParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.LineParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.MessageBubble
@@ -74,7 +75,7 @@ internal fun RoadMapScreen(
         ) {
             when (uiState) {
                 is RoadMapViewModel.RoadMapUiState.Loading -> {
-                    CircularProgressIndicator()
+                    ProgressIndicatorComponent()
                 }
                 is RoadMapViewModel.RoadMapUiState.Success -> {
                     LazyColumn(
