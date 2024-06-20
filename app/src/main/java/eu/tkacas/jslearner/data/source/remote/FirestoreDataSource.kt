@@ -4,11 +4,12 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import eu.tkacas.jslearner.data.model.Course
+import eu.tkacas.jslearner.data.model.CourseLevel
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.Question
 import kotlinx.coroutines.tasks.await
 
-class RoadMapDataSource(private val db: FirebaseFirestore) {
+class FirestoreDataSource(private val db: FirebaseFirestore) {
 
     suspend fun getCourses(): List<Course> {
         return try {
@@ -59,4 +60,20 @@ class RoadMapDataSource(private val db: FirebaseFirestore) {
             emptyMap()
         }
     }
+
+    suspend fun getCoursesBasedOnLevel(courseLevel: CourseLevel): List<Course> {
+        return try {
+            val result = db.collection("courses")
+                .whereEqualTo("level", courseLevel.name)
+                .get()
+                .await()
+            result.map { document ->
+                document.toObject<Course>().copy(id = document.id)
+            }
+        } catch (e: Exception) {
+            Log.w("RoadMapDataSource", "Error getting documents.", e)
+            emptyList()
+        }
+    }
+
 }
