@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,6 +41,10 @@ fun ExploringPathScreen(
 ) {
     val context = LocalContext.current
 
+    LaunchedEffect(Unit) {
+        viewModel.returnCourses(experienceLevel)
+    }
+
     Scaffold(
         modifier= Modifier
             .fillMaxSize(),
@@ -65,16 +71,15 @@ fun ExploringPathScreen(
                 ) {
                     BoldText(textId = R.string.your_path)
                     NormalText(textId = R.string.your_path_description)
-                    Spacer(modifier = Modifier.padding(8.dp))
-                    PathModuleCard(
-                        moduleTitleText = "Demo Module",
-                        moduleDescriptionText = "This is a demo module to show how the module card looks like"
-                    )
-                    Spacer(modifier = Modifier.padding(8.dp))
-                    PathModuleCard(
-                        moduleTitleText = "Demo Module2",
-                        moduleDescriptionText = "This is a demo module to show how the module card looks like for the second module"
-                    )
+                    LazyColumn {
+                        items(viewModel.coursesUiList.size) { index ->
+                            Spacer(modifier = Modifier.padding(8.dp))
+                            PathModuleCard(
+                                moduleTitleText = viewModel.coursesUiList[index].title,
+                                moduleDescriptionText = viewModel.coursesUiList[index].description
+                            )
+                        }
+                    }
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
