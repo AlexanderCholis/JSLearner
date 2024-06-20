@@ -92,4 +92,5 @@
     <string name="start_quiz">Start Quiz</string>
     <string name="looks_good">Looks good</string>
     <string name="open_menu">Open Menu</string>
+    <string name="close_menu">Closes Menu</string>
 </resources>

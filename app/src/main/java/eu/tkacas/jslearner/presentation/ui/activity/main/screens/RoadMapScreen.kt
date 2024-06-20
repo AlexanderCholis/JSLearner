@@ -60,7 +60,8 @@ internal fun RoadMapScreen(
                           }
                       }
                 },
-                title = "Road Map"
+                title = "Road Map",
+                drawerState = drawerState
             )
         }
 

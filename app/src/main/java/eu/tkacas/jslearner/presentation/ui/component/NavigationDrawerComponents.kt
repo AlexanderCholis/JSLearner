@@ -36,14 +36,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
     val scope = rememberCoroutineScope()
-    val items =
-        listOf(
-            R.drawable.account,
-            R.drawable.settings,
-            R.drawable.stats,
-            R.drawable.logout, //(change it to red color)
-        )
-    //val selectedItem = remember { mutableStateOf(items[0]) }
     val selectedItem = remember { mutableStateOf(-1) }
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -70,7 +62,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                         label = { Text("Account") },
                         selected = selectedItem.value == R.drawable.account,
                         onClick = {
-                            //navController.navigate("account")
                             scope.launch { drawerState.close() }
                             selectedItem.value = R.drawable.account
                             if (selectedItem.value == R.drawable.account) {
@@ -79,7 +70,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
-
                     NavigationDrawerItem(
                         icon = {
                             Image(
@@ -99,7 +89,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
-
                     NavigationDrawerItem(
                         icon = {
                             Image(

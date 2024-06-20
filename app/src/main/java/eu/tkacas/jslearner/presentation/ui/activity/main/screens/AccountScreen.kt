@@ -43,9 +43,9 @@ fun AccountScreen(
                                 drawerState.open()
                             }
                         }
-                        //Toast.makeText(context, "Menu clicked", Toast.LENGTH_SHORT).show()
                     },
-                    title = "My Account"
+                    title = "My Account",
+                    drawerState = drawerState
                 )
             },
         ) { innerPadding ->

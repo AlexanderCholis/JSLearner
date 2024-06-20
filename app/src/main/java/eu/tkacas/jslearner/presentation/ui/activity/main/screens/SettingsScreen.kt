@@ -41,9 +41,9 @@ fun SettingsScreen(
                                 drawerState.open()
                             }
                         }
-                        //Toast.makeText(context, "Menu clicked", Toast.LENGTH_SHORT).show()
                     },
-                    title = "Settings"
+                    title = "Settings",
+                    drawerState = drawerState
                 )
             },
         ) { innerPadding ->
