@@ -39,6 +39,7 @@ import eu.tkacas.jslearner.presentation.ui.events.auth.SignUpFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.auth.SignUpFormState
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.presentation.ui.component.ErrorMessageText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 
 @Composable
@@ -167,12 +168,13 @@ fun SignUpScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(15.dp))
-                Text(
-                    text = state.errorMessage ?: "",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.error
-                )
+                ErrorMessageText(errorMessage = state.errorMessage)
+//                Text(
+//                    text = state.errorMessage ?: "",
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.fillMaxWidth(),
+//                    color = MaterialTheme.colorScheme.error
+//                )
             }
         }
         Column(

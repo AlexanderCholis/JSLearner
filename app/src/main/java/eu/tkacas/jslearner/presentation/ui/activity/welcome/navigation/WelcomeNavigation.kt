@@ -18,7 +18,6 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewMod
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 
-
 @Composable
 internal fun WelcomeNavigation(
     authRepository: AuthRepository,

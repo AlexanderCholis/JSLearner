@@ -8,7 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
+import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigation
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
@@ -32,7 +34,9 @@ class MainActivity : ComponentActivity() {
                         }
                     )
 
-                    RoadMapScreen(roadMapViewModel)
+                    //RoadMapScreen(roadMapViewModel)
+
+                    MainNavigation(roadMapViewModel = roadMapViewModel)
                 }
             }
         }

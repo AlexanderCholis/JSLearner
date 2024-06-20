@@ -1,8 +1,10 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -11,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +36,42 @@ fun BackAppTopBar(
                     Image(
                         painter = painterResource(id = R.drawable.arrow_back),
                         contentDescription = stringResource(id = R.string.go_back)
+                    )
+                }
+            )
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = color
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MenuAppTopBar(
+    title: String = "",
+    color: Color,
+    onMenuClick: () -> Unit,
+    drawerState: DrawerState
+){
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = {
+                    onMenuClick()
+                },
+                content = {
+                    Image(
+                        //painter = painterResource(id = R.drawable.menu),
+                        //contentDescription = stringResource(id = R.string.open_menu)
+                        painter = if (drawerState.isOpen) painterResource(id = R.drawable.close) else painterResource(id = R.drawable.menu),
+                        contentDescription = stringResource(id = if (drawerState.isOpen) R.string.close_menu else R.string.open_menu)
                     )
                 }
             )
