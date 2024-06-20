@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
+import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.presentation.ui.activity.main.MainActivity
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
@@ -31,13 +33,11 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExploringPathViewModel
 @Composable
 fun ExploringPathScreen(
     navController: NavController,
-    experienceLevel: String,
-    selectedReason: String
+    viewModel: ExploringPathViewModel,
+    experienceLevel: ExperienceLevel,
+    selectedReason: LearningReason
 ) {
     val context = LocalContext.current
-    val viewModel = viewModel<ExploringPathViewModel>()
-    val isExpandedModule1 = remember { mutableStateOf(false) }
-    val isExpandedModule2 = remember { mutableStateOf(false) }
 
     Scaffold(
         modifier= Modifier
@@ -68,14 +68,12 @@ fun ExploringPathScreen(
                     Spacer(modifier = Modifier.padding(8.dp))
                     PathModuleCard(
                         moduleTitleText = "Demo Module",
-                        moduleDescriptionText = "This is a demo module to show how the module card looks like",
-                        isExpanded = isExpandedModule1
+                        moduleDescriptionText = "This is a demo module to show how the module card looks like"
                     )
                     Spacer(modifier = Modifier.padding(8.dp))
                     PathModuleCard(
                         moduleTitleText = "Demo Module2",
-                        moduleDescriptionText = "This is a demo module to show how the module card looks like for the second module",
-                        isExpanded = isExpandedModule2,
+                        moduleDescriptionText = "This is a demo module to show how the module card looks like for the second module"
                     )
                     Column(
                         modifier = Modifier
