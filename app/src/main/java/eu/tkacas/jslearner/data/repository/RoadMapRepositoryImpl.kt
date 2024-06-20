@@ -3,10 +3,10 @@ package eu.tkacas.jslearner.data.repository
 import eu.tkacas.jslearner.data.model.Course
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.Question
-import eu.tkacas.jslearner.data.source.remote.RoadMapDataSource
+import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 
-class RoadMapRepositoryImpl(private val dataSource: RoadMapDataSource) : RoadMapRepository {
+class RoadMapRepositoryImpl(private val dataSource: FirestoreDataSource) : RoadMapRepository {
 
     override suspend fun getCourses() : List<Course> {
         return dataSource.getCourses()
