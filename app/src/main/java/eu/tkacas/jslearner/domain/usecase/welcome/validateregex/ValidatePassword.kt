@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.usecase.validateregex
+package eu.tkacas.jslearner.domain.usecase.welcome.validateregex
 
 class ValidatePassword {
     fun execute(password: String, isLogin: Boolean): ValidateResult {

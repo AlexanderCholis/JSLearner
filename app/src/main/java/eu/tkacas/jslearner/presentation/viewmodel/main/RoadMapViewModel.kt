@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.usecase.roadmap.GetRoadMapUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.usecase.roadmap
+package eu.tkacas.jslearner.domain.usecase.main.roadmap
 
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeCategory
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
