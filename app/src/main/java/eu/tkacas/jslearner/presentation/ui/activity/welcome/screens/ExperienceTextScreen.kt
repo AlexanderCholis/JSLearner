@@ -34,10 +34,10 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewMode
 @Composable
 fun ExperienceTextScreen(
     navController: NavController,
-    experienceLevel: String
+    experienceLevel: ExperienceLevel
 ) {
-    val viewModel = viewModel<ExperienceTextViewModel>()
-    val texts = viewModel.returnTexts(ExperienceLevel.valueOf(experienceLevel))
+    val viewModel = viewModel<ExperienceTextViewModel>()    //TODO
+    val texts = viewModel.returnTexts(experienceLevel)
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var currentIndex by rememberSaveable { mutableStateOf(if (previousRoute == "experienceLevel") 0 else texts.size - 1) }
 
