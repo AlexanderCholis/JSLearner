@@ -56,7 +56,7 @@ fun LoginScreen(
                 // Loading state is handled in the UI below
             }
             is Result.Success<*> -> {
-                Toast.makeText(context, "Successful Login", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Successful Login", Toast.LENGTH_SHORT).show()
                 navController.navigate("experienceLevel")
             }
             null -> {}

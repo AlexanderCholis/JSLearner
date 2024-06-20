@@ -60,7 +60,7 @@ fun SignUpScreen(
                 // Loading state is handled in the UI below
             }
             is Result.Success<*> -> {
-                Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Registration successful", Toast.LENGTH_SHORT).show()
                 navController.navigate("experienceLevel")
             }
             null -> {}

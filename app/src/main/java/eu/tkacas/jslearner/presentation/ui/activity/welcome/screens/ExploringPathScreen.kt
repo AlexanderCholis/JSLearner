@@ -81,14 +81,15 @@ fun ExploringPathScreen(
                         ) {
                             BoldText(textId = R.string.your_path)
                             NormalText(textId = R.string.your_path_description)
+                            Spacer(modifier = Modifier.padding(8.dp))
                             LazyColumn {
                                 val courseList = (exploringPathState as Result.Success).result
                                 items(courseList.size) { index ->
-                                    Spacer(modifier = Modifier.padding(8.dp))
                                     PathModuleCard(
                                         moduleTitleText = courseList[index].title,
                                         moduleDescriptionText = courseList[index].description
                                     )
+                                    Spacer(modifier = Modifier.padding(8.dp))
                                 }
                             }
                             Column(
