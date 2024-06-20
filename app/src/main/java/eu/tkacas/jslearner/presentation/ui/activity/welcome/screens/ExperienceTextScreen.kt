@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -38,6 +40,10 @@ fun ExperienceTextScreen(
     val texts = viewModel.returnTexts(ExperienceLevel.valueOf(experienceLevel))
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var currentIndex by rememberSaveable { mutableStateOf(if (previousRoute == "experienceLevel") 0 else texts.size - 1) }
+
+    val progress by animateFloatAsState(
+        targetValue = (currentIndex + 1) / texts.size.toFloat(), label = ""
+    )
 
     Scaffold(
         modifier= Modifier
@@ -75,6 +81,8 @@ fun ExperienceTextScreen(
                         verticalArrangement = Arrangement.Bottom,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        LinearProgressIndicator(progress = progress)
+                        Spacer(modifier = Modifier.padding(20.dp))
                         GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
                             if (currentIndex < texts.size - 1) {
                                 currentIndex++

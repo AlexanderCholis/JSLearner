@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -169,7 +170,7 @@ fun PathModuleCard(
                     )
                 }
             }
-            if(isExpanded.value) {
+            AnimatedVisibility(isExpanded.value) {
                 Row(
                     modifier = Modifier
                         .padding(bottom = 6.dp, start = 4.dp)
