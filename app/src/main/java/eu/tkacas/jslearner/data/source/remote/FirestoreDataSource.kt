@@ -2,7 +2,6 @@ package eu.tkacas.jslearner.data.source.remote
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import eu.tkacas.jslearner.data.model.Course
 import eu.tkacas.jslearner.data.model.CourseLevel
 import eu.tkacas.jslearner.data.model.Lesson
@@ -73,6 +72,20 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         } catch (e: Exception) {
             Log.w("FirestoreDataSource", "Error getting documents.", e)
             emptyList()
+        }
+    }
+
+    suspend fun setUserProfile(userId: String, firstName: String, lastName: String, profileCompleted: Boolean) {
+        try {
+            db.collection("users").document(userId).set(
+                mapOf(
+                    "first_name" to firstName,
+                    "last_name" to lastName,
+                    "profile_completed" to profileCompleted
+                )
+            ).await()
+        } catch (e: Exception) {
+            Log.w("FirestoreDataSource", "Error setting document.", e)
         }
     }
 
