@@ -1,8 +1,10 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,7 +36,7 @@ fun PrivacyAndTermsClickableTextComponent(
         ) {
             append(acceptTermsPrefixText)
         }
-        pushStringAnnotation(tag = privacyPolicyText, annotation = privacyPolicyText)
+        pushStringAnnotation(tag = "Clickable", annotation = privacyPolicyText)
         withStyle(
             style = SpanStyle(
                 color = SkyBlue
@@ -50,7 +52,7 @@ fun PrivacyAndTermsClickableTextComponent(
         ) {
             append(andText)
         }
-        pushStringAnnotation(tag = termsOfUseText, annotation = termsOfUseText)
+        pushStringAnnotation(tag = "Clickable", annotation = termsOfUseText)
         withStyle(
             style = SpanStyle(
                 color = SkyBlue
@@ -64,14 +66,10 @@ fun PrivacyAndTermsClickableTextComponent(
     ClickableText(
         text = annotatedString,
         onClick = { offset ->
-            annotatedString.getStringAnnotations(
-                start = offset,
-                end = offset
-            ).firstOrNull()?.also { span ->
-                if (span.item == privacyPolicyText || span.item == termsOfUseText) {
-                    onTextSelected(span.item)
+            annotatedString.getStringAnnotations(tag = "Clickable", start = offset, end = offset)
+                .firstOrNull()?.let { annotation ->
+                    onTextSelected(annotation.item)
                 }
-            }
         }
     )
 }
@@ -107,24 +105,26 @@ fun HaveAnAccountOrNotClickableTextComponent(
         pop()
     }
 
-    ClickableText(
+    Text(
         text = annotatedString,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 40.dp),
+            .heightIn(min = 40.dp)
+            .clickable(
+                onClick = {
+                    annotatedString.getStringAnnotations(
+                        start = 0,
+                        end = annotatedString.length
+                    ).firstOrNull()?.also { span ->
+                        if (span.item == clickableText) {
+                            onTextSelected(span.item)
+                        }
+                    }
+                }
+            ),
         style = TextStyle(
             fontSize = 21.sp,
             textAlign = TextAlign.Center
-        ),
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(
-                start = offset,
-                end = offset
-            ).firstOrNull()?.also { span ->
-                if (span.item == clickableText) {
-                    onTextSelected(span.item)
-                }
-            }
-        }
+        )
     )
 }
