@@ -15,7 +15,9 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.viewModelFactory
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExploringPathViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.LearningReasonViewModel
 
 class WelcomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,13 +57,17 @@ class WelcomeActivity : ComponentActivity() {
                             )
                         }
                     )
+                    val learningReasonViewModel = viewModel<LearningReasonViewModel>()
+                    val experienceTextViewModel = viewModel<ExperienceTextViewModel>()
 
                     WelcomeNavigation(
                         authRepository = JSLearner.appModule.authRepository,
                         loginViewModel = loginViewModel,
                         signUpViewModel = signUpViewModel,
                         experienceLevelViewModel = experienceLevelViewModel,
-                        exploringPathViewModel = exploringPathViewModel
+                        exploringPathViewModel = exploringPathViewModel,
+                        learningReasonViewModel = learningReasonViewModel,
+                        experienceTextViewModel = experienceTextViewModel
                     )
                 }
             }

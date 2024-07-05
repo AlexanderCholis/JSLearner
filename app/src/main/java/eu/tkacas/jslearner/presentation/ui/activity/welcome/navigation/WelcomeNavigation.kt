@@ -17,7 +17,9 @@ import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.WelcomeScree
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.auth.LoginScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.auth.SignUpScreen
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExploringPathViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.LearningReasonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 
@@ -27,7 +29,9 @@ internal fun WelcomeNavigation(
     loginViewModel: LoginViewModel,
     signUpViewModel: SignUpViewModel,
     experienceLevelViewModel: ExperienceLevelViewModel,
-    exploringPathViewModel: ExploringPathViewModel
+    exploringPathViewModel: ExploringPathViewModel,
+    learningReasonViewModel: LearningReasonViewModel,
+    experienceTextViewModel: ExperienceTextViewModel
 ){
     val navController = rememberNavController()
     val startDestination = determineStartDestination(authRepository)
@@ -45,11 +49,11 @@ internal fun WelcomeNavigation(
         composable("experienceText?experienceLevel={experienceLevel}") { backStackEntry ->
             val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
             val experienceLevel = ExperienceLevel.valueOf(experienceLevelString!!)
-            ExperienceTextScreen(navController = navController, experienceLevel = experienceLevel)
+            ExperienceTextScreen(navController = navController, viewModel = experienceTextViewModel, experienceLevel = experienceLevel)
         }
         composable("learningReason?experienceLevel={experienceLevel}") { backStackEntry ->
             val experienceLevel = backStackEntry.arguments?.getString("experienceLevel")
-            LearningReasonScreen(navController = navController, experienceLevel = experienceLevel!!)
+            LearningReasonScreen(navController = navController, viewModel = learningReasonViewModel, experienceLevel = experienceLevel!!)
         }
         composable("exploringPath?experienceLevel={experienceLevel}&selectedReason={selectedReason}") { backStackEntry ->
             val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
