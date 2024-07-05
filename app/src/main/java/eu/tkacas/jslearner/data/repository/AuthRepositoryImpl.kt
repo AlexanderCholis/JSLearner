@@ -6,8 +6,6 @@ import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
 import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.Result
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class AuthRepositoryImpl (
     private val firebaseDataSource: FirebaseDataSource,
