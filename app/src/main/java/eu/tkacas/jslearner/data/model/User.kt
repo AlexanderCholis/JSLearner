@@ -3,7 +3,6 @@ package eu.tkacas.jslearner.data.model
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 
 data class UserFirestore(
-    val uid: String = "",
     val firstName: String = "",
     val lastName: String = "",
     val dateRegistered: String = "",
