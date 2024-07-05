@@ -56,7 +56,7 @@ class AppModuleImpl(
 
     // For the SignIn and SignUp screens
     override val authRepository: AuthRepository by lazy {
-        AuthRepositoryImpl(getFirebaseAuth(), getFirebaseDatabase())
+        AuthRepositoryImpl(getFirebaseAuth(), getFirestoreDatabase(), getFirebaseDatabase())
     }
     override val validateFirstName: ValidateFirstName by lazy {
         ValidateFirstName()
