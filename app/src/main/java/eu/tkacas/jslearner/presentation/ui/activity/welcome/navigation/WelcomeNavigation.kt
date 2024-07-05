@@ -42,21 +42,21 @@ internal fun WelcomeNavigation(
         composable("termsAndConditions") { TermsAndConditionsScreen(navController = navController) }
         composable("privacyPolicy") { PrivacyPolicyScreen(navController = navController) }
         composable("experienceLevel") { ExperienceLevelScreen(navController = navController, viewModel = experienceLevelViewModel) }
-        composable("experienceText/{experienceLevel}") { backStackEntry ->
+        composable("experienceText?experienceLevel={experienceLevel}") { backStackEntry ->
             val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
             val experienceLevel = ExperienceLevel.valueOf(experienceLevelString!!)
             ExperienceTextScreen(navController = navController, experienceLevel = experienceLevel)
         }
-        composable("learningReason/{experienceLevel}") { backStackEntry ->
+        composable("learningReason?experienceLevel={experienceLevel}") { backStackEntry ->
             val experienceLevel = backStackEntry.arguments?.getString("experienceLevel")
             LearningReasonScreen(navController = navController, experienceLevel = experienceLevel!!)
         }
-        composable("exploringPath/{experienceLevel}/{selectedReason}") { backStackEntry ->
+        composable("exploringPath?experienceLevel={experienceLevel}&selectedReason={selectedReason}") { backStackEntry ->
             val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
             val experienceLevel = ExperienceLevel.valueOf(experienceLevelString!!)
             val selectedReasonString = backStackEntry.arguments?.getString("selectedReason")
             val selectedReason = LearningReason.valueOf(selectedReasonString!!)
-            ExploringPathScreen(navController = navController, viewModel = exploringPathViewModel, experienceLevel = experienceLevel, selectedReason = selectedReason!!)
+            ExploringPathScreen(navController = navController, viewModel = exploringPathViewModel, experienceLevel = experienceLevel, selectedReason = selectedReason)
         }
     }
 }

@@ -56,7 +56,7 @@ fun ExperienceLevelScreen(
                     image = item.image,
                     text = item.text,
                     onClick = {
-                        navController.navigate("experienceText/${item.level}")
+                        navController.navigate("experienceText?experienceLevel=${item.level}")
                     }
                 )
             }

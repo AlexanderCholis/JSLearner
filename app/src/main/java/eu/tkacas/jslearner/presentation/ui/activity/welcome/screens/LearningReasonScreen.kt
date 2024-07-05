@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +22,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -42,7 +46,7 @@ fun LearningReasonScreen(
     val context = LocalContext.current
     val viewModel = viewModel<LearningReasonViewModel>()
     val reasons = viewModel.returnReasonsList()
-    val selectedReason = remember { mutableStateOf<LearningReason?>(null) }
+    var selectedReason by rememberSaveable { mutableStateOf<LearningReason?>(null) }
 
     Scaffold(
         modifier = Modifier
@@ -51,7 +55,8 @@ fun LearningReasonScreen(
             BackAppTopBar(
                 color = Color.White,
                 onBackClick = {
-                    navController.navigateUp()
+                    navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
+                    navController.navigate("experienceLevel")
                 }
             )
         },
@@ -85,8 +90,8 @@ fun LearningReasonScreen(
                         LearningReasonCard(
                             image = item.image,
                             text = item.text,
-                            isSelected = selectedReason.value == item.reason,
-                            onSelected = { selectedReason.value = item.reason }
+                            isSelected = selectedReason == item.reason,
+                            onSelected = { selectedReason = item.reason }
                         )
                         if (index < reasons.size - 1) {
                             Spacer(modifier = Modifier.height(16.dp))
@@ -101,8 +106,8 @@ fun LearningReasonScreen(
                         GeneralButtonComponent(
                             valueId = R.string.next,
                             onButtonClicked = {
-                                if (selectedReason.value != null) {
-                                    navController.navigate("exploringPath/$experienceLevel/${selectedReason.value}")
+                                if (selectedReason != null) {
+                                    navController.navigate("exploringPath?experienceLevel=$experienceLevel&selectedReason=${selectedReason}")
                                 } else {
                                     Toast.makeText(context, "Please select a reason", Toast.LENGTH_SHORT).show()
                                 }

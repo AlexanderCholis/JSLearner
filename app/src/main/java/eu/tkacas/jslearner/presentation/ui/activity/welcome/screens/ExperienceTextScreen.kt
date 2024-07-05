@@ -87,7 +87,7 @@ fun ExperienceTextScreen(
                             if (currentIndex < texts.size - 1) {
                                 currentIndex++
                             } else {
-                                navController.navigate("learningReason/$experienceLevel")
+                                navController.navigate("learningReason?experienceLevel=$experienceLevel")
                             }
                         })
                     }
