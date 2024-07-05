@@ -32,7 +32,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.model.NavigationDrawerUiItem
-import eu.tkacas.jslearner.presentation.ui.activity.main.MainActivity
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.WelcomeActivity
 import kotlinx.coroutines.launch
 
@@ -82,7 +81,7 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                 }
 
                 Column(
-                    Modifier.fillMaxSize(),
+                    Modifier.fillMaxSize() .padding(12.dp),
                     verticalArrangement = Arrangement.Bottom,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
