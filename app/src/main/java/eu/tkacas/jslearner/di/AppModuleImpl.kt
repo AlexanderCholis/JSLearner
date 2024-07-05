@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.data.repository.AuthRepositoryImpl
 import eu.tkacas.jslearner.data.repository.ExploringPathRepositoryImpl
 import eu.tkacas.jslearner.data.repository.RoadMapRepositoryImpl
+import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
 import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
@@ -32,14 +33,16 @@ class AppModuleImpl(
     }
 
     // Firestore
-    private val dataSource = FirestoreDataSource(getFirestoreDatabase())
+    private val firestoreDataSource = FirestoreDataSource(getFirestoreDatabase())
+    private val firebaseDataSource = FirebaseDataSource(getFirebaseAuth())
+
     override fun getFirestoreDatabase(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }
 
     // For the RoadMapScreen
     override val roadMapRepository: RoadMapRepository by lazy {
-        RoadMapRepositoryImpl(dataSource)
+        RoadMapRepositoryImpl(firestoreDataSource)
     }
     override val getRoadMapUseCase: GetRoadMapUseCase by lazy {
         GetRoadMapUseCase(roadMapRepository)
@@ -47,7 +50,7 @@ class AppModuleImpl(
 
     // For the ExploringPathScreen
     override val exploringPathRepository: ExploringPathRepository by lazy {
-        ExploringPathRepositoryImpl(dataSource)
+        ExploringPathRepositoryImpl(firestoreDataSource)
     }
     override val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase by lazy {
         GetCoursesBasedOnExperienceUseCase(exploringPathRepository)
@@ -56,7 +59,7 @@ class AppModuleImpl(
 
     // For the SignIn and SignUp screens
     override val authRepository: AuthRepository by lazy {
-        AuthRepositoryImpl(getFirebaseAuth(), getFirestoreDatabase(), getFirebaseDatabase())
+        AuthRepositoryImpl(firebaseDataSource, firestoreDataSource)
     }
     override val validateFirstName: ValidateFirstName by lazy {
         ValidateFirstName()
