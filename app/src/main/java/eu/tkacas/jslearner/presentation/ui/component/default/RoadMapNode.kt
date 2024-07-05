@@ -4,10 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -20,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -54,6 +57,7 @@ fun RoadMapNode(
     Box(
         modifier = Modifier
             .wrapContentSize()
+            .offset(y = 4.dp) // added offset
             .drawBehind {
                 val circleRadiusInPx = circleParameters.radius.toPx()
 
@@ -65,7 +69,6 @@ fun RoadMapNode(
                         strokeWidth = it.strokeWidth.toPx()
                     )
                 }
-
                 drawCircle(
                     circleParameters.backgroundColor,
                     circleRadiusInPx,
@@ -107,6 +110,7 @@ fun RoadMapNode(
                     start = circleParameters.radius * 2 + contentStartOffset,
                     bottom = if (nodeState.position != RoadMapNodePosition.LAST) spacer else 0.dp
                 )
+                .offset (y = -circleParameters.radius / 3)
         )
     }
 }
@@ -174,7 +178,8 @@ fun MessageBubble(modifier: Modifier, containerColor: Color, text: String, onCli
         ) {
             Text(
                 text = text,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp), // added padding
             )
         }
     }

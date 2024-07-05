@@ -41,7 +41,7 @@ fun LeaderboardScreen(
                             }
                         }
                     },
-                    title = "My Account",
+                    title = "Leaderboard",
                     drawerState = drawerState
                 )
             },
