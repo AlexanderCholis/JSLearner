@@ -16,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -46,16 +49,18 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
     val loginFlowState by viewModel.loginFlow.collectAsState()
+    var loadingState by remember { mutableStateOf(false) }
 
     LaunchedEffect(loginFlowState) {
         when (loginFlowState) {
             is Result.Error -> {
-                // The error message is showed up into UI
+                loadingState = false
             }
             is Result.Loading -> {
-                // Loading state is handled in the UI below
+                loadingState = true
             }
             is Result.Success<*> -> {
+                loadingState = false
                 Toast.makeText(context, "Successful Login", Toast.LENGTH_SHORT).show()
                 navController.navigate("experienceLevel")
             }
@@ -70,12 +75,10 @@ fun LoginScreen(
             .background(Color.White)
             .padding(start = 28.dp, end = 28.dp, top = 60.dp, bottom = 28.dp)
     ) {
-        when (loginFlowState) {
-            is Result.Loading -> {
-                ProgressIndicatorComponent()
-            }
-            else -> {}
+        if (loadingState) {
+            ProgressIndicatorComponent()
         }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -116,34 +119,33 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(20.dp))
             }
         }
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Bottom
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        GeneralButtonComponent(
-                            valueId = R.string.login,
-                            onButtonClicked = {
-                                viewModel.onEvent(LoginFormEvent.Submit)
-                            }
-                        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                GeneralButtonComponent(
+                    valueId = R.string.login,
+                    onButtonClicked = {
+                        viewModel.onEvent(LoginFormEvent.Submit)
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    DividerTextComponent()
-                    HaveAnAccountOrNotClickableTextComponent(
-                        alreadyHaveAnAccount = false,
-                        onTextSelected = {
-                            if (it == "Register") {
-                                navController.navigate("signUp")
-                            }
-                        }
-                    )
-                }
+                )
             }
+            Spacer(modifier = Modifier.height(8.dp))
+            DividerTextComponent()
+            HaveAnAccountOrNotClickableTextComponent(
+                alreadyHaveAnAccount = false,
+                onTextSelected = {
+                    if (it == "Register") {
+                        navController.navigate("signUp")
+                    }
+                }
+            )
         }
-
+    }
+}
