@@ -34,7 +34,7 @@ class AuthRepositoryImpl (
             result.user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName("$firstName $lastName").build())?.await()
 
             // Save user to Firebase Realtime Database
-            val user = User(firstName, lastName, email)
+            val user = User(firstName, lastName)
             firebaseDatabase.getReference("users").child(result.user!!.uid).setValue(user)
 
             return Result.Success(result.user!!)
