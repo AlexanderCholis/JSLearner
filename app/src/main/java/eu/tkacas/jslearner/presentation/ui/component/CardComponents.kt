@@ -92,18 +92,7 @@ fun LearningReasonCard(
 ) {
     val cardColor = if (isSelected) SkyBlue else Color.White
 
-//  val configuration = LocalConfiguration.current
-
     Card(
-//        modifier = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            Modifier
-//                .fillMaxWidth()
-//                .clickable(onClick = true),
-//        }else {
-//            Modifier
-//                .size(width = 650.dp, height = 65.dp)
-//                .clickable(onClick = true),
-//        },
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onSelected),

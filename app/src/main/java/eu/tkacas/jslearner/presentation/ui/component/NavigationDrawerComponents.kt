@@ -53,8 +53,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
         drawerContent = {
             ModalDrawerSheet() {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
-                    //Spacer(Modifier.height(12.dp))
-
                     CourseTopCard(
                         points = 500,
                         days = 12,
@@ -62,7 +60,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                     ) //should be given from the database
 
                     Spacer(Modifier.height(12.dp))
-
 
                     screensInDrawer.forEachIndexed { index, item ->
                         NavigationDrawerItem(
@@ -82,70 +79,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                         )
                     }
-
-
-                    //OLD CODE
-
-                    /*
-
-                    NavigationDrawerItem(
-                        icon = {
-                            Image(
-                                painter = painterResource(id = R.drawable.account),
-                                contentDescription = null
-                            )
-                        },
-                        label = { Text("Account") },
-                        selected = selectedItem.value == R.drawable.account,
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            selectedItem.value = R.drawable.account
-                            if (selectedItem.value == R.drawable.account) {
-                                navController.navigate("account")
-                            }
-                        },
-                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                    )
-                    NavigationDrawerItem(
-                        icon = {
-                            Image(
-                                painter = painterResource(id = R.drawable.settings),
-                                contentDescription = null
-                            )
-                        },
-                        label = { Text("Settings") },
-                        selected = selectedItem.value == R.drawable.settings,
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            selectedItem.value = R.drawable.settings
-                            navController.navigate("settings")
-                            if (selectedItem.value == R.drawable.settings) {
-                                navController.navigate("settings")
-                            }
-                        },
-                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                    )
-                    NavigationDrawerItem(
-                        icon = {
-                            Image(
-                                painter = painterResource(id = R.drawable.stats),
-                                contentDescription = null
-                            )
-                        },
-                        label = { Text("Stats") },
-                        selected = selectedItem.value == R.drawable.stats,
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            selectedItem.value = R.drawable.stats
-                            navController.navigate("stats")
-                            if (selectedItem.value == R.drawable.stats) {
-                                navController.navigate("stats")
-                            }
-                        },
-                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                    )
-
-                    */
                 }
 
                 Column(
@@ -154,7 +87,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     val context = LocalContext.current
-                    //Spacer(Modifier.weight(1f))
                     Spacer(modifier = Modifier.height(12.dp))
                     NavigationDrawerItem(
                         icon = { Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
@@ -176,7 +108,6 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
 
                             // Finish the current activity (MainActivity) to prevent going back
                             (context as Activity).finish()
-
 //                            navController.navigate("welcome") {
 //                                popUpTo("welcome") { // Clear backstack to prevent going back to logged-in screens //0 instead of "welcome"
 //                                    inclusive = true
