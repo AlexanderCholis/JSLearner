@@ -15,7 +15,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         return try {
             val result = db.collection("courses").get().await()
             result.map { document ->
-                document.toObject<Course>().copy(id = document.id)
+                document.toObject(Course::class.java).copy(id = document.id)
             }
         } catch (e: Exception) {
             Log.w("FirestoreDataSource", "Error getting documents.", e)
@@ -27,7 +27,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         return try {
             val result = db.collection("courses").document(courseId).collection("lessons").get().await()
             result.map { document ->
-                document.toObject<Lesson>().copy(id = document.id)
+                document.toObject(Lesson::class.java).copy(id = document.id)
             }
         } catch (e: Exception) {
             Log.w("FirestoreDataSource", "Error getting documents.", e)
@@ -41,7 +41,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
                 .collection("lessons").document(lessonId)
                 .collection("questions").get().await()
             result.map { document ->
-                document.toObject<Question>().copy(id = document.id)
+                document.toObject(Question::class.java).copy(id = document.id)
             }
         } catch (e: Exception) {
             Log.w("FirestoreDataSource", "Error getting documents.", e)
@@ -68,7 +68,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
                 .get()
                 .await()
             result.map { document ->
-                document.toObject<Course>().copy(id = document.id)
+                document.toObject(Course::class.java).copy(id = document.id)
             }
         } catch (e: Exception) {
             Log.w("FirestoreDataSource", "Error getting documents.", e)
