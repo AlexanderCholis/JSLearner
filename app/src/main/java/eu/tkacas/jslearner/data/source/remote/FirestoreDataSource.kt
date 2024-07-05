@@ -6,6 +6,7 @@ import eu.tkacas.jslearner.data.model.Course
 import eu.tkacas.jslearner.data.model.CourseLevel
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.Question
+import eu.tkacas.jslearner.data.model.UserFirestore
 import kotlinx.coroutines.tasks.await
 
 class FirestoreDataSource(private val db: FirebaseFirestore) {
@@ -75,15 +76,9 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         }
     }
 
-    suspend fun setUserProfile(userId: String, firstName: String, lastName: String, profileCompleted: Boolean) {
+    suspend fun setUserProfile(userId: String, user: UserFirestore) {
         try {
-            db.collection("users").document(userId).set(
-                mapOf(
-                    "first_name" to firstName,
-                    "last_name" to lastName,
-                    "profile_completed" to profileCompleted
-                )
-            ).await()
+            db.collection("users").document(userId).set(user).await()
         } catch (e: Exception) {
             Log.w("FirestoreDataSource", "Error setting document.", e)
         }
