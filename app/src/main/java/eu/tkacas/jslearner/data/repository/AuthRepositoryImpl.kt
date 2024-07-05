@@ -1,51 +1,37 @@
 package eu.tkacas.jslearner.data.repository
 
-import android.annotation.SuppressLint
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.database.FirebaseDatabase
-import eu.tkacas.jslearner.data.await
+import eu.tkacas.jslearner.data.model.UserFirestore
+import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
+import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.Result
-import eu.tkacas.jslearner.domain.model.User
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class AuthRepositoryImpl (
-    private val firebaseAuth: FirebaseAuth,
-    private val firebaseDatabase: FirebaseDatabase
+    private val firebaseDataSource: FirebaseDataSource,
+    private val firestoreDataSource: FirestoreDataSource
 ): AuthRepository {
-    override val currentUser: FirebaseUser?
-        get() = firebaseAuth.currentUser
+    override val currentUser
+        get() = firebaseDataSource.currentUser
 
-    override suspend fun login(email: String, password: String): Result<FirebaseUser> {
-        return try {
-            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
-            Result.Success(result.user!!)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Result.Error(e)
-        }
-    }
+    override suspend fun login(email: String, password: String) = firebaseDataSource.login(email, password)
 
-    @SuppressLint("RestrictedApi")
     override suspend fun signup(firstName: String, lastName: String, email: String, password: String): Result<FirebaseUser> {
-        return try {
-            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            result.user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName("$firstName $lastName").build())?.await()
-
-            // Save user to Firebase Realtime Database
-            val user = User(firstName, lastName)
-            firebaseDatabase.getReference("users").child(result.user!!.uid).setValue(user)
-
-            return Result.Success(result.user!!)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Result.Error(e)
+        val result = firebaseDataSource.signup(email, password)
+        if (result is Result.Success) {
+            val uid = result.result.uid
+            val user = UserFirestore(firstName, lastName, dateRegistered = getCurrentDate(), profileCompleted = false)
+            firestoreDataSource.setUserProfile(uid, user)
         }
+        return result
     }
 
-    override fun logout() {
-        firebaseAuth.signOut()
+    private fun getCurrentDate(): String {
+        val sdf = SimpleDateFormat("yyyy/MM/dd")
+        return sdf.format(Date())
     }
 
+    override fun logout() = firebaseDataSource.logout()
 }
