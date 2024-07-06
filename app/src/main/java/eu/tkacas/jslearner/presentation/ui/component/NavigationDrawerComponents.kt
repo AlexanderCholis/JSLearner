@@ -2,6 +2,7 @@ package eu.tkacas.jslearner.presentation.ui.component
 
 import android.app.Activity
 import android.content.Intent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,6 +42,7 @@ fun NavigationDrawer(
 
     // Define your screens
     val screensInDrawer = listOf(
+        NavigationDrawerUiItem(id = R.drawable.roadmap, name = "Roadmap", unselectedIcon = R.drawable.roadmap, selectedIcon = R.drawable.roadmap_filled, route = "roadmap"),
         NavigationDrawerUiItem(id = R.drawable.account, name = "Account", unselectedIcon = R.drawable.account, selectedIcon = R.drawable.account_filled, route = "account"),
         NavigationDrawerUiItem(id = R.drawable.settings, name = "Settings", unselectedIcon = R.drawable.settings,selectedIcon = R.drawable.settings_filled, route = "settings"),
         NavigationDrawerUiItem(id = R.drawable.leaderboard, name = "Leaderboard", unselectedIcon = R.drawable.leaderboard,selectedIcon = R.drawable.leaderboard_filled, route = "leaderboard")
@@ -87,15 +89,18 @@ fun NavigationDrawer(
             Spacer(modifier = Modifier.height(12.dp))
             NavigationDrawerItem(
                 icon = {
-                    Icon(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
+                    Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
                 label = {
                     Text(
                         text = "Logout",
-                        color = Color.Red)
-                    },
+                        color = Color.Red
+                    )
+                },
                 selected = selectedItem.value == R.drawable.logout,
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        drawerState.close()
+                    }
                     selectedItem.value = R.drawable.logout
                     //Sign out the user from Firebase
                     Firebase.auth.signOut()
