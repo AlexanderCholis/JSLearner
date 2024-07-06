@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -36,7 +37,10 @@ import eu.tkacas.jslearner.presentation.ui.activity.welcome.WelcomeActivity
 import kotlinx.coroutines.launch
 
 @Composable
-fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
+fun NavigationDrawer(
+    navController: NavController,
+    drawerState: DrawerState
+) {
     val scope = rememberCoroutineScope()
     val selectedItem = remember { mutableStateOf(-1) }
 
@@ -47,79 +51,67 @@ fun NavigationDrawer(navController: NavController, drawerState: DrawerState) {
         NavigationDrawerUiItem(id = R.drawable.leaderboard, name = "Leaderboard", icon = R.drawable.leaderboard, route = "leaderboard")
     )
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet() {
-                Column(Modifier.verticalScroll(rememberScrollState())) {
-                    CourseTopCard(
-                        points = 500,
-                        days = 12,
-                        answers = 3
-                    ) //should be given from the database
+    ModalDrawerSheet {
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+        ) {
+            CourseTopCard(
+                points = 500,
+                days = 12,
+                answers = 3
+            ) //should be given from the database
 
-                    Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(12.dp))
 
-                    screensInDrawer.forEachIndexed { index, item ->
-                        NavigationDrawerItem(
-                            icon = {
-                                Image(
-                                    painter = painterResource(id = item.icon),
-                                    contentDescription = null
-                                )
-                            },
-                            label = { Text(item.name) },
-                            selected = selectedItem.value == item.id,
-                            onClick = {
-                                scope.launch { drawerState.close() }
-                                selectedItem.value = item.id
-                                navController.navigate(item.route)
-                            },
-                            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+            screensInDrawer.forEachIndexed { index, item ->
+                NavigationDrawerItem(
+                    icon = {
+                        Icon(
+                            painter = painterResource(id = item.icon),
+                            contentDescription = null
                         )
+                    },
+                    label = { Text(item.name) },
+                    selected = selectedItem.value == item.id,
+                    onClick = {
+                        scope.launch { drawerState.close() }
+                        selectedItem.value = item.id
+                        navController.navigate(item.route)
                     }
-                }
-
-                Column(
-                    Modifier.fillMaxSize() .padding(12.dp),
-                    verticalArrangement = Arrangement.Bottom,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    val context = LocalContext.current
-                    Spacer(modifier = Modifier.height(12.dp))
-                    NavigationDrawerItem(
-                        icon = { Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
-                        label = { Text("Logout",  color = Color.Red) },
-                        selected = selectedItem.value == R.drawable.logout,
-                        onClick = {
-                            scope.launch { drawerState.close() }
-                            selectedItem.value = R.drawable.logout
-                            //Sign out the user from Firebase
-                            Firebase.auth.signOut()
-
-                            //Navigate to WelcomeScreen through WelcomeActivity after logout
-
-                            // Start WelcomeActivity
-                            val intent = Intent(context, WelcomeActivity::class.java).apply{
-                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            }
-                            context.startActivity(intent)
-
-                            // Finish the current activity (MainActivity) to prevent going back
-                            (context as Activity).finish()
-//                            navController.navigate("welcome") {
-//                                popUpTo("welcome") { // Clear backstack to prevent going back to logged-in screens //0 instead of "welcome"
-//                                    inclusive = true
-//                                }
-//                            }
-                        },
-                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                    )
-                }
+                )
             }
-        },
-        content = {
-            // Content
         }
-    )
+
+        Column(
+            Modifier.fillMaxSize() .padding(12.dp),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val context = LocalContext.current
+            Spacer(modifier = Modifier.height(12.dp))
+            NavigationDrawerItem(
+                icon = { Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
+                label = { Text("Logout",  color = Color.Red) },
+                selected = selectedItem.value == R.drawable.logout,
+                onClick = {
+                    scope.launch { drawerState.close() }
+                    selectedItem.value = R.drawable.logout
+                    //Sign out the user from Firebase
+                    Firebase.auth.signOut()
+
+                    //Navigate to WelcomeScreen through WelcomeActivity after logout
+
+                    // Start WelcomeActivity
+                    val intent = Intent(context, WelcomeActivity::class.java).apply{
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    context.startActivity(intent)
+
+                    // Finish the current activity (MainActivity) to prevent going back
+                    (context as Activity).finish()
+                }
+            )
+        }
+    }
 }
