@@ -50,7 +50,7 @@ fun CircularLeader1Component(image: Int) {
 }
 
 @Composable
-fun CircularLeader2Component(image: Int) {
+fun CircularLeader2Component(image: Int, modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -68,7 +68,7 @@ fun CircularLeader2Component(image: Int) {
 }
 
 @Composable
-fun CircularLeader3Component(image: Int) {
+fun CircularLeader3Component(image: Int, modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
