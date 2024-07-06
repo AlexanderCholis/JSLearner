@@ -49,13 +49,7 @@ class WelcomeActivity : ComponentActivity() {
                             )
                         }
                     )
-                    val experienceLevelViewModel = viewModel<ExperienceLevelViewModel>(
-                        factory = viewModelFactory {
-                            ExperienceLevelViewModel(
-                                getProfileCompletionUseCase = JSLearner.appModule.getProfileCompletionUseCase
-                            )
-                        }
-                    )
+                    val experienceLevelViewModel = viewModel<ExperienceLevelViewModel>()
                     val exploringPathViewModel = viewModel<ExploringPathViewModel>(
                         factory = viewModelFactory {
                             ExploringPathViewModel(
@@ -68,9 +62,11 @@ class WelcomeActivity : ComponentActivity() {
                     val experienceTextViewModel = viewModel<ExperienceTextViewModel>()
 
                     WelcomeNavigation(
+                        context = this,
                         authRepository = JSLearner.appModule.authRepository,
                         loginViewModel = loginViewModel,
                         signUpViewModel = signUpViewModel,
+                        getProfileCompletionUseCase = JSLearner.appModule.getProfileCompletionUseCase,
                         experienceLevelViewModel = experienceLevelViewModel,
                         exploringPathViewModel = exploringPathViewModel,
                         learningReasonViewModel = learningReasonViewModel,
