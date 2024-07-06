@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.CircularLeader1Component
 import eu.tkacas.jslearner.presentation.ui.component.CircularLeader2Component
@@ -43,7 +44,8 @@ fun LeaderboardScreen(
         drawerContent = {
             NavigationDrawer(
                 navController = navController,
-                drawerState = drawerState
+                drawerState = drawerState,
+                getNavigationDrawerItemsUseCase = JSLearner.appModule.getNavigationDrawerItemsUseCase
             )
         },
         drawerState = drawerState

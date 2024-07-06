@@ -15,10 +15,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
+import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import kotlinx.coroutines.launch
-
 
 
 @Composable
@@ -32,7 +32,8 @@ fun AccountScreen(
         drawerContent = {
             NavigationDrawer(
                 navController = navController,
-                drawerState = drawerState
+                drawerState = drawerState,
+                getNavigationDrawerItemsUseCase = JSLearner.appModule.getNavigationDrawerItemsUseCase
             )
         },
         drawerState = drawerState
