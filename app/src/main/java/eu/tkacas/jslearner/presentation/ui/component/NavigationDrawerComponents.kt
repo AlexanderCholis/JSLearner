@@ -13,6 +13,7 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,6 +28,7 @@ import androidx.navigation.NavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.presentation.model.NavigationDrawerUiItem
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.WelcomeActivity
 import kotlinx.coroutines.launch
@@ -34,18 +36,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun NavigationDrawer(
     navController: NavController,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    getNavigationDrawerItemsUseCase: GetNavigationDrawerItemsUseCase
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
     // Define your screens
-    val screensInDrawer = listOf(
-        NavigationDrawerUiItem(name = "Roadmap", unselectedIcon = R.drawable.roadmap, selectedIcon = R.drawable.roadmap_filled, route = "roadmap"),
-        NavigationDrawerUiItem(name = "Account", unselectedIcon = R.drawable.account, selectedIcon = R.drawable.account_filled, route = "account"),
-        NavigationDrawerUiItem(name = "Settings", unselectedIcon = R.drawable.settings,selectedIcon = R.drawable.settings_filled, route = "settings"),
-        NavigationDrawerUiItem(name = "Leaderboard", unselectedIcon = R.drawable.leaderboard,selectedIcon = R.drawable.leaderboard_filled, route = "leaderboard")
-    )
+    val screensInDrawer = getNavigationDrawerItemsUseCase.execute()
 
     fun getCurrentRouteIndex(): Int {
         val currentRoute = navController.currentDestination?.route
@@ -53,7 +51,7 @@ fun NavigationDrawer(
     }
 
     // Use the function to get the current route index
-    val selectedItemIndex = remember { mutableStateOf(getCurrentRouteIndex()) }
+    val selectedItemIndex = remember { mutableIntStateOf(getCurrentRouteIndex()) }
 
     ModalDrawerSheet {
         Column(
@@ -71,10 +69,10 @@ fun NavigationDrawer(
             screensInDrawer.forEachIndexed { index, item ->
                 DrawerItem(
                     item = item,
-                    isSelected = selectedItemIndex.value == index,
+                    isSelected = selectedItemIndex.intValue == index,
                     onItemClick = {
                         scope.launch { drawerState.close() }
-                        selectedItemIndex.value = index
+                        selectedItemIndex.intValue = index
                         item.route?.let { navController.navigate(it) }
                     }
                 )
@@ -92,12 +90,12 @@ fun NavigationDrawer(
                     name = "Logout",
                     unselectedIcon = R.drawable.logout
                 ),
-                isSelected = selectedItemIndex.value == screensInDrawer.size, // The logout item is selected if selectedItemIndex is equal to the size of screensInDrawer
+                isSelected = selectedItemIndex.intValue == screensInDrawer.size,
                 textColor = Color.Red,
                 onItemClick = {
                     scope.launch { drawerState.close() }
-                    selectedItemIndex.value = screensInDrawer.size // Set selectedItemIndex to the size of screensInDrawer when the logout item is clicked
-
+                    selectedItemIndex.intValue = screensInDrawer.size
+                    // TODO: Create UseCase for logout
                     Firebase.auth.signOut()
 
                     val intent = Intent(context, WelcomeActivity::class.java).apply {
