@@ -1,12 +1,13 @@
 package eu.tkacas.jslearner.data.model
 
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
+import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 
 data class UserFirestore(
     val firstName: String? = null,
     val lastName: String? = null,
     val dateRegistered: String? = null,
-    val reasonOfUsingTheApp: String? = null,
+    val learningReason: LearningReason? = null,
     val profileCompleted: Boolean? = false,
     val coursesCompleted: List<Lesson>? = null
 )
