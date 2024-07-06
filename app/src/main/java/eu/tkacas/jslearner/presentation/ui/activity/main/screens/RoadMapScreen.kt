@@ -91,40 +91,46 @@ internal fun RoadMapScreen(
                         ProgressIndicatorComponent()
                     }
                     is Result.Success -> {
-                        LazyColumn(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.fillMaxWidth()
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 8.dp)
                         ) {
-                            val nodes = (uiState as Result.Success<List<RoadMapNodeState>>).result
-                            itemsIndexed(nodes) { index, node ->
-                                val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
-                                val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
-                                    LineParametersDefaults.linearGradient(
-                                        startColor = node.status.getColor(),
-                                        endColor = nextNodeColor
-                                    )
-                                } else null
-                                RoadMapNode(
-                                    nodeState = node,
-                                    circleParameters = CircleParametersDefaults.circleParameters(
-                                        backgroundColor = node.status.getColor(),
-                                        stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
-                                        icon = node.status.getIcon()
-                                    ),
-                                    lineParameters = lineParameters,
-                                    content = { modifier ->
-                                        val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
-                                        val displayText = "${node.title}"
-                                        MessageBubble(
-                                            modifier,
-                                            containerColor = node.status.getColor(),
-                                            text = displayText,
-                                            onClick = {
-                                                Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
-                                            }
+                            LazyColumn(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                val nodes = (uiState as Result.Success<List<RoadMapNodeState>>).result
+                                itemsIndexed(nodes) { index, node ->
+                                    val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
+                                    val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
+                                        LineParametersDefaults.linearGradient(
+                                            startColor = node.status.getColor(),
+                                            endColor = nextNodeColor
                                         )
-                                    }
-                                )
+                                    } else null
+                                    RoadMapNode(
+                                        nodeState = node,
+                                        circleParameters = CircleParametersDefaults.circleParameters(
+                                            backgroundColor = node.status.getColor(),
+                                            stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
+                                            icon = node.status.getIcon()
+                                        ),
+                                        lineParameters = lineParameters,
+                                        content = { modifier ->
+                                            val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
+                                            val displayText = "${node.title}"
+                                            MessageBubble(
+                                                modifier,
+                                                containerColor = node.status.getColor(),
+                                                text = displayText,
+                                                onClick = {
+                                                    Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
                             }
                         }
                     }

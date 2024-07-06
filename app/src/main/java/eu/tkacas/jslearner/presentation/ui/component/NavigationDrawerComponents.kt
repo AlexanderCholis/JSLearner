@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
-import android.app.Activity
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.Text
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.runtime.Composable
@@ -24,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -39,15 +38,22 @@ fun NavigationDrawer(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val selectedItem = remember { mutableStateOf(-1) }
 
     // Define your screens
     val screensInDrawer = listOf(
-        NavigationDrawerUiItem(id = R.drawable.roadmap, name = "Roadmap", unselectedIcon = R.drawable.roadmap, selectedIcon = R.drawable.roadmap_filled, route = "roadmap"),
-        NavigationDrawerUiItem(id = R.drawable.account, name = "Account", unselectedIcon = R.drawable.account, selectedIcon = R.drawable.account_filled, route = "account"),
-        NavigationDrawerUiItem(id = R.drawable.settings, name = "Settings", unselectedIcon = R.drawable.settings,selectedIcon = R.drawable.settings_filled, route = "settings"),
-        NavigationDrawerUiItem(id = R.drawable.leaderboard, name = "Leaderboard", unselectedIcon = R.drawable.leaderboard,selectedIcon = R.drawable.leaderboard_filled, route = "leaderboard")
+        NavigationDrawerUiItem(name = "Roadmap", unselectedIcon = R.drawable.roadmap, selectedIcon = R.drawable.roadmap_filled, route = "roadmap"),
+        NavigationDrawerUiItem(name = "Account", unselectedIcon = R.drawable.account, selectedIcon = R.drawable.account_filled, route = "account"),
+        NavigationDrawerUiItem(name = "Settings", unselectedIcon = R.drawable.settings,selectedIcon = R.drawable.settings_filled, route = "settings"),
+        NavigationDrawerUiItem(name = "Leaderboard", unselectedIcon = R.drawable.leaderboard,selectedIcon = R.drawable.leaderboard_filled, route = "leaderboard")
     )
+
+    fun getCurrentRouteIndex(): Int {
+        val currentRoute = navController.currentDestination?.route
+        return screensInDrawer.indexOfFirst { it.route == currentRoute }
+    }
+
+    // Use the function to get the current route index
+    val selectedItemIndex = remember { mutableStateOf(getCurrentRouteIndex()) }
 
     ModalDrawerSheet {
         Column(
@@ -63,19 +69,13 @@ fun NavigationDrawer(
             Spacer(Modifier.height(12.dp))
 
             screensInDrawer.forEachIndexed { index, item ->
-                NavigationDrawerItem(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = item.unselectedIcon),
-                            contentDescription = null
-                        )
-                    },
-                    label = { Text(item.name) },
-                    selected = selectedItem.value == item.id,
-                    onClick = {
+                DrawerItem(
+                    item = item,
+                    isSelected = selectedItemIndex.value == index,
+                    onItemClick = {
                         scope.launch { drawerState.close() }
-                        selectedItem.value = item.id
-                        navController.navigate(item.route)
+                        selectedItemIndex.value = index
+                        item.route?.let { navController.navigate(it) }
                     }
                 )
             }
@@ -87,27 +87,20 @@ fun NavigationDrawer(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(12.dp))
-            NavigationDrawerItem(
-                icon = {
-                    Image(
-                        painter = painterResource(id = R.drawable.logout),
-                        contentDescription = null) },
-                label = {
-                    Text(
-                        text = "Logout",
-                        color = Color.Red
-                    )
-                },
-                selected = selectedItem.value == R.drawable.logout,
-                onClick = {
-                    scope.launch {
-                        drawerState.close()
-                    }
-                    selectedItem.value = R.drawable.logout
+            DrawerItem(
+                item = NavigationDrawerUiItem(
+                    name = "Logout",
+                    unselectedIcon = R.drawable.logout
+                ),
+                isSelected = selectedItemIndex.value == screensInDrawer.size, // The logout item is selected if selectedItemIndex is equal to the size of screensInDrawer
+                textColor = Color.Red,
+                onItemClick = {
+                    scope.launch { drawerState.close() }
+                    selectedItemIndex.value = screensInDrawer.size // Set selectedItemIndex to the size of screensInDrawer when the logout item is clicked
 
                     Firebase.auth.signOut()
 
-                    val intent = Intent(context, WelcomeActivity::class.java).apply{
+                    val intent = Intent(context, WelcomeActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     context.startActivity(intent)
@@ -115,4 +108,38 @@ fun NavigationDrawer(
             )
         }
     }
+}
+
+@Composable
+fun DrawerItem(
+    item: NavigationDrawerUiItem,
+    isSelected: Boolean,
+    textColor: Color = if (item.name == "Logout") Color.Red else Color.Black,
+    onItemClick: () -> Unit
+) {
+    val iconId = if (isSelected && item.selectedIcon != null) {
+        item.selectedIcon
+    } else {
+        item.unselectedIcon
+    }
+
+    NavigationDrawerItem(
+        icon = {
+            Image(
+                painter = painterResource(id = iconId),
+                contentDescription = null
+            )
+        },
+        label = {
+            Text(
+                text = item.name,
+                fontSize = 18.sp,
+                color = textColor.copy(alpha = if (isSelected) 1f else 0.6f)
+            )
+        },
+        selected = isSelected,
+        onClick = {
+            onItemClick()
+        }
+    )
 }
