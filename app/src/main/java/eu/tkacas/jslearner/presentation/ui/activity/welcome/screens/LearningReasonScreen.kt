@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
@@ -40,7 +41,7 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.LearningReasonViewMode
 fun LearningReasonScreen(
     navController: NavController,
     viewModel: LearningReasonViewModel,
-    experienceLevel: String
+    experienceLevel: ExperienceLevel
 ) {
     val context = LocalContext.current
     val uiLearningReasons = viewModel.uiLearningReasons
