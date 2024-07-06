@@ -2,22 +2,17 @@ package eu.tkacas.jslearner.presentation.ui.component
 
 import android.app.Activity
 import android.content.Intent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,9 +41,9 @@ fun NavigationDrawer(
 
     // Define your screens
     val screensInDrawer = listOf(
-        NavigationDrawerUiItem(id = R.drawable.account, name = "Account", icon = R.drawable.account, route = "account"),
-        NavigationDrawerUiItem(id = R.drawable.settings, name = "Settings", icon = R.drawable.settings, route = "settings"),
-        NavigationDrawerUiItem(id = R.drawable.leaderboard, name = "Leaderboard", icon = R.drawable.leaderboard, route = "leaderboard")
+        NavigationDrawerUiItem(id = R.drawable.account, name = "Account", unselectedIcon = R.drawable.account, selectedIcon = R.drawable.account_filled, route = "account"),
+        NavigationDrawerUiItem(id = R.drawable.settings, name = "Settings", unselectedIcon = R.drawable.settings,selectedIcon = R.drawable.settings_filled, route = "settings"),
+        NavigationDrawerUiItem(id = R.drawable.leaderboard, name = "Leaderboard", unselectedIcon = R.drawable.leaderboard,selectedIcon = R.drawable.leaderboard_filled, route = "leaderboard")
     )
 
     ModalDrawerSheet {
@@ -68,7 +63,7 @@ fun NavigationDrawer(
                 NavigationDrawerItem(
                     icon = {
                         Icon(
-                            painter = painterResource(id = item.icon),
+                            painter = painterResource(id = item.unselectedIcon),
                             contentDescription = null
                         )
                     },
@@ -91,8 +86,13 @@ fun NavigationDrawer(
             val context = LocalContext.current
             Spacer(modifier = Modifier.height(12.dp))
             NavigationDrawerItem(
-                icon = { Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
-                label = { Text("Logout",  color = Color.Red) },
+                icon = {
+                    Icon(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
+                label = {
+                    Text(
+                        text = "Logout",
+                        color = Color.Red)
+                    },
                 selected = selectedItem.value == R.drawable.logout,
                 onClick = {
                     scope.launch { drawerState.close() }
