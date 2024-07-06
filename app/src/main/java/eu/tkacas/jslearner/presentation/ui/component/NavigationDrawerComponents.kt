@@ -37,6 +37,7 @@ fun NavigationDrawer(
     navController: NavController,
     drawerState: DrawerState
 ) {
+    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val selectedItem = remember { mutableStateOf(-1) }
 
@@ -85,11 +86,12 @@ fun NavigationDrawer(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val context = LocalContext.current
             Spacer(modifier = Modifier.height(12.dp))
             NavigationDrawerItem(
                 icon = {
-                    Image(painter = painterResource(id = R.drawable.logout), contentDescription = null) },
+                    Image(
+                        painter = painterResource(id = R.drawable.logout),
+                        contentDescription = null) },
                 label = {
                     Text(
                         text = "Logout",
@@ -102,19 +104,13 @@ fun NavigationDrawer(
                         drawerState.close()
                     }
                     selectedItem.value = R.drawable.logout
-                    //Sign out the user from Firebase
+
                     Firebase.auth.signOut()
 
-                    //Navigate to WelcomeScreen through WelcomeActivity after logout
-
-                    // Start WelcomeActivity
                     val intent = Intent(context, WelcomeActivity::class.java).apply{
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     context.startActivity(intent)
-
-                    // Finish the current activity (MainActivity) to prevent going back
-                    (context as Activity).finish()
                 }
             )
         }

@@ -79,13 +79,20 @@ suspend fun determineStartDestination(context: Context, authRepository: AuthRepo
 
     // If the user's profile is completed, start the main activity
     // Otherwise, navigate to the experience level screen
+    return if (determineActivity(context, getProfileCompletionUseCase)) {
+        "welcome" // Return "welcome" to prevent the NavHost from navigating to another destination
+    } else {
+        "experienceLevel"
+    }
+}
+
+suspend fun determineActivity(context: Context, getProfileCompletionUseCase: GetProfileCompletionUseCase): Boolean {
     if (getProfileCompletionUseCase.execute()) {
-        val intent = Intent(context, MainActivity::class.java).apply{
+        val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         context.startActivity(intent)
-        return "welcome" // Return "welcome" to prevent the NavHost from navigating to another destination
-    } else {
-        return "experienceLevel"
+        return true
     }
+    return false
 }
