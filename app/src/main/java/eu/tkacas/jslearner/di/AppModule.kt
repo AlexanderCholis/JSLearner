@@ -7,6 +7,7 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
+import eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.UpdateUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
@@ -33,6 +34,9 @@ interface AppModule {
     // For the RoadMapScreen
     val roadMapRepository: RoadMapRepository
     val getRoadMapUseCase: GetRoadMapUseCase
+
+    // For the ExperienceLevelScreen
+    val getProfileCompletionUseCase: GetProfileCompletionUseCase
 
     // For the ExploringPathScreen
     val exploringPathRepository: ExploringPathRepository
