@@ -88,7 +88,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         try {
             db.collection("users").document(userId).update(
                 mapOf(
-                    "reasonOfUsingTheApp" to user.reasonOfUsingTheApp,
+                    "learningReason" to user.learningReason,
                     "profileCompleted" to user.profileCompleted,
                 )
             ).await()
@@ -96,5 +96,4 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
             Log.w("FirestoreDataSource", "Error updating document.", e)
         }
     }
-
 }
