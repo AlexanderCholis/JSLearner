@@ -3,6 +3,7 @@ package eu.tkacas.jslearner.presentation.ui.component
 import androidx.compose.foundation.Image
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -67,12 +68,15 @@ fun MenuAppTopBar(
                     onMenuClick()
                 },
                 content = {
-                    Image(
-                        painter = if (drawerState.isOpen) painterResource(id = R.drawable.close) else painterResource(id = R.drawable.menu),
+                    Icon(
+                        painter = painterResource(id = R.drawable.menu),
                         contentDescription = stringResource(id = if (drawerState.isOpen) R.string.close_menu else R.string.open_menu)
                     )
                 }
             )
+        },
+        actions = {
+            ScoreComponent(userScore = 500)
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = color
