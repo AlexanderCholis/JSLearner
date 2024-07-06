@@ -34,7 +34,7 @@ class AppModuleImpl(
 
     // Firestore
     private val firestoreDataSource = FirestoreDataSource(getFirestoreDatabase())
-    private val firebaseDataSource = FirebaseDataSource(getFirebaseAuth())
+    private val firebaseDataSource = FirebaseDataSource(getFirebaseAuth(), getFirebaseDatabase())
 
     override fun getFirestoreDatabase(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
