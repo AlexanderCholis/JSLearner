@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDrawerState
@@ -25,7 +26,15 @@ fun SettingsScreen(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    ModalNavigationDrawer(
+        drawerContent = {
+            NavigationDrawer(
+                navController = navController,
+                drawerState = drawerState
+            )
+        },
+        drawerState = drawerState
+    ) {
         Scaffold(
             modifier = Modifier
                 .fillMaxSize(),
@@ -53,11 +62,8 @@ fun SettingsScreen(
                     .background(Color.White)
                     .padding(innerPadding)
             ) {
-                // Content of the screen
-                NavigationDrawer(navController = navController, drawerState = drawerState)
+
             }
         }
-
-
     }
 }
