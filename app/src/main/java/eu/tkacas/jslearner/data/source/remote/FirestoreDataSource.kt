@@ -84,4 +84,17 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         }
     }
 
+    suspend fun updateUserProfile(userId: String, user: UserFirestore) {
+        try {
+            db.collection("users").document(userId).update(
+                mapOf(
+                    "reasonOfUsingTheApp" to user.reasonOfUsingTheApp,
+                    "profileCompleted" to user.profileCompleted,
+                )
+            ).await()
+        } catch (e: Exception) {
+            Log.w("FirestoreDataSource", "Error updating document.", e)
+        }
+    }
+
 }
