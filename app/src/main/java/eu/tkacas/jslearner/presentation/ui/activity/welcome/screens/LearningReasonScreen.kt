@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -44,6 +45,11 @@ fun LearningReasonScreen(
     val context = LocalContext.current
     val uiLearningReasons = viewModel.uiLearningReasons
     var selectedReason by rememberSaveable { mutableStateOf<LearningReason?>(null) }
+
+    BackHandler {
+        navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
+        navController.navigate("experienceLevel")
+    }
 
     Scaffold(
         modifier = Modifier

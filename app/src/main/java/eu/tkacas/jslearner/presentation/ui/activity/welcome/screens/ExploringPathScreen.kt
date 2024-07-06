@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
 import android.content.Intent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,11 @@ fun ExploringPathScreen(
 ) {
     val context = LocalContext.current
     val exploringPathState by viewModel.exploringPathState.collectAsState()
+
+    BackHandler {
+        navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
+        navController.navigate("experienceLevel")
+    }
 
     LaunchedEffect(Unit) {
         viewModel.returnCourses(experienceLevel)
