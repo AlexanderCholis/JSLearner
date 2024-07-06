@@ -28,23 +28,24 @@ class AuthRepositoryImpl (
         return result
     }
 
-    suspend fun updateUserProfile(userId: String, reasonOfUsingTheApp: String, profileCompleted: Boolean) {
+    override suspend fun updateUserProfile(reasonOfUsingTheApp: String, profileCompleted: Boolean) {
         try { //Check for overwriting the user profile
             val user = UserFirestore(reasonOfUsingTheApp = reasonOfUsingTheApp, profileCompleted = profileCompleted)
-            firestoreDataSource.setUserProfile(userId, user)
+            val uid = currentUser?.uid ?: return
+            firestoreDataSource.updateUserProfile(uid, user)
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
         }
     }
 
-    suspend fun updateUserStats(userId: String, user: UserFirebase) {
+    override suspend fun updateUserStats(user: UserFirebase) {
         try {
-            firebaseDataSource.setUserStats(userId, user)
+            val uid = currentUser?.uid ?: return
+            firebaseDataSource.setUserStats(uid, user)
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error updating user stats.", e)
         }
-}
-
+    }
 
 
     private fun getCurrentDate(): String {
