@@ -101,7 +101,7 @@ fun ExploringPathScreen(
                                 GeneralButtonComponent(
                                     valueId = R.string.looks_good,
                                     onButtonClicked = {
-                                        viewModel.updateUserProfile(selectedReason.toString())
+                                        viewModel.updateUserProfile(selectedReason, experienceLevel)
                                         val intent = Intent(context, MainActivity::class.java)
                                         context.startActivity(intent)
                                     }
