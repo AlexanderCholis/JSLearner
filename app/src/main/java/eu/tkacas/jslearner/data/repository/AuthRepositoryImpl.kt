@@ -44,6 +44,12 @@ class AuthRepositoryImpl (
         }
     }
 
+    override suspend fun checkUserProfileCompletion(): Boolean {
+        val uid = currentUser?.uid ?: return false
+        val profileCompletion = firestoreDataSource.checkIfProfileCompleted(uid)
+        return profileCompletion
+    }
+
     private fun getCurrentDate(): String {
         return System.currentTimeMillis().toString()
     }
