@@ -96,4 +96,14 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
             Log.w("FirestoreDataSource", "Error updating document.", e)
         }
     }
+
+    suspend fun checkIfProfileCompleted(userId: String): Boolean {
+        return try {
+            val result = db.collection("users").document(userId).get().await()
+            result["profileCompleted"] as Boolean
+        } catch (e: Exception) {
+            Log.w("FirestoreDataSource", "Error getting document.", e)
+            false
+        }
+    }
 }
