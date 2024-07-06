@@ -10,7 +10,7 @@ data class UserFirestore(
     val dateRegistered: String? = null,
     val learningReason: LearningReason? = null,
     val profileCompleted: Boolean? = false,
-    val coursesCompleted: List<Lesson>? = null
+    val lessonsCompleted: List<Lesson>? = null
 ) {
     fun toMap(): Map<String, Any?> {
         return mapOf(
@@ -19,7 +19,7 @@ data class UserFirestore(
             "date_registered" to dateRegistered,
             "learning_reason" to learningReason?.name,
             "profile_completed" to profileCompleted,
-            "courses_completed" to coursesCompleted?.map { it.id }
+            "lessons_completed" to lessonsCompleted?.map { it.id }
         )
     }
 }
