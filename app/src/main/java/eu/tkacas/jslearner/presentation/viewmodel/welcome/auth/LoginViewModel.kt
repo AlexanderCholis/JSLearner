@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidateEmail
-import eu.tkacas.jslearner.domain.usecase.validateregex.ValidatePassword
+import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
+import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidatePassword
 import eu.tkacas.jslearner.presentation.ui.events.auth.LoginFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.auth.LoginFormState
 import kotlinx.coroutines.flow.MutableStateFlow

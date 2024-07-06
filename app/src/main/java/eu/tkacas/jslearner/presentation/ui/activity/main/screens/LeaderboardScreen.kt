@@ -18,10 +18,8 @@ import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import kotlinx.coroutines.launch
 
-
-
 @Composable
-fun AccountScreen(
+fun LeaderboardScreen(
     navController: NavController
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -43,22 +41,22 @@ fun AccountScreen(
                             }
                         }
                     },
-                    title = "My Account",
+                    title = "Leaderboard",
                     drawerState = drawerState
                 )
             },
         ) { innerPadding ->
-                Surface(
-                    color = Color.White,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.White)
-                        .padding(innerPadding)
-                ) {
-                    // Content of the screen
-                    NavigationDrawer(navController = navController, drawerState = drawerState)
-                }
+            Surface(
+                color = Color.White,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White)
+                    .padding(innerPadding)
+            ) {
+                // Content of the screen
+                NavigationDrawer(navController = navController, drawerState = drawerState)
             }
+        }
 
 
     }

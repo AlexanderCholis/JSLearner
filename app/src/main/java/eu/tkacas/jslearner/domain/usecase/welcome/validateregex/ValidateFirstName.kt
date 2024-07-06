@@ -1,14 +1,14 @@
-package eu.tkacas.jslearner.domain.usecase.validateregex
+package eu.tkacas.jslearner.domain.usecase.welcome.validateregex
 
-class ValidateLastName {
-    fun execute(lastName: String): ValidateResult {
-        if(lastName.isBlank()) {
+class ValidateFirstName {
+    fun execute(firstName: String): ValidateResult {
+        if(firstName.isBlank()) {
             return ValidateResult(
                 successful = false,
                 errorMessage = "The firstname can't be blank"
             )
         }
-        val allLetters = lastName.all { it.isLetter() }
+        val allLetters = firstName.all { it.isLetter() }
         if(!allLetters) {
             return ValidateResult(
                 successful = false,

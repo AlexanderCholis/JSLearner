@@ -15,6 +15,9 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.viewModelFactory
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExploringPathViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.LearningReasonViewModel
 
 class WelcomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,12 +50,27 @@ class WelcomeActivity : ComponentActivity() {
                         }
                     )
                     val experienceLevelViewModel = viewModel<ExperienceLevelViewModel>()
+                    val exploringPathViewModel = viewModel<ExploringPathViewModel>(
+                        factory = viewModelFactory {
+                            ExploringPathViewModel(
+                                getCoursesBasedOnExperienceUseCase = JSLearner.appModule.getCoursesBasedOnExperienceUseCase,
+                                updateUserProfileUseCase = JSLearner.appModule.updateUserProfileUseCase,
+                            )
+                        }
+                    )
+                    val learningReasonViewModel = viewModel<LearningReasonViewModel>()
+                    val experienceTextViewModel = viewModel<ExperienceTextViewModel>()
 
                     WelcomeNavigation(
+                        context = this,
                         authRepository = JSLearner.appModule.authRepository,
                         loginViewModel = loginViewModel,
                         signUpViewModel = signUpViewModel,
-                        experienceLevelViewModel = experienceLevelViewModel
+                        getProfileCompletionUseCase = JSLearner.appModule.getProfileCompletionUseCase,
+                        experienceLevelViewModel = experienceLevelViewModel,
+                        exploringPathViewModel = exploringPathViewModel,
+                        learningReasonViewModel = learningReasonViewModel,
+                        experienceTextViewModel = experienceTextViewModel
                     )
                 }
             }

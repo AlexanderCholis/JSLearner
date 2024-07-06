@@ -24,7 +24,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -91,18 +92,7 @@ fun LearningReasonCard(
 ) {
     val cardColor = if (isSelected) SkyBlue else Color.White
 
-//  val configuration = LocalConfiguration.current
-
     Card(
-//        modifier = if (configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            Modifier
-//                .fillMaxWidth()
-//                .clickable(onClick = true),
-//        }else {
-//            Modifier
-//                .size(width = 650.dp, height = 65.dp)
-//                .clickable(onClick = true),
-//        },
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onSelected),
@@ -136,9 +126,9 @@ fun LearningReasonCard(
 @Composable
 fun PathModuleCard(
     moduleTitleText : String,
-    moduleDescriptionText : String,
-    isExpanded: MutableState<Boolean>
+    moduleDescriptionText : String
 ) {
+    val isExpanded = remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth(),

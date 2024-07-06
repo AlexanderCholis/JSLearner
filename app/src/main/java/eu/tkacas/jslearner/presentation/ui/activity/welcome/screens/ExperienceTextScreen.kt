@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
@@ -34,10 +33,10 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewMode
 @Composable
 fun ExperienceTextScreen(
     navController: NavController,
-    experienceLevel: String
+    viewModel: ExperienceTextViewModel,
+    experienceLevel: ExperienceLevel
 ) {
-    val viewModel = viewModel<ExperienceTextViewModel>()
-    val texts = viewModel.returnTexts(ExperienceLevel.valueOf(experienceLevel))
+    val texts = viewModel.returnTexts(experienceLevel)
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var currentIndex by rememberSaveable { mutableStateOf(if (previousRoute == "experienceLevel") 0 else texts.size - 1) }
 
@@ -87,7 +86,7 @@ fun ExperienceTextScreen(
                             if (currentIndex < texts.size - 1) {
                                 currentIndex++
                             } else {
-                                navController.navigate("learningReason/$experienceLevel")
+                                navController.navigate("learningReason?experienceLevel=$experienceLevel")
                             }
                         })
                     }

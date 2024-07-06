@@ -1,12 +1,18 @@
 package eu.tkacas.jslearner.presentation.viewmodel.welcome
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevelItem
+import eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.presentation.model.ExperienceLevelUiItem
+import kotlinx.coroutines.launch
 
 class ExperienceLevelViewModel: ViewModel() {
+
     private val levels = listOf(
         ExperienceLevelItem(ExperienceLevel.NO_EXPERIENCE),
         ExperienceLevelItem(ExperienceLevel.SOME_EXPERIENCE),

@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.usecase.validateregex
+package eu.tkacas.jslearner.domain.usecase.welcome.validateregex
 
 import android.util.Patterns
 

@@ -11,20 +11,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
@@ -50,17 +50,19 @@ fun SignUpScreen(
 ) {
     val context = LocalContext.current
     val signupFlowState by viewModel.signupFlow.collectAsState()
+    var signUpState by remember { mutableStateOf(false) }
 
     LaunchedEffect(signupFlowState) {
         when (signupFlowState) {
             is Result.Error -> {
-                // The error message is showed up into UI
+                signUpState = false
             }
             is Result.Loading -> {
-                // Loading state is handled in the UI below
+                signUpState = true
             }
             is Result.Success<*> -> {
-                Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
+                signUpState = false
+                Toast.makeText(context, "Registration successful", Toast.LENGTH_SHORT).show()
                 navController.navigate("experienceLevel")
             }
             null -> {}
@@ -74,12 +76,10 @@ fun SignUpScreen(
             .background(Color.White)
             .padding(start = 28.dp, end = 28.dp, top = 60.dp, bottom = 28.dp)
     ) {
-        when (signupFlowState) {
-            is Result.Loading -> {
-                ProgressIndicatorComponent()
-            }
-            else -> {}
+        if (signUpState) {
+            ProgressIndicatorComponent()
         }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -169,12 +169,6 @@ fun SignUpScreen(
                 }
                 Spacer(modifier = Modifier.height(15.dp))
                 ErrorMessageText(errorMessage = state.errorMessage)
-//                Text(
-//                    text = state.errorMessage ?: "",
-//                    textAlign = TextAlign.Center,
-//                    modifier = Modifier.fillMaxWidth(),
-//                    color = MaterialTheme.colorScheme.error
-//                )
             }
         }
         Column(

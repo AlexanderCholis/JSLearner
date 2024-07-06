@@ -19,12 +19,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
 import eu.tkacas.jslearner.domain.model.roadmap.getColor
 import eu.tkacas.jslearner.domain.model.roadmap.getIcon
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
+import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.ui.component.default.CircleParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.LineParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.MessageBubble
@@ -73,15 +76,15 @@ internal fun RoadMapScreen(
             contentAlignment = Alignment.Center
         ) {
             when (uiState) {
-                is RoadMapViewModel.RoadMapUiState.Loading -> {
-                    CircularProgressIndicator()
+                is Result.Loading -> {
+                    ProgressIndicatorComponent()
                 }
-                is RoadMapViewModel.RoadMapUiState.Success -> {
+                is Result.Success -> {
                     LazyColumn(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        val nodes = (uiState as RoadMapViewModel.RoadMapUiState.Success).nodes
+                        val nodes = (uiState as Result.Success<List<RoadMapNodeState>>).result
                         itemsIndexed(nodes) { index, node ->
                             val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
                             val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
@@ -115,8 +118,8 @@ internal fun RoadMapScreen(
                     }
                     NavigationDrawer(navController = navController, drawerState = drawerState)
                 }
-                is RoadMapViewModel.RoadMapUiState.Error -> {
-                    Text("Error: ${(uiState as RoadMapViewModel.RoadMapUiState.Error).message}", color = MaterialTheme.colorScheme.error)
+                is Result.Error -> {
+                    Text("Error: ${(uiState as Result.Error).exception.message}", color = MaterialTheme.colorScheme.error)
                 }
             }
         }

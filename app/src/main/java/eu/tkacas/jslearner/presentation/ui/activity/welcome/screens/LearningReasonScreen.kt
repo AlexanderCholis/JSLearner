@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +14,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,11 +21,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
@@ -37,12 +40,17 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.LearningReasonViewMode
 @Composable
 fun LearningReasonScreen(
     navController: NavController,
-    experienceLevel: String
+    viewModel: LearningReasonViewModel,
+    experienceLevel: ExperienceLevel
 ) {
     val context = LocalContext.current
-    val viewModel = viewModel<LearningReasonViewModel>()
-    val reasons = viewModel.returnReasonsList()
-    val selectedReason = remember { mutableStateOf<LearningReason?>(null) }
+    val uiLearningReasons = viewModel.uiLearningReasons
+    var selectedReason by rememberSaveable { mutableStateOf<LearningReason?>(null) }
+
+    BackHandler {
+        navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
+        navController.navigate("experienceLevel")
+    }
 
     Scaffold(
         modifier = Modifier
@@ -51,7 +59,8 @@ fun LearningReasonScreen(
             BackAppTopBar(
                 color = Color.White,
                 onBackClick = {
-                    navController.navigateUp()
+                    navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
+                    navController.navigate("experienceLevel")
                 }
             )
         },
@@ -81,14 +90,14 @@ fun LearningReasonScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                     BoldText(textId = R.string.why_do_you_want_to_learn)
                     Spacer(modifier = Modifier.height(8.dp))
-                    reasons.forEachIndexed { index, item ->
+                    uiLearningReasons.forEachIndexed { index, item ->
                         LearningReasonCard(
                             image = item.image,
                             text = item.text,
-                            isSelected = selectedReason.value == item.reason,
-                            onSelected = { selectedReason.value = item.reason }
+                            isSelected = selectedReason == item.reason,
+                            onSelected = { selectedReason = item.reason }
                         )
-                        if (index < reasons.size - 1) {
+                        if (index < uiLearningReasons.size - 1) {
                             Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
@@ -101,8 +110,8 @@ fun LearningReasonScreen(
                         GeneralButtonComponent(
                             valueId = R.string.next,
                             onButtonClicked = {
-                                if (selectedReason.value != null) {
-                                    navController.navigate("exploringPath/$experienceLevel/${selectedReason.value}")
+                                if (selectedReason != null) {
+                                    navController.navigate("exploringPath?experienceLevel=$experienceLevel&selectedReason=$selectedReason")
                                 } else {
                                     Toast.makeText(context, "Please select a reason", Toast.LENGTH_SHORT).show()
                                 }

@@ -68,8 +68,6 @@ fun MenuAppTopBar(
                 },
                 content = {
                     Image(
-                        //painter = painterResource(id = R.drawable.menu),
-                        //contentDescription = stringResource(id = R.string.open_menu)
                         painter = if (drawerState.isOpen) painterResource(id = R.drawable.close) else painterResource(id = R.drawable.menu),
                         contentDescription = stringResource(id = if (drawerState.isOpen) R.string.close_menu else R.string.open_menu)
                     )
