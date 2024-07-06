@@ -41,9 +41,28 @@ class FirebaseDataSource(private val firebaseAuth: FirebaseAuth, private val fir
 
     suspend fun setUserStats(userId: String, user: UserFirebase) {
         try {
-            firebase.getReference("users").child(userId).setValue(user).await()
+            firebase.getReference("users").child(userId).setValue(user.toMap()).await()
         } catch (e: Exception) {
             Log.w("FirebaseDataSource", "Error setting user.", e)
+        }
+    }
+
+    suspend fun getUserStats(userId: String): UserFirebase? {
+        return try {
+            val snapshot = firebase.getReference("users").child(userId).get().await()
+            snapshot.getValue(UserFirebase::class.java)
+        } catch (e: Exception) {
+            Log.w("FirebaseDataSource", "Error getting user.", e)
+            null
+        }
+    }
+
+    suspend fun updateUserStats(userId: String, user: UserFirebase)
+    {
+        try {
+            firebase.getReference("users").child(userId).updateChildren(user.toMap()).await()
+        } catch (e: Exception) {
+            Log.w("FirebaseDataSource", "Error updating user.", e)
         }
     }
 }
