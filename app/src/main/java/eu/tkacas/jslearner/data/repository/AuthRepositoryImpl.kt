@@ -8,6 +8,8 @@ import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
 import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
+import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 
 class AuthRepositoryImpl (
     private val firebaseDataSource: FirebaseDataSource,
@@ -28,25 +30,19 @@ class AuthRepositoryImpl (
         return result
     }
 
-    override suspend fun updateUserProfile(reasonOfUsingTheApp: String, profileCompleted: Boolean) {
-        try { //Check for overwriting the user profile
-            val user = UserFirestore(reasonOfUsingTheApp = reasonOfUsingTheApp, profileCompleted = profileCompleted)
+    override suspend fun updateUserProfile(learningReason: LearningReason, profileCompleted: Boolean, epxerienceLevel: ExperienceLevel) {
+        try {
             val uid = currentUser?.uid ?: return
+            // Update the user profile in Firestore
+            val user = UserFirestore(learningReason = learningReason, profileCompleted = profileCompleted)
             firestoreDataSource.updateUserProfile(uid, user)
+            // Update the user stats in Firebase
+            val userStats = UserFirebase(experienceLevel = epxerienceLevel)
+            firebaseDataSource.setUserStats(uid, userStats)
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
         }
     }
-
-    override suspend fun updateUserStats(user: UserFirebase) {
-        try {
-            val uid = currentUser?.uid ?: return
-            firebaseDataSource.setUserStats(uid, user)
-        } catch (e: Exception) {
-            Log.w("AuthRepositoryImpl", "Error updating user stats.", e)
-        }
-    }
-
 
     private fun getCurrentDate(): String {
         return System.currentTimeMillis().toString()
