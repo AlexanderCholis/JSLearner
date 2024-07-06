@@ -7,7 +7,7 @@ data class UserFirestore(
     val lastName: String? = null,
     val dateRegistered: String? = null,
     val reasonOfUsingTheApp: String? = null,
-    val isProfileCompleted: Boolean? = false,
+    val profileCompleted: Boolean? = false,
     val coursesCompleted: List<Lesson>? = null
 )
 

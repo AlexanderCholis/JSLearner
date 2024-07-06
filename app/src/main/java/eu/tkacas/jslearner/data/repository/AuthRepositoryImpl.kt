@@ -22,7 +22,7 @@ class AuthRepositoryImpl (
         val result = firebaseDataSource.signup(email, password)
         if (result is Result.Success) {
             val uid = result.result.uid
-            val user = UserFirestore(firstName, lastName, dateRegistered = getCurrentDate(), isProfileCompleted = false)
+            val user = UserFirestore(firstName, lastName, dateRegistered = getCurrentDate(), profileCompleted = false)
             firestoreDataSource.setUserProfile(uid, user)
         }
         return result
@@ -30,7 +30,7 @@ class AuthRepositoryImpl (
 
     suspend fun updateUserProfile(userId: String, reasonOfUsingTheApp: String, profileCompleted: Boolean) {
         try { //Check for overwriting the user profile
-            val user = UserFirestore(reasonOfUsingTheApp = reasonOfUsingTheApp, isProfileCompleted = profileCompleted)
+            val user = UserFirestore(reasonOfUsingTheApp = reasonOfUsingTheApp, profileCompleted = profileCompleted)
             firestoreDataSource.setUserProfile(userId, user)
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
