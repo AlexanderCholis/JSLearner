@@ -101,7 +101,7 @@ fun ExploringPathScreen(
                                 GeneralButtonComponent(
                                     valueId = R.string.looks_good,
                                     onButtonClicked = {
-                                        //TODO: Send data to firebase - firestore
+                                        viewModel.updateUserProfile(selectedReason.toString())
                                         val intent = Intent(context, MainActivity::class.java)
                                         context.startActivity(intent)
                                     }
