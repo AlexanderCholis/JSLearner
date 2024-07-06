@@ -1,6 +1,20 @@
 package eu.tkacas.jslearner.domain.model
 
+import eu.tkacas.jslearner.data.model.Lesson
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
+import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
+
 data class User(
-    val firstName: String,
-    val lastName: String
+    // Firestore
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val learningReason: LearningReason? = null,
+    val coursesCompleted: List<Lesson>? = null,
+    // Firebase
+    val experienceLevel: ExperienceLevel? = null,
+    val experienceScore: Int? = null,
+    val currentCourseId: String? = null,
+    val currentLessonId: String? = null,
+    val highScoreDaysInARow: Int? = null,
+    val highScoreCorrectAnswersInARow: Int? = null
 )
