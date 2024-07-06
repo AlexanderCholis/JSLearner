@@ -1,11 +1,14 @@
 package eu.tkacas.jslearner.data.source.remote
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.jslearner.data.await
+import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.domain.Result
 
-class FirebaseDataSource(private val firebaseAuth: FirebaseAuth) {
+class FirebaseDataSource(private val firebaseAuth: FirebaseAuth, private val firebase: FirebaseDatabase) {
 
     val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
@@ -15,6 +18,7 @@ class FirebaseDataSource(private val firebaseAuth: FirebaseAuth) {
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             Result.Success(result.user!!)
         } catch (e: Exception) {
+            Log.w("FirebaseDataSource", "Error logging in user.", e)
             e.printStackTrace()
             Result.Error(e)
         }
@@ -25,6 +29,7 @@ class FirebaseDataSource(private val firebaseAuth: FirebaseAuth) {
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             return Result.Success(result.user!!)
         } catch (e: Exception) {
+            Log.w("FirebaseDataSource", "Error signing up user.", e)
             e.printStackTrace()
             Result.Error(e)
         }
@@ -32,5 +37,13 @@ class FirebaseDataSource(private val firebaseAuth: FirebaseAuth) {
 
     fun logout() {
         firebaseAuth.signOut()
+    }
+
+    suspend fun setUserFirebase(userId: String, user: UserFirebase) {
+        try {
+            firebase.getReference("users").child(userId).setValue(user).await()
+        } catch (e: Exception) {
+            Log.w("FirebaseDataSource", "Error setting user.", e)
+        }
     }
 }
