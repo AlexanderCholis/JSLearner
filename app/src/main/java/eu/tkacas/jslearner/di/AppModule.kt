@@ -9,7 +9,6 @@ import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.UpdateUserProfileUseCase
-import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateLastName
@@ -39,5 +38,4 @@ interface AppModule {
     val exploringPathRepository: ExploringPathRepository
     val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase
     val updateUserProfileUseCase: UpdateUserProfileUseCase
-    val updateUserStatsUseCase: UpdateUserStatsUseCase
 }
