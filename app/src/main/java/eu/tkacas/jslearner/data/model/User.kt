@@ -3,18 +3,19 @@ package eu.tkacas.jslearner.data.model
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 
 data class UserFirestore(
-    val firstName: String = "",
-    val lastName: String = "",
-    val dateRegistered: String = "",
-    val reasonOfUsingTheApp: String = "",
-    val profileCompleted: Boolean = false
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val dateRegistered: String? = null,
+    val reasonOfUsingTheApp: String? = null,
+    val isProfileCompleted: Boolean? = false,
+    val coursesCompleted: List<Lesson>? = null
 )
 
 data class UserFirebase(
-    val experienceLevel: ExperienceLevel = ExperienceLevel.NO_EXPERIENCE,
-    val experienceScore: Int = 0,
-    val currentCourseId: String = "",
-    val currentLessonId: String = "",
-    val highScoreDaysInARow: Int = 0,
-    val highScoreCorrectAnswersInARow: Int = 0
+    val experienceLevel: ExperienceLevel? = null,
+    val experienceScore: Int? = null,
+    val currentCourseId: String? = null,
+    val currentLessonId: String? = null,
+    val highScoreDaysInARow: Int? = null,
+    val highScoreCorrectAnswersInARow: Int? = null
 )
