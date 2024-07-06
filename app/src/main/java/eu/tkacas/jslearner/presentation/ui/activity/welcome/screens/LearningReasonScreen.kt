@@ -111,7 +111,7 @@ fun LearningReasonScreen(
                             valueId = R.string.next,
                             onButtonClicked = {
                                 if (selectedReason != null) {
-                                    navController.navigate("exploringPath?experienceLevel=$experienceLevel&selectedReason=${selectedReason}")
+                                    navController.navigate("exploringPath?experienceLevel=$experienceLevel&selectedReason=$selectedReason")
                                 } else {
                                     Toast.makeText(context, "Please select a reason", Toast.LENGTH_SHORT).show()
                                 }

@@ -61,7 +61,7 @@ internal fun WelcomeNavigation(
         composable("learningReason?experienceLevel={experienceLevel}") { backStackEntry ->
             val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
             val experienceLevel = ExperienceLevel.valueOf(experienceLevelString!!)
-            LearningReasonScreen(navController = navController, viewModel = learningReasonViewModel, experienceLevel = experienceLevel!!)
+            LearningReasonScreen(navController = navController, viewModel = learningReasonViewModel, experienceLevel = experienceLevel)
         }
         composable("exploringPath?experienceLevel={experienceLevel}&selectedReason={selectedReason}") { backStackEntry ->
             val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
@@ -75,7 +75,7 @@ internal fun WelcomeNavigation(
 
 suspend fun determineStartDestination(context: Context, authRepository: AuthRepository, getProfileCompletionUseCase: GetProfileCompletionUseCase): String {
     // If the user is not logged in, navigate to the welcome screen
-    val user = authRepository.currentUser ?: return "welcome"
+    authRepository.currentUser ?: return "welcome"
 
     // If the user's profile is completed, start the main activity
     // Otherwise, navigate to the experience level screen
