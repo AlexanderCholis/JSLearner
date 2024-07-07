@@ -14,7 +14,6 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -26,11 +25,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
-import eu.tkacas.jslearner.domain.usecase.main.profile.LogoutUseCase
+import eu.tkacas.jslearner.domain.usecase.user.LogoutUseCase
 import eu.tkacas.jslearner.presentation.model.NavigationDrawerUiItem
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.WelcomeActivity
 import kotlinx.coroutines.launch

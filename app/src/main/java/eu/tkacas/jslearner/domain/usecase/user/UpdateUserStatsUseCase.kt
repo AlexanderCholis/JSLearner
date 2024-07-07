@@ -1,6 +1,5 @@
-package eu.tkacas.jslearner.domain.usecase.main.profile
+package eu.tkacas.jslearner.domain.usecase.user
 
-import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 

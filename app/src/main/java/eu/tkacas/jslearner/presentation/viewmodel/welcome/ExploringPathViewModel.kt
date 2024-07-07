@@ -8,7 +8,7 @@ import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedO
 import eu.tkacas.jslearner.domain.model.CourseShort
 import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
-import eu.tkacas.jslearner.domain.usecase.main.profile.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

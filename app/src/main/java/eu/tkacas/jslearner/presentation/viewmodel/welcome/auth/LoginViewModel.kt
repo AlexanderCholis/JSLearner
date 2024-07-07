@@ -7,9 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import eu.tkacas.jslearner.domain.Result
-import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.usecase.main.profile.GetProfileCompletionUseCase
-import eu.tkacas.jslearner.domain.usecase.main.profile.LoginUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
+import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidatePassword
 import eu.tkacas.jslearner.presentation.ui.events.auth.LoginFormEvent

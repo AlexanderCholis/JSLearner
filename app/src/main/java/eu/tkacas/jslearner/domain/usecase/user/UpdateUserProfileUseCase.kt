@@ -1,7 +1,6 @@
-package eu.tkacas.jslearner.domain.usecase.main.profile
+package eu.tkacas.jslearner.domain.usecase.user
 
 import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.User
 
 class UpdateUserProfileUseCase(private val authRepository: AuthRepository) {
