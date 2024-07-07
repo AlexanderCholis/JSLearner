@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.auth
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +39,7 @@ import eu.tkacas.jslearner.presentation.ui.events.auth.LoginFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.auth.LoginFormState
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.presentation.ui.activity.main.MainActivity
 import eu.tkacas.jslearner.presentation.ui.component.ErrorMessageText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 
@@ -62,7 +64,16 @@ fun LoginScreen(
             is Result.Success<*> -> {
                 loadingState = false
                 Toast.makeText(context, "Successful Login", Toast.LENGTH_SHORT).show()
-                navController.navigate("experienceLevel")
+                val destination = viewModel.determineDestination()
+                if (destination == "experienceLevel") {
+                    navController.navigate("experienceLevel")
+                }
+                else {
+                    val intent = Intent(context, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    context.startActivity(intent)
+                }
             }
             null -> {}
         }

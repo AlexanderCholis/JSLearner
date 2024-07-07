@@ -20,6 +20,7 @@ import eu.tkacas.jslearner.R
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.ui.res.stringResource
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 
 
@@ -44,7 +45,7 @@ fun ScoreComponent(userScore: Int) {
             Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
                 Image(
                     painter = painterResource(id = R.drawable.trophy),
-                    contentDescription = null,
+                    contentDescription = stringResource(id = R.string.trophy),
                     modifier = Modifier.padding(start = 20.dp)
                 )
             }

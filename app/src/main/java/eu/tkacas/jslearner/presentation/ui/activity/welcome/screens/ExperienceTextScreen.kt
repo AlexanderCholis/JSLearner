@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
@@ -73,7 +74,10 @@ fun ExperienceTextScreen(
                     NormalText(textId = texts[currentIndex].normalText)
                     Spacer(modifier = Modifier.padding(20.dp))
                     Spacer(modifier = Modifier.weight(1f))
-                    Image(painter = painterResource(id = texts[currentIndex].image),contentDescription = null)
+                    Image(
+                        painter = painterResource(id = texts[currentIndex].image),
+                        contentDescription = stringResource(id = R.string.simple_image)
+                    )
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),

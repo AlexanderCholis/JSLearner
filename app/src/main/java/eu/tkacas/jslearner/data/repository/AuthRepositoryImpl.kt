@@ -2,6 +2,7 @@ package eu.tkacas.jslearner.data.repository
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseUser
+import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.data.model.UserFirestore
 import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
@@ -30,17 +31,58 @@ class AuthRepositoryImpl (
         return result
     }
 
-    override suspend fun updateUserProfile(learningReason: LearningReason, profileCompleted: Boolean, epxerienceLevel: ExperienceLevel) {
+override suspend fun updateUserProfile(
+    firstName: String?,
+    lastName: String?,
+    experienceScore: Int?,
+    learningReason: LearningReason?,
+    profileCompleted: Boolean?,
+    experienceLevel: ExperienceLevel?,
+    lessonsCompleted: List<String>?,
+    highScoreDaysInARow: Int?,
+    highScoreCorrectAnswersInARow: Int?
+) {
+    try {
+        val uid = currentUser?.uid ?: return
+        // Update the user profile in Firestore
+        val user = UserFirestore(firstName = firstName, lastName = lastName, learningReason = learningReason, profileCompleted = profileCompleted, lessonsCompleted = lessonsCompleted)
+        firestoreDataSource.updateUserProfile(uid, user)
+        // Update the user stats in Firebase
+        val userStats = UserFirebase(
+                experienceLevel = experienceLevel,
+                experienceScore = experienceScore,
+                currentCourseId = lessonsCompleted?.firstOrNull()?.toString(),
+                currentLessonId = lessonsCompleted?.firstOrNull()?.toString(),
+                highScoreDaysInARow = highScoreDaysInARow,
+                highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow,
+            )
+        firebaseDataSource.setUserStats(uid, userStats)
+    } catch (e: Exception) {
+        Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
+    }
+}
+
+    override suspend fun updateUserStats(
+        experienceLevel: ExperienceLevel?,
+        experienceScore: Int?,
+        currentCourseId: String?,
+        currentLessonId: String?,
+        highScoreDaysInARow: Int?,
+        highScoreCorrectAnswersInARow: Int?
+    ) {
         try {
             val uid = currentUser?.uid ?: return
-            // Update the user profile in Firestore
-            val user = UserFirestore(learningReason = learningReason, profileCompleted = profileCompleted)
-            firestoreDataSource.updateUserProfile(uid, user)
-            // Update the user stats in Firebase
-            val userStats = UserFirebase(experienceLevel = epxerienceLevel)
+            val userStats = UserFirebase(
+                experienceLevel = experienceLevel,
+                experienceScore = experienceScore,
+                currentCourseId = currentCourseId,
+                currentLessonId = currentLessonId,
+                highScoreDaysInARow = highScoreDaysInARow,
+                highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow
+            )
             firebaseDataSource.setUserStats(uid, userStats)
         } catch (e: Exception) {
-            Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
+            Log.w("AuthRepositoryImpl", "Error updating user stats.", e)
         }
     }
 

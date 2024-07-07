@@ -1,8 +1,8 @@
 package eu.tkacas.jslearner.presentation.model
 
 data class NavigationDrawerUiItem (
-    val id: Int,
     val name: String,
-    val icon: Int,
-    val route: String
+    val unselectedIcon: Int,
+    val selectedIcon: Int? = null,
+    val route: String? = null
 )

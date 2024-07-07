@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen.GetProfileCompletionUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.presentation.ui.activity.main.MainActivity
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.ExperienceLevelScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.ExperienceTextScreen
@@ -79,11 +79,20 @@ suspend fun determineStartDestination(context: Context, authRepository: AuthRepo
 
     // If the user's profile is completed, start the main activity
     // Otherwise, navigate to the experience level screen
-    if (getProfileCompletionUseCase.execute()) {
-        val intent = Intent(context, MainActivity::class.java)
-        context.startActivity(intent)
-        return "welcome" // Return "welcome" to prevent the NavHost from navigating to another destination
+    return if (determineActivity(context, getProfileCompletionUseCase)) {
+        "welcome" // Return "welcome" to prevent the NavHost from navigating to another destination
     } else {
-        return "experienceLevel"
+        "experienceLevel"
     }
+}
+
+suspend fun determineActivity(context: Context, getProfileCompletionUseCase: GetProfileCompletionUseCase): Boolean {
+    if (getProfileCompletionUseCase.execute()) {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        context.startActivity(intent)
+        return true
+    }
+    return false
 }

@@ -17,8 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import eu.tkacas.jslearner.JSLearner
+import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
@@ -50,76 +53,95 @@ internal fun RoadMapScreen(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    Scaffold(
-        topBar = {
-            MenuAppTopBar(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                onMenuClick = {
-                      scope.launch {
-                          if(drawerState.isOpen) {
-                              drawerState.close()
-                          } else {
-                              drawerState.open()
-                          }
-                      }
-                },
-                title = "Road Map",
-                drawerState = drawerState
+    ModalNavigationDrawer(
+        drawerContent = {
+            NavigationDrawer(
+                navController = navController,
+                drawerState = drawerState,
+                getNavigationDrawerItemsUseCase = JSLearner.appModule.getNavigationDrawerItemsUseCase,
+                logoutUseCase = JSLearner.appModule.logoutUseCase
             )
-        }
-
-    ) { innerPadding ->
-        Box(
+        },
+        drawerState = drawerState
+    ) {
+        Scaffold(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            when (uiState) {
-                is Result.Loading -> {
-                    ProgressIndicatorComponent()
-                }
-                is Result.Success -> {
-                    LazyColumn(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        val nodes = (uiState as Result.Success<List<RoadMapNodeState>>).result
-                        itemsIndexed(nodes) { index, node ->
-                            val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
-                            val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
-                                LineParametersDefaults.linearGradient(
-                                    startColor = node.status.getColor(),
-                                    endColor = nextNodeColor
-                                )
-                            } else null
-                            RoadMapNode(
-                                nodeState = node,
-                                circleParameters = CircleParametersDefaults.circleParameters(
-                                    backgroundColor = node.status.getColor(),
-                                    stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
-                                    icon = node.status.getIcon()
-                                ),
-                                lineParameters = lineParameters,
-                                content = { modifier ->
-                                    val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
-                                    val displayText = "${node.title}"
-                                    MessageBubble(
-                                        modifier,
-                                        containerColor = node.status.getColor(),
-                                        text = displayText,
-                                        onClick = {
-                                            Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
+            topBar = {
+                MenuAppTopBar(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    onMenuClick = {
+                        scope.launch {
+                            if(drawerState.isOpen) {
+                                drawerState.close()
+                            } else {
+                                drawerState.open()
+                            }
+                        }
+                    },
+                    title = stringResource(id = R.string.roadmap),
+                    drawerState = drawerState
+                )
+            }
+
+        ) { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                when (uiState) {
+                    is Result.Loading -> {
+                        ProgressIndicatorComponent()
+                    }
+                    is Result.Success -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 8.dp)
+                        ) {
+                            LazyColumn(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                val nodes = (uiState as Result.Success<List<RoadMapNodeState>>).result
+                                itemsIndexed(nodes) { index, node ->
+                                    val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
+                                    val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
+                                        LineParametersDefaults.linearGradient(
+                                            startColor = node.status.getColor(),
+                                            endColor = nextNodeColor
+                                        )
+                                    } else null
+                                    RoadMapNode(
+                                        nodeState = node,
+                                        circleParameters = CircleParametersDefaults.circleParameters(
+                                            backgroundColor = node.status.getColor(),
+                                            stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
+                                            icon = node.status.getIcon()
+                                        ),
+                                        lineParameters = lineParameters,
+                                        content = { modifier ->
+                                            val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
+                                            val displayText = "${node.title}"
+                                            MessageBubble(
+                                                modifier,
+                                                containerColor = node.status.getColor(),
+                                                text = displayText,
+                                                onClick = {
+                                                    Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
+                                                }
+                                            )
                                         }
                                     )
                                 }
-                            )
+                            }
                         }
                     }
-                    NavigationDrawer(navController = navController, drawerState = drawerState)
-                }
-                is Result.Error -> {
-                    Text("Error: ${(uiState as Result.Error).exception.message}", color = MaterialTheme.colorScheme.error)
+                    is Result.Error -> {
+                        Text("Error: ${(uiState as Result.Error).exception.message}", color = MaterialTheme.colorScheme.error)
+                    }
                 }
             }
         }
