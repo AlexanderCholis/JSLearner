@@ -15,7 +15,7 @@ class UpdateUserProfileUseCase(private val authRepository: AuthRepository) {
             highScoreDaysInARow = user.highScoreDaysInARow,
             highScoreCorrectAnswersInARow = user.highScoreCorrectAnswersInARow,
             lessonsCompleted = user.lessonsCompleted,
-            profileCompleted = null
+            profileCompleted = if (user.learningReason != null && user.experienceLevel != null) true else false
         )
     }
 }
