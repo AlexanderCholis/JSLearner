@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
@@ -27,15 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.component.CircularLeader1Component
-import eu.tkacas.jslearner.presentation.ui.component.CircularLeader2Component
-import eu.tkacas.jslearner.presentation.ui.component.CircularLeader3Component
 import eu.tkacas.jslearner.presentation.ui.component.LeaderboardComponent
 import eu.tkacas.jslearner.presentation.ui.component.LeaderboardRowComponent
 import eu.tkacas.jslearner.presentation.ui.component.LeaderboardTopSection
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
-import eu.tkacas.jslearner.presentation.ui.component.UserScoreBubbleComponent
 import kotlinx.coroutines.launch
 
 @Composable

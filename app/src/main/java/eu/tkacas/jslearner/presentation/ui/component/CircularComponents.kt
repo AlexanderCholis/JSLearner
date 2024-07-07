@@ -33,17 +33,17 @@ import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 
 @Composable
-fun CircularLeader1Component(image: Int) {
+fun CircularLeaderComponent(image: Int, borderColor: Color, hasCrown: Boolean = false) {
     Box(
         modifier = Modifier
-            .size(126.dp)
+            .size(if (hasCrown) 126.dp else 100.dp)
     ) {
         Box(
             modifier = Modifier
                 .size(100.dp) //Size of Circle
-                .offset(x = 12.dp, y = 22.dp)
+                .offset(x = if (hasCrown) 12.dp else 0.dp, y = if (hasCrown) 22.dp else 0.dp)
                 .clip(CircleShape) //Cut into circle shape
-                .border(4.dp, Color(0xFFD4AF37), CircleShape) //Gold outline
+                .border(4.dp, borderColor, CircleShape)
         ) {
             Image(
                 painter = painterResource(id = image),
@@ -52,50 +52,16 @@ fun CircularLeader1Component(image: Int) {
                 contentScale = ContentScale.Crop
             )
         }
-        Image(
-            painter = painterResource(R.drawable.crown),
-            contentDescription = stringResource(id = R.string.crown),
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .size(30.dp)
-                .offset(y = (+1).dp)
-        )
-    }
-}
-
-@Composable
-fun CircularLeader2Component(image: Int, modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .size(100.dp)
-            .clip(CircleShape)
-            .border(4.dp, Color(0xFFA9A9A9), CircleShape)
-    ) {
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = stringResource(id = R.string.leaderboard_image),
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-    }
-}
-
-@Composable
-fun CircularLeader3Component(image: Int, modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .size(100.dp)
-            .clip(CircleShape)
-            .border(4.dp, Color(0xFFCD7F32), CircleShape)
-    ) {
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = stringResource(id = R.string.leaderboard_image),
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        if (hasCrown) {
+            Image(
+                painter = painterResource(R.drawable.crown),
+                contentDescription = stringResource(id = R.string.crown),
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .size(30.dp)
+                    .offset(y = 1.dp)
+            )
+        }
     }
 }
 
@@ -128,7 +94,7 @@ fun LeaderboardTopSection(image: Int, userScore: Int, leaderType1: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy((-20).dp)
     ) {
-        CircularLeader1Component(image = image)
+        CircularLeaderComponent(image = image, borderColor = Color(0xFFD4AF37), hasCrown = true)
         UserScoreBubbleComponent(userScore = userScore, leaderType = leaderType1)
     }
 }
@@ -144,7 +110,7 @@ fun LeaderboardRowComponent(image2: Int, score2: Int, image3: Int, score3: Int, 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy((-20).dp)
         ) {
-            CircularLeader2Component(image = image2)
+            CircularLeaderComponent(image = image2, borderColor = Color(0xFFA9A9A9))
             UserScoreBubbleComponent(userScore = score2, leaderType = leaderType2)
         }
 
@@ -155,7 +121,7 @@ fun LeaderboardRowComponent(image2: Int, score2: Int, image3: Int, score3: Int, 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy((-20).dp)
         ) {
-            CircularLeader3Component(image = image3)
+            CircularLeaderComponent(image = image3, borderColor = Color(0xFFCD7F32))
             UserScoreBubbleComponent(userScore = score3, leaderType = leaderType3)
         }
     }
@@ -163,12 +129,12 @@ fun LeaderboardRowComponent(image2: Int, score2: Int, image3: Int, score3: Int, 
 
 @Preview
 @Composable
-fun LeaderboardTopSectionDEMO(){//image: Int, score: Int, lead) {
+fun LeaderboardTopSectionDEMO(){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy((-20).dp)
     ) {
-        CircularLeader1Component(image = R.drawable.application)
+        CircularLeaderComponent(image = R.drawable.application, borderColor = Color(0xFFD4AF37), hasCrown = true)
         UserScoreBubbleComponent(userScore = 1000, leaderType = 1)
     }
 }
