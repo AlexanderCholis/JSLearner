@@ -78,7 +78,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
 
     suspend fun setUserProfile(userId: String, user: UserFirestore) {
         try {
-            db.collection("users").document(userId).set(user).await()
+            db.collection("users").document(userId).set(user.toMap()).await()
         } catch (e: Exception) {
             Log.w("FirestoreDataSource", "Error setting document.", e)
         }
@@ -86,12 +86,8 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
 
     suspend fun updateUserProfile(userId: String, user: UserFirestore) {
         try {
-            db.collection("users").document(userId).update(
-                mapOf(
-                    "learningReason" to user.learningReason,
-                    "profileCompleted" to user.profileCompleted,
-                )
-            ).await()
+            val userMap = user.toMap().filterValues { it != null }
+            db.collection("users").document(userId).update(userMap).await()
         } catch (e: Exception) {
             Log.w("FirestoreDataSource", "Error updating document.", e)
         }
