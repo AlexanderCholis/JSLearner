@@ -14,6 +14,8 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.LoginUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
@@ -27,6 +29,10 @@ import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateTerms
 class AppModuleImpl(
     private val appContext: Context
 ) : AppModule {
+    // Repositories
+    override val authRepository: AuthRepository by lazy {
+        AuthRepositoryImpl(firebaseDataSource, firestoreDataSource)
+    }
 
     // Firebase
     override fun getFirebaseAuth(): FirebaseAuth {
@@ -36,7 +42,7 @@ class AppModuleImpl(
         return FirebaseDatabase.getInstance()
     }
 
-    // Firestore
+    // Firebase and Firestore
     private val firestoreDataSource = FirestoreDataSource(getFirestoreDatabase())
     private val firebaseDataSource = FirebaseDataSource(getFirebaseAuth(), getFirebaseDatabase())
 
@@ -45,9 +51,13 @@ class AppModuleImpl(
     }
 
     // For the SignIn and SignUp screens
-    override val authRepository: AuthRepository by lazy {
-        AuthRepositoryImpl(firebaseDataSource, firestoreDataSource)
+    override val loginUseCase: LoginUseCase by lazy {
+        LoginUseCase(authRepository)
     }
+    override val signUpUseCase: SignUpUseCase by lazy {
+        SignUpUseCase(authRepository)
+    }
+
     override val validateFirstName: ValidateFirstName by lazy {
         ValidateFirstName()
     }

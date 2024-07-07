@@ -7,6 +7,8 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.LoginUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
@@ -18,6 +20,8 @@ import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidatePassword
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateTerms
 
 interface AppModule {
+    // Repositories
+    val authRepository: AuthRepository
 
     // Firebase
     fun getFirebaseAuth(): FirebaseAuth
@@ -25,12 +29,15 @@ interface AppModule {
     fun getFirestoreDatabase(): FirebaseFirestore
 
     // For the SignIn and SignUp screens
-    val authRepository: AuthRepository
+    val loginUseCase: LoginUseCase
+    val signUpUseCase: SignUpUseCase
+
     val validateFirstName: ValidateFirstName
     val validateLastName: ValidateLastName
     val validateEmail: ValidateEmail
     val validatePassword: ValidatePassword
     val validateTerms: ValidateTerms
+
 
     // For the RoadMapScreen
     val roadMapRepository: RoadMapRepository
