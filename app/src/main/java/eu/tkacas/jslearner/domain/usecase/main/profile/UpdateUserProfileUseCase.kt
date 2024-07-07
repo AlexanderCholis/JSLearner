@@ -9,7 +9,7 @@ class UpdateUserProfileUseCase(private val authRepository: AuthRepository) {
         authRepository.updateUserProfile(
             firstName = user.firstName,
             lastName = user.lastName,
-            learningReason = null,
+            learningReason = user.learningReason,
             experienceLevel = user.experienceLevel,
             experienceScore = user.experienceScore,
             highScoreDaysInARow = user.highScoreDaysInARow,
