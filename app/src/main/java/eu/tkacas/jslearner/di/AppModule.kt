@@ -9,10 +9,10 @@ import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.profile.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.main.profile.SignUpUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
-import eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
-import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.UpdateUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateLastName
@@ -28,10 +28,13 @@ interface AppModule {
     fun getFirebaseDatabase(): FirebaseDatabase
     fun getFirestoreDatabase(): FirebaseFirestore
 
-    // For the SignIn and SignUp screens
+    // Profile UseCases
     val loginUseCase: LoginUseCase
     val signUpUseCase: SignUpUseCase
+    val updateUserProfileUseCase: UpdateUserProfileUseCase
+    val updateUserStatsUseCase: UpdateUserStatsUseCase
 
+    // For the SignIn and SignUp screens
     val validateFirstName: ValidateFirstName
     val validateLastName: ValidateLastName
     val validateEmail: ValidateEmail
@@ -43,13 +46,9 @@ interface AppModule {
     val roadMapRepository: RoadMapRepository
     val getRoadMapUseCase: GetRoadMapUseCase
 
-    // For the ExperienceLevelScreen
-    val getProfileCompletionUseCase: GetProfileCompletionUseCase
-
     // For the ExploringPathScreen
     val exploringPathRepository: ExploringPathRepository
     val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase
-    val updateUserProfileUseCase: UpdateUserProfileUseCase
 
     // For the NavigationDrawer
     val getNavigationDrawerItemsUseCase: GetNavigationDrawerItemsUseCase

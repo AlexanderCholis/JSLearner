@@ -16,10 +16,10 @@ import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.profile.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.main.profile.SignUpUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
-import eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
-import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.UpdateUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateLastName
@@ -50,14 +50,21 @@ class AppModuleImpl(
         return FirebaseFirestore.getInstance()
     }
 
-    // For the SignIn and SignUp screens
+    // Profile UseCases
     override val loginUseCase: LoginUseCase by lazy {
         LoginUseCase(authRepository)
     }
     override val signUpUseCase: SignUpUseCase by lazy {
         SignUpUseCase(authRepository)
     }
+    override val updateUserProfileUseCase: UpdateUserProfileUseCase by lazy {
+        UpdateUserProfileUseCase(authRepository)
+    }
+    override val updateUserStatsUseCase: UpdateUserStatsUseCase by lazy {
+        UpdateUserStatsUseCase(authRepository)
+    }
 
+    // For the SignIn and SignUp screens
     override val validateFirstName: ValidateFirstName by lazy {
         ValidateFirstName()
     }
@@ -82,20 +89,12 @@ class AppModuleImpl(
         GetRoadMapUseCase(roadMapRepository)
     }
 
-    // For the ExperienceLevelScreen
-    override val getProfileCompletionUseCase: GetProfileCompletionUseCase by lazy {
-        GetProfileCompletionUseCase(authRepository)
-    }
-
     // For the ExploringPathScreen
     override val exploringPathRepository: ExploringPathRepository by lazy {
         ExploringPathRepositoryImpl(firestoreDataSource)
     }
     override val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase by lazy {
         GetCoursesBasedOnExperienceUseCase(exploringPathRepository)
-    }
-    override val updateUserProfileUseCase: UpdateUserProfileUseCase by lazy {
-        UpdateUserProfileUseCase(authRepository)
     }
 
     // For the NavigationDrawer
