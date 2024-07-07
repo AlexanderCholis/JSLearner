@@ -67,7 +67,8 @@ fun LeaderboardScreen(
                         }
                     },
                     title = "Leaderboard",
-                    drawerState = drawerState
+                    drawerState = drawerState,
+                    showScore = false
                 )
             },
         ) { innerPadding ->
