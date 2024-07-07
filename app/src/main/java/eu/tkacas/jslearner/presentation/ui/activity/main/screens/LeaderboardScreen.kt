@@ -45,7 +45,8 @@ fun LeaderboardScreen(
             NavigationDrawer(
                 navController = navController,
                 drawerState = drawerState,
-                getNavigationDrawerItemsUseCase = JSLearner.appModule.getNavigationDrawerItemsUseCase
+                getNavigationDrawerItemsUseCase = JSLearner.appModule.getNavigationDrawerItemsUseCase,
+                logoutUseCase = JSLearner.appModule.logoutUseCase
             )
         },
         drawerState = drawerState
