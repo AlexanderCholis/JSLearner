@@ -12,6 +12,7 @@ import eu.tkacas.jslearner.domain.usecase.main.profile.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.main.profile.UpdateUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.main.profile.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
@@ -33,6 +34,7 @@ interface AppModule {
     val signUpUseCase: SignUpUseCase
     val updateUserProfileUseCase: UpdateUserProfileUseCase
     val updateUserStatsUseCase: UpdateUserStatsUseCase
+    val getProfileCompletionUseCase: GetProfileCompletionUseCase
 
     // For the SignIn and SignUp screens
     val validateFirstName: ValidateFirstName
