@@ -156,7 +156,7 @@ fun PathModuleCard(
                 ) {
                     Image(
                         painter = if(isExpanded.value) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                        contentDescription = null
+                        contentDescription = if(isExpanded.value) stringResource(id = R.string.arrow_up) else stringResource(id = R.string.arrow_down)
                     )
                 }
             }
@@ -201,7 +201,7 @@ fun CoursesPathCard(
             if(!isEnabled) {
                 Icon(
                     painter = painterResource(id = R.drawable.lock),
-                    contentDescription = null,
+                    contentDescription = stringResource(id = R.string.locked_course),
                     tint = Color.Gray
                 )
             }
@@ -224,7 +224,7 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
 
         Image(
             painter = painterResource(id = R.drawable.element_thinking),
-            contentDescription = null,
+            contentDescription = stringResource(id = R.string.stats_card),
             modifier = Modifier
                 .fillMaxSize()
                 .offset(x = 28.dp)

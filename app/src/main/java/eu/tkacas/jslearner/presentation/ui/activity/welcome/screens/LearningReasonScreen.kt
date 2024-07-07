@@ -26,6 +26,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
@@ -80,7 +81,7 @@ fun LearningReasonScreen(
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.faq),
-                        contentDescription = null,
+                        contentDescription = stringResource(id = R.string.simple_image),
                         modifier = Modifier
                             .size(100.dp)
                             .clip(CircleShape)

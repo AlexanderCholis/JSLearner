@@ -25,6 +25,7 @@ import androidx.compose.material.Text
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.R
@@ -46,14 +47,14 @@ fun CircularLeader1Component(image: Int) {
         ) {
             Image(
                 painter = painterResource(id = image),
-                contentDescription = null,
+                contentDescription = stringResource(id = R.string.leaderboard_image),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
         }
         Image(
             painter = painterResource(R.drawable.crown),
-            contentDescription = "Crown",
+            contentDescription = stringResource(id = R.string.crown),
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .size(30.dp)
@@ -73,7 +74,7 @@ fun CircularLeader2Component(image: Int, modifier: Modifier = Modifier) {
     ) {
         Image(
             painter = painterResource(id = image),
-            contentDescription = null,
+            contentDescription = stringResource(id = R.string.leaderboard_image),
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
@@ -91,7 +92,7 @@ fun CircularLeader3Component(image: Int, modifier: Modifier = Modifier) {
     ) {
         Image(
             painter = painterResource(id = image),
-            contentDescription = null,
+            contentDescription = stringResource(id = R.string.leaderboard_image),
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )

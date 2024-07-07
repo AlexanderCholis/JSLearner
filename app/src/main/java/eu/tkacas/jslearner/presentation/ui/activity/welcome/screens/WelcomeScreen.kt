@@ -45,7 +45,7 @@ fun WelcomeScreen(
             item {
                 Image(
                     painter = painterResource(id = R.drawable.jslearner_transparent),
-                    contentDescription = "Welcome Image"
+                    contentDescription = stringResource(id = R.string.welcome_image)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
