@@ -33,7 +33,17 @@ class ExploringPathViewModel(
 
     fun updateUserProfile(learningReason: LearningReason, experienceLevel: ExperienceLevel) = viewModelScope.launch {
         try {
-            updateUserProfileUseCase.execute(learningReason, true, experienceLevel)
+            updateUserProfileUseCase.execute(
+                firstName = null,
+                lastName = null,
+                experienceScore = null,
+                learningReason = learningReason,
+                profileCompleted = null,
+                experienceLevel = experienceLevel,
+                lessonsCompleted = null,
+                highScoreDaysInARow = null,
+                highScoreCorrectAnswersInARow = null
+            )
         } catch (e: Exception) {
             _exploringPathState.value = Result.Error(e)
         }
