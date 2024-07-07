@@ -31,7 +31,7 @@ class WelcomeActivity : ComponentActivity() {
                     val loginViewModel = viewModel<LoginViewModel>(
                         factory = viewModelFactory {
                             LoginViewModel(
-                                authRepository = JSLearner.appModule.authRepository,
+                                loginUseCase = JSLearner.appModule.loginUseCase,
                                 validateEmail = JSLearner.appModule.validateEmail,
                                 validatePassword = JSLearner.appModule.validatePassword
                             )
@@ -40,7 +40,7 @@ class WelcomeActivity : ComponentActivity() {
                     val signUpViewModel = viewModel<SignUpViewModel>(
                         factory = viewModelFactory {
                             SignUpViewModel(
-                                authRepository = JSLearner.appModule.authRepository,
+                                signUpUseCase = JSLearner.appModule.signUpUseCase,
                                 validateEmail = JSLearner.appModule.validateEmail,
                                 validatePassword = JSLearner.appModule.validatePassword,
                                 validateFirstName = JSLearner.appModule.validateFirstName,
