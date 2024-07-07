@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen.GetProfileCompletionUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.presentation.ui.activity.main.MainActivity
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.ExperienceLevelScreen
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.screens.ExperienceTextScreen
