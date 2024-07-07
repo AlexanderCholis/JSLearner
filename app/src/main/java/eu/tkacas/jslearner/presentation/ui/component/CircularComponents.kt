@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -29,6 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.theme.Bronze
+import eu.tkacas.jslearner.presentation.ui.theme.Gold
+import eu.tkacas.jslearner.presentation.ui.theme.Silver
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 
@@ -40,9 +42,9 @@ fun CircularLeaderComponent(image: Int, borderColor: Color, hasCrown: Boolean = 
     ) {
         Box(
             modifier = Modifier
-                .size(100.dp) //Size of Circle
+                .size(100.dp)
                 .offset(x = if (hasCrown) 12.dp else 0.dp, y = if (hasCrown) 22.dp else 0.dp)
-                .clip(CircleShape) //Cut into circle shape
+                .clip(CircleShape)
                 .border(4.dp, borderColor, CircleShape)
         ) {
             Image(
@@ -68,10 +70,10 @@ fun CircularLeaderComponent(image: Int, borderColor: Color, hasCrown: Boolean = 
 @Composable
 fun UserScoreBubbleComponent(userScore: Int, leaderType: Int) {
     val backgroundColor = when (leaderType) {
-        1 -> Color(0xFFD4AF37) // Gold for CircularLeader1Component
-        2 -> Color(0xFFA9A9A9) // Silver for CircularLeader2Component
-        3 -> Color(0xFFCD7F32) // Bronze for CircularLeader3Component
-        else -> SkyBlue // Default color
+        1 -> Gold // Gold for CircularLeader1Component
+        2 -> Silver // Silver for CircularLeader2Component
+        3 -> Bronze // Bronze for CircularLeader3Component
+        else -> SkyBlue
     }
     Box(
         contentAlignment = Alignment.Center,
@@ -94,7 +96,7 @@ fun LeaderboardTopSection(image: Int, userScore: Int, leaderType1: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy((-20).dp)
     ) {
-        CircularLeaderComponent(image = image, borderColor = Color(0xFFD4AF37), hasCrown = true)
+        CircularLeaderComponent(image = image, borderColor = Gold, hasCrown = true)
         UserScoreBubbleComponent(userScore = userScore, leaderType = leaderType1)
     }
 }
@@ -110,7 +112,7 @@ fun LeaderboardRowComponent(image2: Int, score2: Int, image3: Int, score3: Int, 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy((-20).dp)
         ) {
-            CircularLeaderComponent(image = image2, borderColor = Color(0xFFA9A9A9))
+            CircularLeaderComponent(image = image2, borderColor = Silver)
             UserScoreBubbleComponent(userScore = score2, leaderType = leaderType2)
         }
 
@@ -121,7 +123,7 @@ fun LeaderboardRowComponent(image2: Int, score2: Int, image3: Int, score3: Int, 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy((-20).dp)
         ) {
-            CircularLeaderComponent(image = image3, borderColor = Color(0xFFCD7F32))
+            CircularLeaderComponent(image = image3, borderColor = Bronze)
             UserScoreBubbleComponent(userScore = score3, leaderType = leaderType3)
         }
     }
