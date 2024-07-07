@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import eu.tkacas.jslearner.domain.Result
-import eu.tkacas.jslearner.domain.repository.AuthRepository
+import eu.tkacas.jslearner.domain.usecase.main.profile.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateLastName
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val authRepository: AuthRepository,
+    private val signUpUseCase: SignUpUseCase,
     private val validateFirstName: ValidateFirstName,
     private val validateLastName: ValidateLastName,
     private val validateEmail: ValidateEmail,
@@ -86,7 +86,7 @@ class SignUpViewModel(
 
     private fun signupUser(firstName: String, lastName: String, email: String, password: String) = viewModelScope.launch {
         _signupFlow.value = Result.Loading
-        val result = authRepository.signup(firstName, lastName, email, password)
+        val result = signUpUseCase.execute(firstName, lastName, email, password)
         if (result is Result.Error) {
             _state = _state.copy(errorMessage = result.exception.message)
         }

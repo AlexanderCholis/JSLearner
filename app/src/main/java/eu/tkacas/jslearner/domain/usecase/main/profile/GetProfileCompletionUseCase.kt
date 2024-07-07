@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.usecase.welcome.experiencelevelscreen
+package eu.tkacas.jslearner.domain.usecase.main.profile
 
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 

@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.repository.AuthRepository
+import eu.tkacas.jslearner.domain.usecase.main.profile.GetProfileCompletionUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidatePassword
 import eu.tkacas.jslearner.presentation.ui.events.auth.LoginFormEvent
@@ -17,7 +19,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val authRepository: AuthRepository,
+    private val loginUseCase: LoginUseCase,
+    private val getProfileCompletionUseCase: GetProfileCompletionUseCase,
     private val validateEmail: ValidateEmail,
     private val validatePassword: ValidatePassword
 ): ViewModel()  {
@@ -62,10 +65,18 @@ class LoginViewModel(
 
     private fun loginUser(email: String, password: String) = viewModelScope.launch {
         _loginFlow.value = Result.Loading
-        val result = authRepository.login(email, password)
+        val result = loginUseCase.execute(email, password)
         if (result is Result.Error) {
             _state = _state.copy(errorMessage = result.exception.message)
         }
         _loginFlow.value = result
+    }
+
+    suspend fun determineDestination(): String {
+        return if (getProfileCompletionUseCase.execute()) {
+            "mainActivity"
+        } else {
+            "experienceLevel"
+        }
     }
 }

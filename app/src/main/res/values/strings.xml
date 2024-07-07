@@ -93,4 +93,18 @@
     <string name="looks_good">Looks good</string>
     <string name="open_menu">Open Menu</string>
     <string name="close_menu">Closes Menu</string>
+    <string name="my_account">My Account</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="leaderboard_image">Leaderboard Image</string>
+    <string name="settings">Settings</string>
+    <string name="roadmap">Roadmap</string>
+    <string name="logout">Logout</string>
+    <string name="simple_image">Simple Image</string>
+    <string name="trophy">Trophy</string>
+    <string name="welcome_image">Welcome Image</string>
+    <string name="arrow_up">Arrow Up</string>
+    <string name="arrow_down">Arrow Down</string>
+    <string name="crown">Crown</string>
+    <string name="locked_course">Locked Course</string>
+    <string name="stats_card">Statistics Card</string>
 </resources>

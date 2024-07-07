@@ -53,7 +53,8 @@ fun MenuAppTopBar(
     title: String = "",
     color: Color,
     onMenuClick: () -> Unit,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    showScore: Boolean = true
 ){
     TopAppBar(
         title = {
@@ -76,7 +77,9 @@ fun MenuAppTopBar(
             )
         },
         actions = {
-            ScoreComponent(userScore = 500)
+            if (showScore) {
+                ScoreComponent(userScore = 500)
+            }
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = color
