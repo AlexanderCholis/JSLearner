@@ -9,7 +9,7 @@ data class User(
     val firstName: String? = null,
     val lastName: String? = null,
     val learningReason: LearningReason? = null,
-    val lessonsCompleted: List<Lesson>? = null,
+    val lessonsCompleted: List<String>? = null,
     // Firebase
     val experienceLevel: ExperienceLevel? = null,
     val experienceScore: Int? = null,
