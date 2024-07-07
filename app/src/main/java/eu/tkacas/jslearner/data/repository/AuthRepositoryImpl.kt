@@ -38,21 +38,21 @@ override suspend fun updateUserProfile(
     learningReason: LearningReason?,
     profileCompleted: Boolean?,
     experienceLevel: ExperienceLevel?,
-    lessonsCompleted: List<Lesson>?,
+    lessonsCompleted: List<String>?,
     highScoreDaysInARow: Int?,
     highScoreCorrectAnswersInARow: Int?
 ) {
     try {
         val uid = currentUser?.uid ?: return
         // Update the user profile in Firestore
-        val user = UserFirestore(firstName = firstName, lastName = lastName, learningReason = learningReason, profileCompleted = profileCompleted, lessonsCompleted = lessonsCompleted?.map { it.id })
+        val user = UserFirestore(firstName = firstName, lastName = lastName, learningReason = learningReason, profileCompleted = profileCompleted, lessonsCompleted = lessonsCompleted)
         firestoreDataSource.updateUserProfile(uid, user)
         // Update the user stats in Firebase
         val userStats = UserFirebase(
                 experienceLevel = experienceLevel,
                 experienceScore = experienceScore,
-                currentCourseId = lessonsCompleted?.firstOrNull()?.id,
-                currentLessonId = lessonsCompleted?.firstOrNull()?.id,
+                currentCourseId = lessonsCompleted?.firstOrNull()?.toString(),
+                currentLessonId = lessonsCompleted?.firstOrNull()?.toString(),
                 highScoreDaysInARow = highScoreDaysInARow,
                 highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow,
             )
