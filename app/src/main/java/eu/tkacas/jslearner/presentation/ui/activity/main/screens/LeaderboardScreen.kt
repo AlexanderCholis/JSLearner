@@ -31,6 +31,7 @@ import eu.tkacas.jslearner.presentation.ui.component.LeaderboardRowComponent
 import eu.tkacas.jslearner.presentation.ui.component.LeaderboardTopSection
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
+import eu.tkacas.jslearner.presentation.ui.component.WinnersPodiumComponent
 import kotlinx.coroutines.launch
 
 @Composable
@@ -106,6 +107,7 @@ fun LeaderboardScreen(
                             leaderType3 = 3,
                         )
                     }
+                    WinnersPodiumComponent()
                     Spacer(modifier = Modifier.height(30.dp))
                     // Add LeaderboardComponent entries here
                     LeaderboardComponent(userImage = R.drawable.application, userName = "User 1", userScore = 1000)
