@@ -21,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
@@ -66,7 +67,7 @@ fun LeaderboardScreen(
                             }
                         }
                     },
-                    title = "Leaderboard",
+                    title = stringResource(id = R.string.leaderboard),
                     drawerState = drawerState,
                     showScore = false
                 )

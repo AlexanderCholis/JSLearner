@@ -14,8 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
+import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import kotlinx.coroutines.launch
@@ -54,7 +56,7 @@ fun AccountScreen(
                             }
                         }
                     },
-                    title = "My Account",
+                    title = stringResource(id = R.string.my_account),
                     drawerState = drawerState
                 )
             },
