@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.domain.model
 
-import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 
