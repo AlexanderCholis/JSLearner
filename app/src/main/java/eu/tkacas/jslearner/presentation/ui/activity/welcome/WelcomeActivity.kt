@@ -32,6 +32,7 @@ class WelcomeActivity : ComponentActivity() {
                         factory = viewModelFactory {
                             LoginViewModel(
                                 loginUseCase = JSLearner.appModule.loginUseCase,
+                                getProfileCompletionUseCase = JSLearner.appModule.getProfileCompletionUseCase,
                                 validateEmail = JSLearner.appModule.validateEmail,
                                 validatePassword = JSLearner.appModule.validatePassword
                             )

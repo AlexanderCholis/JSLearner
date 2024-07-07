@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.repository.AuthRepository
+import eu.tkacas.jslearner.domain.usecase.main.profile.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.main.profile.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidatePassword
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
+    private val getProfileCompletionUseCase: GetProfileCompletionUseCase,
     private val validateEmail: ValidateEmail,
     private val validatePassword: ValidatePassword
 ): ViewModel()  {
@@ -68,5 +70,13 @@ class LoginViewModel(
             _state = _state.copy(errorMessage = result.exception.message)
         }
         _loginFlow.value = result
+    }
+
+    suspend fun determineDestination(): String {
+        return if (getProfileCompletionUseCase.execute()) {
+            "mainActivity"
+        } else {
+            "experienceLevel"
+        }
     }
 }
