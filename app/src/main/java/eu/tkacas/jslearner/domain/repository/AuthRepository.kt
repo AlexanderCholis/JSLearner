@@ -26,7 +26,7 @@ interface AuthRepository {
         learningReason: LearningReason?,
         profileCompleted: Boolean?,
         experienceLevel: ExperienceLevel?,
-        lessonsCompleted: List<Lesson>?,
+        lessonsCompleted: List<String>?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     )
