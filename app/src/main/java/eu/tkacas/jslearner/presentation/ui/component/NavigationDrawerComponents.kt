@@ -29,6 +29,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.profile.LogoutUseCase
 import eu.tkacas.jslearner.presentation.model.NavigationDrawerUiItem
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.WelcomeActivity
 import kotlinx.coroutines.launch
@@ -37,7 +38,8 @@ import kotlinx.coroutines.launch
 fun NavigationDrawer(
     navController: NavController,
     drawerState: DrawerState,
-    getNavigationDrawerItemsUseCase: GetNavigationDrawerItemsUseCase
+    getNavigationDrawerItemsUseCase: GetNavigationDrawerItemsUseCase,
+    logoutUseCase: LogoutUseCase
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -93,15 +95,18 @@ fun NavigationDrawer(
                 isSelected = selectedItemIndex.intValue == screensInDrawer.size,
                 textColor = Color.Red,
                 onItemClick = {
-                    scope.launch { drawerState.close() }
-                    selectedItemIndex.intValue = screensInDrawer.size
-                    // TODO: Create UseCase for logout
-                    Firebase.auth.signOut()
+                    scope.launch {
+                        drawerState.close()
 
-                    val intent = Intent(context, WelcomeActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        selectedItemIndex.intValue = screensInDrawer.size
+
+                        logoutUseCase.execute()
+
+                        val intent = Intent(context, WelcomeActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        context.startActivity(intent)
                     }
-                    context.startActivity(intent)
                 }
             )
         }
