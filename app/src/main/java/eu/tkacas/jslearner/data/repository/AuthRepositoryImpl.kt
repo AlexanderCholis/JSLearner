@@ -31,38 +31,48 @@ class AuthRepositoryImpl (
         return result
     }
 
-override suspend fun updateUserProfile(
-    firstName: String?,
-    lastName: String?,
-    experienceScore: Int?,
-    learningReason: LearningReason?,
-    profileCompleted: Boolean?,
-    experienceLevel: ExperienceLevel?,
-    lessonsCompleted: List<String>?,
-    highScoreDaysInARow: Int?,
-    highScoreCorrectAnswersInARow: Int?
-) {
-    try {
-        val uid = currentUser?.uid ?: return
-        // Update the user profile in Firestore
-        val user = UserFirestore(firstName = firstName, lastName = lastName, learningReason = learningReason, profileCompleted = profileCompleted, lessonsCompleted = lessonsCompleted)
-        firestoreDataSource.updateUserProfile(uid, user)
-        // Update the user stats in Firebase
-        val userStats = UserFirebase(
-                experienceLevel = experienceLevel,
-                experienceScore = experienceScore,
-                currentCourseId = lessonsCompleted?.firstOrNull()?.toString(),
-                currentLessonId = lessonsCompleted?.firstOrNull()?.toString(),
-                highScoreDaysInARow = highScoreDaysInARow,
-                highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow,
-            )
-        firebaseDataSource.setUserStats(uid, userStats)
-    } catch (e: Exception) {
-        Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
+    override suspend fun setUserProfile(
+        firstName: String?,
+        lastName: String?,
+        experienceScore: Int?,
+        learningReason: LearningReason?,
+        profileCompleted: Boolean?,
+        experienceLevel: ExperienceLevel?,
+        lessonsCompleted: List<String>?,
+        highScoreDaysInARow: Int?,
+        highScoreCorrectAnswersInARow: Int?
+    ) {
+        try {
+            val uid = currentUser?.uid ?: return
+            // Update the user profile in Firestore
+            val user = UserFirestore(firstName = firstName, lastName = lastName, learningReason = learningReason, profileCompleted = profileCompleted, lessonsCompleted = lessonsCompleted)
+            firestoreDataSource.setUserProfile(uid, user)
+            // Update the user stats in Firebase
+            val userStats = UserFirebase(
+                    experienceLevel = experienceLevel,
+                    experienceScore = experienceScore,
+                    currentCourseId = lessonsCompleted?.firstOrNull()?.toString(),
+                    currentLessonId = lessonsCompleted?.firstOrNull()?.toString(),
+                    highScoreDaysInARow = highScoreDaysInARow,
+                    highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow,
+                )
+            firebaseDataSource.setUserStats(uid, userStats)
+        } catch (e: Exception) {
+            Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
+        }
     }
-}
 
-    override suspend fun updateUserStats(
+    override suspend fun getUserProfile(): Result<UserFirebase> {
+        try {
+            val uid = currentUser?.uid ?: return Result.Error(Exception("User not logged in."))
+            return Result.Success(firebaseDataSource.getUserStats(uid)!!)
+        } catch (e: Exception) {
+            Log.w("AuthRepositoryImpl", "Error getting user profile.", e)
+            return Result.Error(e)
+        }
+    }
+
+    override suspend fun setUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
         currentCourseId: String?,
@@ -83,6 +93,16 @@ override suspend fun updateUserProfile(
             firebaseDataSource.setUserStats(uid, userStats)
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error updating user stats.", e)
+        }
+    }
+
+    override suspend fun getUserStats(): Result<UserFirebase> {
+        try {
+            val uid = currentUser?.uid ?: return Result.Error(Exception("User not logged in."))
+            return Result.Success(firebaseDataSource.getUserStats(uid)!!)
+        } catch (e: Exception) {
+            Log.w("AuthRepositoryImpl", "Error getting user stats.", e)
+            return Result.Error(e)
         }
     }
 
