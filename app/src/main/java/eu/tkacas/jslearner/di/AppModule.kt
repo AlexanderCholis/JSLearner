@@ -9,7 +9,7 @@ import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
-import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
@@ -34,7 +34,7 @@ interface AppModule {
     val loginUseCase: LoginUseCase
     val signUpUseCase: SignUpUseCase
     val logoutUseCase: LogoutUseCase
-    val updateUserProfileUseCase: UpdateUserProfileUseCase
+    val setUserProfileUseCase: SetUserProfileUseCase
     val updateUserStatsUseCase: UpdateUserStatsUseCase
     val getProfileCompletionUseCase: GetProfileCompletionUseCase
 

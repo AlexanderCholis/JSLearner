@@ -8,14 +8,14 @@ import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedO
 import eu.tkacas.jslearner.domain.model.CourseShort
 import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
-import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ExploringPathViewModel(
     private val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase,
-    private val updateUserProfileUseCase: UpdateUserProfileUseCase,
+    private val setUserProfileUseCase: SetUserProfileUseCase,
 ): ViewModel() {
 
     private val _exploringPathState = MutableStateFlow<Result<List<CourseShort>>?>(null)
@@ -44,7 +44,7 @@ class ExploringPathViewModel(
                 highScoreDaysInARow = null,
                 highScoreCorrectAnswersInARow = null
             )
-            updateUserProfileUseCase.execute(user)
+            setUserProfileUseCase.execute(user)
         } catch (e: Exception) {
             _exploringPathState.value = Result.Error(e)
         }
