@@ -32,6 +32,17 @@ interface AuthRepository {
         highScoreCorrectAnswersInARow: Int?
     )
     suspend fun getUserProfile(): Result<UserFirestore>
+    suspend fun updateUserProfile(
+        firstName: String?,
+        lastName: String?,
+        experienceScore: Int?,
+        learningReason: LearningReason?,
+        profileCompleted: Boolean?,
+        experienceLevel: ExperienceLevel?,
+        lessonsCompleted: List<String>?,
+        highScoreDaysInARow: Int?,
+        highScoreCorrectAnswersInARow: Int?
+    )
     suspend fun setUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
@@ -41,6 +52,14 @@ interface AuthRepository {
         highScoreCorrectAnswersInARow: Int?
     )
     suspend fun getUserStats(): Result<UserFirebase>
+    suspend fun updateUserStats(
+        experienceLevel: ExperienceLevel?,
+        experienceScore: Int?,
+        currentCourseId: String?,
+        currentLessonId: String?,
+        highScoreDaysInARow: Int?,
+        highScoreCorrectAnswersInARow: Int?
+    )
     suspend fun checkUserProfileCompletion(): Boolean
     fun logout()
 }

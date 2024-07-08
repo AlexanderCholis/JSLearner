@@ -57,4 +57,13 @@ class FirebaseDataSource(private val firebaseAuth: FirebaseAuth, private val fir
             null
         }
     }
+
+    suspend fun updateUserStats(userId: String, user: UserFirebase?) {
+        try {
+            val userMap = user?.toMap()?.filterValues { it != null }?.mapValues { it.value!! }
+            firebase.getReference("users").child(userId).updateChildren(userMap as Map<String, Any>).await()
+        } catch (e: Exception) {
+            Log.w("FirebaseDataSource", "Error updating user.", e)
+        }
+    }
 }

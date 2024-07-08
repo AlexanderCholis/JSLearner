@@ -45,7 +45,12 @@ class AuthRepositoryImpl (
         try {
             val uid = currentUser?.uid ?: return
             // Update the user profile in Firestore
-            val user = UserFirestore(firstName = firstName, lastName = lastName, learningReason = learningReason, profileCompleted = profileCompleted, lessonsCompleted = lessonsCompleted)
+            val user = UserFirestore(
+                firstName = firstName,
+                lastName = lastName,
+                learningReason = learningReason,
+                profileCompleted = profileCompleted,
+                lessonsCompleted = lessonsCompleted)
             firestoreDataSource.setUserProfile(uid, user)
             // Update the user stats in Firebase
             val userStats = UserFirebase(
@@ -69,6 +74,31 @@ class AuthRepositoryImpl (
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error getting user profile.", e)
             return Result.Error(e)
+        }
+    }
+
+    override suspend fun updateUserProfile(
+        firstName: String?,
+        lastName: String?,
+        experienceScore: Int?,
+        learningReason: LearningReason?,
+        profileCompleted: Boolean?,
+        experienceLevel: ExperienceLevel?,
+        lessonsCompleted: List<String>?,
+        highScoreDaysInARow: Int?,
+        highScoreCorrectAnswersInARow: Int?
+    ) {
+        try {
+            val uid = currentUser?.uid ?: return
+            val user = UserFirestore(
+                firstName = firstName,
+                lastName = lastName,
+                learningReason = learningReason,
+                profileCompleted = profileCompleted,
+                lessonsCompleted = lessonsCompleted)
+            firestoreDataSource.updateUserProfile(uid, user)
+        } catch (e: Exception) {
+            Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
         }
     }
 
@@ -103,6 +133,30 @@ class AuthRepositoryImpl (
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error getting user stats.", e)
             return Result.Error(e)
+        }
+    }
+
+    override suspend fun updateUserStats(
+        experienceLevel: ExperienceLevel?,
+        experienceScore: Int?,
+        currentCourseId: String?,
+        currentLessonId: String?,
+        highScoreDaysInARow: Int?,
+        highScoreCorrectAnswersInARow: Int?
+    ) {
+        try {
+            val uid = currentUser?.uid ?: return
+            val userStats = UserFirebase(
+                experienceLevel = experienceLevel,
+                experienceScore = experienceScore,
+                currentCourseId = currentCourseId,
+                currentLessonId = currentLessonId,
+                highScoreDaysInARow = highScoreDaysInARow,
+                highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow
+            )
+            firebaseDataSource.updateUserStats(uid, userStats)
+        } catch (e: Exception) {
+            Log.w("AuthRepositoryImpl", "Error updating user stats.", e)
         }
     }
 
