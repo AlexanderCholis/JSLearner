@@ -20,7 +20,8 @@ import eu.tkacas.jslearner.R
 fun BackAppTopBar(
     title: String = "",
     color: Color,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    showScore: Boolean = false
 ){
     TopAppBar(
         title = {
@@ -43,7 +44,12 @@ fun BackAppTopBar(
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = color
-        )
+        ),
+        actions = {
+            if (showScore) {
+                ScoreComponent(userScore = 500)
+            }
+        }
     )
 }
 
