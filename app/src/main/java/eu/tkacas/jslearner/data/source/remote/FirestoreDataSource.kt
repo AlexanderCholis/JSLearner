@@ -12,104 +12,61 @@ import kotlinx.coroutines.tasks.await
 class FirestoreDataSource(private val db: FirebaseFirestore) {
 
     suspend fun getCourses(): List<Course> {
-        return try {
-            val result = db.collection("courses").get().await()
-            result.map { document ->
-                document.toObject(Course::class.java).copy(id = document.id)
-            }
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error getting documents.", e)
-            emptyList()
+        val result = db.collection("courses").get().await()
+        return result.map { document ->
+            document.toObject(Course::class.java).copy(id = document.id)
         }
     }
 
     suspend fun getLessons(courseId: String): List<Lesson> {
-        return try {
-            val result = db.collection("courses").document(courseId).collection("lessons").get().await()
-            result.map { document ->
-                document.toObject(Lesson::class.java).copy(id = document.id)
-            }
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error getting documents.", e)
-            emptyList()
+        val result = db.collection("courses").document(courseId).collection("lessons").get().await()
+        return result.map { document ->
+            document.toObject(Lesson::class.java).copy(id = document.id)
         }
     }
 
     suspend fun getQuestions(courseId: String, lessonId: String): List<Question> {
-        return try {
-            val result = db.collection("courses").document(courseId)
-                .collection("lessons").document(lessonId)
-                .collection("questions").get().await()
-            result.map { document ->
-                document.toObject(Question::class.java).copy(id = document.id)
-            }
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error getting documents.", e)
-            emptyList()
+        val result = db.collection("courses").document(courseId)
+            .collection("lessons").document(lessonId)
+            .collection("questions").get().await()
+        return result.map { document ->
+            document.toObject(Question::class.java).copy(id = document.id)
         }
     }
 
     suspend fun getUserCompletedCourses(userId: String): Map<String, List<String>> {
-        return try {
-            val result = db.collection("users").document(userId).collection("done_courses").get().await()
-            result.associate { document ->
-                document.id to (document["list_of_completed_lessons"] as List<String>)
-            }
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error getting documents.", e)
-            emptyMap()
+        val result = db.collection("users").document(userId).collection("done_courses").get().await()
+        return result.associate { document ->
+            document.id to (document["list_of_completed_lessons"] as List<String>)
         }
     }
 
     suspend fun getCoursesBasedOnLevel(courseLevel: CourseLevel): List<Course> {
-        return try {
-            val result = db.collection("courses")
-                .whereEqualTo("level", courseLevel.name)
-                .get()
-                .await()
-            result.map { document ->
-                document.toObject(Course::class.java).copy(id = document.id)
-            }
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error getting documents.", e)
-            emptyList()
+        val result = db.collection("courses")
+            .whereEqualTo("level", courseLevel.name)
+            .get()
+            .await()
+        return result.map { document ->
+            document.toObject(Course::class.java).copy(id = document.id)
         }
     }
 
     suspend fun setUserProfile(userId: String, user: UserFirestore) {
-        try {
-            db.collection("users").document(userId).set(user.toMap()).await()
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error setting document.", e)
-        }
+        db.collection("users").document(userId).set(user.toMap()).await()
     }
 
     suspend fun updateUserProfile(userId: String, user: UserFirestore) {
-        try {
-            val userMap = user.toMap().filterValues { it != null }
-            db.collection("users").document(userId).update(userMap).await()
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error updating document.", e)
-        }
+        val userMap = user.toMap().filterValues { it != null }
+        db.collection("users").document(userId).update(userMap).await()
     }
 
     suspend fun getUserProfile(userId: String): UserFirestore? {
-        return try {
-            val result = db.collection("users").document(userId).get().await()
-            result.toObject(UserFirestore::class.java)
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error getting document.", e)
-            null
-        }
+        val result = db.collection("users").document(userId).get().await()
+        return result.toObject(UserFirestore::class.java)
     }
 
     suspend fun checkIfProfileCompleted(userId: String): Boolean {
-        return try {
-            val result = db.collection("users").document(userId).get().await()
-            result["profile_completed"] as Boolean
-        } catch (e: Exception) {
-            Log.w("FirestoreDataSource", "Error getting document.", e)
-            false
-        }
+        val result = db.collection("users").document(userId).get().await()
+        return result["profile_completed"] as? Boolean ?: false
     }
 }
