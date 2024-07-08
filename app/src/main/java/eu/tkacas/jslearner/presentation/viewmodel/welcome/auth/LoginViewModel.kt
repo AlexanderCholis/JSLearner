@@ -63,21 +63,20 @@ class LoginViewModel(
     }
 
     private fun loginUser(email: String, password: String) = viewModelScope.launch {
-        _loginFlow.value = Result.Loading
-        val result = loginUseCase.execute(email, password)
-        if (result is Result.Error) {
-            _state = _state.copy(errorMessage = result.exception.message)
+        try {
+            val user = loginUseCase.execute(email, password)
+            _loginFlow.value = Result.Success(user)
+        } catch (e: Exception) {
+            _state = _state.copy(errorMessage = e.message)
+            _loginFlow.value = Result.Error(e)
         }
-        _loginFlow.value = result
     }
 
     suspend fun determineDestination(): String {
-        return when (val result = getProfileCompletionUseCase.execute()) {
-            is Result.Success -> {
-                if (result.result) "mainActivity" else "experienceLevel"
-            }
-            is Result.Error -> "experienceLevel" // Or handle the error differently
-            else -> "experienceLevel" // Handle other cases if necessary
+        return try {
+            if (getProfileCompletionUseCase.execute()) "mainActivity" else "experienceLevel"
+        } catch (e: Exception) {
+            "experienceLevel" // Or log the error if needed
         }
     }
 }

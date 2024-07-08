@@ -81,15 +81,16 @@ class SignUpViewModel(
             )
             return
         }
-        signupUser(_state.firstName, _state.lastName, _state.email, _state.password)
+        signUpUser(_state.firstName, _state.lastName, _state.email, _state.password)
     }
 
-    private fun signupUser(firstName: String, lastName: String, email: String, password: String) = viewModelScope.launch {
-        _signupFlow.value = Result.Loading
-        val result = signUpUseCase.execute(firstName, lastName, email, password)
-        if (result is Result.Error) {
-            _state = _state.copy(errorMessage = result.exception.message)
+    private fun signUpUser(firstName: String, lastName: String, email: String, password: String) = viewModelScope.launch {
+        try {
+            val user = signUpUseCase.execute(firstName, lastName, email, password)
+            _signupFlow.value = Result.Success(user) // Assuming you still want to use Result for success indication
+        } catch (e: Exception) {
+            _state = _state.copy(errorMessage = e.message)
+            _signupFlow.value = Result.Error(e) // Assuming you still want to use Result for error indication
         }
-        _signupFlow.value = result
     }
 }
