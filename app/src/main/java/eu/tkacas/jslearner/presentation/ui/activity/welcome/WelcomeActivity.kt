@@ -55,7 +55,7 @@ class WelcomeActivity : ComponentActivity() {
                         factory = viewModelFactory {
                             ExploringPathViewModel(
                                 getCoursesBasedOnExperienceUseCase = JSLearner.appModule.getCoursesBasedOnExperienceUseCase,
-                                setUserProfileUseCase = JSLearner.appModule.setUserProfileUseCase,
+                                updateUserProfileUseCase = JSLearner.appModule.updateUserProfileUseCase,
                             )
                         }
                     )
