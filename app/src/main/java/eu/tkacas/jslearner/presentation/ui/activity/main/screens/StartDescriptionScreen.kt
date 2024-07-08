@@ -25,13 +25,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.BulletText
 import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
+import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartDescriptionViewModel
 
 @Composable
-fun StartModuleScreen() {
+fun StartDescriptionScreen(
+    navController: NavController,
+    viewModel: StartDescriptionViewModel
+) {
     val subsections = listOf("L1: Title", "L2: Title", "L3: Title", "L4: Title")
 
     Surface(
@@ -113,10 +119,4 @@ fun StartModuleScreen() {
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun StartModuleScreenPreview() {
-    StartModuleScreen()
 }
