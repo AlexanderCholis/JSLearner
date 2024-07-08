@@ -62,10 +62,10 @@ class AuthRepositoryImpl (
         }
     }
 
-    override suspend fun getUserProfile(): Result<UserFirebase> {
+    override suspend fun getUserProfile(): Result<UserFirestore> {
         try {
             val uid = currentUser?.uid ?: return Result.Error(Exception("User not logged in."))
-            return Result.Success(firebaseDataSource.getUserStats(uid)!!)
+            return Result.Success(firestoreDataSource.getUserProfile(uid)!!)
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error getting user profile.", e)
             return Result.Error(e)

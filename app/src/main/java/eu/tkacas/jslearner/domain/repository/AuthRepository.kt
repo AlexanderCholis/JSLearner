@@ -3,6 +3,7 @@ package eu.tkacas.jslearner.domain.repository
 import com.google.firebase.auth.FirebaseUser
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.UserFirebase
+import eu.tkacas.jslearner.data.model.UserFirestore
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
@@ -30,7 +31,7 @@ interface AuthRepository {
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     )
-    suspend fun getUserProfile(): Result<UserFirebase>
+    suspend fun getUserProfile(): Result<UserFirestore>
     suspend fun setUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
