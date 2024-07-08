@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.component.FloatingButton
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import kotlinx.coroutines.launch
@@ -58,7 +59,7 @@ fun SettingsScreen(
                     title = stringResource(id = R.string.settings),
                     drawerState = drawerState
                 )
-            },
+            }
         ) { innerPadding ->
             Surface(
                 color = Color.White,
