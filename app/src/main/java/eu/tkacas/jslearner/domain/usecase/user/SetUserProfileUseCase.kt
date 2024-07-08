@@ -8,13 +8,13 @@ class SetUserProfileUseCase(private val authRepository: AuthRepository) {
         authRepository.setUserProfile(
             firstName = user.firstName,
             lastName = user.lastName,
-            learningReason = user.learningReason,
-            experienceLevel = user.experienceLevel,
             experienceScore = user.experienceScore,
-            highScoreDaysInARow = user.highScoreDaysInARow,
-            highScoreCorrectAnswersInARow = user.highScoreCorrectAnswersInARow,
+            learningReason = user.learningReason,
+            profileCompleted = user.experienceLevel != null && user.learningReason != null,
+            experienceLevel = user.experienceLevel,
             lessonsCompleted = user.lessonsCompleted,
-            profileCompleted = user.experienceLevel != null && user.learningReason != null
+            highScoreDaysInARow = user.highScoreDaysInARow,
+            highScoreCorrectAnswersInARow = user.highScoreCorrectAnswersInARow
         )
     }
 }
