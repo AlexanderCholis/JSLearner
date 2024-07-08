@@ -26,7 +26,8 @@ fun BackAppTopBar(
     TopAppBar(
         title = {
             Text(
-                text = title
+                text = title,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
         },
         navigationIcon = {
@@ -82,13 +83,13 @@ fun MenuAppTopBar(
                 }
             )
         },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = color
+        ),
         actions = {
             if (showScore) {
                 ScoreComponent(userScore = 500)
             }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = color
-        )
+        }
     )
 }
