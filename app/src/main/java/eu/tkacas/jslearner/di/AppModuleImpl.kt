@@ -20,7 +20,11 @@ import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LogoutUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
@@ -68,6 +72,19 @@ class AppModuleImpl(
     override val setUserStatsUseCase: SetUserStatsUseCase by lazy {
         SetUserStatsUseCase(authRepository)
     }
+    override val getUserProfileUseCase: GetUserProfileUseCase by lazy {
+        GetUserProfileUseCase(authRepository)
+    }
+    override val getUserStatsUseCase: GetUserStatsUseCase by lazy {
+        GetUserStatsUseCase(authRepository)
+    }
+    override val updateUserProfileUseCase: UpdateUserProfileUseCase by lazy {
+        UpdateUserProfileUseCase(authRepository)
+    }
+    override val updateUserStatsUseCase: UpdateUserStatsUseCase by lazy {
+        UpdateUserStatsUseCase(authRepository)
+    }
+
     override val getProfileCompletionUseCase: GetProfileCompletionUseCase by lazy {
         GetProfileCompletionUseCase(authRepository)
     }

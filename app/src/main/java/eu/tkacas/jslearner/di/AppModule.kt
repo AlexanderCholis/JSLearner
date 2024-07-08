@@ -13,7 +13,11 @@ import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LogoutUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
@@ -36,6 +40,10 @@ interface AppModule {
     val logoutUseCase: LogoutUseCase
     val setUserProfileUseCase: SetUserProfileUseCase
     val setUserStatsUseCase: SetUserStatsUseCase
+    val getUserProfileUseCase: GetUserProfileUseCase
+    val getUserStatsUseCase: GetUserStatsUseCase
+    val updateUserProfileUseCase: UpdateUserProfileUseCase
+    val updateUserStatsUseCase: UpdateUserStatsUseCase
     val getProfileCompletionUseCase: GetProfileCompletionUseCase
 
     // For the SignIn and SignUp screens
