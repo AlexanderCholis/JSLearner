@@ -4,9 +4,12 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,57 +61,165 @@ fun LeaderboardComponent(userImage: Int, userName: String, userScore: Int) {
 }
 
 @Composable
-fun WinnersPodiumComponent() {
-    Canvas(modifier = Modifier.fillMaxWidth().height(100.dp)) {
-        val podiumWidth = size.width / 5
-        val podiumHeight = size.height / 3
-        val paint = android.graphics.Paint().apply {
-            color = android.graphics.Color.BLACK
-            textSize = 40f
-            textAlign = android.graphics.Paint.Align.CENTER
+fun WinnersPodiumComponentWithLeaders(image1: Int, userScore1: Int, image2: Int, userScore2: Int, image3: Int, userScore3: Int) {
+    Box(modifier = Modifier
+        .fillMaxWidth())
+    {
+        // First place podium
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Box(
+                    modifier = Modifier
+                        .size(126.dp)
+                        .offset(y = 30.dp)
+                ) {
+                    CircularLeaderComponent(
+                        image = image1,
+                        borderColor = Gold,
+                        hasCrown = true,
+                        userScore = userScore1,
+                        leaderType = 1
+
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                ) {
+                    val podiumWidth1 = size.width / 3
+                    val podiumHeight1 = size.height / 3
+                    val paint = android.graphics.Paint().apply {
+                        color = android.graphics.Color.BLACK
+                        textSize = 40f
+                        textAlign = android.graphics.Paint.Align.CENTER
+                    }
+                    val firstPlaceTopLeft =
+                        Offset(
+                            (size.width / 2) - (podiumWidth1 / 2),
+                            size.height - (podiumHeight1 * 1.95f)
+                        )
+                    drawRect(
+                        color = Gold,
+                        topLeft = firstPlaceTopLeft,
+                        size = Size(podiumWidth1, podiumHeight1 * 1.95f)
+                    )
+                    drawContext.canvas.nativeCanvas.drawText(
+                        "1st",
+                        firstPlaceTopLeft.x + podiumWidth1 / 2,
+                        firstPlaceTopLeft.y + podiumHeight1 * 1.75f / 2 + paint.textSize / 2,
+                        paint
+                    )
+                }
+            }
         }
 
-        // First place podium
-        val firstPlaceTopLeft = Offset((size.width / 2) - (podiumWidth / 2), size.height - (podiumHeight * 1.75f))
-        drawRect(
-            color = Gold,
-            topLeft = firstPlaceTopLeft,
-            size = Size(podiumWidth, podiumHeight * 1.75f)
-        )
-        drawContext.canvas.nativeCanvas.drawText(
-            "1st",
-            firstPlaceTopLeft.x + podiumWidth / 2,
-            firstPlaceTopLeft.y + podiumHeight * 1.75f / 2 + paint.textSize / 2,
-            paint
-        )
-
         // Second place podium
-        val secondPlaceTopLeft = Offset((size.width / 2) - (podiumWidth * 1.5f), size.height - podiumHeight * 1.25f)
-        drawRect(
-            color = Silver,
-            topLeft = secondPlaceTopLeft,
-            size = Size(podiumWidth, podiumHeight*1.25f)
-        )
-        drawContext.canvas.nativeCanvas.drawText(
-            "2nd",
-            secondPlaceTopLeft.x + podiumWidth / 2,
-            secondPlaceTopLeft.y + podiumHeight * 1.25f / 2 + paint.textSize / 2,
-            paint
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(y = 36.dp)
+        ) {
+            Column() {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .offset(x = 20.dp, y = 40.dp)
+                ) {
+                    CircularLeaderComponent(
+                        image = image2,
+                        borderColor = Silver,
+                        hasCrown = false,
+                        userScore = userScore2,
+                        leaderType = 2
+
+                    )
+                }
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                ) {
+                    val podiumWidth2 = size.width / 3
+                    val podiumHeight2 = size.height / 3
+                    val paint = android.graphics.Paint().apply {
+                        color = android.graphics.Color.BLACK
+                        textSize = 40f
+                        textAlign = android.graphics.Paint.Align.CENTER
+                    }
+                    val secondPlaceTopLeft = Offset(
+                        (size.width / 2) - (podiumWidth2 * 1.5f),
+                        size.height - podiumHeight2 * 1.25f
+                    )
+                    drawRect(
+                        color = Silver,
+                        topLeft = secondPlaceTopLeft,
+                        size = Size(podiumWidth2, podiumHeight2 * 1.25f)
+                    )
+                    drawContext.canvas.nativeCanvas.drawText(
+                        "2nd",
+                        secondPlaceTopLeft.x + podiumWidth2 / 2,
+                        secondPlaceTopLeft.y + podiumHeight2 * 1.25f / 2 + paint.textSize / 2,
+                        paint
+                    )
+                }
+            }
+        }
+
 
         // Third place podium
-        val thirdPlaceTopLeft = Offset((size.width / 2) + (podiumWidth / 2), size.height - podiumHeight)
-        drawRect(
-            color = Bronze,
-            topLeft = thirdPlaceTopLeft,
-            size = Size(podiumWidth, podiumHeight)
-        )
-        drawContext.canvas.nativeCanvas.drawText(
-            "3rd",
-            thirdPlaceTopLeft.x + podiumWidth / 2,
-            thirdPlaceTopLeft.y + podiumHeight / 2 + paint.textSize / 2,
-            paint
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(x = 0.dp, y = 36.dp)
+        ) {
+            Column() {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .offset(x = 295.dp, y = 50.dp)
+                ) {
+                    CircularLeaderComponent(
+                        image = image3,
+                        borderColor = Bronze,
+                        hasCrown = false,
+                        userScore = userScore3,
+                        leaderType = 3
+
+                    )
+                }
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                ) {
+                    val podiumWidth3 = size.width / 3
+                    val podiumHeight3 = size.height / 3
+                    val paint = android.graphics.Paint().apply {
+                        color = android.graphics.Color.BLACK
+                        textSize = 40f
+                        textAlign = android.graphics.Paint.Align.CENTER
+                    }
+                    val thirdPlaceTopLeft =
+                        Offset((size.width / 2) + (podiumWidth3 / 2), size.height - podiumHeight3)
+                    drawRect(
+                        color = Bronze,
+                        topLeft = thirdPlaceTopLeft,
+                        size = Size(podiumWidth3, podiumHeight3)
+                    )
+                    drawContext.canvas.nativeCanvas.drawText(
+                        "3rd",
+                        thirdPlaceTopLeft.x + podiumWidth3 / 2,
+                        thirdPlaceTopLeft.y + podiumHeight3 / 2 + paint.textSize / 2,
+                        paint
+                    )
+                }
+            }
+        }
     }
 }
 
