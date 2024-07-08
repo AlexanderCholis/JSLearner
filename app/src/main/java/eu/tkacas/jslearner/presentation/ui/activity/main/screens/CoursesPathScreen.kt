@@ -34,57 +34,43 @@ import kotlinx.coroutines.launch
 fun CoursesPathScreen(
     navController: NavController
 ) {
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerContent = {
-            NavigationDrawer(
-                navController = navController,
-                drawerState = drawerState,
-                getNavigationDrawerItemsUseCase = JSLearner.appModule.getNavigationDrawerItemsUseCase,
-                logoutUseCase = JSLearner.appModule.logoutUseCase
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        topBar = {
+            BackAppTopBar(
+                title = stringResource(id = R.string.courses),
+                color = SkyBlue,
+                onBackClick = {
+                    navController.navigateUp()
+                },
+                showScore = true
             )
         },
-        drawerState = drawerState
-    ) {
-        Scaffold(
+    ) { innerPadding ->
+        Surface(
+            color = Color.White,
             modifier = Modifier
-                .fillMaxSize(),
-            topBar = {
-                BackAppTopBar(
-                    title = stringResource(id = R.string.courses),
-                    color = SkyBlue,
-                    onBackClick = {
-                        navController.navigateUp()
-                    },
-                    showScore = true
-                )
-            },
-        ) { innerPadding ->
-            Surface(
-                color = Color.White,
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(innerPadding)
+        ) {
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.White)
-                    .padding(innerPadding)
+                    .padding(16.dp)
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CoursesPathCard(
-                        moduleTitleText = "Fundamentals",
-                        isEnabled = true
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    CoursesPathCard(
-                        moduleTitleText = "Fundamentals II",
-                        isEnabled = false
-                    )
-                }
+                Spacer(modifier = Modifier.height(8.dp))
+                CoursesPathCard(
+                    moduleTitleText = "Fundamentals",
+                    isEnabled = true
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                CoursesPathCard(
+                    moduleTitleText = "Fundamentals II",
+                    isEnabled = false
+                )
             }
         }
     }
