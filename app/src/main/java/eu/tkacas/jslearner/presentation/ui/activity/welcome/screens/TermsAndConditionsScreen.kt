@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,7 +29,7 @@ fun TermsAndConditionsScreen(
         topBar = {
             BackAppTopBar(
                 title = stringResource(id = R.string.terms_and_conditions_header),
-                color = SkyBlue,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 onBackClick = {
                     navController.navigateUp()
                 }

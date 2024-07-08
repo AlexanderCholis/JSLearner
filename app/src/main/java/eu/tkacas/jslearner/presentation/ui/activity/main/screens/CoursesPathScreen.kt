@@ -41,7 +41,7 @@ fun CoursesPathScreen(
         topBar = {
             BackAppTopBar(
                 title = stringResource(id = R.string.courses),
-                color = SkyBlue,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 onBackClick = {
                     navController.navigateUp()
                 },
