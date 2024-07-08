@@ -4,5 +4,6 @@ data class Lesson(
     val id: String = "",
     val title: String = "",
     val theoriesList: List<String> = emptyList(),
-    val extraInfo: String = ""
+    val description: String = "",
+    val url : String = ""
 )
