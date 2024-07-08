@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.domain.repository.AuthRepository
@@ -87,12 +88,20 @@ suspend fun determineStartDestination(context: Context, authRepository: AuthRepo
 }
 
 suspend fun determineActivity(context: Context, getProfileCompletionUseCase: GetProfileCompletionUseCase): Boolean {
-    if (getProfileCompletionUseCase.execute()) {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    val result = getProfileCompletionUseCase.execute()
+    return when (result) {
+        is Result.Success -> {
+            if (result.result) {
+                val intent = Intent(context, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+                context.startActivity(intent)
+                true
+            } else {
+                false
+            }
         }
-        context.startActivity(intent)
-        return true
+        is Result.Error -> false
+        else -> false // Handle other cases if necessary
     }
-    return false
 }

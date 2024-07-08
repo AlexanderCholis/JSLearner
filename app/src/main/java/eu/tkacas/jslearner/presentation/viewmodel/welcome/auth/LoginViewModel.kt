@@ -72,10 +72,12 @@ class LoginViewModel(
     }
 
     suspend fun determineDestination(): String {
-        return if (getProfileCompletionUseCase.execute()) {
-            "mainActivity"
-        } else {
-            "experienceLevel"
+        return when (val result = getProfileCompletionUseCase.execute()) {
+            is Result.Success -> {
+                if (result.result) "mainActivity" else "experienceLevel"
+            }
+            is Result.Error -> "experienceLevel" // Or handle the error differently
+            else -> "experienceLevel" // Handle other cases if necessary
         }
     }
 }
