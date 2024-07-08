@@ -41,7 +41,8 @@ class FirebaseDataSource(private val firebaseAuth: FirebaseAuth, private val fir
 
     suspend fun setUserStats(userId: String, user: UserFirebase?) {
         try {
-            firebase.getReference("users").child(userId).setValue(user?.toMap()).await()
+            val userMap = user?.toMap()?.filterValues { it != null }
+            firebase.getReference("users").child(userId).setValue(userMap).await()
         } catch (e: Exception) {
             Log.w("FirebaseDataSource", "Error setting user.", e)
         }
