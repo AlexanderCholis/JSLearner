@@ -9,6 +9,7 @@ import eu.tkacas.jslearner.domain.model.CourseShort
 import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 
 class ExploringPathViewModel(
     private val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase,
-    private val updateUserProfileUseCase: UpdateUserProfileUseCase
+    private val updateUserProfileUseCase: UpdateUserProfileUseCase,
+    private val setUserStatsUseCase: SetUserStatsUseCase
 ): ViewModel() {
 
     private val _exploringPathState = MutableStateFlow<Result<List<CourseShort>>?>(null)
@@ -33,7 +35,7 @@ class ExploringPathViewModel(
         }
     }
 
-    fun updateUserProfile(learningReason: LearningReason, experienceLevel: ExperienceLevel) = viewModelScope.launch {
+    fun updateUserData(learningReason: LearningReason, experienceLevel: ExperienceLevel) = viewModelScope.launch {
         try {
             val user = User(
                 firstName = null,
@@ -46,6 +48,7 @@ class ExploringPathViewModel(
                 highScoreCorrectAnswersInARow = null
             )
             updateUserProfileUseCase.execute(user)
+            setUserStatsUseCase.execute(user)
         } catch (e: Exception) {
             _exploringPathState.value = Result.Error(e)
         }
