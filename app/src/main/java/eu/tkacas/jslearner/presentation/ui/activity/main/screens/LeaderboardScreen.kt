@@ -76,7 +76,7 @@ fun LeaderboardScreen(
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    //modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(16.dp)
                 ) {
                     // First 3 places on the podium
                     WinnersPodiumComponentWithLeaders(

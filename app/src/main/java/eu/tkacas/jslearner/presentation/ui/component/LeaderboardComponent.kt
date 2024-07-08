@@ -128,7 +128,7 @@ fun WinnersPodiumComponentWithLeaders(image1: Int, userScore1: Int, image2: Int,
                 Box(
                     modifier = Modifier
                         .size(100.dp)
-                        .offset(x = 20.dp, y = 40.dp)
+                        .offset(x = 15.dp, y = 40.dp)
                 ) {
                     CircularLeaderComponent(
                         image = image2,
@@ -181,7 +181,7 @@ fun WinnersPodiumComponentWithLeaders(image1: Int, userScore1: Int, image2: Int,
                 Box(
                     modifier = Modifier
                         .size(100.dp)
-                        .offset(x = 295.dp, y = 50.dp)
+                        .offset(x = 265.dp, y = 50.dp)
                 ) {
                     CircularLeaderComponent(
                         image = image3,
