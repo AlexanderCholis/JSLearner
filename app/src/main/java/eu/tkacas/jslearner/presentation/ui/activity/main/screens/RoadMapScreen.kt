@@ -131,6 +131,7 @@ internal fun RoadMapScreen(
                                                 text = displayText,
                                                 onClick = {
                                                     Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
+                                                    navController.navigate("startDescription/${node.id}")
                                                 }
                                             )
                                         }
