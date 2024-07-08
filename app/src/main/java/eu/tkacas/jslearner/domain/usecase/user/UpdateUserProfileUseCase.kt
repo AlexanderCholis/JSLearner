@@ -5,7 +5,7 @@ import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 
 class UpdateUserProfileUseCase(private val authRepository: AuthRepository) {
-    suspend fun execute(user: User) : Result<Unit> {
+    suspend fun execute(user: User) {
         return authRepository.updateUserProfile(
             firstName = user.firstName,
             lastName = user.lastName,

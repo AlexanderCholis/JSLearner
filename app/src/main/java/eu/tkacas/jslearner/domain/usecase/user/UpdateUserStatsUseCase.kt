@@ -5,7 +5,7 @@ import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 
 class UpdateUserStatsUseCase(private val authRepository: AuthRepository) {
-    suspend fun execute(user: User): Result<Unit> {
+    suspend fun execute(user: User) {
         return authRepository.updateUserStats(
             experienceLevel = user.experienceLevel,
             experienceScore = user.experienceScore,
