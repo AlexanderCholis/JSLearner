@@ -30,7 +30,7 @@ interface AuthRepository {
         lessonsCompleted: List<String>?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
-    )
+    ) : Result<Unit>
     suspend fun getUserProfile(): Result<UserFirestore>
     suspend fun updateUserProfile(
         firstName: String?,
@@ -42,7 +42,7 @@ interface AuthRepository {
         lessonsCompleted: List<String>?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
-    )
+    ) : Result<Unit>
     suspend fun setUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
@@ -50,7 +50,7 @@ interface AuthRepository {
         currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
-    )
+    ) : Result<Unit>
     suspend fun getUserStats(): Result<UserFirebase>
     suspend fun updateUserStats(
         experienceLevel: ExperienceLevel?,
@@ -59,7 +59,7 @@ interface AuthRepository {
         currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
-    )
-    suspend fun checkUserProfileCompletion(): Boolean
-    fun logout()
+    ) : Result<Unit>
+    suspend fun checkUserProfileCompletion(): Result<Boolean>
+    fun logout() : Result<Unit>
 }

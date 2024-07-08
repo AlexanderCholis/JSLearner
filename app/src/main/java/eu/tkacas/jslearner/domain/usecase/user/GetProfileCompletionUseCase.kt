@@ -6,7 +6,7 @@ import eu.tkacas.jslearner.domain.Result
 class GetProfileCompletionUseCase(private val authRepository: AuthRepository) {
     suspend fun execute(): Result<Boolean> {
         return try {
-            Result.Success(authRepository.checkUserProfileCompletion())
+            authRepository.checkUserProfileCompletion()
         } catch (e: Exception) {
             Result.Error(e)
         }

@@ -16,7 +16,7 @@ class GetUserProfileUseCase(private val authRepository: AuthRepository) {
                 ))
             }
             is Result.Error -> Result.Error(result.exception)
-            is Result.Loading -> Result.Loading // TODO
+            Result.Loading -> TODO()
         }
     }
 }

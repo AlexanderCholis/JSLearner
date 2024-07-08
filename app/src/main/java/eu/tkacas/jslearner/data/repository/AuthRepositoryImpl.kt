@@ -19,7 +19,9 @@ class AuthRepositoryImpl (
     override val currentUser
         get() = firebaseDataSource.currentUser
 
-    override suspend fun login(email: String, password: String) = firebaseDataSource.login(email, password)
+    override suspend fun login(email: String, password: String) : Result<FirebaseUser> {
+        return firebaseDataSource.login(email, password)
+    }
 
     override suspend fun signup(firstName: String, lastName: String, email: String, password: String): Result<FirebaseUser> {
         val result = firebaseDataSource.signup(email, password)
@@ -41,29 +43,21 @@ class AuthRepositoryImpl (
         lessonsCompleted: List<String>?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
-    ) {
+    ) : Result<Unit> {
         try {
-            val uid = currentUser?.uid ?: return
-            // Update the user profile in Firestore
+            val uid = currentUser?.uid ?: return Result.Error(Exception("User not logged in."))
             val user = UserFirestore(
                 firstName = firstName,
                 lastName = lastName,
                 learningReason = learningReason,
                 profileCompleted = profileCompleted,
-                lessonsCompleted = lessonsCompleted)
+                lessonsCompleted = lessonsCompleted
+            )
             firestoreDataSource.setUserProfile(uid, user)
-            // Update the user stats in Firebase
-            val userStats = UserFirebase(
-                    experienceLevel = experienceLevel,
-                    experienceScore = experienceScore,
-                    currentCourseId = lessonsCompleted?.firstOrNull()?.toString(),
-                    currentLessonId = lessonsCompleted?.firstOrNull()?.toString(),
-                    highScoreDaysInARow = highScoreDaysInARow,
-                    highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow,
-                )
-            firebaseDataSource.setUserStats(uid, userStats)
+            return Result.Success(Unit)
         } catch (e: Exception) {
-            Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
+            Log.w("AuthRepositoryImpl", "Error setting user profile.", e)
+            return Result.Error(e)
         }
     }
 
@@ -87,18 +81,21 @@ class AuthRepositoryImpl (
         lessonsCompleted: List<String>?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
-    ) {
+    ) : Result<Unit> {
         try {
-            val uid = currentUser?.uid ?: return
+            val uid = currentUser?.uid ?: return Result.Error(Exception("User not logged in."))
             val user = UserFirestore(
                 firstName = firstName,
                 lastName = lastName,
                 learningReason = learningReason,
                 profileCompleted = profileCompleted,
-                lessonsCompleted = lessonsCompleted)
+                lessonsCompleted = lessonsCompleted,
+            )
             firestoreDataSource.updateUserProfile(uid, user)
+            return Result.Success(Unit)
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error updating user profile.", e)
+            return Result.Error(e)
         }
     }
 
@@ -109,9 +106,9 @@ class AuthRepositoryImpl (
         currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
-    ) {
+    ): Result<Unit> {
         try {
-            val uid = currentUser?.uid ?: return
+            val uid = currentUser?.uid ?: return Result.Error(Exception("User not logged in."))
             val userStats = UserFirebase(
                 experienceLevel = experienceLevel,
                 experienceScore = experienceScore,
@@ -121,8 +118,10 @@ class AuthRepositoryImpl (
                 highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow
             )
             firebaseDataSource.setUserStats(uid, userStats)
+            return Result.Success(Unit)
         } catch (e: Exception) {
-            Log.w("AuthRepositoryImpl", "Error updating user stats.", e)
+            Log.w("AuthRepositoryImpl", "Error setting user stats.", e)
+            return Result.Error(e)
         }
     }
 
@@ -143,9 +142,9 @@ class AuthRepositoryImpl (
         currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
-    ) {
+    ): Result<Unit> {
         try {
-            val uid = currentUser?.uid ?: return
+            val uid = currentUser?.uid ?: return Result.Error(Exception("User not logged in."))
             val userStats = UserFirebase(
                 experienceLevel = experienceLevel,
                 experienceScore = experienceScore,
@@ -155,19 +154,33 @@ class AuthRepositoryImpl (
                 highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow
             )
             firebaseDataSource.updateUserStats(uid, userStats)
+            return Result.Success(Unit)
         } catch (e: Exception) {
             Log.w("AuthRepositoryImpl", "Error updating user stats.", e)
+            return Result.Error(e)
         }
     }
 
-    override suspend fun checkUserProfileCompletion(): Boolean {
-        val uid = currentUser?.uid ?: return false
-        val profileCompletion = firestoreDataSource.checkIfProfileCompleted(uid)
-        return profileCompletion
+    override suspend fun checkUserProfileCompletion(): Result<Boolean> {
+        try {
+            val uid = currentUser?.uid ?: return Result.Error(Exception("User not logged in."))
+            return Result.Success(firestoreDataSource.checkIfProfileCompleted(uid))
+        } catch (e: Exception) {
+            Log.w("AuthRepositoryImpl", "Error checking user profile completion.", e)
+            return Result.Error(e)
+        }
     }
 
     private fun getCurrentDate(): String {
         return System.currentTimeMillis().toString()
     }
-    override fun logout() = firebaseDataSource.logout()
+    override fun logout(): Result<Unit> {
+        return try {
+            firebaseDataSource.logout()
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Log.w("AuthRepositoryImpl", "Error logging out.", e)
+            Result.Error(e)
+        }
+    }
 }
