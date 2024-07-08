@@ -12,6 +12,7 @@ import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigation
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartDescriptionViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.viewModelFactory
 
 class MainActivity : ComponentActivity() {
@@ -31,8 +32,19 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
+                    val startDescriptionViewModel = viewModel<StartDescriptionViewModel>(
+                        factory = viewModelFactory {
+                            StartDescriptionViewModel(
+                                getCourseUseCase = JSLearner.appModule.getCourseUseCase,
+                                getLessonUseCase = JSLearner.appModule.getLessonUseCase,
+                            )
+                        }
+                    )
 
-                    MainNavigation(roadMapViewModel = roadMapViewModel)
+                    MainNavigation(
+                        roadMapViewModel = roadMapViewModel,
+                        startDescriptionViewModel = startDescriptionViewModel
+                    )
                 }
             }
         }
