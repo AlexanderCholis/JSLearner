@@ -88,20 +88,18 @@ suspend fun determineStartDestination(context: Context, authRepository: AuthRepo
 }
 
 suspend fun determineActivity(context: Context, getProfileCompletionUseCase: GetProfileCompletionUseCase): Boolean {
-    val result = getProfileCompletionUseCase.execute()
-    return when (result) {
-        is Result.Success -> {
-            if (result.result) {
-                val intent = Intent(context, MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }
-                context.startActivity(intent)
-                true
-            } else {
-                false
+    return try {
+        val isProfileComplete = getProfileCompletionUseCase.execute()
+        if (isProfileComplete) {
+            val intent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
+            context.startActivity(intent)
+            true
+        } else {
+            false
         }
-        is Result.Error -> false
-        else -> false // Handle other cases if necessary
+    } catch (e: Exception) {
+        false
     }
 }
