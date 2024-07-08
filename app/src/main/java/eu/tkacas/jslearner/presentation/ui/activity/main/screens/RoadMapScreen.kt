@@ -131,7 +131,12 @@ internal fun RoadMapScreen(
                                                 text = displayText,
                                                 onClick = {
                                                     Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
-                                                    navController.navigate("startDescription/${node.id}")
+                                                    if (node.category.toString() == "LESSON") {
+                                                        navController.navigate("startLesson?lessonId=${node.id}")
+                                                    }
+                                                    else if (node.category.toString() == "COURSE") {
+                                                        navController.navigate("startCourse?courseId=${node.id}")
+                                                    }
                                                 }
                                             )
                                         }
