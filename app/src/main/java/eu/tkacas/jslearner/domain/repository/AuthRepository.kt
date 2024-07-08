@@ -19,7 +19,7 @@ interface AuthRepository {
         email: String,
         password: String
     ): Result<FirebaseUser>
-    suspend fun updateUserProfile(
+    suspend fun setUserProfile(
         firstName: String?,
         lastName: String?,
         experienceScore: Int?,
@@ -30,7 +30,8 @@ interface AuthRepository {
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     )
-    suspend fun updateUserStats(
+    suspend fun getUserProfile(): Result<UserFirebase>
+    suspend fun setUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
         currentCourseId: String?,
@@ -38,6 +39,7 @@ interface AuthRepository {
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     )
+    suspend fun getUserStats(): Result<UserFirebase>
     suspend fun checkUserProfileCompletion(): Boolean
     fun logout()
 }
