@@ -14,6 +14,9 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
@@ -106,12 +109,21 @@ class AppModuleImpl(
         ValidateTerms()
     }
 
-    // For the RoadMapScreen
+    // For the RoadMap
     override val roadMapRepository: RoadMapRepository by lazy {
         RoadMapRepositoryImpl(firestoreDataSource)
     }
     override val getRoadMapUseCase: GetRoadMapUseCase by lazy {
         GetRoadMapUseCase(roadMapRepository)
+    }
+    override val getCourseUseCase: GetCourseUseCase by lazy {
+        GetCourseUseCase(roadMapRepository)
+    }
+    override val getLessonUseCase: GetLessonUseCase by lazy {
+        GetLessonUseCase(roadMapRepository)
+    }
+    override val getQuizUseCase: GetQuizUseCase by lazy {
+        GetQuizUseCase(roadMapRepository)
     }
 
     // For the ExploringPathScreen

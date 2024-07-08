@@ -7,6 +7,9 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
@@ -54,9 +57,12 @@ interface AppModule {
     val validateTerms: ValidateTerms
 
 
-    // For the RoadMapScreen
+    // For the RoadMap
     val roadMapRepository: RoadMapRepository
     val getRoadMapUseCase: GetRoadMapUseCase
+    val getCourseUseCase: GetCourseUseCase
+    val getLessonUseCase: GetLessonUseCase
+    val getQuizUseCase: GetQuizUseCase
 
     // For the ExploringPathScreen
     val exploringPathRepository: ExploringPathRepository
