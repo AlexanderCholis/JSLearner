@@ -18,3 +18,7 @@ val BgColor = Color(0xFFF7F8F8)
 val Gold = Color(0xFFD4AF37)
 val Silver = Color(0xFFA9A9A9)
 val Bronze = Color(0xFFCD7F32)
+
+val LightBeige = Color(0xFFE8D9B6)
+val GreenPal = Color(0xFF508D4E)
+val GreenLightPal = Color(0xFFD6EFD8)

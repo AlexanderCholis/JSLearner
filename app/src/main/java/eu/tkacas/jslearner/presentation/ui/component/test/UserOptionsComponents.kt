@@ -39,6 +39,9 @@ import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import eu.tkacas.jslearner.presentation.ui.theme.GreenLightPal
+import eu.tkacas.jslearner.presentation.ui.theme.GreenPal
+import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
 @Composable
 fun MultipleChoiceSingleCard(
@@ -178,7 +181,7 @@ fun DraggableWordCard(text: String) {
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(4.dp)
-            .background(Color.LightGray)
+            .background(GreenLightPal)
             .dragAndDropSource {
                 detectTapGestures(
                     onLongPress = {
@@ -201,7 +204,7 @@ fun DraggableWordCard(text: String) {
 @Composable
 fun TargetWordBox(text: String) {
     var textState by remember { mutableStateOf(text) }
-    var backgroundColor by remember { mutableStateOf(Color.Red) }
+    var backgroundColor by remember { mutableStateOf(GreenPal) }
     val dragAndDropTarget = remember {
         object : DragAndDropTarget {
             override fun onDrop(event: DragAndDropEvent): Boolean {
@@ -212,17 +215,17 @@ fun TargetWordBox(text: String) {
             }
             override fun onEntered(event: DragAndDropEvent) {
                 super.onEntered(event)
-                backgroundColor = Color.Green
+                backgroundColor = LightBeige
             }
 
             override fun onEnded(event: DragAndDropEvent) {
                 super.onExited(event)
-                backgroundColor = Color.Red
+                backgroundColor = GreenPal
             }
 
             override fun onExited(event: DragAndDropEvent) {
                 super.onExited(event)
-                backgroundColor = Color.Red
+                backgroundColor = GreenPal
             }
         }
     }
