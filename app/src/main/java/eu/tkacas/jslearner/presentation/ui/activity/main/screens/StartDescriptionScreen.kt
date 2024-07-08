@@ -32,7 +32,7 @@ import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
 @Composable
 fun StartModuleScreen() {
-    val subsections = listOf("Subsection 1", "Subsection 2", "Subsection 3", "Subsection 4")
+    val subsections = listOf("L1: Title", "L2: Title", "L3: Title", "L4: Title")
 
     Surface(
         modifier = Modifier
@@ -61,7 +61,7 @@ fun StartModuleScreen() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Fundamentals",
+                            text = "Course Curriculum",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
@@ -93,7 +93,7 @@ fun StartModuleScreen() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Ready to learn about the fundamentals of JavaScript?",
+                            text = "Course Description Long",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
@@ -105,7 +105,7 @@ fun StartModuleScreen() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         GeneralButtonComponent(
-                            valueId = R.string.start_module,
+                            valueId = R.string.start_course,
                             onButtonClicked = { }
                         )
                     }
