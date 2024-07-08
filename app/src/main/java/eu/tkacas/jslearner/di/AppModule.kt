@@ -10,7 +10,7 @@ import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
-import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LogoutUseCase
@@ -35,7 +35,7 @@ interface AppModule {
     val signUpUseCase: SignUpUseCase
     val logoutUseCase: LogoutUseCase
     val setUserProfileUseCase: SetUserProfileUseCase
-    val updateUserStatsUseCase: UpdateUserStatsUseCase
+    val setUserStatsUseCase: SetUserStatsUseCase
     val getProfileCompletionUseCase: GetProfileCompletionUseCase
 
     // For the SignIn and SignUp screens
