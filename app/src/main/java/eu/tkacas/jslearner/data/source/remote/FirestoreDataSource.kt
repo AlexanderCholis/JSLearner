@@ -69,4 +69,14 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         val result = db.collection("users").document(userId).get().await()
         return result["profile_completed"] as? Boolean ?: false
     }
+
+    suspend fun getCourse(courseId: String): Course {
+        return db.collection("courses").document(courseId).get().await().toObject(Course::class.java)!!
+    }
+
+    suspend fun getLesson(courseId: String, lessonId: String): Lesson {
+        return db.collection("courses").document(courseId)
+            .collection("lessons").document(lessonId).get().await()
+            .toObject(Lesson::class.java)!!
+    }
 }
