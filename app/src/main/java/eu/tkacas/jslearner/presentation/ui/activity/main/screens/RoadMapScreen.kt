@@ -28,6 +28,7 @@ import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
 import eu.tkacas.jslearner.domain.model.roadmap.getColor
 import eu.tkacas.jslearner.domain.model.roadmap.getIcon
+import eu.tkacas.jslearner.presentation.ui.component.FloatingButton
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
@@ -82,8 +83,14 @@ internal fun RoadMapScreen(
                     title = stringResource(id = R.string.roadmap),
                     drawerState = drawerState
                 )
+            },
+            floatingActionButton = {
+                FloatingButton(
+                    onButtonClicked = {
+                        navController.navigate("coursesPath")
+                    }
+                )
             }
-
         ) { innerPadding ->
             Box(
                 modifier = Modifier

@@ -20,7 +20,6 @@ import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 
 @Composable
 fun GeneralButtonComponent(
-    //value: String,
     @StringRes valueId: Int,
     onButtonClicked: () -> Unit
 ) {

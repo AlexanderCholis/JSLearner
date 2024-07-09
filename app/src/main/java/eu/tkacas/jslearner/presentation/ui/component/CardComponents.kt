@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
@@ -211,13 +212,13 @@ fun CoursesPathCard(
 
 @Composable
 fun CourseTopCard(points: Int, days: Int, answers: Int) {
-    val lightBeige = Color(0xFFF8EFE0)
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(250.dp)
             .clip(RoundedCornerShape(25.dp))
-            .background(lightBeige)
+            .background(LightBeige)
             .padding(16.dp),
         contentAlignment = Alignment.BottomStart
     ) {

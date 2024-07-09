@@ -20,12 +20,14 @@ import eu.tkacas.jslearner.R
 fun BackAppTopBar(
     title: String = "",
     color: Color,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    showScore: Boolean = false
 ){
     TopAppBar(
         title = {
             Text(
-                text = title
+                text = title,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
             )
         },
         navigationIcon = {
@@ -43,7 +45,12 @@ fun BackAppTopBar(
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = color
-        )
+        ),
+        actions = {
+            if (showScore) {
+                ScoreComponent(userScore = 500)
+            }
+        }
     )
 }
 
@@ -76,13 +83,13 @@ fun MenuAppTopBar(
                 }
             )
         },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = color
+        ),
         actions = {
             if (showScore) {
                 ScoreComponent(userScore = 500)
             }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = color
-        )
+        }
     )
 }

@@ -1,16 +1,26 @@
 package eu.tkacas.jslearner.presentation.ui.component.test
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.draganddrop.dragAndDropSource
+import androidx.compose.foundation.draganddrop.dragAndDropTarget
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -24,6 +34,14 @@ import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draganddrop.DragAndDropEvent
+import androidx.compose.ui.draganddrop.DragAndDropTarget
+import androidx.compose.ui.draganddrop.DragAndDropTransferData
+import androidx.compose.ui.draganddrop.mimeTypes
+import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import eu.tkacas.jslearner.presentation.ui.theme.GreenLightPal
+import eu.tkacas.jslearner.presentation.ui.theme.GreenPal
+import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
 @Composable
 fun MultipleChoiceSingleCard(
@@ -156,171 +174,75 @@ fun TrueFalse(
     )
 }
 
-//@Composable
-//fun SequenceHotspot(
-//    items: List<String>,
-//    sequence: List<Int>,
-//    userSequence: List<Int>,
-//    onSequenceChanged: (Int, Int) -> Unit
-//) {
-//    Column {
-//        items.forEachIndexed { index, item ->
-//            var offsetX by remember { mutableFloatStateOf(0f) }
-//            var offsetY by remember { mutableFloatStateOf(0f) }
-//
-//            Box(
-//                modifier = Modifier
-//                    .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-//                    .pointerInput(Unit) {
-//                        detectDragGestures { change, dragAmount ->
-//                            change.consume()
-//                            offsetX += dragAmount.x
-//                            offsetY += dragAmount.y
-//                            val newIndex =
-//                                ((index + offsetX).roundToInt()).coerceIn(0, items.size - 1)
-//                            onSequenceChanged(index, newIndex)
-//                        }
-//                    }
-//            ) {
-//                Text(text = item)
-//            }
-//        }
-//    }
-//}
-//@Composable
-//fun DragTheWords(
-//    words: List<String>,
-//    targetWords: List<String>,
-//    userAnswers: List<String>,
-//    onWordDropped: (Int, String) -> Unit
-//) {
-//    val droppedWords = remember { mutableStateOf(List(words.size) { "Drop Me here" }) }
-//    val offsets = remember { words.map { mutableStateOf(Offset.Zero) } }
-//    var boxHeight by remember { mutableStateOf(0f) }
-//
-//    // State hoisting for better composability
-//    var draggingIndex by remember { mutableStateOf<Int?>(null) }
-//
-//    Row(Modifier.fillMaxWidth()) {
-//        Column(Modifier.weight(1f)) {
-//            targetWords.forEachIndexed { index, _ ->
-//                TargetWordBox(text = userAnswers[index])
-//            }
-//        }
-//
-//        Column(Modifier.weight(1f)) {
-//            droppedWords.value.forEachIndexed { index, word ->
-//                DroppedWordBox(
-//                    text = word,
-//                    onHeightMeasured = { height ->
-//                        boxHeight = height.toFloat()
-//                        println("Box height: $boxHeight")
-//                    }
-//                )
-//            }
-//        }
-//
-//        Column(Modifier.weight(1f)) {
-//            words.forEachIndexed { index, word ->
-//                val offset by offsets[index]
-//
-//                Box(
-//                    modifier = Modifier
-//                        .onGloballyPositioned { coordinates ->
-//                            boxHeight = coordinates.size.height.toFloat()
-//                        }
-//                        .offset { IntOffset(offset.x.roundToInt(), offset.y.roundToInt()) }
-//                        .pointerInput(Unit) {
-//                            detectDragGestures(
-//                                onDragStart = {
-//                                    draggingIndex = index
-//                                },
-//                                onDrag = { change, dragAmount ->
-//                                    change.consume()
-//                                    offsets[index].value += dragAmount
-//                                },
-//                                onDragEnd = {
-//                                    if (draggingIndex == index) {
-//                                        val newIndex = calculateDropIndex(offset.y, boxHeight, words.size)
-//                                        onWordDropped(newIndex, word)
-//                                        droppedWords.value = droppedWords.value.toMutableList().also { it[newIndex] = word }
-//                                        println("Dropped word: $word")
-//                                        println("New index: $newIndex")
-//                                        println("Dropped words: $droppedWords")
-//                                        offsets[index].value = Offset.Zero
-//                                    }
-//                                    draggingIndex = null
-//                                }
-//                            )
-//                        }
-//                ) {
-//                    DraggableWordCard(text = word, isDragging = draggingIndex == index)
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//fun calculateDropIndex(yOffset: Float, boxHeight: Float, wordsSize: Int): Int {
-//    // Calculate drop index based on the position relative to the top edges of the drop areas
-//    val approximateIndex = (yOffset / boxHeight).toInt()
-//    return if (approximateIndex < 0) 0 else if (approximateIndex >= wordsSize) wordsSize - 1 else approximateIndex
-//}
-//
-//@Composable
-//fun TargetWordBox(text: String) {
-//    Surface(shape = RoundedCornerShape(8.dp), color = MaterialTheme.colorScheme.inversePrimary, modifier = Modifier.padding(4.dp)) {
-//        Text(text = text, modifier = Modifier.padding(8.dp))
-//    }
-//}
-//
-//@Composable
-//fun DroppedWordBox(text: String = "Drop Here", onHeightMeasured: (Int) -> Unit) {
-//    val heightState = remember { mutableStateOf(0) } //
-//
-//    Card(
-//        shape = RoundedCornerShape(8.dp),
-//        border = BorderStroke(2.dp, Color.Black),
-//        modifier = Modifier
-//            .padding(4.dp)
-//            .height(37.dp)
-//            .onGloballyPositioned {
-//                heightState.value = it.size.height
-//                onHeightMeasured(it.size.height)
-//                println("Height measured: ${it.size.height}")
-//            }
-//    ) {
-//        Text(text = text, modifier = Modifier.padding(8.dp))
-//    }
-//}
-//
-//@Composable
-//fun DraggableWordCard(text: String, isDragging: Boolean) {
-//    Card(
-//        shape = RoundedCornerShape(8.dp),
-//        modifier = Modifier
-//            .padding(4.dp)
-//            .background(if (isDragging) Color.LightGray else Color.White)
-//            .shadow(if (isDragging) 8.dp else 0.dp), // Add shadow when dragging
-//    ) {
-//        Text(text = text, modifier = Modifier.padding(8.dp))
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun DragTheWordsPreview() {
-//    DragTheWords(
-//        words = listOf("Word 1", "Word 2", "Word 3"),
-//        targetWords = listOf("Target 1", "Target 2", "Target 3"),
-//        userAnswers = listOf("Answer 1", "Answer 2", "Answer 3"),
-//        onWordDropped = { index, word -> println("Word $word dropped at index $index") }
-//    )
-//}
-//
-// To be fixed
-// .onGloballyPositioned { layoutCoordinates ->
-//                val position = layoutCoordinates.positionInWindow()
-//                Log.d("DroppedWordBox", "Position: ${position}")
-//                onHeightMeasured(position.y.toInt())
-//            }
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun DraggableWordCard(text: String) {
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
+            .padding(4.dp)
+            .background(GreenLightPal)
+            .dragAndDropSource {
+                detectTapGestures(
+                    onLongPress = {
+                        Log.d("Drag", "Dragged $text")
+                        startTransfer(
+                            DragAndDropTransferData(
+                                ClipData.newPlainText("text/plain", text)
+                            )
+                        )
+                    }
+                )
+            }
+    ) {
+        Text(text = text, modifier = Modifier.padding(8.dp))
+    }
+}
+
+@SuppressLint("RememberReturnType")
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun TargetWordBox(text: String) {
+    var textState by remember { mutableStateOf(text) }
+    var backgroundColor by remember { mutableStateOf(GreenPal) }
+    val dragAndDropTarget = remember {
+        object : DragAndDropTarget {
+            override fun onDrop(event: DragAndDropEvent): Boolean {
+                val draggedData = event.toAndroidDragEvent()
+                    .clipData.getItemAt(0).text
+                textState = draggedData.toString()
+                return true
+            }
+            override fun onEntered(event: DragAndDropEvent) {
+                super.onEntered(event)
+                backgroundColor = LightBeige
+            }
+
+            override fun onEnded(event: DragAndDropEvent) {
+                super.onExited(event)
+                backgroundColor = GreenPal
+            }
+
+            override fun onExited(event: DragAndDropEvent) {
+                super.onExited(event)
+                backgroundColor = GreenPal
+            }
+        }
+    }
+
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        color = backgroundColor,
+        modifier = Modifier
+            .padding(4.dp)
+            .dragAndDropTarget(
+                shouldStartDragAndDrop = { event ->
+                    event.mimeTypes().contains("text/plain")
+
+                },
+                target = dragAndDropTarget
+            )
+    ) {
+        Text(text = textState, modifier = Modifier.padding(8.dp))
+    }
+}

@@ -1,15 +1,10 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
@@ -27,15 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.component.CircularLeader1Component
-import eu.tkacas.jslearner.presentation.ui.component.CircularLeader2Component
-import eu.tkacas.jslearner.presentation.ui.component.CircularLeader3Component
 import eu.tkacas.jslearner.presentation.ui.component.LeaderboardComponent
-import eu.tkacas.jslearner.presentation.ui.component.LeaderboardRowComponent
-import eu.tkacas.jslearner.presentation.ui.component.LeaderboardTopSection
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
-import eu.tkacas.jslearner.presentation.ui.component.UserScoreBubbleComponent
+import eu.tkacas.jslearner.presentation.ui.component.WinnersPodiumComponentWithLeaders
 import kotlinx.coroutines.launch
 
 @Composable
@@ -88,36 +78,22 @@ fun LeaderboardScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(130.dp)
-                            .fillMaxSize(),
-                        contentAlignment = Alignment.TopCenter
-                    ) {
-                        LeaderboardTopSection(image = R.drawable.application, userScore = 1000, leaderType1 = 1)
-                    }
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        LeaderboardRowComponent(
-                            image2 = R.drawable.application,
-                            score2 = 980,
-                            leaderType2 = 2,
-                            image3 = R.drawable.application,
-                            score3 = 920,
-                            leaderType3 = 3,
-                        )
-                    }
+                    // First 3 places on the podium
+                    WinnersPodiumComponentWithLeaders(
+                        image1 = R.drawable.application,
+                        image2 = R.drawable.application,
+                        image3 = R.drawable.application,
+                        userScore1 = 1000,
+                        userScore2 = 980,
+                        userScore3 = 920
+                    )
                     Spacer(modifier = Modifier.height(30.dp))
-                    // Add LeaderboardComponent entries here
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 1", userScore = 1000)
+                    // Other users on the leaderboard
+                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 1", userScore = 900)
                     Spacer(modifier = Modifier.height(8.dp))
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 2", userScore = 980)
+                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 2", userScore = 860)
                     Spacer(modifier = Modifier.height(8.dp))
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 3", userScore = 920)
+                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 3", userScore = 840)
                 }
             }
         }

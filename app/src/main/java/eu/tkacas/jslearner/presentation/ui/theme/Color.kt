@@ -14,3 +14,11 @@ val GrayColor = Color(0xFF7B6F72)
 val PrussianBlue = Color(0xFF023047)
 val SkyBlue = Color(0xFF8BD3E6)
 val BgColor = Color(0xFFF7F8F8)
+
+val Gold = Color(0xFFD4AF37)
+val Silver = Color(0xFFA9A9A9)
+val Bronze = Color(0xFFCD7F32)
+
+val LightBeige = Color(0xFFF8EFE0)
+val GreenPal = Color(0xFF508D4E)
+val GreenLightPal = Color(0xFFD6EFD8)

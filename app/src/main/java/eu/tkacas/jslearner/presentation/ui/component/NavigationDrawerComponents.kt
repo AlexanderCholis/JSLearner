@@ -130,7 +130,7 @@ fun DrawerItem(
         icon = {
             Image(
                 painter = painterResource(id = iconId),
-                contentDescription = null
+                contentDescription = item.name
             )
         },
         label = {

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.CoursesPathScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LeaderboardScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
@@ -75,6 +76,7 @@ internal fun MainNavigation(
                 navController = navController
             )
         }
+        composable("coursesPath") { CoursesPathScreen(navController = navController) }
     }
 
 }
