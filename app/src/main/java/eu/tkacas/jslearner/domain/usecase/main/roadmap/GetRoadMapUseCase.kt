@@ -4,17 +4,21 @@ import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeCategory
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 
-class GetRoadMapUseCase(private val repository: RoadMapRepository) {
+class GetRoadMapUseCase(
+    private val roadMapRepository: RoadMapRepository,
+    private val authRepository: AuthRepository
+) {
 
-    suspend fun execute(userId: String): List<RoadMapNodeState> {
-        val courses = repository.getCourses()
-        val completedCourses = repository.getUserCompletedCourses(userId)
+    suspend fun execute(): List<RoadMapNodeState> {
+        val courses = roadMapRepository.getCourses()
+        val completedCourses = authRepository.getUserCompletedLessons()
         val roadMapNodes = mutableListOf<RoadMapNodeState>()
 
         for ((index, course) in courses.withIndex()) {
-            val lessons = repository.getLessons(course.id)
+            val lessons = roadMapRepository.getLessons(course.id)
             val isCourseCompleted = lessons.all { lesson -> completedCourses[course.id]?.contains(lesson.id) == true }
             val courseStatus = when {
                 isCourseCompleted -> RoadMapNodeStatus.COMPLETED
