@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.PodiumUser
 import eu.tkacas.jslearner.presentation.ui.theme.Bronze
 import eu.tkacas.jslearner.presentation.ui.theme.Gold
 import eu.tkacas.jslearner.presentation.ui.theme.Silver
@@ -37,52 +38,14 @@ import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
 
 @Composable
-fun LeaderboardCard(
-    userImage: Int,
-    userName: String,
-    userScore: Int
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(componentShapes.extraLarge),
-        colors = CardDefaults.cardColors(containerColor = SkyBlue),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ){
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(16.dp)
-
-        ) {
-            Image(
-                painter = painterResource(id = userImage),
-                contentDescription = stringResource(id = R.string.leaderboard_image),
-                modifier = Modifier.size(48.dp)
-            )
-            Text(
-                text = userName,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp)
-            )
-            Text(
-                text = userScore.toString(),
-                modifier = Modifier.padding(start = 8.dp)
-            )
-        }
-    }
-}
-
-@Composable
 fun WinnersPodiumComponentWithLeaders(
-    image1: Int,
-    userScore1: Int,
-    image2: Int,
-    userScore2: Int,
-    image3: Int,
-    userScore3: Int
+    podiumUserList: List<PodiumUser>
 ) {
+    val sortedPodiumUsers = podiumUserList.sortedBy { it.position }
+    val (image1, userScore1) = sortedPodiumUsers.getOrNull(0)?.let { it.image to it.score } ?: (0 to 0)
+    val (image2, userScore2) = sortedPodiumUsers.getOrNull(1)?.let { it.image to it.score } ?: (0 to 0)
+    val (image3, userScore3) = sortedPodiumUsers.getOrNull(2)?.let { it.image to it.score } ?: (0 to 0)
+
     Box(modifier = Modifier
         .fillMaxWidth())
     {
@@ -91,7 +54,9 @@ fun WinnersPodiumComponentWithLeaders(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Box(
                     modifier = Modifier
                         .size(126.dp)
@@ -103,7 +68,6 @@ fun WinnersPodiumComponentWithLeaders(
                         hasCrown = true,
                         userScore = userScore1,
                         leaderType = 1
-
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
