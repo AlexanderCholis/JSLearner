@@ -13,17 +13,20 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.SettingsScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartQuizViewModel
 
 @Composable
 internal fun MainNavigation(
     roadMapViewModel: RoadMapViewModel,
     startCourseViewModel: StartCourseViewModel,
     startLessonViewModel: StartLessonViewModel,
-    lessonViewModel: LessonViewModel
+    lessonViewModel: LessonViewModel,
+    startQuizViewModel: StartQuizViewModel
 ) {
     val navController = rememberNavController()
 
@@ -76,7 +79,17 @@ internal fun MainNavigation(
                 navController = navController
             )
         }
-        composable("coursesPath") { CoursesPathScreen(navController = navController) }
+        composable("coursesPath") {
+            CoursesPathScreen(
+                navController = navController
+            )
+        }
+        composable("startQuiz") {
+            StartQuizScreen(
+                navController = navController,
+                viewModel = startQuizViewModel
+            )
+        }
     }
 
 }
