@@ -89,11 +89,11 @@ class AuthRepositoryImpl(
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         val userStats = UserFirebase(
             experienceLevel = experienceLevel,
-            experienceScore = experienceScore,
+            experienceScore = experienceScore?.toLong(),
             currentCourseId = currentCourseId,
             currentLessonId = currentLessonId,
-            highScoreDaysInARow = highScoreDaysInARow,
-            highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow
+            highScoreDaysInARow = highScoreDaysInARow?.toLong(),
+            highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow?.toLong()
         )
         firebaseDataSource.setUserStats(uid, userStats)
     }
@@ -114,11 +114,11 @@ class AuthRepositoryImpl(
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         val userStats = UserFirebase(
             experienceLevel = experienceLevel,
-            experienceScore = experienceScore,
+            experienceScore = experienceScore?.toLong(),
             currentCourseId = currentCourseId,
             currentLessonId = currentLessonId,
-            highScoreDaysInARow = highScoreDaysInARow,
-            highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow
+            highScoreDaysInARow = highScoreDaysInARow?.toLong(),
+            highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow?.toLong()
         )
         firebaseDataSource.updateUserStats(uid, userStats)
     }
@@ -134,5 +134,10 @@ class AuthRepositoryImpl(
 
     override fun logout() {
         firebaseDataSource.logout()
+    }
+
+    override suspend fun getUserCompletedLessons(): Map<String, List<String>> {
+        val uid = currentUser?.uid ?: throw Exception("User not logged in.")
+        return firestoreDataSource.getUserCompletedCourses(uid)
     }
 }

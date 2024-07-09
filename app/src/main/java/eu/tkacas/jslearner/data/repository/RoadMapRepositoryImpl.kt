@@ -27,8 +27,4 @@ class RoadMapRepositoryImpl(private val dataSource: FirestoreDataSource) : RoadM
     override suspend fun getQuestions(courseId: String, lessonId: String) : List<Question> {
         return dataSource.getQuestions(courseId, lessonId)
     }
-
-    override suspend fun getUserCompletedCourses(userId: String): Map<String, List<String>> {
-        return dataSource.getUserCompletedCourses(userId)
-    }
 }

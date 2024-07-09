@@ -62,4 +62,5 @@ interface AuthRepository {
     )
     suspend fun checkUserProfileCompletion(): Boolean
     fun logout()
+    suspend fun getUserCompletedLessons(): Map<String, List<String>>
 }
