@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
                         factory = viewModelFactory {
                             StartCourseViewModel(
                                 getCourseUseCase = JSLearner.appModule.getCourseUseCase,
+                                getLessonsUseCase = JSLearner.appModule.getLessonsUseCase
                             )
                         }
                     )
