@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.component.LeaderboardComponent
+import eu.tkacas.jslearner.presentation.ui.component.LeaderboardCard
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import eu.tkacas.jslearner.presentation.ui.component.WinnersPodiumComponentWithLeaders
@@ -89,11 +89,11 @@ fun LeaderboardScreen(
                     )
                     Spacer(modifier = Modifier.height(30.dp))
                     // Other users on the leaderboard
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 1", userScore = 900)
+                    LeaderboardCard(userImage = R.drawable.application, userName = "User 1", userScore = 900)
                     Spacer(modifier = Modifier.height(8.dp))
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 2", userScore = 860)
+                    LeaderboardCard(userImage = R.drawable.application, userName = "User 2", userScore = 860)
                     Spacer(modifier = Modifier.height(8.dp))
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 3", userScore = 840)
+                    LeaderboardCard(userImage = R.drawable.application, userName = "User 3", userScore = 840)
                 }
             }
         }
