@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
@@ -85,8 +86,8 @@ fun ExploringPathScreen(
                                 .fillMaxSize()
                                 .padding(top = 30.dp, start = 32.dp, end = 32.dp),
                         ) {
-                            BoldText(textId = R.string.your_path)
-                            NormalText(textId = R.string.your_path_description)
+                            BoldText(text = stringResource(id = R.string.your_path))
+                            NormalText(text = stringResource(id = R.string.your_path_description))
                             Spacer(modifier = Modifier.padding(8.dp))
                             LazyColumn {
                                 val courseList = (exploringPathState as Result.Success).result

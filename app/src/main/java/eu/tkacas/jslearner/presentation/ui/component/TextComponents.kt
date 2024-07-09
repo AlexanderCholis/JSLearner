@@ -73,18 +73,18 @@ fun BulletText(value: String) {
 }
 
 @Composable
-fun NormalText(@StringRes textId: Int) {
+fun NormalText(text: String) {
     Text(
-        text = stringResource(id = textId),
+        text = text,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     )
 }
 
 @Composable
-fun BoldText(@StringRes textId: Int){
+fun BoldText(text: String){
     Text(
-        text = stringResource(id = textId),
+        text = text,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         textAlign = TextAlign.Center

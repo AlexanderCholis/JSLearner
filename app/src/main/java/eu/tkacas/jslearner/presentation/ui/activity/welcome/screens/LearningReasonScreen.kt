@@ -87,9 +87,9 @@ fun LearningReasonScreen(
                             .clip(CircleShape)
                             .background(color = Color(0xFFF8EFE0))
                     )
-                    NormalText(textId = R.string.finding_your_path)
+                    NormalText(text = stringResource(id = R.string.finding_your_path))
                     Spacer(modifier = Modifier.height(8.dp))
-                    BoldText(textId = R.string.why_do_you_want_to_learn)
+                    BoldText(text = stringResource(id = R.string.why_do_you_want_to_learn))
                     Spacer(modifier = Modifier.height(8.dp))
                     uiLearningReasons.forEachIndexed { index, item ->
                         LearningReasonCard(
