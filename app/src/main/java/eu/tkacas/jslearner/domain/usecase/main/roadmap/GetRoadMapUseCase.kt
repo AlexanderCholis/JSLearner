@@ -35,7 +35,7 @@ class GetRoadMapUseCase(
             val courseStatus = when {
                 isCourseCompleted -> RoadMapNodeStatus.COMPLETED
                 isCourseInProgress -> RoadMapNodeStatus.IN_PROGRESS
-                previousCoursesCompleted && isExperienceLevelMatch(course.level, userExperienceLevel) -> RoadMapNodeStatus.UNLOCKED
+                previousCoursesCompleted || isExperienceLevelMatch(course.level, userExperienceLevel) -> RoadMapNodeStatus.UNLOCKED
                 else -> RoadMapNodeStatus.LOCKED
             }
 
