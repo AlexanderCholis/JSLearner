@@ -46,10 +46,6 @@ internal fun RoadMapScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(Unit) {
-        viewModel.loadRoadMapNodes()
-    }
-
     val context = LocalContext.current
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -73,7 +69,7 @@ internal fun RoadMapScreen(
                     color = MaterialTheme.colorScheme.primaryContainer,
                     onMenuClick = {
                         scope.launch {
-                            if(drawerState.isOpen) {
+                            if (drawerState.isOpen) {
                                 drawerState.close()
                             } else {
                                 drawerState.open()
@@ -81,7 +77,8 @@ internal fun RoadMapScreen(
                         }
                     },
                     title = stringResource(id = R.string.roadmap),
-                    drawerState = drawerState
+                    drawerState = drawerState,
+                    score = (uiState as? Result.Success)?.result?.user?.experienceScore ?: 0
                 )
             },
             floatingActionButton = {
@@ -103,53 +100,55 @@ internal fun RoadMapScreen(
                         ProgressIndicatorComponent()
                     }
                     is Result.Success -> {
-                        val nodes = (uiState as Result.Success<List<RoadMapNodeState>>).result
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 8.dp)
-                        ) {
-                            LazyColumn(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.fillMaxWidth()
+                        val nodes = (uiState as Result.Success).result.nodes
+                        if (nodes != null) {  // Handle nullability
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(top = 8.dp)
                             ) {
-                                itemsIndexed(nodes) { index, node ->
-                                    val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
-                                    val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
-                                        LineParametersDefaults.linearGradient(
-                                            startColor = node.status.getColor(),
-                                            endColor = nextNodeColor
-                                        )
-                                    } else null
-                                    RoadMapNode(
-                                        nodeState = node,
-                                        circleParameters = CircleParametersDefaults.circleParameters(
-                                            backgroundColor = node.status.getColor(),
-                                            stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
-                                            icon = node.status.getIcon()
-                                        ),
-                                        lineParameters = lineParameters,
-                                        content = { modifier ->
-                                            val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
-                                            val displayText = "${node.title}"
-                                            MessageBubble(
-                                                modifier,
-                                                containerColor = node.status.getColor(),
-                                                text = displayText,
-                                                onClick = {
-                                                    Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
-                                                    if (node.category.toString() == "LESSON") {
-                                                        navController.navigate("startLesson?lessonId=${node.id}")
-                                                    }
-                                                    else if (node.category.toString() == "COURSE") {
-                                                        navController.navigate("startCourse?courseId=${node.id}")
-                                                    }
-                                                }
+                                LazyColumn(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    itemsIndexed(nodes) { index, node ->
+                                        val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
+                                        val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
+                                            LineParametersDefaults.linearGradient(
+                                                startColor = node.status.getColor(),
+                                                endColor = nextNodeColor
                                             )
-                                        }
-                                    )
+                                        } else null
+                                        RoadMapNode(
+                                            nodeState = node,
+                                            circleParameters = CircleParametersDefaults.circleParameters(
+                                                backgroundColor = node.status.getColor(),
+                                                stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
+                                                icon = node.status.getIcon()
+                                            ),
+                                            lineParameters = lineParameters,
+                                            content = { modifier ->
+                                                val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
+                                                val displayText = "${node.title}"
+                                                MessageBubble(
+                                                    modifier,
+                                                    containerColor = node.status.getColor(),
+                                                    text = displayText,
+                                                    onClick = {
+                                                        Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
+                                                        when (node.category.toString()) {
+                                                            "LESSON" -> navController.navigate("startLesson?lessonId=${node.id}")
+                                                            "COURSE" -> navController.navigate("startCourse?courseId=${node.id}")
+                                                        }
+                                                    }
+                                                )
+                                            }
+                                        )
+                                    }
                                 }
                             }
+                        } else {
+                            Text("No roadmap nodes available", color = MaterialTheme.colorScheme.error)
                         }
                     }
                     is Result.Error -> {
@@ -160,4 +159,3 @@ internal fun RoadMapScreen(
         }
     }
 }
-
