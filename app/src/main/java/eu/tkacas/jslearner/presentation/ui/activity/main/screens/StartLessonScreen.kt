@@ -128,7 +128,7 @@ fun StartLessonScreen(
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
                                     GeneralButtonComponent(
-                                        valueId = R.string.start_course,
+                                        valueId = R.string.start_lesson,
                                         onButtonClicked = {
                                             //TODO: navigate to the lesson
                                         }
