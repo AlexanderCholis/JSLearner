@@ -14,6 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -62,7 +63,7 @@ fun StartCourseScreen(
                     .fillMaxSize(),
                 topBar = {
                     BackAppTopBar(
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.primaryContainer,
                         onBackClick = {
                             navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
                             navController.navigate("roadmap")
@@ -146,7 +147,7 @@ fun StartCourseScreen(
                     .fillMaxSize(),
                 topBar = {
                     BackAppTopBar(
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.primaryContainer,
                         onBackClick = {
                             navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
                             navController.navigate("roadmap")
