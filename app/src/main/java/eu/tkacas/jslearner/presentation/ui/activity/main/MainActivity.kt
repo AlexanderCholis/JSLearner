@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigation
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
+import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
@@ -57,13 +58,22 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
+                    val accountViewModel = viewModel<AccountViewModel>(
+                        factory = viewModelFactory {
+                            AccountViewModel(
+                                getUserProfileUseCase = JSLearner.appModule.getUserProfileUseCase,
+                                getUserStatsUseCase = JSLearner.appModule.getUserStatsUseCase
+                            )
+                        }
+                    )
                     val startQuizViewModel = viewModel<StartQuizViewModel>()
                     MainNavigation(
                         roadMapViewModel = roadMapViewModel,
                         startCourseViewModel = startCourseViewModel,
                         startLessonViewModel = startLessonViewModel,
                         lessonViewModel = lessonViewModel,
-                        startQuizViewModel = startQuizViewModel
+                        startQuizViewModel = startQuizViewModel,
+                        accountViewModel = accountViewModel
                     )
                 }
             }

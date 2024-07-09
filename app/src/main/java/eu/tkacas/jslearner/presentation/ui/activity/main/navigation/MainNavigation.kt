@@ -14,6 +14,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
+import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
@@ -26,7 +27,8 @@ internal fun MainNavigation(
     startCourseViewModel: StartCourseViewModel,
     startLessonViewModel: StartLessonViewModel,
     lessonViewModel: LessonViewModel,
-    startQuizViewModel: StartQuizViewModel
+    startQuizViewModel: StartQuizViewModel,
+    accountViewModel: AccountViewModel
 ) {
     val navController = rememberNavController()
 
@@ -66,7 +68,8 @@ internal fun MainNavigation(
         }
         composable("account") {
             AccountScreen(
-                navController = navController
+                navController = navController,
+                viewModel = accountViewModel
             )
         }
         composable("about") {
