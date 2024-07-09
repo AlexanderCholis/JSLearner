@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,7 +23,6 @@ import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
-import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
 import eu.tkacas.jslearner.domain.model.roadmap.getColor
 import eu.tkacas.jslearner.domain.model.roadmap.getIcon
