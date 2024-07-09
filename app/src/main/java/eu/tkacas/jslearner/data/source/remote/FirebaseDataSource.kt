@@ -6,33 +6,20 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.jslearner.data.await
 import eu.tkacas.jslearner.data.model.UserFirebase
-import eu.tkacas.jslearner.domain.Result
 
 class FirebaseDataSource(private val firebaseAuth: FirebaseAuth, private val firebase: FirebaseDatabase) {
 
     val currentUser: FirebaseUser?
         get() = firebaseAuth.currentUser
 
-    suspend fun login(email: String, password: String): Result<FirebaseUser> {
-        return try {
-            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
-            Result.Success(result.user!!)
-        } catch (e: Exception) {
-            Log.w("FirebaseDataSource", "Error logging in user.", e)
-            e.printStackTrace()
-            Result.Error(e)
-        }
+    suspend fun login(email: String, password: String): FirebaseUser {
+        val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+        return result.user ?: throw Exception("Login failed")
     }
 
-    suspend fun signup(email: String, password: String): Result<FirebaseUser> {
-        return try {
-            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            return Result.Success(result.user!!)
-        } catch (e: Exception) {
-            Log.w("FirebaseDataSource", "Error signing up user.", e)
-            e.printStackTrace()
-            Result.Error(e)
-        }
+    suspend fun signup(email: String, password: String): FirebaseUser {
+        val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+        return result.user ?: throw Exception("Signup failed")
     }
 
     fun logout() {
@@ -40,29 +27,17 @@ class FirebaseDataSource(private val firebaseAuth: FirebaseAuth, private val fir
     }
 
     suspend fun setUserStats(userId: String, user: UserFirebase?) {
-        try {
-            firebase.getReference("users").child(userId).setValue(user?.toMap()).await()
-        } catch (e: Exception) {
-            Log.w("FirebaseDataSource", "Error setting user.", e)
-        }
+        val userMap = user?.toMap()?.filterValues { it != null }
+        firebase.getReference("users").child(userId).setValue(userMap).await()
     }
 
     suspend fun getUserStats(userId: String): UserFirebase? {
-        return try {
-            val snapshot = firebase.getReference("users").child(userId).get().await()
-            snapshot.getValue(UserFirebase::class.java)
-        } catch (e: Exception) {
-            Log.w("FirebaseDataSource", "Error getting user.", e)
-            null
-        }
+        val snapshot = firebase.getReference("users").child(userId).get().await()
+        return snapshot.getValue(UserFirebase::class.java)
     }
 
-    suspend fun updateUserStats(userId: String, user: UserFirebase)
-    {
-        try {
-            firebase.getReference("users").child(userId).updateChildren(user.toMap()).await()
-        } catch (e: Exception) {
-            Log.w("FirebaseDataSource", "Error updating user.", e)
-        }
+    suspend fun updateUserStats(userId: String, user: UserFirebase?) {
+        val userMap = user?.toMap()?.filterValues { it != null }?.mapValues { it.value!! }
+        firebase.getReference("users").child(userId).updateChildren(userMap as Map<String, Any>).await()
     }
 }

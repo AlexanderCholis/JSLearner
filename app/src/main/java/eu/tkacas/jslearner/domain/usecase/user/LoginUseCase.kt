@@ -5,7 +5,7 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.Result
 
 class LoginUseCase(private val authRepository: AuthRepository) {
-    suspend fun execute(email: String, password: String) : Result<FirebaseUser>{
+    suspend fun execute(email: String, password: String) : FirebaseUser{
         return authRepository.login(email, password)
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,7 @@ fun CoursesPathScreen() {
                     .padding(bottom = 40.dp)
             )
         }
-        NormalText(textId = R.string.courses)
+        NormalText(text = stringResource(id = R.string.courses))
         Spacer(modifier = Modifier.height(8.dp))
         CoursesPathCard(
             moduleTitleText = "Fundamentals",

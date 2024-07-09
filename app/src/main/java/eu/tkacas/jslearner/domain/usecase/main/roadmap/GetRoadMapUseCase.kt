@@ -9,8 +9,6 @@ import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 class GetRoadMapUseCase(private val repository: RoadMapRepository) {
 
     suspend fun execute(userId: String): List<RoadMapNodeState> {
-        val experienceLevel = "beginner" // TODO: get user experience level from repository
-
         val courses = repository.getCourses()
         val completedCourses = repository.getUserCompletedCourses(userId)
         val roadMapNodes = mutableListOf<RoadMapNodeState>()

@@ -70,6 +70,7 @@ fun NavigationDrawer(
                 DrawerItem(
                     item = item,
                     isSelected = selectedItemIndex.intValue == index,
+                    isEnabled = selectedItemIndex.intValue != index,
                     onItemClick = {
                         scope.launch { drawerState.close() }
                         selectedItemIndex.intValue = index
@@ -115,6 +116,7 @@ fun NavigationDrawer(
 fun DrawerItem(
     item: NavigationDrawerUiItem,
     isSelected: Boolean,
+    isEnabled: Boolean = true,
     textColor: Color = if (item.name == "Logout") Color.Red else Color.Black,
     onItemClick: () -> Unit
 ) {
@@ -140,7 +142,9 @@ fun DrawerItem(
         },
         selected = isSelected,
         onClick = {
-            onItemClick()
+            if (isEnabled) {
+                onItemClick()
+            }
         }
     )
 }

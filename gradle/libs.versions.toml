@@ -20,6 +20,7 @@ firebaseDatabase = "21.0.0"
 firebaseFirestore = "25.0.0"
 org-jetbrains-kotlin-android = "1.8.0"
 firebaseFirestoreKtx = "25.0.0"
+runtimeLivedata = "1.6.8"
 
 
 [libraries]
@@ -48,6 +49,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
