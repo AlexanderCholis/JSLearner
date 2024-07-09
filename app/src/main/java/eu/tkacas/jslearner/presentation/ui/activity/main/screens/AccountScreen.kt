@@ -21,12 +21,14 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.CourseTopCard
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
+import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun AccountScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: AccountViewModel
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
