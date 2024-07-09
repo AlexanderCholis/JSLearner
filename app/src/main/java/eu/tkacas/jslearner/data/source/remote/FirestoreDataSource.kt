@@ -75,8 +75,10 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
     }
 
     suspend fun getLesson(courseId: String, lessonId: String): Lesson {
-        return db.collection("courses").document(courseId)
+        val documentSnapshot = db.collection("courses").document(courseId)
             .collection("lessons").document(lessonId).get().await()
-            .toObject(Lesson::class.java)!!
+        val lesson = documentSnapshot.toObject(Lesson::class.java)!!
+        lesson.id = documentSnapshot.id // Set the id of the lesson
+        return lesson
     }
 }
