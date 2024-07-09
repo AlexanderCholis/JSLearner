@@ -21,7 +21,8 @@ fun BackAppTopBar(
     title: String = "",
     color: Color,
     onBackClick: () -> Unit,
-    showScore: Boolean = false
+    showScore: Boolean = false,
+    score: Int = 0
 ){
     TopAppBar(
         title = {
@@ -48,7 +49,7 @@ fun BackAppTopBar(
         ),
         actions = {
             if (showScore) {
-                ScoreComponent(userScore = 500)
+                ScoreComponent(userScore = score)
             }
         }
     )
@@ -61,7 +62,8 @@ fun MenuAppTopBar(
     color: Color,
     onMenuClick: () -> Unit,
     drawerState: DrawerState,
-    showScore: Boolean = true
+    showScore: Boolean = true,
+    score: Int = 0
 ){
     TopAppBar(
         title = {
@@ -88,7 +90,7 @@ fun MenuAppTopBar(
         ),
         actions = {
             if (showScore) {
-                ScoreComponent(userScore = 500)
+                ScoreComponent(userScore = score)
             }
         }
     )
