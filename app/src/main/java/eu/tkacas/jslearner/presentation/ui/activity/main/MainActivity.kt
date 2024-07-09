@@ -48,7 +48,6 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
-
                     MainNavigation(
                         roadMapViewModel = roadMapViewModel,
                         startCourseViewModel = startCourseViewModel,

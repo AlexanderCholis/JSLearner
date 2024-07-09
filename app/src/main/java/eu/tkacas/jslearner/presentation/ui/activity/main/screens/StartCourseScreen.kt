@@ -54,8 +54,7 @@ fun StartCourseScreen(
                     BackAppTopBar(
                         color = MaterialTheme.colorScheme.primaryContainer,
                         onBackClick = {
-                            navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
-                            navController.navigate("roadmap")
+                            navController.navigateUp()
                         },
                         title = result.course.title
                     )
@@ -114,7 +113,7 @@ fun StartCourseScreen(
                             GeneralButtonComponent(
                                 valueId = R.string.start_course,
                                 onButtonClicked = {
-                                    //TODO: navigate to the lesson
+                                    navController.navigate("startLesson?lessonId=${result.lessons.first().id}")
                                 }
                             )
                         }
