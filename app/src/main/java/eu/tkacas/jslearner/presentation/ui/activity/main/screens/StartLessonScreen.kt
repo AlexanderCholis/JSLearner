@@ -130,7 +130,7 @@ fun StartLessonScreen(
                                     GeneralButtonComponent(
                                         valueId = R.string.start_lesson,
                                         onButtonClicked = {
-                                            //TODO: navigate to the lesson
+                                            navController.navigate("lesson?lessonId=${lesson.id}")
                                         }
                                     )
                                 }

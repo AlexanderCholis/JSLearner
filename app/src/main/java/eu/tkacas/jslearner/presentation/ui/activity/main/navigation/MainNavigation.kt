@@ -4,12 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LeaderboardScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.SettingsScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
+import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
@@ -18,7 +21,8 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
 internal fun MainNavigation(
     roadMapViewModel: RoadMapViewModel,
     startCourseViewModel: StartCourseViewModel,
-    startLessonViewModel: StartLessonViewModel
+    startLessonViewModel: StartLessonViewModel,
+    lessonViewModel: LessonViewModel
 ) {
     val navController = rememberNavController()
 
@@ -45,6 +49,14 @@ internal fun MainNavigation(
             StartLessonScreen(
                 navController = navController,
                 viewModel = startLessonViewModel,
+                id = lessonId
+            )
+        }
+        composable("lesson?lessonId={lessonId}") { backStackEntry ->
+            val lessonId = backStackEntry.arguments?.getString("lessonId") ?: ""
+            LessonScreen(
+                navController = navController,
+                viewModel = lessonViewModel,
                 id = lessonId
             )
         }
