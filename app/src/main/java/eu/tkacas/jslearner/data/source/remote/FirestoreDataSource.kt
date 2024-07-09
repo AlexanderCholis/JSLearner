@@ -33,11 +33,10 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         }
     }
 
-    suspend fun getUserCompletedLessons(userId: String): Map<String, List<String>> {
-        val result = db.collection("users").document(userId).collection("lessons_completed").get().await()
-        return result.associate { document ->
-            document.id to (document["list_of_completed_lessons"] as List<String>)
-        }
+    suspend fun getUserCompletedLessons(userId: String): List<String> {
+        val documentSnapshot = db.collection("users").document(userId).get().await()
+        val lessonsCompleted = documentSnapshot.get("lessons_completed") as? List<String> ?: emptyList()
+        return lessonsCompleted
     }
 
     suspend fun getCoursesBasedOnLevel(courseLevel: CourseLevel): List<Course> {

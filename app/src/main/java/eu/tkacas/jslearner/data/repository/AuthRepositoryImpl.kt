@@ -135,7 +135,7 @@ class AuthRepositoryImpl(
         firebaseDataSource.logout()
     }
 
-    override suspend fun getUserCompletedLessons(): Map<String, List<String>> {
+    override suspend fun getUserCompletedLessons(): List<String> {
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         return firestoreDataSource.getUserCompletedLessons(uid)
     }
