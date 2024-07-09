@@ -13,7 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,7 +39,7 @@ fun ExperienceTextScreen(
 ) {
     val texts = viewModel.returnTexts(experienceLevel)
     val previousRoute = navController.previousBackStackEntry?.destination?.route
-    var currentIndex by rememberSaveable { mutableStateOf(if (previousRoute == "experienceLevel") 0 else texts.size - 1) }
+    var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "experienceLevel") 0 else texts.size - 1) }
 
     val progress by animateFloatAsState(
         targetValue = (currentIndex + 1) / texts.size.toFloat(), label = ""
@@ -69,9 +69,9 @@ fun ExperienceTextScreen(
                     .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
             ) {
                 Column {
-                    BoldText(textId = texts[currentIndex].boldText)
+                    BoldText(text = stringResource(id = texts[currentIndex].boldText))
                     Spacer(modifier = Modifier.padding(10.dp))
-                    NormalText(textId = texts[currentIndex].normalText)
+                    NormalText(text = stringResource(id = texts[currentIndex].normalText))
                     Spacer(modifier = Modifier.padding(20.dp))
                     Spacer(modifier = Modifier.weight(1f))
                     Image(

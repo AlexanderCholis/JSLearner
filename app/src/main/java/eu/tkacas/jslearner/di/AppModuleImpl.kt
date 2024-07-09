@@ -14,13 +14,21 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
-import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
-import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LogoutUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
@@ -62,12 +70,25 @@ class AppModuleImpl(
     override val logoutUseCase: LogoutUseCase by lazy {
         LogoutUseCase(authRepository)
     }
+    override val setUserProfileUseCase: SetUserProfileUseCase by lazy {
+        SetUserProfileUseCase(authRepository)
+    }
+    override val setUserStatsUseCase: SetUserStatsUseCase by lazy {
+        SetUserStatsUseCase(authRepository)
+    }
+    override val getUserProfileUseCase: GetUserProfileUseCase by lazy {
+        GetUserProfileUseCase(authRepository)
+    }
+    override val getUserStatsUseCase: GetUserStatsUseCase by lazy {
+        GetUserStatsUseCase(authRepository)
+    }
     override val updateUserProfileUseCase: UpdateUserProfileUseCase by lazy {
         UpdateUserProfileUseCase(authRepository)
     }
     override val updateUserStatsUseCase: UpdateUserStatsUseCase by lazy {
         UpdateUserStatsUseCase(authRepository)
     }
+
     override val getProfileCompletionUseCase: GetProfileCompletionUseCase by lazy {
         GetProfileCompletionUseCase(authRepository)
     }
@@ -89,12 +110,24 @@ class AppModuleImpl(
         ValidateTerms()
     }
 
-    // For the RoadMapScreen
+    // For the RoadMap
     override val roadMapRepository: RoadMapRepository by lazy {
         RoadMapRepositoryImpl(firestoreDataSource)
     }
     override val getRoadMapUseCase: GetRoadMapUseCase by lazy {
         GetRoadMapUseCase(roadMapRepository)
+    }
+    override val getCourseUseCase: GetCourseUseCase by lazy {
+        GetCourseUseCase(roadMapRepository)
+    }
+    override val getLessonUseCase: GetLessonUseCase by lazy {
+        GetLessonUseCase(roadMapRepository)
+    }
+    override val getQuizUseCase: GetQuizUseCase by lazy {
+        GetQuizUseCase(roadMapRepository)
+    }
+    override val getLessonsUseCase: GetLessonsUseCase by lazy {
+        GetLessonsUseCase(roadMapRepository)
     }
 
     // For the ExploringPathScreen

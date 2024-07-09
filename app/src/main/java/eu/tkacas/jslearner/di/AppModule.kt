@@ -7,13 +7,21 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
-import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
-import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LogoutUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateEmail
 import eu.tkacas.jslearner.domain.usecase.welcome.validateregex.ValidateFirstName
@@ -34,6 +42,10 @@ interface AppModule {
     val loginUseCase: LoginUseCase
     val signUpUseCase: SignUpUseCase
     val logoutUseCase: LogoutUseCase
+    val setUserProfileUseCase: SetUserProfileUseCase
+    val setUserStatsUseCase: SetUserStatsUseCase
+    val getUserProfileUseCase: GetUserProfileUseCase
+    val getUserStatsUseCase: GetUserStatsUseCase
     val updateUserProfileUseCase: UpdateUserProfileUseCase
     val updateUserStatsUseCase: UpdateUserStatsUseCase
     val getProfileCompletionUseCase: GetProfileCompletionUseCase
@@ -46,9 +58,13 @@ interface AppModule {
     val validateTerms: ValidateTerms
 
 
-    // For the RoadMapScreen
+    // For the RoadMap
     val roadMapRepository: RoadMapRepository
     val getRoadMapUseCase: GetRoadMapUseCase
+    val getCourseUseCase: GetCourseUseCase
+    val getLessonUseCase: GetLessonUseCase
+    val getQuizUseCase: GetQuizUseCase
+    val getLessonsUseCase: GetLessonsUseCase
 
     // For the ExploringPathScreen
     val exploringPathRepository: ExploringPathRepository

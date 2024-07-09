@@ -11,7 +11,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigation
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
+import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.viewModelFactory
 
 class MainActivity : ComponentActivity() {
@@ -31,8 +34,34 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
-
-                    MainNavigation(roadMapViewModel = roadMapViewModel)
+                    val startCourseViewModel = viewModel<StartCourseViewModel>(
+                        factory = viewModelFactory {
+                            StartCourseViewModel(
+                                getCourseUseCase = JSLearner.appModule.getCourseUseCase,
+                                getLessonsUseCase = JSLearner.appModule.getLessonsUseCase
+                            )
+                        }
+                    )
+                    val startLessonViewModel = viewModel<StartLessonViewModel>(
+                        factory = viewModelFactory {
+                            StartLessonViewModel(
+                                getLessonUseCase = JSLearner.appModule.getLessonUseCase
+                            )
+                        }
+                    )
+                    val lessonViewModel = viewModel<LessonViewModel>(
+                        factory = viewModelFactory {
+                            LessonViewModel(
+                                getLessonUseCase = JSLearner.appModule.getLessonUseCase
+                            )
+                        }
+                    )
+                    MainNavigation(
+                        roadMapViewModel = roadMapViewModel,
+                        startCourseViewModel = startCourseViewModel,
+                        startLessonViewModel = startLessonViewModel,
+                        lessonViewModel = lessonViewModel
+                    )
                 }
             }
         }

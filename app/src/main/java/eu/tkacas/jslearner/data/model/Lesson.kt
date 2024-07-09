@@ -1,8 +1,11 @@
 package eu.tkacas.jslearner.data.model
 
+import com.google.firebase.firestore.PropertyName
+
 data class Lesson(
-    val id: String = "",
+    var id: String = "",
     val title: String = "",
-    val theoriesList: List<String> = emptyList(),
-    val extraInfo: String = ""
+    @get:PropertyName("theories_list") @set:PropertyName("theories_list") var theoriesList: List<String> = emptyList(),
+    val description: String = "",
+    val url : String = ""
 )

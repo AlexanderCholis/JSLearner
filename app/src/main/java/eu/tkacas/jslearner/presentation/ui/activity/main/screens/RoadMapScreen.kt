@@ -103,6 +103,7 @@ internal fun RoadMapScreen(
                         ProgressIndicatorComponent()
                     }
                     is Result.Success -> {
+                        val nodes = (uiState as Result.Success<List<RoadMapNodeState>>).result
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -112,7 +113,6 @@ internal fun RoadMapScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                val nodes = (uiState as Result.Success<List<RoadMapNodeState>>).result
                                 itemsIndexed(nodes) { index, node ->
                                     val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
                                     val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
@@ -138,6 +138,12 @@ internal fun RoadMapScreen(
                                                 text = displayText,
                                                 onClick = {
                                                     Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
+                                                    if (node.category.toString() == "LESSON") {
+                                                        navController.navigate("startLesson?lessonId=${node.id}")
+                                                    }
+                                                    else if (node.category.toString() == "COURSE") {
+                                                        navController.navigate("startCourse?courseId=${node.id}")
+                                                    }
                                                 }
                                             )
                                         }
