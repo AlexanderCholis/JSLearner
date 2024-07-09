@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.data.source.remote
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.data.model.Course
 import eu.tkacas.jslearner.data.model.CourseLevel
@@ -34,8 +33,8 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         }
     }
 
-    suspend fun getUserCompletedCourses(userId: String): Map<String, List<String>> {
-        val result = db.collection("users").document(userId).collection("done_courses").get().await()
+    suspend fun getUserCompletedLessons(userId: String): Map<String, List<String>> {
+        val result = db.collection("users").document(userId).collection("lessons_completed").get().await()
         return result.associate { document ->
             document.id to (document["list_of_completed_lessons"] as List<String>)
         }
