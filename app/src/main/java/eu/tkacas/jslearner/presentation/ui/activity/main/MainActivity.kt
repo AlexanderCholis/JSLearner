@@ -15,6 +15,7 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartQuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.viewModelFactory
 
 class MainActivity : ComponentActivity() {
@@ -56,11 +57,13 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
+                    val startQuizViewModel = viewModel<StartQuizViewModel>()
                     MainNavigation(
                         roadMapViewModel = roadMapViewModel,
                         startCourseViewModel = startCourseViewModel,
                         startLessonViewModel = startLessonViewModel,
-                        lessonViewModel = lessonViewModel
+                        lessonViewModel = lessonViewModel,
+                        startQuizViewModel = startQuizViewModel
                     )
                 }
             }
