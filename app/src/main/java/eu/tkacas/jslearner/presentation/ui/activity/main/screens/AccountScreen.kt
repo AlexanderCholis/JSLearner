@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.component.CourseTopCard
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import kotlinx.coroutines.launch
@@ -68,7 +69,11 @@ fun AccountScreen(
                     .background(Color.White)
                     .padding(innerPadding)
             ) {
-
+                CourseTopCard(
+                    points = 500,
+                    days = 12,
+                    answers = 3
+                ) //should be given from the database
             }
         }
     }

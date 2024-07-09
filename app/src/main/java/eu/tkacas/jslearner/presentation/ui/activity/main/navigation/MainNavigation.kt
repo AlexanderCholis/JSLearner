@@ -5,12 +5,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.data.model.Lesson
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AboutScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.CoursesPathScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LeaderboardScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
-import eu.tkacas.jslearner.presentation.ui.activity.main.screens.SettingsScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
@@ -69,8 +69,8 @@ internal fun MainNavigation(
                 navController = navController
             )
         }
-        composable("settings") {
-            SettingsScreen(
+        composable("about") {
+            AboutScreen(
                 navController = navController
             )
         }

@@ -1,7 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
@@ -18,13 +17,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.component.FloatingButton
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(
+fun AboutScreen(
     navController: NavController
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -56,7 +54,7 @@ fun SettingsScreen(
                             }
                         }
                     },
-                    title = stringResource(id = R.string.settings),
+                    title = stringResource(id = R.string.about),
                     drawerState = drawerState
                 )
             }

@@ -58,14 +58,6 @@ fun NavigationDrawer(
             modifier = Modifier
                 .padding(8.dp)
         ) {
-            CourseTopCard(
-                points = 500,
-                days = 12,
-                answers = 3
-            ) //should be given from the database
-
-            Spacer(Modifier.height(12.dp))
-
             screensInDrawer.forEachIndexed { index, item ->
                 DrawerItem(
                     item = item,
