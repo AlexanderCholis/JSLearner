@@ -86,6 +86,8 @@ internal fun RoadMapScreen(
             floatingActionButton = {
                 FloatingButton(
                     onButtonClicked = {
+                        sharedViewModel.setUser((uiState as Result.Success).result.user)
+                        sharedViewModel.setCoursesState((uiState as Result.Success).result.nodes?.filter { it.category == RoadMapNodeCategory.COURSE } ?: emptyList())
                         navController.navigate("coursesPath")
                     }
                 )
