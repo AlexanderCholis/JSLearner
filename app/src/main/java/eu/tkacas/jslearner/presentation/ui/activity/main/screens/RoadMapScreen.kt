@@ -120,6 +120,7 @@ internal fun RoadMapScreen(
                                         RoadMapNode(
                                             nodeState = node,
                                             circleParameters = CircleParametersDefaults.circleParameters(
+                                                category = node.category,
                                                 backgroundColor = node.status.getColor(),
                                                 stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
                                                 icon = node.status.getIcon()
@@ -129,6 +130,7 @@ internal fun RoadMapScreen(
                                                 val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
                                                 val displayText = "${node.title}"
                                                 MessageBubble(
+                                                    nodeState = node,
                                                     modifier,
                                                     containerColor = node.status.getColor(),
                                                     text = displayText,
