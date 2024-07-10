@@ -22,7 +22,9 @@ import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeCategory
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeStatus
 import eu.tkacas.jslearner.domain.model.roadmap.StrokeParameters
 import eu.tkacas.jslearner.domain.model.roadmap.getColor
 import eu.tkacas.jslearner.domain.model.roadmap.getIcon
@@ -126,18 +128,20 @@ internal fun RoadMapScreen(
                                             ),
                                             lineParameters = lineParameters,
                                             content = { modifier ->
-                                                val nodeInfo = "${node.category}, ${node.id}, ${node.status}"
-                                                val displayText = "${node.title}"
                                                 MessageBubble(
                                                     nodeState = node,
                                                     modifier,
                                                     containerColor = node.status.getColor(),
-                                                    text = displayText,
+                                                    text = node.title ?: "",
                                                     onClick = {
-                                                        Toast.makeText(context, nodeInfo, Toast.LENGTH_SHORT).show()
-                                                        when (node.category.toString()) {
-                                                            "LESSON" -> navController.navigate("startLesson?lessonId=${node.id}")
-                                                            "COURSE" -> navController.navigate("startCourse?courseId=${node.id}")
+                                                        if (node.status == RoadMapNodeStatus.LOCKED) {
+                                                            Toast.makeText(context, "Complete previous lessons to unlock this ${node.category.name.lowercase()}.", Toast.LENGTH_SHORT).show()
+                                                        } else {
+                                                            when (node.category) {
+                                                                RoadMapNodeCategory.LESSON -> navController.navigate("startLesson?lessonId=${node.id}")
+                                                                RoadMapNodeCategory.COURSE -> navController.navigate("startCourse?courseId=${node.id}")
+                                                                RoadMapNodeCategory.TEST -> navController.navigate("startQuiz?testId=${node.id}")
+                                                            }
                                                         }
                                                     }
                                                 )
