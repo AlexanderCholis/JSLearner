@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.data.repository.AuthRepositoryImpl
 import eu.tkacas.jslearner.data.repository.ExploringPathRepositoryImpl
-import eu.tkacas.jslearner.data.repository.NavigationDrawerRepositoryImpl
+import eu.tkacas.jslearner.domain.model.NavigationDrawer
 import eu.tkacas.jslearner.data.repository.RoadMapRepositoryImpl
 import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
 import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
@@ -140,6 +140,6 @@ class AppModuleImpl(
 
     // For the NavigationDrawer
     override val getNavigationDrawerItemsUseCase: GetNavigationDrawerItemsUseCase by lazy {
-        GetNavigationDrawerItemsUseCase(NavigationDrawerRepositoryImpl())
+        GetNavigationDrawerItemsUseCase(NavigationDrawer())
     }
 }
