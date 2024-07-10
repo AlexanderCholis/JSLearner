@@ -96,7 +96,7 @@ fun StartQuizScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Ready to test your Knowledge?",
+                        text = stringResource(id = R.string.ready_to_test_your_knowledge),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )

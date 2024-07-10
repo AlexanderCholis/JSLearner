@@ -57,7 +57,7 @@ fun WelcomeScreen(
                     text = stringResource(id = R.string.creators),
                     textAlign = TextAlign.Center
                 )
-                //Spacer(modifier = Modifier.height(250.dp))
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),

@@ -159,7 +159,7 @@ fun StartLessonScreen(
                         .padding(innerPadding)
                 ) {
                     val error = (uiState as Result.Error).exception
-                    Text(text = error.message ?: "An error occurred")
+                    Text(text = error.message ?: stringResource(id = R.string.an_error_occurred))
                 }
             }
         }

@@ -116,4 +116,10 @@
     <string name="exclamation_mark">!</string>
     <string name="no_roadmap_nodes_available">No roadmap nodes available</string>
     <string name="error">Error:</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="unknown">Unknown</string>
+    <string name="user">User</string>
+    <string name="course_title_not_found">Course title not found</string>
+    <string name="course_status_not_found">Course status not found</string>
+    <string name="ready_to_test_your_knowledge">Ready to test your knowledge?</string>
 </resources>

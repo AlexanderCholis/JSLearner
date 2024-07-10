@@ -56,9 +56,9 @@ fun CoursesPathScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         CoursesPathCard(
                             courseTitleText = courseStatuses.value?.get(index)?.title
-                                ?: error("Course title not found"),
+                                ?: error(stringResource(id = R.string.course_title_not_found)),
                             courseStatus = courseStatuses.value?.get(index)?.status
-                                ?: error("Course status not found"),
+                                ?: error(stringResource(id = R.string.course_status_not_found)),
                         )
                     }
                 }

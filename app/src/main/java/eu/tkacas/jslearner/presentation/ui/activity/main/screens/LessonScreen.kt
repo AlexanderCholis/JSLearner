@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
@@ -132,7 +133,7 @@ fun LessonScreen(
                         .padding(innerPadding)
                 ) {
                     val error = (uiState as Result.Error).exception
-                    Text(text = error.message ?: "An error occurred")
+                    Text(text = error.message ?: stringResource(id = R.string.an_error_occurred))
                 }
             }
         }

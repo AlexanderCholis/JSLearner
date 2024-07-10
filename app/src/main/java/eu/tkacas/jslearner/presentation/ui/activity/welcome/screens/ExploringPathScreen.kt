@@ -126,7 +126,7 @@ fun ExploringPathScreen(
 
                     is Result.Error -> {
                         Text(
-                            "Error: ${(exploringPathState as Result.Error)}",
+                            text = stringResource(id = R.string.error) + " ${(exploringPathState as Result.Error)}",
                             color = MaterialTheme.colorScheme.error
                         )
                     }

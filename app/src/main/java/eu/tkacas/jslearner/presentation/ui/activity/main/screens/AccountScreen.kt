@@ -109,8 +109,8 @@ fun AccountScreen(
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 NameFieldComponent(
-                                    firstName = user?.firstName ?: "Unknown",
-                                    lastName = user?.lastName ?: "User"
+                                    firstName = user?.firstName ?: stringResource(id = R.string.unknown),
+                                    lastName = user?.lastName ?: stringResource(id = R.string.user)
                                 )
                             }
                             Spacer(modifier = Modifier.height(30.dp))
