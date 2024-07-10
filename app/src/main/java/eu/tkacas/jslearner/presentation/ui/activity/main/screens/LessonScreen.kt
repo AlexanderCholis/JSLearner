@@ -56,7 +56,7 @@ fun LessonScreen(
         }
         is Result.Success -> {
             val lesson = (uiState as Result.Success<Lesson>).result
-            var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startLesson?lessonId={lessonId}") 0 else lesson.theoriesList.size - 1) }
+            var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startLesson") 0 else lesson.theoriesList.size - 1) }
 
             val progress by animateFloatAsState(
                 targetValue = (currentIndex + 1) / lesson.theoriesList.size.toFloat(), label = ""
