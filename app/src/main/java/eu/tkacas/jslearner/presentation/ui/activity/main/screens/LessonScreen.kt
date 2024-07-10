@@ -32,18 +32,22 @@ import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 
 @Composable
 fun LessonScreen(
     navController: NavController,
     viewModel: LessonViewModel,
-    id: String
+    sharedViewModel: MainSharedViewModel
 ) {
+    val id = sharedViewModel.selectedLessonId.value
     val uiState by viewModel.uiState.collectAsState()
     val previousRoute = navController.previousBackStackEntry?.destination?.route
 
     LaunchedEffect(id) {
-        viewModel.loadLesson(id)
+        if (id != null) {
+            viewModel.loadLesson(id)
+        }
     }
 
     when (uiState) {

@@ -16,6 +16,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScre
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
@@ -31,6 +32,7 @@ internal fun MainNavigation(
     accountViewModel: AccountViewModel
 ) {
     val navController = rememberNavController()
+    val sharedViewModel = MainSharedViewModel()
 
     NavHost(
         navController,
@@ -39,31 +41,29 @@ internal fun MainNavigation(
         composable("roadmap") {
             RoadMapScreen(
                 navController = navController,
-                viewModel = roadMapViewModel
+                viewModel = roadMapViewModel,
+                sharedViewModel = sharedViewModel
             )
         }
-        composable("startCourse?courseId={courseId}") { backStackEntry ->
-            val courseId = backStackEntry.arguments?.getString("courseId") ?: ""
+        composable("startCourse") {
             StartCourseScreen(
                 navController = navController,
                 viewModel = startCourseViewModel,
-                id = courseId
+                sharedViewModel = sharedViewModel
             )
         }
-        composable("startLesson?lessonId={lessonId}") { backStackEntry ->
-            val lessonId = backStackEntry.arguments?.getString("lessonId") ?: ""
+        composable("startLesson") {
             StartLessonScreen(
                 navController = navController,
                 viewModel = startLessonViewModel,
-                id = lessonId
+                sharedViewModel = sharedViewModel
             )
         }
-        composable("lesson?lessonId={lessonId}") { backStackEntry ->
-            val lessonId = backStackEntry.arguments?.getString("lessonId") ?: ""
+        composable("lesson") {
             LessonScreen(
                 navController = navController,
                 viewModel = lessonViewModel,
-                id = lessonId
+                sharedViewModel = sharedViewModel
             )
         }
         composable("account") {

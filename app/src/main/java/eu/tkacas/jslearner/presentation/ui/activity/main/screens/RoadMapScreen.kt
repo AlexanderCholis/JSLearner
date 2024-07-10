@@ -36,13 +36,15 @@ import eu.tkacas.jslearner.presentation.ui.component.default.CircleParametersDef
 import eu.tkacas.jslearner.presentation.ui.component.default.LineParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.MessageBubble
 import eu.tkacas.jslearner.presentation.ui.component.default.RoadMapNode
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 internal fun RoadMapScreen(
     navController: NavController,
-    viewModel: RoadMapViewModel
+    viewModel: RoadMapViewModel,
+    sharedViewModel: MainSharedViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -138,9 +140,18 @@ internal fun RoadMapScreen(
                                                             Toast.makeText(context, "Complete previous lessons to unlock this ${node.category.name.lowercase()}.", Toast.LENGTH_SHORT).show()
                                                         } else {
                                                             when (node.category) {
-                                                                RoadMapNodeCategory.LESSON -> navController.navigate("startLesson?lessonId=${node.id}")
-                                                                RoadMapNodeCategory.COURSE -> navController.navigate("startCourse?courseId=${node.id}")
-                                                                RoadMapNodeCategory.TEST -> navController.navigate("startQuiz?testId=${node.id}")
+                                                                RoadMapNodeCategory.LESSON -> {
+                                                                    sharedViewModel.setSelectedLessonId(node.id)
+                                                                    navController.navigate("startLesson")
+                                                                }
+                                                                RoadMapNodeCategory.COURSE -> {
+                                                                    sharedViewModel.setSelectedCourseId(node.id)
+                                                                    navController.navigate("startCourse")
+                                                                }
+                                                                RoadMapNodeCategory.TEST -> {
+                                                                    sharedViewModel.setSelectedQuizId(node.id)
+                                                                    navController.navigate("startQuiz?testId=${node.id}")
+                                                                }
                                                             }
                                                         }
                                                     }

@@ -29,17 +29,21 @@ import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.roadmap.CourseWithLessons
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 
 @Composable
 fun StartCourseScreen(
     navController: NavController,
     viewModel: StartCourseViewModel,
-    id: String
+    sharedViewModel: MainSharedViewModel
 ) {
+    val id = sharedViewModel.selectedCourseId.value
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(id) {
-        viewModel.loadCourse(id)
+        if (id != null) {
+            viewModel.loadCourse(id)
+        }
     }
 
     when (uiState) {
@@ -113,7 +117,8 @@ fun StartCourseScreen(
                             GeneralButtonComponent(
                                 valueId = R.string.start_course,
                                 onButtonClicked = {
-                                    navController.navigate("startLesson?lessonId=${result.lessons.first().id}")
+                                    sharedViewModel.setSelectedLessonId(result.lessons.first().id)
+                                    navController.navigate("startLesson")
                                 }
                             )
                         }
