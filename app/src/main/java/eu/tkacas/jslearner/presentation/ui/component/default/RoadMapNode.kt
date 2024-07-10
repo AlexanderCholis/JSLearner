@@ -65,9 +65,9 @@ fun RoadMapNode(
 ) {
     val adjustedCircleParameters = if (nodeState.category == RoadMapNodeCategory.COURSE) {
         CircleParameters(
-            radius = 20.dp, // Increased radius for COURSE
+            radius = 20.dp,
             backgroundColor = circleParameters.backgroundColor,
-            stroke = StrokeParameters(color = Color.Black, width = 5.dp),
+            stroke = StrokeParameters(color = Color.Black, width = 2.dp),
             icon = circleParameters.icon
         )
     } else {
@@ -78,7 +78,7 @@ fun RoadMapNode(
     Box(
         modifier = Modifier
             .wrapContentSize()
-            .offset(y = 4.dp)
+            .offset(y = 10.dp)
             .drawBehind {
                 val circleRadiusInPx = adjustedCircleParameters.radius.toPx()
 
