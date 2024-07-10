@@ -109,7 +109,7 @@ fun StartQuizScreen(
                     GeneralButtonComponent(
                         valueId = R.string.start_quiz,
                         onButtonClicked = {
-                            //TODO: Navigate to Quiz
+                            navController.navigate("quiz")
                         }
                     )
                 }
