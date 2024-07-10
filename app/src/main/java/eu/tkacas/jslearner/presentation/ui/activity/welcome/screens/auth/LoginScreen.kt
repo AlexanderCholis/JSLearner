@@ -58,23 +58,25 @@ fun LoginScreen(
             is Result.Error -> {
                 loadingState = false
             }
+
             is Result.Loading -> {
                 loadingState = true
             }
+
             is Result.Success<*> -> {
                 loadingState = false
                 Toast.makeText(context, "Successful Login", Toast.LENGTH_SHORT).show()
                 val destination = viewModel.determineDestination()
                 if (destination == "experienceLevel") {
                     navController.navigate("experienceLevel")
-                }
-                else {
+                } else {
                     val intent = Intent(context, MainActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     context.startActivity(intent)
                 }
             }
+
             null -> {}
         }
     }

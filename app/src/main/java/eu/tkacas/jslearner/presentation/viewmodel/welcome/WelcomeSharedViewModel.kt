@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 
-class WelcomeSharedViewModel: ViewModel() {
+class WelcomeSharedViewModel : ViewModel() {
     private val _experienceLevel = MutableLiveData<ExperienceLevel>()
     val experienceLevel: LiveData<ExperienceLevel> = _experienceLevel
 

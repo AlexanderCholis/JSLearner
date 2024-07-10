@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.Icon
@@ -37,14 +36,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.domain.model.roadmap.getColor
+import eu.tkacas.jslearner.domain.model.roadmap.getIcon
+import eu.tkacas.jslearner.domain.model.roadmap.getTextColor
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
+import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
 @Composable
 fun ExperienceLevelCard(
-    image : Int,
-    text : Int,
+    image: Int,
+    text: Int,
     onClick: () -> Unit
 ) {
     Card(
@@ -88,8 +92,8 @@ fun ExperienceLevelCard(
 
 @Composable
 fun LearningReasonCard(
-    image : Int,
-    text : Int,
+    image: Int,
+    text: Int,
     isSelected: Boolean,
     onSelected: () -> Unit
 ) {
@@ -102,7 +106,7 @@ fun LearningReasonCard(
         colors = cardColors(containerColor = cardColor),
         elevation = cardElevation(defaultElevation = 4.dp)
     ) {
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
@@ -124,12 +128,10 @@ fun LearningReasonCard(
 }
 
 
-
-
 @Composable
 fun PathModuleCard(
-    moduleTitleText : String,
-    moduleDescriptionText : String
+    moduleTitleText: String,
+    moduleDescriptionText: String
 ) {
     val isExpanded = remember { mutableStateOf(false) }
     Card(
@@ -158,8 +160,12 @@ fun PathModuleCard(
                     onClick = { isExpanded.value = !isExpanded.value }
                 ) {
                     Image(
-                        painter = if(isExpanded.value) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                        contentDescription = if(isExpanded.value) stringResource(id = R.string.arrow_up) else stringResource(id = R.string.arrow_down)
+                        painter = if (isExpanded.value) painterResource(id = R.drawable.arrow_up) else painterResource(
+                            id = R.drawable.arrow_down
+                        ),
+                        contentDescription = if (isExpanded.value) stringResource(id = R.string.arrow_up) else stringResource(
+                            id = R.string.arrow_down
+                        )
                     )
                 }
             }
@@ -179,13 +185,13 @@ fun PathModuleCard(
 
 @Composable
 fun CoursesPathCard(
-    moduleTitleText : String,
-    isEnabled: Boolean
+    courseTitleText: String,
+    courseStatus: RoadMapNodeStatus
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
-        colors = cardColors(containerColor = Color.White),
+        colors = cardColors(containerColor = courseStatus.getColor()),
         elevation = cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -196,18 +202,16 @@ fun CoursesPathCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = moduleTitleText,
-                fontWeight = if (isEnabled) FontWeight.Bold else FontWeight.Normal,
-                color = if (isEnabled) Color.Black else Color.Gray,
+                text = courseTitleText,
+                fontWeight = FontWeight.Bold,
+                color = courseStatus.getTextColor(),
                 fontSize = 20.sp
             )
-            if(!isEnabled) {
-                Icon(
-                    painter = painterResource(id = R.drawable.lock),
-                    contentDescription = stringResource(id = R.string.locked_course),
-                    tint = Color.Gray
-                )
-            }
+            Icon(
+                painter = painterResource(id = courseStatus.getIcon()),
+                contentDescription = stringResource(id = R.string.courses), // Adjust the description as needed or use null if not applicable
+                tint = Color.Black
+            )
         }
     }
 }
@@ -262,27 +266,35 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
 
 @Composable
 fun LeaderboardCard(
-    userImage: Int,
+    firstName: String,
+    lastName: String,
     userName: String,
-    userScore: Int
+    userScore: Int,
+    position: Int
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clip(componentShapes.extraLarge),
-        colors = CardDefaults.cardColors(containerColor = SkyBlue),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ){
+        colors = cardColors(containerColor = SkyBlue),
+        elevation = cardElevation(defaultElevation = 4.dp)
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(16.dp)
-
         ) {
-            Image(
-                painter = painterResource(id = userImage),
-                contentDescription = stringResource(id = R.string.leaderboard_image),
-                modifier = Modifier.size(48.dp)
+            Text(
+                text = "$position.",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            UserInitialsCircle(
+                firstName = firstName,
+                lastName = lastName,
+                backgroundColor = LightBeige,
+                textColor = PrussianBlue,
+                size = 35.dp,
+                fontSize = 15.sp
             )
             Text(
                 text = userName,

@@ -16,14 +16,14 @@ import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
 @Preview
-fun ProgressIndicatorComponent(){
+fun ProgressIndicatorComponent() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp)
-    ){
+    ) {
         CircularProgressIndicator(
             modifier = Modifier.size(150.dp),
             color = SkyBlue,

@@ -1,5 +1,7 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -8,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -112,19 +115,72 @@ fun HaveAnAccountOrNotClickableTextComponent(
             .heightIn(min = 40.dp)
             .clickable(
                 onClick = {
-                    annotatedString.getStringAnnotations(
-                        start = 0,
-                        end = annotatedString.length
-                    ).firstOrNull()?.also { span ->
-                        if (span.item == clickableText) {
-                            onTextSelected(span.item)
+                    annotatedString
+                        .getStringAnnotations(
+                            start = 0,
+                            end = annotatedString.length
+                        )
+                        .firstOrNull()
+                        ?.also { span ->
+                            if (span.item == clickableText) {
+                                onTextSelected(span.item)
+                            }
                         }
-                    }
                 }
             ),
         style = TextStyle(
             fontSize = 21.sp,
             textAlign = TextAlign.Center
         )
+    )
+}
+
+@Composable
+fun HyperLinkText(
+    url: String
+) {
+    val context = LocalContext.current
+    val nonClickableText = stringResource(id = R.string.click_for)
+    val clickableText = stringResource(id = R.string.more)
+    val exclamationMark = stringResource(id = R.string.exclamation_mark)
+
+    val annotatedText = buildAnnotatedString {
+        withStyle(
+            style = SpanStyle(
+                color = Color.Black,
+                fontSize = 16.sp
+            )
+        ) {
+            append(nonClickableText)
+        }
+        pushStringAnnotation(tag = url, annotation = url)
+        withStyle(
+            style = SpanStyle(
+                color = SkyBlue,
+                fontSize = 16.sp
+            )
+        ) {
+            append(clickableText)
+        }
+        pop()
+        withStyle(
+            style = SpanStyle(
+                color = Color.Black,
+                fontSize = 16.sp
+            )
+        ) {
+            append(exclamationMark)
+        }
+    }
+
+    ClickableText(
+        text = annotatedText,
+        onClick = { offset ->
+            annotatedText.getStringAnnotations(tag = url, start = offset, end = offset)
+                .firstOrNull()?.let { annotation ->
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(annotation.item))
+                    context.startActivity(intent)
+                }
+        }
     )
 }

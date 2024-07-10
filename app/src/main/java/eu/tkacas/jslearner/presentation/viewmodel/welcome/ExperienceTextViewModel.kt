@@ -5,7 +5,7 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.presentation.model.ExperienceTextUiItem
 
-class ExperienceTextViewModel: ViewModel() {
+class ExperienceTextViewModel : ViewModel() {
     private val noExperienceTexts = listOf(
         ExperienceTextUiItem(
             boldText = R.string.no_experience_no_problem,
@@ -76,7 +76,7 @@ class ExperienceTextViewModel: ViewModel() {
     )
 
     fun returnTexts(level: ExperienceLevel): List<ExperienceTextUiItem> {
-        return when(level) {
+        return when (level) {
             ExperienceLevel.NO_EXPERIENCE -> noExperienceTexts
             ExperienceLevel.SOME_EXPERIENCE -> someExperienceTexts
             ExperienceLevel.A_LOT_OF_EXPERIENCE -> aLotOfExperienceTexts

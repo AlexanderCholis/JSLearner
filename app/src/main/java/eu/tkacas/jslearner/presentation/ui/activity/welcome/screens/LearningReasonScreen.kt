@@ -102,7 +102,7 @@ fun LearningReasonScreen(
                         }
                     }
                     Column(
-                        modifier= Modifier
+                        modifier = Modifier
                             .fillMaxSize(),
                         verticalArrangement = Arrangement.Bottom,
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -114,7 +114,11 @@ fun LearningReasonScreen(
                                     sharedViewModel.setSelectedReason(selectedReason)
                                     navController.navigate("exploringPath")
                                 } else {
-                                    Toast.makeText(context, "Please select a reason", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Please select a reason",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                         )

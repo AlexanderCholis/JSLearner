@@ -5,9 +5,9 @@ import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.data.model.UserFirestore
 import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
 import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
-import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
+import eu.tkacas.jslearner.domain.repository.AuthRepository
 
 class AuthRepositoryImpl(
     private val firebaseDataSource: FirebaseDataSource,
@@ -20,10 +20,20 @@ class AuthRepositoryImpl(
         return firebaseDataSource.login(email, password)
     }
 
-    override suspend fun signup(firstName: String, lastName: String, email: String, password: String): FirebaseUser {
+    override suspend fun signup(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String
+    ): FirebaseUser {
         val user = firebaseDataSource.signup(email, password)
         val uid = user.uid
-        val userProfile = UserFirestore(firstName, lastName, dateRegistered = getCurrentDate(), profileCompleted = false)
+        val userProfile = UserFirestore(
+            firstName,
+            lastName,
+            dateRegistered = getCurrentDate(),
+            profileCompleted = false
+        )
         firestoreDataSource.setUserProfile(uid, userProfile)
         return user
     }

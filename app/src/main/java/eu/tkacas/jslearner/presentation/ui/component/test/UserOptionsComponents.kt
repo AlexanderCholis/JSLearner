@@ -213,6 +213,7 @@ fun TargetWordBox(text: String) {
                 textState = draggedData.toString()
                 return true
             }
+
             override fun onEntered(event: DragAndDropEvent) {
                 super.onEntered(event)
                 backgroundColor = LightBeige

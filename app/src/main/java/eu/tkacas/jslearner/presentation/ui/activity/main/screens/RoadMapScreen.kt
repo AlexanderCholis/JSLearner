@@ -7,7 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.*
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -36,13 +41,15 @@ import eu.tkacas.jslearner.presentation.ui.component.default.CircleParametersDef
 import eu.tkacas.jslearner.presentation.ui.component.default.LineParametersDefaults
 import eu.tkacas.jslearner.presentation.ui.component.default.MessageBubble
 import eu.tkacas.jslearner.presentation.ui.component.default.RoadMapNode
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 internal fun RoadMapScreen(
     navController: NavController,
-    viewModel: RoadMapViewModel
+    viewModel: RoadMapViewModel,
+    sharedViewModel: MainSharedViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -82,11 +89,16 @@ internal fun RoadMapScreen(
                 )
             },
             floatingActionButton = {
-                FloatingButton(
-                    onButtonClicked = {
-                        navController.navigate("coursesPath")
-                    }
-                )
+                if (uiState is Result.Success) {
+                    FloatingButton(
+                        onButtonClicked = {
+                            sharedViewModel.setUser((uiState as Result.Success).result.user)
+                            sharedViewModel.setCoursesState((uiState as Result.Success).result.nodes?.filter { it.category == RoadMapNodeCategory.COURSE }
+                                ?: emptyList())
+                            navController.navigate("coursesPath")
+                        }
+                    )
+                }
             }
         ) { innerPadding ->
             Box(
@@ -99,6 +111,7 @@ internal fun RoadMapScreen(
                     is Result.Loading -> {
                         ProgressIndicatorComponent()
                     }
+
                     is Result.Success -> {
                         val nodes = (uiState as Result.Success).result.nodes
                         if (nodes != null) {  // Handle nullability
@@ -112,18 +125,23 @@ internal fun RoadMapScreen(
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
                                     itemsIndexed(nodes) { index, node ->
-                                        val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
-                                        val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
-                                            LineParametersDefaults.linearGradient(
-                                                startColor = node.status.getColor(),
-                                                endColor = nextNodeColor
-                                            )
-                                        } else null
+                                        val nextNodeColor =
+                                            if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
+                                        val lineParameters =
+                                            if (node.position != RoadMapNodePosition.LAST) {
+                                                LineParametersDefaults.linearGradient(
+                                                    startColor = node.status.getColor(),
+                                                    endColor = nextNodeColor
+                                                )
+                                            } else null
                                         RoadMapNode(
                                             nodeState = node,
                                             circleParameters = CircleParametersDefaults.circleParameters(
                                                 backgroundColor = node.status.getColor(),
-                                                stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
+                                                stroke = StrokeParameters(
+                                                    color = node.status.getColor(),
+                                                    width = 2.dp
+                                                ),
                                                 icon = node.status.getIcon()
                                             ),
                                             lineParameters = lineParameters,
@@ -135,12 +153,33 @@ internal fun RoadMapScreen(
                                                     text = node.title ?: "",
                                                     onClick = {
                                                         if (node.status == RoadMapNodeStatus.LOCKED) {
-                                                            Toast.makeText(context, "Complete previous lessons to unlock this ${node.category.name.lowercase()}.", Toast.LENGTH_SHORT).show()
+                                                            Toast.makeText(
+                                                                context,
+                                                                "Complete previous lessons to unlock this ${node.category.name.lowercase()}.",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
                                                         } else {
                                                             when (node.category) {
-                                                                RoadMapNodeCategory.LESSON -> navController.navigate("startLesson?lessonId=${node.id}")
-                                                                RoadMapNodeCategory.COURSE -> navController.navigate("startCourse?courseId=${node.id}")
-                                                                RoadMapNodeCategory.TEST -> navController.navigate("startQuiz?testId=${node.id}")
+                                                                RoadMapNodeCategory.LESSON -> {
+                                                                    sharedViewModel.setSelectedLessonId(
+                                                                        node.id
+                                                                    )
+                                                                    navController.navigate("startLesson")
+                                                                }
+
+                                                                RoadMapNodeCategory.COURSE -> {
+                                                                    sharedViewModel.setSelectedCourseId(
+                                                                        node.id
+                                                                    )
+                                                                    navController.navigate("startCourse")
+                                                                }
+
+                                                                RoadMapNodeCategory.TEST -> {
+                                                                    sharedViewModel.setSelectedQuizId(
+                                                                        node.id
+                                                                    )
+                                                                    navController.navigate("startQuiz?testId=${node.id}")
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -151,11 +190,17 @@ internal fun RoadMapScreen(
                                 }
                             }
                         } else {
-                            Text("No roadmap nodes available", color = MaterialTheme.colorScheme.error)
+                            Text(
+                                text = stringResource(id = R.string.no_roadmap_nodes_available),
+                                color = MaterialTheme.colorScheme.error
+                            )
                         }
                     }
                     is Result.Error -> {
-                        Text("Error: ${(uiState as Result.Error).exception.message}", color = MaterialTheme.colorScheme.error)
+                        Text(
+                            text = stringResource(id = R.string.error) + " ${(uiState as Result.Error).exception.message}",
+                            color = MaterialTheme.colorScheme.error
+                        )
                     }
                 }
             }

@@ -36,26 +36,32 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
+import eu.tkacas.jslearner.presentation.ui.component.HyperLinkText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 
 
 @Composable
 fun StartLessonScreen(
     navController: NavController,
     viewModel: StartLessonViewModel,
-    id: String
+    sharedViewModel: MainSharedViewModel
 ) {
+    val id = sharedViewModel.selectedLessonId.value
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(id) {
-        viewModel.loadLesson(id)
+        if (id != null) {
+            viewModel.loadLesson(id)
+        }
     }
 
     when (uiState) {
         is Result.Loading -> {
             ProgressIndicatorComponent()
         }
+
         is Result.Success -> {
             val lesson = (uiState as Result.Success<Lesson>).result
             Scaffold(
@@ -80,66 +86,55 @@ fun StartLessonScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Surface(
-                            color = Color.Gray,
+                        Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clip(componentShapes.medium)
+                                .padding(top = 16.dp, start = 36.dp, end = 36.dp, bottom = 16.dp)
                         ) {
-                            Column(
+                            Text(
+                                text = lesson.description,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            Spacer(modifier = Modifier.height(100.dp))
+                            Image(
+                                painter = painterResource(id = R.drawable.application),
+                                contentDescription = stringResource(id = R.string.simple_image),
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(top = 16.dp, start = 36.dp, end = 36.dp, bottom = 16.dp)
+                                    .size(240.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            )
+                            Spacer(modifier = Modifier.height(24.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
                             ) {
-                                /*subsections.forEach {
-                                    BulletText(value = it)
-                                }*/ //TODO: add Lessons
-                                Spacer(modifier = Modifier.height(100.dp))
-
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.application),
-                                        contentDescription = stringResource(id = R.string.simple_image),
-                                        modifier = Modifier.size(240.dp)
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(48.dp))
-
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Text(
-                                        text = lesson.description,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        textAlign = TextAlign.Center
-                                    )
-                                }
-                                Column(
-                                    modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement = Arrangement.Bottom,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    GeneralButtonComponent(
-                                        valueId = R.string.start_lesson,
-                                        onButtonClicked = {
-                                            navController.navigate("lesson?lessonId=${lesson.id}")
-                                        }
-                                    )
-                                }
+                                HyperLinkText(url = lesson.url)
+                            }
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Bottom,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                GeneralButtonComponent(
+                                    valueId = R.string.start_lesson,
+                                    onButtonClicked = {
+                                        navController.navigate("lesson")
+                                    }
+                                )
                             }
                         }
                     }
                 }
             }
         }
+
         is Result.Error -> {
             Scaffold(
                 modifier = Modifier
@@ -148,7 +143,10 @@ fun StartLessonScreen(
                     BackAppTopBar(
                         color = MaterialTheme.colorScheme.primaryContainer,
                         onBackClick = {
-                            navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
+                            navController.popBackStack(
+                                navController.graph.startDestinationId,
+                                inclusive = false
+                            )
                             navController.navigate("roadmap")
                         }
                     )
@@ -161,7 +159,7 @@ fun StartLessonScreen(
                         .padding(innerPadding)
                 ) {
                     val error = (uiState as Result.Error).exception
-                    Text(text = error.message ?: "An error occurred")
+                    Text(text = error.message ?: stringResource(id = R.string.an_error_occurred))
                 }
             }
         }

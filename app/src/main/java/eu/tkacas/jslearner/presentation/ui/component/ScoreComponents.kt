@@ -26,30 +26,30 @@ import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 
 @Composable
 fun ScoreComponent(userScore: Int) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .size(width = 125.dp, height = 50.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(SkyBlue)
-                .padding(7.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                Text(
-                    text = userScore.toString(), //up to 4 digits no problem
-                    modifier = Modifier.padding(start = 2.dp),
-                    fontSize = 20.sp
-                )
-            }
-            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                Image(
-                    painter = painterResource(id = R.drawable.trophy),
-                    contentDescription = stringResource(id = R.string.trophy),
-                    modifier = Modifier.padding(start = 20.dp)
-                )
-            }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .size(width = 125.dp, height = 50.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(SkyBlue)
+            .padding(7.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+            Text(
+                text = userScore.toString(), //up to 4 digits no problem
+                modifier = Modifier.padding(start = 2.dp),
+                fontSize = 20.sp
+            )
         }
+        Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+            Image(
+                painter = painterResource(id = R.drawable.trophy),
+                contentDescription = stringResource(id = R.string.trophy),
+                modifier = Modifier.padding(start = 20.dp)
+            )
+        }
+    }
 }
 
 

@@ -23,7 +23,7 @@ fun BackAppTopBar(
     onBackClick: () -> Unit,
     showScore: Boolean = false,
     score: Int = 0
-){
+) {
     TopAppBar(
         title = {
             Text(
@@ -64,7 +64,7 @@ fun MenuAppTopBar(
     drawerState: DrawerState,
     showScore: Boolean = true,
     score: Int = 0
-){
+) {
     TopAppBar(
         title = {
             Text(

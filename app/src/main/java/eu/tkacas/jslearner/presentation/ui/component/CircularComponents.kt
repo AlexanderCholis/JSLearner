@@ -19,16 +19,30 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.theme.Bronze
 import eu.tkacas.jslearner.presentation.ui.theme.Gold
+import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
+import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.Silver
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 
 @Composable
-fun CircularLeaderComponent(image: Int, borderColor: Color, hasCrown: Boolean = false, userScore: Int, leaderType: Int, modifier: Modifier = Modifier) {
+fun CircularLeaderComponent(
+    firstName: String,
+    lastName: String,
+    borderColor: Color,
+    hasCrown: Boolean = false,
+    userScore: Int,
+    leaderType: Int,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .size(if (hasCrown) 126.dp else 100.dp)
@@ -39,13 +53,9 @@ fun CircularLeaderComponent(image: Int, borderColor: Color, hasCrown: Boolean = 
                 .offset(x = if (hasCrown) 12.dp else 0.dp, y = if (hasCrown) 22.dp else 0.dp)
                 .clip(CircleShape)
                 .border(4.dp, borderColor, CircleShape)
+                .background(Color.White, CircleShape)
         ) {
-            Image(
-                painter = painterResource(id = image),
-                contentDescription = stringResource(id = R.string.leaderboard_image),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            UserInitialsCircle(firstName = firstName, lastName = lastName, backgroundColor = LightBeige, textColor = PrussianBlue, size = 100.dp, fontSize = 40.sp)
         }
         if (hasCrown) {
             Image(
@@ -57,8 +67,8 @@ fun CircularLeaderComponent(image: Int, borderColor: Color, hasCrown: Boolean = 
                     .offset(y = 1.dp)
             )
         }
-        userScore?.let { score ->
-            leaderType?.let { type ->
+        userScore.let { score ->
+            leaderType.let { type ->
                 val backgroundColor = when (type) {
                     1 -> Gold
                     2 -> Silver
@@ -81,6 +91,32 @@ fun CircularLeaderComponent(image: Int, borderColor: Color, hasCrown: Boolean = 
                 }
             }
         }
+    }
+}
+
+@Composable
+fun UserInitialsCircle(
+    firstName: String,
+    lastName: String,
+    backgroundColor: Color = PrussianBlue,
+    textColor: Color = Color.White,
+    size: Dp = 65.dp,
+    fontSize: TextUnit = 24.sp
+) {
+    val initials = "${firstName.firstOrNull()?.uppercaseChar() ?: ""}${lastName.firstOrNull()?.uppercaseChar() ?: ""}"
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .size(size)
+            .background(color = backgroundColor, shape = CircleShape)
+    ) {
+        Text(
+            text = initials,
+            color = textColor,
+            fontSize = fontSize,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 

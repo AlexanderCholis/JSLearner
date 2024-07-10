@@ -29,23 +29,28 @@ import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.roadmap.CourseWithLessons
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 
 @Composable
 fun StartCourseScreen(
     navController: NavController,
     viewModel: StartCourseViewModel,
-    id: String
+    sharedViewModel: MainSharedViewModel
 ) {
+    val id = sharedViewModel.selectedCourseId.value
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(id) {
-        viewModel.loadCourse(id)
+        if (id != null) {
+            viewModel.loadCourse(id)
+        }
     }
 
     when (uiState) {
         is Result.Loading -> {
             ProgressIndicatorComponent()
         }
+
         is Result.Success -> {
             val result = (uiState as Result.Success<CourseWithLessons>).result
             Scaffold(
@@ -113,7 +118,8 @@ fun StartCourseScreen(
                             GeneralButtonComponent(
                                 valueId = R.string.start_course,
                                 onButtonClicked = {
-                                    navController.navigate("startLesson?lessonId=${result.lessons.first().id}")
+                                    sharedViewModel.setSelectedLessonId(result.lessons.first().id)
+                                    navController.navigate("startLesson")
                                 }
                             )
                         }
@@ -121,14 +127,19 @@ fun StartCourseScreen(
                 }
             }
         }
+
         is Result.Error -> {
             Scaffold(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize(),
                 topBar = {
                     BackAppTopBar(
                         color = MaterialTheme.colorScheme.primaryContainer,
                         onBackClick = {
-                            navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
+                            navController.popBackStack(
+                                navController.graph.startDestinationId,
+                                inclusive = false
+                            )
                             navController.navigate("roadmap")
                         }
                     )
@@ -142,7 +153,7 @@ fun StartCourseScreen(
                 ) {
                     val error = (uiState as Result.Error).exception
                     Text(
-                        text = error.message ?: "An error occurred",
+                        text = error.message ?: stringResource(id = R.string.an_error_occurred),
                     )
                 }
             }

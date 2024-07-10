@@ -18,48 +18,54 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import eu.tkacas.jslearner.domain.Result
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.data.model.Lesson
+import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 
 @Composable
 fun LessonScreen(
     navController: NavController,
     viewModel: LessonViewModel,
-    id: String
+    sharedViewModel: MainSharedViewModel
 ) {
+    val id = sharedViewModel.selectedLessonId.value
     val uiState by viewModel.uiState.collectAsState()
     val previousRoute = navController.previousBackStackEntry?.destination?.route
 
     LaunchedEffect(id) {
-        viewModel.loadLesson(id)
+        if (id != null) {
+            viewModel.loadLesson(id)
+        }
     }
 
     when (uiState) {
         is Result.Loading -> {
             ProgressIndicatorComponent()
         }
+
         is Result.Success -> {
             val lesson = (uiState as Result.Success<Lesson>).result
-            var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startLesson?lessonId={lessonId}") 0 else lesson.theoriesList.size - 1) }
+            var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startLesson") 0 else lesson.theoriesList.size - 1) }
 
             val progress by animateFloatAsState(
                 targetValue = (currentIndex + 1) / lesson.theoriesList.size.toFloat(), label = ""
             )
 
             Scaffold(
-                modifier= Modifier
+                modifier = Modifier
                     .fillMaxSize(),
                 topBar = {
                     BackAppTopBar(
@@ -106,9 +112,10 @@ fun LessonScreen(
                 }
             }
         }
+
         is Result.Error -> {
             Scaffold(
-                modifier= Modifier
+                modifier = Modifier
                     .fillMaxSize(),
                 topBar = {
                     BackAppTopBar(
@@ -126,7 +133,7 @@ fun LessonScreen(
                         .padding(innerPadding)
                 ) {
                     val error = (uiState as Result.Error).exception
-                    Text(text = error.message ?: "An error occurred")
+                    Text(text = error.message ?: stringResource(id = R.string.an_error_occurred))
                 }
             }
         }

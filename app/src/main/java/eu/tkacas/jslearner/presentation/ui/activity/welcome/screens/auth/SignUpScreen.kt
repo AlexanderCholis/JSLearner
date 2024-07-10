@@ -57,14 +57,17 @@ fun SignUpScreen(
             is Result.Error -> {
                 signUpState = false
             }
+
             is Result.Loading -> {
                 signUpState = true
             }
+
             is Result.Success<*> -> {
                 signUpState = false
                 Toast.makeText(context, "Registration successful", Toast.LENGTH_SHORT).show()
                 navController.navigate("experienceLevel")
             }
+
             null -> {}
         }
     }

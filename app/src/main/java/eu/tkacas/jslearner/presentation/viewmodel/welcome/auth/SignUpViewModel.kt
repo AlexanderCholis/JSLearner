@@ -26,7 +26,7 @@ class SignUpViewModel(
     private val validateEmail: ValidateEmail,
     private val validatePassword: ValidatePassword,
     private val validateTerms: ValidateTerms,
-): ViewModel() {
+) : ViewModel() {
     private var _state by mutableStateOf(SignUpFormState())
     val state: SignUpFormState get() = _state
 
@@ -34,22 +34,27 @@ class SignUpViewModel(
     val signupFlow: StateFlow<Result<FirebaseUser>?> = _signupFlow
 
     fun onEvent(event: SignUpFormEvent) {
-        when(event) {
+        when (event) {
             is SignUpFormEvent.FirstNameChanged -> {
                 _state = _state.copy(firstName = event.firstName)
             }
+
             is SignUpFormEvent.LastNameChanged -> {
                 _state = _state.copy(lastName = event.lastName)
             }
+
             is SignUpFormEvent.EmailChanged -> {
                 _state = _state.copy(email = event.email)
             }
+
             is SignUpFormEvent.PasswordChanged -> {
                 _state = _state.copy(password = event.password)
             }
+
             is SignUpFormEvent.AcceptTerms -> {
                 _state = _state.copy(acceptedTerms = event.isAccepted)
             }
+
             is SignUpFormEvent.Submit -> {
                 submitData()
             }
@@ -69,9 +74,9 @@ class SignUpViewModel(
             emailResult,
             passwordResult,
             termsResult
-        ).any { it.errorMessage != null}
+        ).any { it.errorMessage != null }
 
-        if(hasError) {
+        if (hasError) {
             _state = _state.copy(
                 firstNameError = firstNameResult.errorMessage,
                 lastNameError = lastNameResult.errorMessage,
@@ -84,13 +89,16 @@ class SignUpViewModel(
         signUpUser(_state.firstName, _state.lastName, _state.email, _state.password)
     }
 
-    private fun signUpUser(firstName: String, lastName: String, email: String, password: String) = viewModelScope.launch {
-        try {
-            val user = signUpUseCase.execute(firstName, lastName, email, password)
-            _signupFlow.value = Result.Success(user) // Assuming you still want to use Result for success indication
-        } catch (e: Exception) {
-            _state = _state.copy(errorMessage = e.message)
-            _signupFlow.value = Result.Error(e) // Assuming you still want to use Result for error indication
+    private fun signUpUser(firstName: String, lastName: String, email: String, password: String) =
+        viewModelScope.launch {
+            try {
+                val user = signUpUseCase.execute(firstName, lastName, email, password)
+                _signupFlow.value =
+                    Result.Success(user) // Assuming you still want to use Result for success indication
+            } catch (e: Exception) {
+                _state = _state.copy(errorMessage = e.message)
+                _signupFlow.value =
+                    Result.Error(e) // Assuming you still want to use Result for error indication
+            }
         }
-    }
 }

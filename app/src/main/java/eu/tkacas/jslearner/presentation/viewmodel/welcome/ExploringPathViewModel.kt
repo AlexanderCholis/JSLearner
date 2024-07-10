@@ -19,7 +19,7 @@ class ExploringPathViewModel(
     private val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase,
     private val updateUserProfileUseCase: UpdateUserProfileUseCase,
     private val setUserStatsUseCase: SetUserStatsUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _exploringPathState = MutableStateFlow<Result<List<CourseShort>>?>(null)
     val exploringPathState: StateFlow<Result<List<CourseShort>>?> = _exploringPathState
@@ -35,22 +35,23 @@ class ExploringPathViewModel(
         }
     }
 
-    fun updateUserData(learningReason: LearningReason, experienceLevel: ExperienceLevel) = viewModelScope.launch {
-        try {
-            val user = User(
-                firstName = null,
-                lastName = null,
-                experienceScore = null,
-                learningReason = learningReason,
-                experienceLevel = experienceLevel,
-                lessonsCompleted = null,
-                highScoreDaysInARow = null,
-                highScoreCorrectAnswersInARow = null
-            )
-            updateUserProfileUseCase.execute(user)
-            setUserStatsUseCase.execute(user)
-        } catch (e: Exception) {
-            _exploringPathState.value = Result.Error(e)
+    fun updateUserData(learningReason: LearningReason, experienceLevel: ExperienceLevel) =
+        viewModelScope.launch {
+            try {
+                val user = User(
+                    firstName = null,
+                    lastName = null,
+                    experienceScore = null,
+                    learningReason = learningReason,
+                    experienceLevel = experienceLevel,
+                    lessonsCompleted = null,
+                    highScoreDaysInARow = null,
+                    highScoreCorrectAnswersInARow = null
+                )
+                updateUserProfileUseCase.execute(user)
+                setUserStatsUseCase.execute(user)
+            } catch (e: Exception) {
+                _exploringPathState.value = Result.Error(e)
+            }
         }
-    }
 }

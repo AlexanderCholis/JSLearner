@@ -7,5 +7,5 @@ data class Lesson(
     val title: String = "",
     @get:PropertyName("theories_list") @set:PropertyName("theories_list") var theoriesList: List<String> = emptyList(),
     val description: String = "",
-    val url : String = ""
+    val url: String = ""
 )

@@ -82,7 +82,7 @@ fun NormalText(text: String) {
 }
 
 @Composable
-fun BoldText(text: String){
+fun BoldText(text: String) {
     Text(
         text = text,
         fontWeight = FontWeight.Bold,

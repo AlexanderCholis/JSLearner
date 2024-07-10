@@ -48,7 +48,7 @@ fun ExperienceTextScreen(
     )
 
     Scaffold(
-        modifier= Modifier
+        modifier = Modifier
             .fillMaxSize(),
         topBar = {
             BackAppTopBar(
