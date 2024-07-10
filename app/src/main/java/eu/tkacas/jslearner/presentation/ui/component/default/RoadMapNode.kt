@@ -131,7 +131,7 @@ fun RoadMapNode(
                     start = adjustedCircleParameters.radius * 2 + contentStartOffset,
                     bottom = if (nodeState.position != RoadMapNodePosition.LAST) spacer else 0.dp
                 )
-                .offset(y = if (nodeState.category == RoadMapNodeCategory.COURSE) -adjustedCircleParameters.radius / 2 else -adjustedCircleParameters.radius / 4)
+                .offset(y = if (nodeState.category == RoadMapNodeCategory.COURSE) -adjustedCircleParameters.radius / 2 + 10.dp else -adjustedCircleParameters.radius / 4)
         )
     }
 }
