@@ -84,60 +84,48 @@ fun StartLessonScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Surface(
-                            color = Color.Gray,
+                        Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .clip(componentShapes.medium)
+                                .padding(top = 16.dp, start = 36.dp, end = 36.dp, bottom = 16.dp)
                         ) {
-                            Column(
+                            Text(
+                                text = lesson.description,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            /*subsections.forEach {
+                                BulletText(value = it)
+                            }*/ //TODO: add Lessons
+                            Spacer(modifier = Modifier.height(100.dp))
+
+                            Row(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(top = 16.dp, start = 36.dp, end = 36.dp, bottom = 16.dp)
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
                             ) {
-                                /*subsections.forEach {
-                                    BulletText(value = it)
-                                }*/ //TODO: add Lessons
-                                Spacer(modifier = Modifier.height(100.dp))
+                                Image(
+                                    painter = painterResource(id = R.drawable.application),
+                                    contentDescription = stringResource(id = R.string.simple_image),
+                                    modifier = Modifier.size(240.dp)
+                                )
+                            }
 
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.application),
-                                        contentDescription = stringResource(id = R.string.simple_image),
-                                        modifier = Modifier.size(240.dp)
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(48.dp))
-
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Text(
-                                        text = lesson.description,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        textAlign = TextAlign.Center
-                                    )
-                                }
-                                Column(
-                                    modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement = Arrangement.Bottom,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    GeneralButtonComponent(
-                                        valueId = R.string.start_lesson,
-                                        onButtonClicked = {
-                                            navController.navigate("lesson")
-                                        }
-                                    )
-                                }
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Bottom,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                GeneralButtonComponent(
+                                    valueId = R.string.start_lesson,
+                                    onButtonClicked = {
+                                        navController.navigate("lesson")
+                                    }
+                                )
                             }
                         }
                     }

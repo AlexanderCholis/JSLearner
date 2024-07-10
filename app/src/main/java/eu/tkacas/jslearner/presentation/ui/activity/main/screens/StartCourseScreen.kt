@@ -128,7 +128,8 @@ fun StartCourseScreen(
         }
         is Result.Error -> {
             Scaffold(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize(),
                 topBar = {
                     BackAppTopBar(
                         color = MaterialTheme.colorScheme.primaryContainer,
