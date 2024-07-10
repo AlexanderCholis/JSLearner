@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,47 +23,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.PodiumUser
 import eu.tkacas.jslearner.presentation.ui.theme.Bronze
 import eu.tkacas.jslearner.presentation.ui.theme.Gold
 import eu.tkacas.jslearner.presentation.ui.theme.Silver
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
+import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
 
 @Composable
-fun LeaderboardComponent(userImage: Int, userName: String, userScore: Int) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .clip(RoundedCornerShape(30.dp))
-            .background(SkyBlue)
-            .padding(16.dp)
-            .width(350.dp)
-    ) {
-        Image(
-            painter = painterResource(id = userImage),
-            contentDescription = stringResource(id = R.string.leaderboard_image),
-            modifier = Modifier.size(48.dp)
-        )
-        Text(
-            text = userName,
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = 8.dp)
-        )
-        Text(
-            text = userScore.toString(),
-            modifier = Modifier.padding(start = 8.dp)
-        )
-    }
-}
+fun WinnersPodiumComponentWithLeaders(
+    podiumUserList: List<PodiumUser>
+) {
+    val sortedPodiumUsers = podiumUserList.sortedBy { it.position }
+    val (image1, userScore1) = sortedPodiumUsers.getOrNull(0)?.let { it.image to it.score } ?: (0 to 0)
+    val (image2, userScore2) = sortedPodiumUsers.getOrNull(1)?.let { it.image to it.score } ?: (0 to 0)
+    val (image3, userScore3) = sortedPodiumUsers.getOrNull(2)?.let { it.image to it.score } ?: (0 to 0)
 
-@Composable
-fun WinnersPodiumComponentWithLeaders(image1: Int, userScore1: Int, image2: Int, userScore2: Int, image3: Int, userScore3: Int) {
     Box(modifier = Modifier
         .fillMaxWidth())
     {
@@ -70,7 +54,9 @@ fun WinnersPodiumComponentWithLeaders(image1: Int, userScore1: Int, image2: Int,
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Box(
                     modifier = Modifier
                         .size(126.dp)
@@ -82,7 +68,6 @@ fun WinnersPodiumComponentWithLeaders(image1: Int, userScore1: Int, image2: Int,
                         hasCrown = true,
                         userScore = userScore1,
                         leaderType = 1
-
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))

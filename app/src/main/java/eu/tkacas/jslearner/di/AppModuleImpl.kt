@@ -115,7 +115,7 @@ class AppModuleImpl(
         RoadMapRepositoryImpl(firestoreDataSource)
     }
     override val getRoadMapUseCase: GetRoadMapUseCase by lazy {
-        GetRoadMapUseCase(roadMapRepository)
+        GetRoadMapUseCase(roadMapRepository, authRepository)
     }
     override val getCourseUseCase: GetCourseUseCase by lazy {
         GetCourseUseCase(roadMapRepository)

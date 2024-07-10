@@ -3,11 +3,13 @@ package eu.tkacas.jslearner.presentation.ui.component
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ModalDrawerSheet
@@ -58,11 +60,19 @@ fun NavigationDrawer(
             modifier = Modifier
                 .padding(8.dp)
         ) {
-            CourseTopCard(
-                points = 500,
-                days = 12,
-                answers = 3
-            ) //should be given from the database
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.element_all_the_data),
+                    contentDescription = "Navigation Header",
+                    //modifier = Modifier.size(120.dp)
+                )
+            }
 
             Spacer(Modifier.height(12.dp))
 

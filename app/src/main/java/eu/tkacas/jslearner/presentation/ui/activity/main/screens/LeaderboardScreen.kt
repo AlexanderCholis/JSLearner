@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.component.LeaderboardComponent
+import eu.tkacas.jslearner.domain.model.PodiumUser
+import eu.tkacas.jslearner.presentation.ui.component.LeaderboardCard
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import eu.tkacas.jslearner.presentation.ui.component.WinnersPodiumComponentWithLeaders
@@ -34,6 +35,13 @@ fun LeaderboardScreen(
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    // TODO: Use viewModel to get the list of users
+    val podiumUserList = listOf(
+        PodiumUser(R.drawable.application, 1000, 1),
+        PodiumUser(R.drawable.application, 980, 2),
+        PodiumUser(R.drawable.application, 920, 3)
+    )
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -79,21 +87,14 @@ fun LeaderboardScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     // First 3 places on the podium
-                    WinnersPodiumComponentWithLeaders(
-                        image1 = R.drawable.application,
-                        image2 = R.drawable.application,
-                        image3 = R.drawable.application,
-                        userScore1 = 1000,
-                        userScore2 = 980,
-                        userScore3 = 920
-                    )
+                    WinnersPodiumComponentWithLeaders(podiumUserList)
                     Spacer(modifier = Modifier.height(30.dp))
                     // Other users on the leaderboard
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 1", userScore = 900)
+                    LeaderboardCard(userImage = R.drawable.application, userName = "User 1", userScore = 900)
                     Spacer(modifier = Modifier.height(8.dp))
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 2", userScore = 860)
+                    LeaderboardCard(userImage = R.drawable.application, userName = "User 2", userScore = 860)
                     Spacer(modifier = Modifier.height(8.dp))
-                    LeaderboardComponent(userImage = R.drawable.application, userName = "User 3", userScore = 840)
+                    LeaderboardCard(userImage = R.drawable.application, userName = "User 3", userScore = 840)
                 }
             }
         }

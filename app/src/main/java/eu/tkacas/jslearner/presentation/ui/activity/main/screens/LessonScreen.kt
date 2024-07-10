@@ -98,7 +98,7 @@ fun LessonScreen(
                                 if (currentIndex < lesson.theoriesList.size - 1) {
                                     currentIndex++
                                 } else {
-                                    //TODO: navigate to next screen
+                                    navController.navigate("startQuiz")
                                 }
                             })
                         }

@@ -98,6 +98,7 @@
     <string name="leaderboard">Leaderboard</string>
     <string name="leaderboard_image">Leaderboard Image</string>
     <string name="settings">Settings</string>
+    <string name="about">About</string>
     <string name="roadmap">Roadmap</string>
     <string name="logout">Logout</string>
     <string name="simple_image">Simple Image</string>
@@ -109,4 +110,5 @@
     <string name="locked_course">Locked Course</string>
     <string name="stats_card">Statistics Card</string>
     <string name="courses_list">Courses List</string>
+    <string name="bookmark_icon">Bookmark Icon</string>
 </resources>

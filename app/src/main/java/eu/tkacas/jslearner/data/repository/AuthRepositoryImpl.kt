@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.data.repository
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseUser
 import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.data.model.UserFirestore
@@ -89,11 +88,11 @@ class AuthRepositoryImpl(
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         val userStats = UserFirebase(
             experienceLevel = experienceLevel,
-            experienceScore = experienceScore,
+            experienceScore = experienceScore?.toLong(),
             currentCourseId = currentCourseId,
             currentLessonId = currentLessonId,
-            highScoreDaysInARow = highScoreDaysInARow,
-            highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow
+            highScoreDaysInARow = highScoreDaysInARow?.toLong(),
+            highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow?.toLong()
         )
         firebaseDataSource.setUserStats(uid, userStats)
     }
@@ -114,11 +113,11 @@ class AuthRepositoryImpl(
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         val userStats = UserFirebase(
             experienceLevel = experienceLevel,
-            experienceScore = experienceScore,
+            experienceScore = experienceScore?.toLong(),
             currentCourseId = currentCourseId,
             currentLessonId = currentLessonId,
-            highScoreDaysInARow = highScoreDaysInARow,
-            highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow
+            highScoreDaysInARow = highScoreDaysInARow?.toLong(),
+            highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow?.toLong()
         )
         firebaseDataSource.updateUserStats(uid, userStats)
     }
@@ -134,5 +133,10 @@ class AuthRepositoryImpl(
 
     override fun logout() {
         firebaseDataSource.logout()
+    }
+
+    override suspend fun getUserCompletedLessons(): List<String> {
+        val uid = currentUser?.uid ?: throw Exception("User not logged in.")
+        return firestoreDataSource.getUserCompletedLessons(uid)
     }
 }

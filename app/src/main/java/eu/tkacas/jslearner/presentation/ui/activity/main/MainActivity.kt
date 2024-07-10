@@ -11,10 +11,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigation
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
+import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartQuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.viewModelFactory
 
 class MainActivity : ComponentActivity() {
@@ -30,7 +32,7 @@ class MainActivity : ComponentActivity() {
                         factory = viewModelFactory {
                             RoadMapViewModel(
                                 getRoadMapUseCase = JSLearner.appModule.getRoadMapUseCase,
-                                authRepository = JSLearner.appModule.authRepository
+                                getUserStatsUseCase = JSLearner.appModule.getUserStatsUseCase
                             )
                         }
                     )
@@ -56,11 +58,22 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
+                    val accountViewModel = viewModel<AccountViewModel>(
+                        factory = viewModelFactory {
+                            AccountViewModel(
+                                getUserProfileUseCase = JSLearner.appModule.getUserProfileUseCase,
+                                getUserStatsUseCase = JSLearner.appModule.getUserStatsUseCase
+                            )
+                        }
+                    )
+                    val startQuizViewModel = viewModel<StartQuizViewModel>()
                     MainNavigation(
                         roadMapViewModel = roadMapViewModel,
                         startCourseViewModel = startCourseViewModel,
                         startLessonViewModel = startLessonViewModel,
-                        lessonViewModel = lessonViewModel
+                        lessonViewModel = lessonViewModel,
+                        startQuizViewModel = startQuizViewModel,
+                        accountViewModel = accountViewModel
                     )
                 }
             }

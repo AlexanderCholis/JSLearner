@@ -5,25 +5,30 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import eu.tkacas.jslearner.data.model.Lesson
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AboutScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.CoursesPathScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LeaderboardScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
-import eu.tkacas.jslearner.presentation.ui.activity.main.screens.SettingsScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
+import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartQuizViewModel
 
 @Composable
 internal fun MainNavigation(
     roadMapViewModel: RoadMapViewModel,
     startCourseViewModel: StartCourseViewModel,
     startLessonViewModel: StartLessonViewModel,
-    lessonViewModel: LessonViewModel
+    lessonViewModel: LessonViewModel,
+    startQuizViewModel: StartQuizViewModel,
+    accountViewModel: AccountViewModel
 ) {
     val navController = rememberNavController()
 
@@ -63,11 +68,12 @@ internal fun MainNavigation(
         }
         composable("account") {
             AccountScreen(
-                navController = navController
+                navController = navController,
+                viewModel = accountViewModel
             )
         }
-        composable("settings") {
-            SettingsScreen(
+        composable("about") {
+            AboutScreen(
                 navController = navController
             )
         }
@@ -76,7 +82,17 @@ internal fun MainNavigation(
                 navController = navController
             )
         }
-        composable("coursesPath") { CoursesPathScreen(navController = navController) }
+        composable("coursesPath") {
+            CoursesPathScreen(
+                navController = navController
+            )
+        }
+        composable("startQuiz") {
+            StartQuizScreen(
+                navController = navController,
+                viewModel = startQuizViewModel
+            )
+        }
     }
 
 }

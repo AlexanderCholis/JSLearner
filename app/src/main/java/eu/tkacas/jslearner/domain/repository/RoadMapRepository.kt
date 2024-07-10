@@ -11,5 +11,5 @@ interface RoadMapRepository {
     suspend fun getLessons(courseId: String): List<Lesson>
     suspend fun getLesson(courseId: String, lessonId: String): Lesson
     suspend fun getQuestions(courseId: String, lessonId: String) : List<Question>
-    suspend fun getUserCompletedCourses(userId: String): Map<String, List<String>>
+
 }

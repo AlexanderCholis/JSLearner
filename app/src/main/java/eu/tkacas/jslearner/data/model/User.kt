@@ -26,12 +26,12 @@ data class UserFirestore(
 }
 
 data class UserFirebase(
-    @get:PropertyName("experience_level") @set:PropertyName("experience_level") var experienceLevel: ExperienceLevel? = null,
-    @get:PropertyName("experience_score") @set:PropertyName("experience_score") var experienceScore: Int? = null,
-    @get:PropertyName("current_course_id") @set:PropertyName("current_course_id") var currentCourseId: String? = null,
-    @get:PropertyName("current_lesson_id") @set:PropertyName("current_lesson_id") var currentLessonId: String? = null,
-    @get:PropertyName("high_score_days_in_a_row") @set:PropertyName("high_score_days_in_a_row") var highScoreDaysInARow: Int? = null,
-    @get:PropertyName("high_score_correct_answers_in_a_row") @set:PropertyName("high_score_correct_answers_in_a_row") var highScoreCorrectAnswersInARow: Int? = null,
+    @PropertyName("current_lesson_id") var currentLessonId: String? = null,
+    @PropertyName("current_course_id") var currentCourseId: String? = null,
+    @PropertyName("high_score_correct_answers_in_a_row") var highScoreCorrectAnswersInARow: Long? = null,
+    @PropertyName("high_score_days_in_a_row") var highScoreDaysInARow: Long? = null,
+    @PropertyName("experience_level") var experienceLevel: ExperienceLevel? = null,
+    @PropertyName("experience_score") var experienceScore: Long? = null
 ) {
     fun toMap(): Map<String, Any?> {
         return mapOf(

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.Icon
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
+import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
 @Composable
 fun ExperienceLevelCard(
@@ -252,9 +254,46 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
             modifier = Modifier
                 .align(Alignment.TopStart),
         ) {
-            Text(text = "Correct Answers:")
+            Text(text = "Correct Answers in a row:")
             Text(text = answers.toString(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
+    }
+}
 
+@Composable
+fun LeaderboardCard(
+    userImage: Int,
+    userName: String,
+    userScore: Int
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(componentShapes.extraLarge),
+        colors = CardDefaults.cardColors(containerColor = SkyBlue),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(16.dp)
+
+        ) {
+            Image(
+                painter = painterResource(id = userImage),
+                contentDescription = stringResource(id = R.string.leaderboard_image),
+                modifier = Modifier.size(48.dp)
+            )
+            Text(
+                text = userName,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp)
+            )
+            Text(
+                text = userScore.toString(),
+                modifier = Modifier.padding(start = 8.dp)
+            )
+        }
     }
 }

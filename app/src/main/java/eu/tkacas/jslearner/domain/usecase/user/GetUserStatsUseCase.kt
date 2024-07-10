@@ -8,11 +8,11 @@ class GetUserStatsUseCase(private val authRepository: AuthRepository) {
         val userFirebase = authRepository.getUserStats()
         return User(
             experienceLevel = userFirebase.experienceLevel,
-            experienceScore = userFirebase.experienceScore,
+            experienceScore = userFirebase.experienceScore?.toInt(),
             currentCourseId = userFirebase.currentCourseId,
             currentLessonId = userFirebase.currentLessonId,
-            highScoreDaysInARow = userFirebase.highScoreDaysInARow,
-            highScoreCorrectAnswersInARow = userFirebase.highScoreCorrectAnswersInARow
+            highScoreDaysInARow = userFirebase.highScoreDaysInARow?.toInt(),
+            highScoreCorrectAnswersInARow = userFirebase.highScoreCorrectAnswersInARow?.toInt()
         )
     }
 }

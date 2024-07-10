@@ -19,6 +19,16 @@ fun RoadMapNodeStatus.getColor(): Color {
     }
 }
 
+fun RoadMapNodeStatus.getTextColor(): Color {
+    return when (this) {
+        RoadMapNodeStatus.COMPLETED -> Color(0xFF000000) // White
+        RoadMapNodeStatus.UNLOCKED -> Color(0xFF000000) // Black
+        RoadMapNodeStatus.IN_PROGRESS -> Color(0xFF000000) // Black
+        RoadMapNodeStatus.LOCKED -> Color(0xFF000000) // White
+    }
+}
+
+
 fun RoadMapNodeStatus.getIcon(): Int {
     return when (this) {
         RoadMapNodeStatus.COMPLETED -> R.drawable.complete
