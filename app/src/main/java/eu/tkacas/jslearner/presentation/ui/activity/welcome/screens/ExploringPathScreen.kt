@@ -59,7 +59,7 @@ fun ExploringPathScreen(
     }
 
     Scaffold(
-        modifier= Modifier
+        modifier = Modifier
             .fillMaxSize(),
         topBar = {
             BackAppTopBar(
@@ -78,10 +78,11 @@ fun ExploringPathScreen(
                     .background(Color.White)
                     .padding(top = 30.dp, bottom = 28.dp)
             ) {
-                when(exploringPathState) {
+                when (exploringPathState) {
                     is Result.Loading -> {
                         ProgressIndicatorComponent()
                     }
+
                     is Result.Success -> {
                         val courseList = (exploringPathState as Result.Success).result
                         Column(
@@ -111,18 +112,25 @@ fun ExploringPathScreen(
                                     valueId = R.string.looks_good,
                                     onButtonClicked = {
                                         viewModel.updateUserData(selectedReason, experienceLevel)
-                                        val intent = Intent(context, MainActivity::class.java).apply{
-                                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                        }
+                                        val intent =
+                                            Intent(context, MainActivity::class.java).apply {
+                                                flags =
+                                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            }
                                         context.startActivity(intent)
                                     }
                                 )
                             }
                         }
                     }
+
                     is Result.Error -> {
-                        Text("Error: ${(exploringPathState as Result.Error)}", color = MaterialTheme.colorScheme.error)
+                        Text(
+                            "Error: ${(exploringPathState as Result.Error)}",
+                            color = MaterialTheme.colorScheme.error
+                        )
                     }
+
                     null -> {}
                 }
             }

@@ -41,10 +41,16 @@ internal fun WelcomeNavigation(
     learningReasonViewModel: LearningReasonViewModel,
     experienceTextViewModel: ExperienceTextViewModel,
     getProfileCompletionUseCase: GetProfileCompletionUseCase
-){
+) {
     val navController = rememberNavController()
     val sharedViewModel = WelcomeSharedViewModel()
-    val startDestination = runBlocking { determineStartDestination(context, authRepository, getProfileCompletionUseCase) }
+    val startDestination = runBlocking {
+        determineStartDestination(
+            context,
+            authRepository,
+            getProfileCompletionUseCase
+        )
+    }
 
     NavHost(
         navController = navController,
@@ -108,7 +114,11 @@ internal fun WelcomeNavigation(
     }
 }
 
-suspend fun determineStartDestination(context: Context, authRepository: AuthRepository, getProfileCompletionUseCase: GetProfileCompletionUseCase): String {
+suspend fun determineStartDestination(
+    context: Context,
+    authRepository: AuthRepository,
+    getProfileCompletionUseCase: GetProfileCompletionUseCase
+): String {
     // If the user is not logged in, navigate to the welcome screen
     authRepository.currentUser ?: return "welcome"
 
@@ -121,7 +131,10 @@ suspend fun determineStartDestination(context: Context, authRepository: AuthRepo
     }
 }
 
-suspend fun determineActivity(context: Context, getProfileCompletionUseCase: GetProfileCompletionUseCase): Boolean {
+suspend fun determineActivity(
+    context: Context,
+    getProfileCompletionUseCase: GetProfileCompletionUseCase
+): Boolean {
     return try {
         val isProfileComplete = getProfileCompletionUseCase.execute()
         if (isProfileComplete) {

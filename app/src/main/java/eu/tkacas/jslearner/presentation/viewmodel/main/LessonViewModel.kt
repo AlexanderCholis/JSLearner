@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class LessonViewModel(
     private val getLessonUseCase: GetLessonUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<Result<Lesson>>(Result.Loading)
     val uiState: StateFlow<Result<Lesson>> = _uiState.asStateFlow()

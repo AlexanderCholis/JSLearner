@@ -47,8 +47,8 @@ import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
 @Composable
 fun ExperienceLevelCard(
-    image : Int,
-    text : Int,
+    image: Int,
+    text: Int,
     onClick: () -> Unit
 ) {
     Card(
@@ -92,8 +92,8 @@ fun ExperienceLevelCard(
 
 @Composable
 fun LearningReasonCard(
-    image : Int,
-    text : Int,
+    image: Int,
+    text: Int,
     isSelected: Boolean,
     onSelected: () -> Unit
 ) {
@@ -106,7 +106,7 @@ fun LearningReasonCard(
         colors = cardColors(containerColor = cardColor),
         elevation = cardElevation(defaultElevation = 4.dp)
     ) {
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
@@ -128,12 +128,10 @@ fun LearningReasonCard(
 }
 
 
-
-
 @Composable
 fun PathModuleCard(
-    moduleTitleText : String,
-    moduleDescriptionText : String
+    moduleTitleText: String,
+    moduleDescriptionText: String
 ) {
     val isExpanded = remember { mutableStateOf(false) }
     Card(
@@ -162,8 +160,12 @@ fun PathModuleCard(
                     onClick = { isExpanded.value = !isExpanded.value }
                 ) {
                     Image(
-                        painter = if(isExpanded.value) painterResource(id = R.drawable.arrow_up) else painterResource(id = R.drawable.arrow_down),
-                        contentDescription = if(isExpanded.value) stringResource(id = R.string.arrow_up) else stringResource(id = R.string.arrow_down)
+                        painter = if (isExpanded.value) painterResource(id = R.drawable.arrow_up) else painterResource(
+                            id = R.drawable.arrow_down
+                        ),
+                        contentDescription = if (isExpanded.value) stringResource(id = R.string.arrow_up) else stringResource(
+                            id = R.string.arrow_down
+                        )
                     )
                 }
             }
@@ -274,7 +276,7 @@ fun LeaderboardCard(
             .clip(componentShapes.extraLarge),
         colors = CardDefaults.cardColors(containerColor = SkyBlue),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ){
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier

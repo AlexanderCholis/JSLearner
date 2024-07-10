@@ -42,12 +42,17 @@ fun WinnersPodiumComponentWithLeaders(
     podiumUserList: List<PodiumUser>
 ) {
     val sortedPodiumUsers = podiumUserList.sortedBy { it.position }
-    val (image1, userScore1) = sortedPodiumUsers.getOrNull(0)?.let { it.image to it.score } ?: (0 to 0)
-    val (image2, userScore2) = sortedPodiumUsers.getOrNull(1)?.let { it.image to it.score } ?: (0 to 0)
-    val (image3, userScore3) = sortedPodiumUsers.getOrNull(2)?.let { it.image to it.score } ?: (0 to 0)
+    val (image1, userScore1) = sortedPodiumUsers.getOrNull(0)?.let { it.image to it.score }
+        ?: (0 to 0)
+    val (image2, userScore2) = sortedPodiumUsers.getOrNull(1)?.let { it.image to it.score }
+        ?: (0 to 0)
+    val (image3, userScore3) = sortedPodiumUsers.getOrNull(2)?.let { it.image to it.score }
+        ?: (0 to 0)
 
-    Box(modifier = Modifier
-        .fillMaxWidth())
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    )
     {
         // First place podium
         Box(

@@ -90,11 +90,23 @@ fun LeaderboardScreen(
                     WinnersPodiumComponentWithLeaders(podiumUserList)
                     Spacer(modifier = Modifier.height(30.dp))
                     // Other users on the leaderboard
-                    LeaderboardCard(userImage = R.drawable.application, userName = "User 1", userScore = 900)
+                    LeaderboardCard(
+                        userImage = R.drawable.application,
+                        userName = "User 1",
+                        userScore = 900
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
-                    LeaderboardCard(userImage = R.drawable.application, userName = "User 2", userScore = 860)
+                    LeaderboardCard(
+                        userImage = R.drawable.application,
+                        userName = "User 2",
+                        userScore = 860
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
-                    LeaderboardCard(userImage = R.drawable.application, userName = "User 3", userScore = 840)
+                    LeaderboardCard(
+                        userImage = R.drawable.application,
+                        userName = "User 3",
+                        userScore = 840
+                    )
                 }
             }
         }

@@ -50,6 +50,7 @@ fun StartCourseScreen(
         is Result.Loading -> {
             ProgressIndicatorComponent()
         }
+
         is Result.Success -> {
             val result = (uiState as Result.Success<CourseWithLessons>).result
             Scaffold(
@@ -126,6 +127,7 @@ fun StartCourseScreen(
                 }
             }
         }
+
         is Result.Error -> {
             Scaffold(
                 modifier = Modifier
@@ -134,7 +136,10 @@ fun StartCourseScreen(
                     BackAppTopBar(
                         color = MaterialTheme.colorScheme.primaryContainer,
                         onBackClick = {
-                            navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
+                            navController.popBackStack(
+                                navController.graph.startDestinationId,
+                                inclusive = false
+                            )
                             navController.navigate("roadmap")
                         }
                     )

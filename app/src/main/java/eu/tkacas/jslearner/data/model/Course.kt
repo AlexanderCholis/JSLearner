@@ -1,7 +1,6 @@
 package eu.tkacas.jslearner.data.model
 
 import com.google.firebase.firestore.PropertyName
-import eu.tkacas.jslearner.data.model.CourseLevel
 
 data class Course(
     val id: String = "",

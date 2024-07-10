@@ -1,7 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -26,7 +25,8 @@ fun CoursesPathScreen(
     navController: NavController,
     sharedViewModel: MainSharedViewModel
 ) {
-    val courseStatuses = sharedViewModel.coursesState // This function should load the statuses from SharedPreferences
+    val courseStatuses =
+        sharedViewModel.coursesState // This function should load the statuses from SharedPreferences
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -56,8 +56,10 @@ fun CoursesPathScreen(
                     items(it.size) { index ->
                         Spacer(modifier = Modifier.height(8.dp))
                         CoursesPathCard(
-                            courseTitleText = courseStatuses.value?.get(index)?.title ?: error("Course title not found"),
-                            courseStatus = courseStatuses.value?.get(index)?.status ?: error("Course status not found"),
+                            courseTitleText = courseStatuses.value?.get(index)?.title
+                                ?: error("Course title not found"),
+                            courseStatus = courseStatuses.value?.get(index)?.status
+                                ?: error("Course status not found"),
                         )
                     }
                 }

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AboutScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.CoursesPathScreen

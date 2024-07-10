@@ -91,7 +91,7 @@ fun NavigationDrawer(
         }
 
         Column(
-            Modifier.fillMaxSize() .padding(12.dp),
+            Modifier.fillMaxSize().padding(12.dp),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

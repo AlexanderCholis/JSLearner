@@ -41,7 +41,7 @@ fun WelcomeScreen(
                 .fillMaxSize()
                 .padding(top = 28.dp, start = 32.dp, end = 32.dp, bottom = 28.dp),
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             item {
                 Image(
                     painter = painterResource(id = R.drawable.jslearner_transparent),

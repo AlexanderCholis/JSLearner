@@ -28,7 +28,14 @@ import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 
 @Composable
-fun CircularLeaderComponent(image: Int, borderColor: Color, hasCrown: Boolean = false, userScore: Int, leaderType: Int, modifier: Modifier = Modifier) {
+fun CircularLeaderComponent(
+    image: Int,
+    borderColor: Color,
+    hasCrown: Boolean = false,
+    userScore: Int,
+    leaderType: Int,
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
             .size(if (hasCrown) 126.dp else 100.dp)

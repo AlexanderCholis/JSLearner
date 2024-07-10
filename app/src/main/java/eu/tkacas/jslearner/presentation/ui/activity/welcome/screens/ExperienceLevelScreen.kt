@@ -38,7 +38,7 @@ fun ExperienceLevelScreen(
             .background(Color.White)
     ) {
         Column(
-            modifier= Modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(top = 60.dp, start = 32.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally

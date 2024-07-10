@@ -48,7 +48,7 @@ fun PrivacyPolicyScreen(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    item{
+                    item {
                         Text(
                             text = stringResource(id = R.string.privacy_policy_intro)
                         )

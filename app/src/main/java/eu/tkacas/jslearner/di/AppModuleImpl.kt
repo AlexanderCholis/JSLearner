@@ -6,10 +6,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.data.repository.AuthRepositoryImpl
 import eu.tkacas.jslearner.data.repository.ExploringPathRepositoryImpl
-import eu.tkacas.jslearner.domain.model.NavigationDrawer
 import eu.tkacas.jslearner.data.repository.RoadMapRepositoryImpl
 import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
 import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
+import eu.tkacas.jslearner.domain.model.NavigationDrawer
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
@@ -18,15 +18,15 @@ import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
-import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
-import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
-import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
-import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
+import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LogoutUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.user.UpdateUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
@@ -48,6 +48,7 @@ class AppModuleImpl(
     override fun getFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
+
     override fun getFirebaseDatabase(): FirebaseDatabase {
         return FirebaseDatabase.getInstance()
     }

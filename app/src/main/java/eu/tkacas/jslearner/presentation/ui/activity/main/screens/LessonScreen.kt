@@ -18,7 +18,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import eu.tkacas.jslearner.domain.Result
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.data.model.Lesson
+import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
@@ -54,6 +54,7 @@ fun LessonScreen(
         is Result.Loading -> {
             ProgressIndicatorComponent()
         }
+
         is Result.Success -> {
             val lesson = (uiState as Result.Success<Lesson>).result
             var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startLesson") 0 else lesson.theoriesList.size - 1) }
@@ -63,7 +64,7 @@ fun LessonScreen(
             )
 
             Scaffold(
-                modifier= Modifier
+                modifier = Modifier
                     .fillMaxSize(),
                 topBar = {
                     BackAppTopBar(
@@ -110,9 +111,10 @@ fun LessonScreen(
                 }
             }
         }
+
         is Result.Error -> {
             Scaffold(
-                modifier= Modifier
+                modifier = Modifier
                     .fillMaxSize(),
                 topBar = {
                     BackAppTopBar(

@@ -1,10 +1,13 @@
 package eu.tkacas.jslearner.domain.usecase.main.roadmap
 
-import eu.tkacas.jslearner.domain.model.roadmap.*
-import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.data.model.CourseLevel
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeCategory
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodePosition
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.domain.repository.AuthRepository
+import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 
 class GetRoadMapUseCase(
     private val roadMapRepository: RoadMapRepository,
@@ -26,7 +29,9 @@ class GetRoadMapUseCase(
 
             val previousCoursesCompleted = if (index == 0) true else {
                 courses.take(index).all { previousCourse ->
-                    previousCourse.level == course.level && roadMapRepository.getLessons(previousCourse.id).all { lesson ->
+                    previousCourse.level == course.level && roadMapRepository.getLessons(
+                        previousCourse.id
+                    ).all { lesson ->
                         completedLessons.contains(lesson.id)
                     }
                 }
@@ -35,16 +40,23 @@ class GetRoadMapUseCase(
             val courseStatus = when {
                 isCourseCompleted -> RoadMapNodeStatus.COMPLETED
                 isCourseInProgress -> RoadMapNodeStatus.IN_PROGRESS
-                previousCoursesCompleted || isExperienceLevelMatch(course.level, userExperienceLevel) -> RoadMapNodeStatus.UNLOCKED
+                previousCoursesCompleted || isExperienceLevelMatch(
+                    course.level,
+                    userExperienceLevel
+                ) -> RoadMapNodeStatus.UNLOCKED
+
                 else -> RoadMapNodeStatus.LOCKED
             }
 
-            roadMapNodes.add(RoadMapNodeState(
-                id = course.id,
-                status = courseStatus,
-                position = RoadMapNodePosition.MIDDLE,
-                category = RoadMapNodeCategory.COURSE,
-                title = course.title))
+            roadMapNodes.add(
+                RoadMapNodeState(
+                    id = course.id,
+                    status = courseStatus,
+                    position = RoadMapNodePosition.MIDDLE,
+                    category = RoadMapNodeCategory.COURSE,
+                    title = course.title
+                )
+            )
 
             for ((lessonIndex, lesson) in lessons.withIndex()) {
                 val isLessonCompleted = completedLessons.contains(lesson.id)
@@ -81,7 +93,10 @@ class GetRoadMapUseCase(
         return roadMapNodes
     }
 
-    private fun isExperienceLevelMatch(courseLevel: CourseLevel, experienceLevel: ExperienceLevel?): Boolean {
+    private fun isExperienceLevelMatch(
+        courseLevel: CourseLevel,
+        experienceLevel: ExperienceLevel?
+    ): Boolean {
         return when (courseLevel) {
             CourseLevel.BEGINNER -> true
             CourseLevel.INTERMEDIATE -> experienceLevel == ExperienceLevel.SOME_EXPERIENCE || experienceLevel == ExperienceLevel.A_LOT_OF_EXPERIENCE

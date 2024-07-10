@@ -8,7 +8,7 @@ import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 
 class RoadMapRepositoryImpl(private val dataSource: FirestoreDataSource) : RoadMapRepository {
 
-    override suspend fun getCourses() : List<Course> {
+    override suspend fun getCourses(): List<Course> {
         return dataSource.getCourses()
     }
 
@@ -24,7 +24,7 @@ class RoadMapRepositoryImpl(private val dataSource: FirestoreDataSource) : RoadM
         return dataSource.getLesson(courseId, lessonId)
     }
 
-    override suspend fun getQuestions(courseId: String, lessonId: String) : List<Question> {
+    override suspend fun getQuestions(courseId: String, lessonId: String): List<Question> {
         return dataSource.getQuestions(courseId, lessonId)
     }
 }

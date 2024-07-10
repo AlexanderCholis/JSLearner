@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 
-class MainSharedViewModel: ViewModel() {
+class MainSharedViewModel : ViewModel() {
     private val _selectedCourseId = MutableLiveData<String>()
     val selectedCourseId = _selectedCourseId
 

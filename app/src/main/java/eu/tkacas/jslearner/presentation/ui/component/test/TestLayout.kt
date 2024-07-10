@@ -25,7 +25,7 @@ fun TestLayout(
     onNextClick: () -> Unit,
     onHelpClick: () -> Unit
 ) {
-    Box{
+    Box {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,

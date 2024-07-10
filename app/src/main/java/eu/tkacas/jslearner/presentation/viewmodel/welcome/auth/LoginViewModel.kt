@@ -22,7 +22,7 @@ class LoginViewModel(
     private val getProfileCompletionUseCase: GetProfileCompletionUseCase,
     private val validateEmail: ValidateEmail,
     private val validatePassword: ValidatePassword
-): ViewModel()  {
+) : ViewModel() {
     private var _state by mutableStateOf(LoginFormState())
     val state: LoginFormState get() = _state
 
@@ -30,13 +30,15 @@ class LoginViewModel(
     val loginFlow: StateFlow<Result<FirebaseUser>?> = _loginFlow
 
     fun onEvent(event: LoginFormEvent) {
-        when(event) {
+        when (event) {
             is LoginFormEvent.EmailChanged -> {
                 _state = _state.copy(email = event.email)
             }
+
             is LoginFormEvent.PasswordChanged -> {
                 _state = _state.copy(password = event.password)
             }
+
             is LoginFormEvent.Submit -> {
                 submitData()
             }
@@ -52,7 +54,7 @@ class LoginViewModel(
             passwordResult
         ).any { it.errorMessage != null }
 
-        if(hasError) {
+        if (hasError) {
             _state = _state.copy(
                 emailError = emailResult.errorMessage,
                 passwordError = passwordResult.errorMessage

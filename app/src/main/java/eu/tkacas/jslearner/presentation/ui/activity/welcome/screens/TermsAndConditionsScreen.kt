@@ -47,7 +47,7 @@ fun TermsAndConditionsScreen(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    item{
+                    item {
                         Text(
                             text = stringResource(id = R.string.terms_of_use_intro)
                         )

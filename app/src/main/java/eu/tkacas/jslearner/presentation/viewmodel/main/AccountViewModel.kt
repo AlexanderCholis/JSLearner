@@ -48,8 +48,10 @@ class AccountViewModel(
             experienceScore = userProfile?.experienceScore ?: userStats?.experienceScore,
             currentCourseId = userProfile?.currentCourseId ?: userStats?.currentCourseId,
             currentLessonId = userProfile?.currentLessonId ?: userStats?.currentLessonId,
-            highScoreDaysInARow = userProfile?.highScoreDaysInARow ?: userStats?.highScoreDaysInARow,
-            highScoreCorrectAnswersInARow = userProfile?.highScoreCorrectAnswersInARow ?: userStats?.highScoreCorrectAnswersInARow
+            highScoreDaysInARow = userProfile?.highScoreDaysInARow
+                ?: userStats?.highScoreDaysInARow,
+            highScoreCorrectAnswersInARow = userProfile?.highScoreCorrectAnswersInARow
+                ?: userStats?.highScoreCorrectAnswersInARow
         )
     }
 }

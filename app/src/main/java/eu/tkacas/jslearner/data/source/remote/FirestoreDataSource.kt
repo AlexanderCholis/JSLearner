@@ -35,7 +35,8 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
 
     suspend fun getUserCompletedLessons(userId: String): List<String> {
         val documentSnapshot = db.collection("users").document(userId).get().await()
-        val lessonsCompleted = documentSnapshot.get("lessons_completed") as? List<String> ?: emptyList()
+        val lessonsCompleted =
+            documentSnapshot.get("lessons_completed") as? List<String> ?: emptyList()
         return lessonsCompleted
     }
 
@@ -69,7 +70,8 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
     }
 
     suspend fun getCourse(courseId: String): Course {
-        return db.collection("courses").document(courseId).get().await().toObject(Course::class.java)!!
+        return db.collection("courses").document(courseId).get().await()
+            .toObject(Course::class.java)!!
     }
 
     suspend fun getLesson(courseId: String, lessonId: String): Lesson {

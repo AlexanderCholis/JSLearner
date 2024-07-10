@@ -140,10 +140,34 @@ fun RoadMapNode(
 @Composable
 fun RoadMapNodePreview() {
     val nodes = listOf(
-        RoadMapNodeState("1", RoadMapNodeStatus.COMPLETED, RoadMapNodePosition.FIRST, RoadMapNodeCategory.COURSE, "First Node"),
-        RoadMapNodeState("2", RoadMapNodeStatus.IN_PROGRESS, RoadMapNodePosition.MIDDLE, RoadMapNodeCategory.LESSON, "Middle Node"),
-        RoadMapNodeState("3", RoadMapNodeStatus.UNLOCKED, RoadMapNodePosition.MIDDLE, RoadMapNodeCategory.COURSE, "Middle Node"),
-        RoadMapNodeState("4", RoadMapNodeStatus.LOCKED, RoadMapNodePosition.LAST, RoadMapNodeCategory.COURSE, "Last Node")
+        RoadMapNodeState(
+            "1",
+            RoadMapNodeStatus.COMPLETED,
+            RoadMapNodePosition.FIRST,
+            RoadMapNodeCategory.COURSE,
+            "First Node"
+        ),
+        RoadMapNodeState(
+            "2",
+            RoadMapNodeStatus.IN_PROGRESS,
+            RoadMapNodePosition.MIDDLE,
+            RoadMapNodeCategory.LESSON,
+            "Middle Node"
+        ),
+        RoadMapNodeState(
+            "3",
+            RoadMapNodeStatus.UNLOCKED,
+            RoadMapNodePosition.MIDDLE,
+            RoadMapNodeCategory.COURSE,
+            "Middle Node"
+        ),
+        RoadMapNodeState(
+            "4",
+            RoadMapNodeStatus.LOCKED,
+            RoadMapNodePosition.LAST,
+            RoadMapNodeCategory.COURSE,
+            "Last Node"
+        )
     )
 
     LazyColumn(
@@ -151,7 +175,8 @@ fun RoadMapNodePreview() {
         modifier = Modifier.fillMaxWidth()
     ) {
         itemsIndexed(nodes) { index, node ->
-            val nextNodeColor = if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
+            val nextNodeColor =
+                if (index < nodes.size - 1) nodes[index + 1].status.getColor() else Color.DarkGray
             val lineParameters = if (node.position != RoadMapNodePosition.LAST) {
                 LineParametersDefaults.linearGradient(
                     startColor = node.status.getColor(),

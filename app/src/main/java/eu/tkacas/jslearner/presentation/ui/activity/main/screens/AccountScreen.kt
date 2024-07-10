@@ -93,19 +93,30 @@ fun AccountScreen(
                     is Result.Success -> {
                         val user = (uiState as Result.Success<User?>).result
                         Column(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
                                 .padding(top = 35.dp, start = 10.dp, end = 10.dp),
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            NameFieldComponent(firstName =  user?.firstName ?: "Unknown", lastName = user?.lastName ?: "User")
+                            NameFieldComponent(
+                                firstName = user?.firstName ?: "Unknown",
+                                lastName = user?.lastName ?: "User"
+                            )
                             Spacer(modifier = Modifier.height(45.dp))
-                            CourseTopCard(points = user?.experienceScore ?: 0, days = user?.highScoreDaysInARow ?: 0, answers = user?.highScoreCorrectAnswersInARow ?: 0)
+                            CourseTopCard(
+                                points = user?.experienceScore ?: 0,
+                                days = user?.highScoreDaysInARow ?: 0,
+                                answers = user?.highScoreCorrectAnswersInARow ?: 0
+                            )
                         }
                     }
 
                     is Result.Error -> {
-                        Text("Error: ${(uiState as Result.Error).exception.message}", color = MaterialTheme.colorScheme.error)
+                        Text(
+                            "Error: ${(uiState as Result.Error).exception.message}",
+                            color = MaterialTheme.colorScheme.error
+                        )
                     }
                 }
             }

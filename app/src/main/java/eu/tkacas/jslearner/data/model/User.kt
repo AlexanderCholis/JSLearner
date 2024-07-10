@@ -3,7 +3,6 @@ package eu.tkacas.jslearner.data.model
 import com.google.firebase.firestore.PropertyName
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
-import kotlin.collections.mapOf
 
 data class UserFirestore(
     @get:PropertyName("first_name") @set:PropertyName("first_name") var firstName: String? = null,
