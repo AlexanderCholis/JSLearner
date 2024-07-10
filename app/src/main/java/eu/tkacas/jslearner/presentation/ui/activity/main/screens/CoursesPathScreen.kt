@@ -7,48 +7,36 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.CoursesPathCard
-import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
-import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
-import eu.tkacas.jslearner.presentation.ui.component.NormalText
-import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
-import kotlinx.coroutines.launch
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 
 @Composable
 fun CoursesPathScreen(
-    navController: NavController
+    navController: NavController,
+    sharedViewModel: MainSharedViewModel
 ) {
+    val courseStatuses = sharedViewModel.coursesState // This function should load the statuses from SharedPreferences
 
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             BackAppTopBar(
                 title = stringResource(id = R.string.courses),
                 color = MaterialTheme.colorScheme.primaryContainer,
-                onBackClick = {
-                    navController.navigateUp()
-                },
-                showScore = true
+                onBackClick = { navController.navigateUp() },
+                showScore = true,
+                score = sharedViewModel.user.value?.experienceScore ?: 0
             )
         },
     ) { innerPadding ->
@@ -59,21 +47,20 @@ fun CoursesPathScreen(
                 .background(Color.White)
                 .padding(innerPadding)
         ) {
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                Spacer(modifier = Modifier.height(8.dp))
-                CoursesPathCard(
-                    moduleTitleText = "Fundamentals",
-                    isEnabled = true
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                CoursesPathCard(
-                    moduleTitleText = "Fundamentals II",
-                    isEnabled = false
-                )
+                courseStatuses.value?.let {
+                    items(it.size) { index ->
+                        Spacer(modifier = Modifier.height(8.dp))
+                        CoursesPathCard(
+                            courseTitleText = courseStatuses.value?.get(index)?.title ?: error("Course title not found"),
+                            courseStatus = courseStatuses.value?.get(index)?.status ?: error("Course status not found"),
+                        )
+                    }
+                }
             }
         }
     }
