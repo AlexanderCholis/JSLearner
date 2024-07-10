@@ -29,7 +29,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
             .collection("lessons").document(lessonId)
             .collection("questions").get().await()
         return result.map { document ->
-            document.toObject(Question::class.java).copy(id = document.id)
+            document.toObject(Question::class.java).copy()
         }
     }
 
