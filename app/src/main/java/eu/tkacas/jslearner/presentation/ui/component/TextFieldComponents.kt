@@ -163,8 +163,14 @@ fun NameFieldComponent(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentWidth(Alignment.CenterHorizontally),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
+
+        UserInitialsCircle(firstName = firstName, lastName = lastName)
+
+        Spacer(modifier = Modifier.width(20.dp))
+
         androidx.compose.material.Text(
             text = firstName,
             style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp),

@@ -78,7 +78,8 @@ internal fun MainNavigation(
         }
         composable("leaderboard") {
             LeaderboardScreen(
-                navController = navController
+                navController = navController,
+                viewModel = accountViewModel
             )
         }
         composable("coursesPath") {

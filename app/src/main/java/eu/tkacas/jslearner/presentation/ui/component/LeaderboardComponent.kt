@@ -1,40 +1,24 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.model.PodiumUser
 import eu.tkacas.jslearner.presentation.ui.theme.Bronze
 import eu.tkacas.jslearner.presentation.ui.theme.Gold
 import eu.tkacas.jslearner.presentation.ui.theme.Silver
-import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
-import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
 
 @Composable
@@ -42,12 +26,12 @@ fun WinnersPodiumComponentWithLeaders(
     podiumUserList: List<PodiumUser>
 ) {
     val sortedPodiumUsers = podiumUserList.sortedBy { it.position }
-    val (image1, userScore1) = sortedPodiumUsers.getOrNull(0)?.let { it.image to it.score }
-        ?: (0 to 0)
-    val (image2, userScore2) = sortedPodiumUsers.getOrNull(1)?.let { it.image to it.score }
-        ?: (0 to 0)
-    val (image3, userScore3) = sortedPodiumUsers.getOrNull(2)?.let { it.image to it.score }
-        ?: (0 to 0)
+    val (firstname1, lastname1, userScore1) = sortedPodiumUsers.getOrNull(0)?.let { Triple(it.firstName, it.lastName, it.score) }
+        ?: Triple("", "", 0)
+    val (firstname2, lastname2, userScore2) = sortedPodiumUsers.getOrNull(1)?.let { Triple(it.firstName, it.lastName, it.score) }
+        ?: Triple("", "", 0)
+    val (firstname3, lastname3, userScore3) = sortedPodiumUsers.getOrNull(2)?.let { Triple(it.firstName, it.lastName, it.score) }
+        ?: Triple("", "", 0)
 
     Box(
         modifier = Modifier
@@ -68,7 +52,8 @@ fun WinnersPodiumComponentWithLeaders(
                         .offset(y = 30.dp)
                 ) {
                     CircularLeaderComponent(
-                        image = image1,
+                        firstName = firstname1,
+                        lastName = lastname1,
                         borderColor = Gold,
                         hasCrown = true,
                         userScore = userScore1,
@@ -121,12 +106,12 @@ fun WinnersPodiumComponentWithLeaders(
                         .offset(x = 15.dp, y = 40.dp)
                 ) {
                     CircularLeaderComponent(
-                        image = image2,
+                        firstName = firstname2,
+                        lastName = lastname2,
                         borderColor = Silver,
                         hasCrown = false,
                         userScore = userScore2,
                         leaderType = 2
-
                     )
                 }
                 Canvas(
@@ -174,12 +159,12 @@ fun WinnersPodiumComponentWithLeaders(
                         .offset(x = 265.dp, y = 50.dp)
                 ) {
                     CircularLeaderComponent(
-                        image = image3,
+                        firstName = firstname3,
+                        lastName = lastname3,
                         borderColor = Bronze,
                         hasCrown = false,
                         userScore = userScore3,
                         leaderType = 3
-
                     )
                 }
                 Canvas(

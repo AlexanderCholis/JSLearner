@@ -78,7 +78,6 @@ fun RoadMapNode(
     Box(
         modifier = Modifier
             .wrapContentSize()
-            .offset(y = 10.dp)
             .drawBehind {
                 val circleRadiusInPx = adjustedCircleParameters.radius.toPx()
 

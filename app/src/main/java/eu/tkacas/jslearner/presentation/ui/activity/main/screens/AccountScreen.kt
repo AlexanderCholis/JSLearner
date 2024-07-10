@@ -3,10 +3,13 @@ package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
@@ -33,6 +36,7 @@ import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NameFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
+import eu.tkacas.jslearner.presentation.ui.component.UserInitialsCircle
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import kotlinx.coroutines.launch
 
@@ -95,15 +99,21 @@ fun AccountScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(top = 35.dp, start = 10.dp, end = 10.dp),
+                                .padding(top = 25.dp, start = 10.dp, end = 10.dp),
                             verticalArrangement = Arrangement.Top,
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            NameFieldComponent(
-                                firstName = user?.firstName ?: "Unknown",
-                                lastName = user?.lastName ?: "User"
-                            )
-                            Spacer(modifier = Modifier.height(45.dp))
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                NameFieldComponent(
+                                    firstName = user?.firstName ?: "Unknown",
+                                    lastName = user?.lastName ?: "User"
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(30.dp))
                             CourseTopCard(
                                 points = user?.experienceScore ?: 0,
                                 days = user?.highScoreDaysInARow ?: 0,

@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.Icon
@@ -42,6 +41,7 @@ import eu.tkacas.jslearner.domain.model.roadmap.getColor
 import eu.tkacas.jslearner.domain.model.roadmap.getIcon
 import eu.tkacas.jslearner.domain.model.roadmap.getTextColor
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
+import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 
@@ -266,27 +266,35 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
 
 @Composable
 fun LeaderboardCard(
-    userImage: Int,
+    firstName: String,
+    lastName: String,
     userName: String,
-    userScore: Int
+    userScore: Int,
+    position: Int
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clip(componentShapes.extraLarge),
-        colors = CardDefaults.cardColors(containerColor = SkyBlue),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        colors = cardColors(containerColor = SkyBlue),
+        elevation = cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(16.dp)
-
         ) {
-            Image(
-                painter = painterResource(id = userImage),
-                contentDescription = stringResource(id = R.string.leaderboard_image),
-                modifier = Modifier.size(48.dp)
+            Text(
+                text = "$position.",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            UserInitialsCircle(
+                firstName = firstName,
+                lastName = lastName,
+                backgroundColor = LightBeige,
+                textColor = PrussianBlue,
+                size = 35.dp,
+                fontSize = 15.sp
             )
             Text(
                 text = userName,

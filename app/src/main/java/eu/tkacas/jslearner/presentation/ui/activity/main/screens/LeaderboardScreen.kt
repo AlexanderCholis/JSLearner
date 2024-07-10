@@ -13,6 +13,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,25 +24,31 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.PodiumUser
+import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.presentation.ui.component.LeaderboardCard
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import eu.tkacas.jslearner.presentation.ui.component.WinnersPodiumComponentWithLeaders
+import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun LeaderboardScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: AccountViewModel // TODO: Change viewModel to get the list of users and change also from MainNavigation.kt
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val uiState by viewModel.uiState.collectAsState()
+    val user = (uiState as Result.Success<User?>).result
 
     // TODO: Use viewModel to get the list of users
     val podiumUserList = listOf(
-        PodiumUser(R.drawable.application, 1000, 1),
-        PodiumUser(R.drawable.application, 980, 2),
-        PodiumUser(R.drawable.application, 920, 3)
+        PodiumUser(user?.firstName ?: "Unknown", user?.lastName ?: "User", 1120, 1),
+        PodiumUser(user?.firstName ?: "Unknown", user?.lastName ?: "User", 1100, 2),
+        PodiumUser(user?.firstName ?: "Unknown", user?.lastName ?: "User", 1080, 3),
     )
 
     ModalNavigationDrawer(
@@ -91,21 +99,27 @@ fun LeaderboardScreen(
                     Spacer(modifier = Modifier.height(30.dp))
                     // Other users on the leaderboard
                     LeaderboardCard(
-                        userImage = R.drawable.application,
-                        userName = "User 1",
-                        userScore = 900
+                        firstName = user?.firstName ?: "Unknown",
+                        lastName = user?.lastName ?: "User",
+                        userName = "${user?.firstName ?: "Unknown"} ${user?.lastName ?: "User"}",
+                        userScore = 1020,
+                        position = 4
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     LeaderboardCard(
-                        userImage = R.drawable.application,
-                        userName = "User 2",
-                        userScore = 860
+                        firstName = user?.firstName ?: "Unknown",
+                        lastName = user?.lastName ?: "User",
+                        userName = "${user?.firstName ?: "Unknown"} ${user?.lastName ?: "User"}",
+                        userScore = 980,
+                        position = 5
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     LeaderboardCard(
-                        userImage = R.drawable.application,
-                        userName = "User 3",
-                        userScore = 840
+                        firstName = user?.firstName ?: "Unknown",
+                        lastName = user?.lastName ?: "User",
+                        userName = "${user?.firstName ?: "Unknown"} ${user?.lastName ?: "User"}",
+                        userScore = 920,
+                        position = 6
                     )
                 }
             }
