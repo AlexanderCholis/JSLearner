@@ -36,6 +36,7 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
+import eu.tkacas.jslearner.presentation.ui.component.HyperLinkText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
@@ -98,23 +99,23 @@ fun StartLessonScreen(
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            /*subsections.forEach {
-                                BulletText(value = it)
-                            }*/ //TODO: add Lessons
                             Spacer(modifier = Modifier.height(100.dp))
-
+                            Image(
+                                painter = painterResource(id = R.drawable.application),
+                                contentDescription = stringResource(id = R.string.simple_image),
+                                modifier = Modifier
+                                    .size(240.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            )
+                            Spacer(modifier = Modifier.height(24.dp))
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 horizontalArrangement = Arrangement.Center
                             ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.application),
-                                    contentDescription = stringResource(id = R.string.simple_image),
-                                    modifier = Modifier.size(240.dp)
-                                )
+                                HyperLinkText(url = lesson.url)
                             }
-
+                            Spacer(modifier = Modifier.height(16.dp))
                             Column(
                                 modifier = Modifier.fillMaxSize(),
                                 verticalArrangement = Arrangement.Bottom,
