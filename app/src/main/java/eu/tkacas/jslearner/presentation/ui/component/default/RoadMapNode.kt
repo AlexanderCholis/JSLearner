@@ -152,7 +152,6 @@ fun RoadMapNodePreview() {
             RoadMapNode(
                 nodeState = node,
                 circleParameters = CircleParametersDefaults.circleParameters(
-                    category = node.category,
                     backgroundColor = node.status.getColor(),
                     stroke = StrokeParameters(color = node.status.getColor(), width = 2.dp),
                     icon = node.status.getIcon()
