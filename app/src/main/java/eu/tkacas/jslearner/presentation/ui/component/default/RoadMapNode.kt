@@ -202,7 +202,7 @@ fun MessageBubble(
     Card(
         modifier = modifier
             .width(300.dp)
-            .height(30.dp)
+            .wrapContentSize()
             .clickable(onClick = onClick)
             .border(width = borderWidth, color = borderColor, shape = MaterialTheme.shapes.medium),
         colors = CardDefaults.cardColors(containerColor = containerColor)
