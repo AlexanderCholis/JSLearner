@@ -10,7 +10,7 @@ import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
-import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuestionsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
@@ -63,7 +63,7 @@ interface AppModule {
     val getRoadMapUseCase: GetRoadMapUseCase
     val getCourseUseCase: GetCourseUseCase
     val getLessonUseCase: GetLessonUseCase
-    val getQuizUseCase: GetQuizUseCase
+    val getQuestionsUseCase: GetQuestionsUseCase
     val getLessonsUseCase: GetLessonsUseCase
 
     // For the ExploringPathScreen

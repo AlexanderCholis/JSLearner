@@ -17,7 +17,7 @@ import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
-import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuestionsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
@@ -124,8 +124,8 @@ class AppModuleImpl(
     override val getLessonUseCase: GetLessonUseCase by lazy {
         GetLessonUseCase(roadMapRepository)
     }
-    override val getQuizUseCase: GetQuizUseCase by lazy {
-        GetQuizUseCase(roadMapRepository)
+    override val getQuestionsUseCase: GetQuestionsUseCase by lazy {
+        GetQuestionsUseCase(roadMapRepository)
     }
     override val getLessonsUseCase: GetLessonsUseCase by lazy {
         GetLessonsUseCase(roadMapRepository)
