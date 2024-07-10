@@ -25,6 +25,7 @@ import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewMod
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExploringPathViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.LearningReasonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.WelcomeSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 import kotlinx.coroutines.runBlocking
@@ -42,34 +43,67 @@ internal fun WelcomeNavigation(
     getProfileCompletionUseCase: GetProfileCompletionUseCase
 ){
     val navController = rememberNavController()
+    val sharedViewModel = WelcomeSharedViewModel()
     val startDestination = runBlocking { determineStartDestination(context, authRepository, getProfileCompletionUseCase) }
 
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable("welcome") { WelcomeScreen(navController = navController) }
-        composable("login") { LoginScreen(navController = navController,viewModel = loginViewModel) }
-        composable("signUp") { SignUpScreen(navController = navController, viewModel = signUpViewModel) }
-        composable("termsAndConditions") { TermsAndConditionsScreen(navController = navController) }
-        composable("privacyPolicy") { PrivacyPolicyScreen(navController = navController) }
-        composable("experienceLevel") { ExperienceLevelScreen(navController = navController, viewModel = experienceLevelViewModel) }
-        composable("experienceText?experienceLevel={experienceLevel}") { backStackEntry ->
-            val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
-            val experienceLevel = ExperienceLevel.valueOf(experienceLevelString!!)
-            ExperienceTextScreen(navController = navController, viewModel = experienceTextViewModel, experienceLevel = experienceLevel)
+        composable("welcome") {
+            WelcomeScreen(
+                navController = navController
+            )
         }
-        composable("learningReason?experienceLevel={experienceLevel}") { backStackEntry ->
-            val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
-            val experienceLevel = ExperienceLevel.valueOf(experienceLevelString!!)
-            LearningReasonScreen(navController = navController, viewModel = learningReasonViewModel, experienceLevel = experienceLevel)
+        composable("login") {
+            LoginScreen(
+                navController = navController,
+                viewModel = loginViewModel
+            )
         }
-        composable("exploringPath?experienceLevel={experienceLevel}&selectedReason={selectedReason}") { backStackEntry ->
-            val experienceLevelString = backStackEntry.arguments?.getString("experienceLevel")
-            val experienceLevel = ExperienceLevel.valueOf(experienceLevelString!!)
-            val selectedReasonString = backStackEntry.arguments?.getString("selectedReason")
-            val selectedReason = LearningReason.valueOf(selectedReasonString!!)
-            ExploringPathScreen(navController = navController, viewModel = exploringPathViewModel, experienceLevel = experienceLevel, selectedReason = selectedReason)
+        composable("signUp") {
+            SignUpScreen(
+                navController = navController,
+                viewModel = signUpViewModel
+            )
+        }
+        composable("termsAndConditions") {
+            TermsAndConditionsScreen(
+                navController = navController
+            )
+        }
+        composable("privacyPolicy") {
+            PrivacyPolicyScreen(
+                navController = navController
+            )
+        }
+        composable("experienceLevel") {
+            ExperienceLevelScreen(
+                navController = navController,
+                viewModel = experienceLevelViewModel,
+                sharedViewModel = sharedViewModel
+            )
+        }
+        composable("experienceText") {
+            ExperienceTextScreen(
+                navController = navController,
+                viewModel = experienceTextViewModel,
+                sharedViewModel = sharedViewModel
+            )
+        }
+        composable("learningReason") {
+            LearningReasonScreen(
+                navController = navController,
+                viewModel = learningReasonViewModel,
+                sharedViewModel = sharedViewModel
+            )
+        }
+        composable("exploringPath") {
+            ExploringPathScreen(
+                navController = navController,
+                viewModel = exploringPathViewModel,
+                sharedViewModel = sharedViewModel
+            )
         }
     }
 }

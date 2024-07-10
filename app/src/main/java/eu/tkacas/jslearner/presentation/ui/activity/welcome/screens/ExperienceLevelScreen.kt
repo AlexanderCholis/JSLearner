@@ -21,11 +21,13 @@ import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.ExperienceLevelCard
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.WelcomeSharedViewModel
 
 @Composable
 fun ExperienceLevelScreen(
     navController: NavController,
-    viewModel: ExperienceLevelViewModel
+    viewModel: ExperienceLevelViewModel,
+    sharedViewModel: WelcomeSharedViewModel
 ) {
     val uiLevels = viewModel.uiLevels
 
@@ -55,7 +57,8 @@ fun ExperienceLevelScreen(
                     image = item.image,
                     text = item.text,
                     onClick = {
-                        navController.navigate("experienceText?experienceLevel=${item.level}")
+                        sharedViewModel.setExperienceLevel(item.level)
+                        navController.navigate("experienceText")
                     }
                 )
             }

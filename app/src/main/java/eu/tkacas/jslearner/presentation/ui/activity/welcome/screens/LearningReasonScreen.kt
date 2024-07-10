@@ -37,20 +37,20 @@ import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.LearningReasonCard
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.LearningReasonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.WelcomeSharedViewModel
 
 @Composable
 fun LearningReasonScreen(
     navController: NavController,
     viewModel: LearningReasonViewModel,
-    experienceLevel: ExperienceLevel
+    sharedViewModel: WelcomeSharedViewModel
 ) {
     val context = LocalContext.current
     val uiLearningReasons = viewModel.uiLearningReasons
     var selectedReason by rememberSaveable { mutableStateOf<LearningReason?>(null) }
 
     BackHandler {
-        navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
-        navController.navigate("experienceLevel")
+        navController.navigateUp()
     }
 
     Scaffold(
@@ -60,8 +60,7 @@ fun LearningReasonScreen(
             BackAppTopBar(
                 color = Color.White,
                 onBackClick = {
-                    navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
-                    navController.navigate("experienceLevel")
+                    navController.navigateUp()
                 }
             )
         },
@@ -112,7 +111,8 @@ fun LearningReasonScreen(
                             valueId = R.string.next,
                             onButtonClicked = {
                                 if (selectedReason != null) {
-                                    navController.navigate("exploringPath?experienceLevel=$experienceLevel&selectedReason=$selectedReason")
+                                    sharedViewModel.setSelectedReason(selectedReason)
+                                    navController.navigate("exploringPath")
                                 } else {
                                     Toast.makeText(context, "Please select a reason", Toast.LENGTH_SHORT).show()
                                 }

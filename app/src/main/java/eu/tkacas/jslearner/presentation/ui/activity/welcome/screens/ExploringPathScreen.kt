@@ -36,20 +36,22 @@ import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.ui.component.PathModuleCard
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExploringPathViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.WelcomeSharedViewModel
 
 @Composable
 fun ExploringPathScreen(
     navController: NavController,
     viewModel: ExploringPathViewModel,
-    experienceLevel: ExperienceLevel,
-    selectedReason: LearningReason
+    sharedViewModel: WelcomeSharedViewModel
 ) {
+    val experienceLevel = sharedViewModel.experienceLevel.value ?: ExperienceLevel.NO_EXPERIENCE
+    val selectedReason = sharedViewModel.selectedReason.value ?: LearningReason.GAIN_SKILLS
     val context = LocalContext.current
     val exploringPathState by viewModel.exploringPathState.collectAsState()
 
     BackHandler {
-        navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
-        navController.navigate("experienceLevel")
+        sharedViewModel.setSelectedReason(null)
+        navController.navigateUp()
     }
 
     LaunchedEffect(Unit) {
@@ -63,8 +65,8 @@ fun ExploringPathScreen(
             BackAppTopBar(
                 color = Color.White,
                 onBackClick = {
-                    navController.popBackStack(navController.graph.startDestinationId, inclusive = false)
-                    navController.navigate("experienceLevel")
+                    sharedViewModel.setSelectedReason(null)
+                    navController.navigateUp()
                 }
             )
         },
@@ -81,6 +83,7 @@ fun ExploringPathScreen(
                         ProgressIndicatorComponent()
                     }
                     is Result.Success -> {
+                        val courseList = (exploringPathState as Result.Success).result
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -90,7 +93,6 @@ fun ExploringPathScreen(
                             NormalText(text = stringResource(id = R.string.your_path_description))
                             Spacer(modifier = Modifier.padding(8.dp))
                             LazyColumn {
-                                val courseList = (exploringPathState as Result.Success).result
                                 items(courseList.size) { index ->
                                     PathModuleCard(
                                         moduleTitleText = courseList[index].title,
