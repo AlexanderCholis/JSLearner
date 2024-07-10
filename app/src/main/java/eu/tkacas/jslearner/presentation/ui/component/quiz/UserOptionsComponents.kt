@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.presentation.ui.component.test
+package eu.tkacas.jslearner.presentation.ui.component.quiz
 
 import android.annotation.SuppressLint
 import android.content.ClipData

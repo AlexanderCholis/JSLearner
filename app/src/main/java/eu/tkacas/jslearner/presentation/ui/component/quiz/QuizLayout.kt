@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.presentation.ui.component.test
+package eu.tkacas.jslearner.presentation.ui.component.quiz
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TestLayout(
+fun QuizLayout(
     questionNumber: Int,
     totalQuestions: Int,
     remainingTime: String,
@@ -66,7 +66,7 @@ fun TestLayout(
 @Preview
 @Composable
 fun TestLayoutPreview() {
-    TestLayout(
+    QuizLayout(
         questionNumber = 1,
         totalQuestions = 10,
         remainingTime = "10:00",

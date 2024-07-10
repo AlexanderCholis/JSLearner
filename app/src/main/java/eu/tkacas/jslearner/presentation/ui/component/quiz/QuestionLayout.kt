@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.presentation.ui.component.test
+package eu.tkacas.jslearner.presentation.ui.component.quiz
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
