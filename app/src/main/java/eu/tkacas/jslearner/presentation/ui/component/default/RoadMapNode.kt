@@ -54,7 +54,6 @@ import eu.tkacas.jslearner.domain.model.roadmap.getColor
 import eu.tkacas.jslearner.domain.model.roadmap.getIcon
 import eu.tkacas.jslearner.domain.model.roadmap.getTextColor
 
-
 @Composable
 fun RoadMapNode(
     nodeState: RoadMapNodeState,
@@ -64,13 +63,24 @@ fun RoadMapNode(
     spacer: Dp = 32.dp,
     content: @Composable BoxScope.(modifier: Modifier) -> Unit
 ) {
-    val iconPainter = circleParameters.icon?.let { painterResource(id = it) }
+    val adjustedCircleParameters = if (nodeState.category == RoadMapNodeCategory.COURSE) {
+        CircleParameters(
+            radius = 20.dp, // Increased radius for COURSE
+            backgroundColor = circleParameters.backgroundColor,
+            stroke = StrokeParameters(color = Color.Black, width = 5.dp),
+            icon = circleParameters.icon
+        )
+    } else {
+        circleParameters
+    }
+
+    val iconPainter = adjustedCircleParameters.icon?.let { painterResource(id = it) }
     Box(
         modifier = Modifier
             .wrapContentSize()
-            .offset(y = 4.dp) // added offset
+            .offset(y = 4.dp)
             .drawBehind {
-                val circleRadiusInPx = circleParameters.radius.toPx()
+                val circleRadiusInPx = adjustedCircleParameters.radius.toPx()
 
                 lineParameters?.let {
                     drawLine(
@@ -81,12 +91,12 @@ fun RoadMapNode(
                     )
                 }
                 drawCircle(
-                    circleParameters.backgroundColor,
+                    adjustedCircleParameters.backgroundColor,
                     circleRadiusInPx,
                     center = Offset(x = circleRadiusInPx, y = circleRadiusInPx)
                 )
 
-                circleParameters.stroke?.let { stroke ->
+                adjustedCircleParameters.stroke?.let { stroke ->
                     val strokeWidthInPx = stroke.width.toPx()
                     drawCircle(
                         color = stroke.color,
@@ -116,12 +126,12 @@ fun RoadMapNode(
     ) {
         content(
             Modifier
-                .defaultMinSize(minHeight = circleParameters.radius * 2)
+                .defaultMinSize(minHeight = adjustedCircleParameters.radius * 2)
                 .padding(
-                    start = circleParameters.radius * 2 + contentStartOffset,
+                    start = adjustedCircleParameters.radius * 2 + contentStartOffset,
                     bottom = if (nodeState.position != RoadMapNodePosition.LAST) spacer else 0.dp
                 )
-                .offset(y = -circleParameters.radius / 3)
+                .offset(y = if (nodeState.category == RoadMapNodeCategory.COURSE) -adjustedCircleParameters.radius / 2 else -adjustedCircleParameters.radius / 4)
         )
     }
 }
