@@ -84,13 +84,15 @@ internal fun MainNavigation(
         }
         composable("coursesPath") {
             CoursesPathScreen(
-                navController = navController
+                navController = navController,
+                sharedViewModel = sharedViewModel
             )
         }
         composable("startQuiz") {
             StartQuizScreen(
                 navController = navController,
-                viewModel = startQuizViewModel
+                viewModel = startQuizViewModel,
+                sharedViewModel = sharedViewModel
             )
         }
     }
