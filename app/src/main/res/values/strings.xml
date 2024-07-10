@@ -114,4 +114,6 @@
     <string name="click_for">Click for\u00A0</string>
     <string name="more">more</string>
     <string name="exclamation_mark">!</string>
+    <string name="no_roadmap_nodes_available">No roadmap nodes available</string>
+    <string name="error">Error:</string>
 </resources>

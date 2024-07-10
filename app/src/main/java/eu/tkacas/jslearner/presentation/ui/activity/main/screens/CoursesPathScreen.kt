@@ -25,8 +25,7 @@ fun CoursesPathScreen(
     navController: NavController,
     sharedViewModel: MainSharedViewModel
 ) {
-    val courseStatuses =
-        sharedViewModel.coursesState // This function should load the statuses from SharedPreferences
+    val courseStatuses = sharedViewModel.coursesState
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

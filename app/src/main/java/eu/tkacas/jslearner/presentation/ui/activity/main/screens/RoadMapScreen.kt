@@ -89,14 +89,16 @@ internal fun RoadMapScreen(
                 )
             },
             floatingActionButton = {
-                FloatingButton(
-                    onButtonClicked = {
-                        sharedViewModel.setUser((uiState as Result.Success).result.user)
-                        sharedViewModel.setCoursesState((uiState as Result.Success).result.nodes?.filter { it.category == RoadMapNodeCategory.COURSE }
-                            ?: emptyList())
-                        navController.navigate("coursesPath")
-                    }
-                )
+                if (uiState is Result.Success) {
+                    FloatingButton(
+                        onButtonClicked = {
+                            sharedViewModel.setUser((uiState as Result.Success).result.user)
+                            sharedViewModel.setCoursesState((uiState as Result.Success).result.nodes?.filter { it.category == RoadMapNodeCategory.COURSE }
+                                ?: emptyList())
+                            navController.navigate("coursesPath")
+                        }
+                    )
+                }
             }
         ) { innerPadding ->
             Box(
@@ -189,15 +191,14 @@ internal fun RoadMapScreen(
                             }
                         } else {
                             Text(
-                                "No roadmap nodes available",
+                                text = stringResource(id = R.string.no_roadmap_nodes_available),
                                 color = MaterialTheme.colorScheme.error
                             )
                         }
                     }
-
                     is Result.Error -> {
                         Text(
-                            "Error: ${(uiState as Result.Error).exception.message}",
+                            text = stringResource(id = R.string.error) + " ${(uiState as Result.Error).exception.message}",
                             color = MaterialTheme.colorScheme.error
                         )
                     }
