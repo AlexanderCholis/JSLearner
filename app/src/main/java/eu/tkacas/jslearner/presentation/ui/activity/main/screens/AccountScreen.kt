@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
@@ -32,6 +33,7 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.presentation.ui.component.CourseTopCard
+import eu.tkacas.jslearner.presentation.ui.component.ExperienceLevelComponent
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NameFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
@@ -119,6 +121,17 @@ fun AccountScreen(
                                 days = user?.highScoreDaysInARow ?: 0,
                                 answers = user?.highScoreCorrectAnswersInARow ?: 0
                             )
+                            Spacer(modifier = Modifier.height(30.dp))
+                            Text(
+                                text = "Experience Level:",
+                                modifier = Modifier
+                                    .align(Alignment.Start)
+                                    .padding(start = 10.dp),
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.height(5.dp))
+                            ExperienceLevelComponent(user = user)
                         }
                     }
 

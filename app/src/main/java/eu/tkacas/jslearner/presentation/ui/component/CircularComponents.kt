@@ -8,13 +8,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -25,6 +30,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.User
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.presentation.ui.theme.Bronze
 import eu.tkacas.jslearner.presentation.ui.theme.Gold
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
@@ -116,6 +123,39 @@ fun UserInitialsCircle(
             color = textColor,
             fontSize = fontSize,
             fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+fun ExperienceLevelComponent(user: User?) {
+    val experienceText = when (user?.experienceLevel) {
+        ExperienceLevel.SOME_EXPERIENCE -> "Intermediate"
+        ExperienceLevel.NO_EXPERIENCE -> "Beginner"
+        ExperienceLevel.A_LOT_OF_EXPERIENCE -> "Expert"
+        else -> "Unknown"
+    }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier
+                .size(50.dp)
+                .clip(CircleShape)
+                .background(SkyBlue),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Star,
+                contentDescription = "Experience Level",
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Text(
+            text = experienceText,
+            modifier = Modifier.padding(top = 8.dp),
+            fontSize = 14.sp,
+            color = PrussianBlue
         )
     }
 }
