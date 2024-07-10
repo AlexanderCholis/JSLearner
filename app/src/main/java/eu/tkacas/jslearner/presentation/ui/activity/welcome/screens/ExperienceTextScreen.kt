@@ -30,13 +30,15 @@ import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.WelcomeSharedViewModel
 
 @Composable
 fun ExperienceTextScreen(
     navController: NavController,
     viewModel: ExperienceTextViewModel,
-    experienceLevel: ExperienceLevel
+    sharedViewModel: WelcomeSharedViewModel
 ) {
+    val experienceLevel = sharedViewModel.experienceLevel.value ?: ExperienceLevel.NO_EXPERIENCE
     val texts = viewModel.returnTexts(experienceLevel)
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "experienceLevel") 0 else texts.size - 1) }
@@ -90,7 +92,7 @@ fun ExperienceTextScreen(
                             if (currentIndex < texts.size - 1) {
                                 currentIndex++
                             } else {
-                                navController.navigate("learningReason?experienceLevel=$experienceLevel")
+                                navController.navigate("learningReason")
                             }
                         })
                     }
