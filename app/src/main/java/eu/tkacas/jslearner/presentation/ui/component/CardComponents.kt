@@ -37,6 +37,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeStatus
+import eu.tkacas.jslearner.domain.model.roadmap.getColor
+import eu.tkacas.jslearner.domain.model.roadmap.getIcon
+import eu.tkacas.jslearner.domain.model.roadmap.getTextColor
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
@@ -179,13 +183,13 @@ fun PathModuleCard(
 
 @Composable
 fun CoursesPathCard(
-    moduleTitleText : String,
-    isEnabled: Boolean
+    courseTitleText: String,
+    courseStatus: RoadMapNodeStatus
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth(),
-        colors = cardColors(containerColor = Color.White),
+        colors = cardColors(containerColor = courseStatus.getColor()),
         elevation = cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -196,18 +200,16 @@ fun CoursesPathCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = moduleTitleText,
-                fontWeight = if (isEnabled) FontWeight.Bold else FontWeight.Normal,
-                color = if (isEnabled) Color.Black else Color.Gray,
+                text = courseTitleText,
+                fontWeight = FontWeight.Bold,
+                color = courseStatus.getTextColor(),
                 fontSize = 20.sp
             )
-            if(!isEnabled) {
-                Icon(
-                    painter = painterResource(id = R.drawable.lock),
-                    contentDescription = stringResource(id = R.string.locked_course),
-                    tint = Color.Gray
-                )
-            }
+            Icon(
+                painter = painterResource(id = courseStatus.getIcon()),
+                contentDescription = stringResource(id = R.string.courses), // Adjust the description as needed or use null if not applicable
+                tint = Color.Black
+            )
         }
     }
 }
