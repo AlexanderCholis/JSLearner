@@ -292,6 +292,9 @@ fun FillInTheBlanks(
     question: Question,
     onAnswerSelected: (List<String>) -> Unit
 ) {
+    // Safely cast options to the expected type
+    val options = question.options as? List<Map<String, String>> ?: listOf()
+
     val answers = remember { mutableStateOf<List<String>>(listOf()) }
 
     Column {
@@ -299,12 +302,14 @@ fun FillInTheBlanks(
         Text(question.questionDescription.replace("____", "__________"))
 
         // Display options as draggable cards
-        question.options.forEach { option ->
-            DraggableWordCard(text = option["text"] ?: "")
+        options.forEach { optionMap ->
+            optionMap["text"]?.let { text ->
+                DraggableWordCard(text = text)
+            }
         }
 
-        // Display blanks as target boxes
-        val blanksCount = "_".toRegex().findAll(question.questionDescription).count()
+        // Correctly count the blanks in the question description
+        val blanksCount = "____".toRegex().findAll(question.questionDescription).count()
         val userAnswers = remember { mutableStateListOf<String>().apply { repeat(blanksCount) { add("") } } }
 
         userAnswers.forEachIndexed { index, _ ->
