@@ -15,13 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import eu.tkacas.jslearner.data.model.Question
 
 @Composable
 fun QuizLayout(
     questionNumber: Int,
     totalQuestions: Int,
-    remainingTime: String,
-    questionLayout: @Composable () -> Unit,
+    questions: List<Question>,
+    currentIndex: Int,
     onNextClick: () -> Unit,
     onHelpClick: () -> Unit
 ) {
@@ -39,15 +40,36 @@ fun QuizLayout(
                     text = "Question $questionNumber of $totalQuestions",
                     style = MaterialTheme.typography.bodyLarge
                 )
-                Text(
-                    text = "Time remaining: $remainingTime",
-                    style = MaterialTheme.typography.bodyLarge
-                )
             }
 
-            Box(modifier = Modifier.padding(16.dp)) {
-                questionLayout()
+            val currentQuestion = questions[currentIndex]
+            when (currentQuestion.questionType) {
+                "true_false" -> TrueFalse(
+                    isTrue = null, // Assuming a way to determine if the user has selected true or false
+                    onTrueFalseSelected = { /* Handle selection */ }
+                )
+                "multiple_choice_single_answer" -> MultipleChoiceSingleAnswer(
+                    options = currentQuestion.options.map { it["text"] ?: "" }, // Assuming options is a list of maps with a "text" key
+                    initialSelectedOption = null, // Assuming a way to determine the initially selected option if any
+                    onOptionSelected = { /* Handle selection */ }
+                )
+                "multiple_choice_multiple_answers" -> MultipleChoiceMultipleAnswers(
+                    options = currentQuestion.options.map { it["text"] ?: "" }, // Assuming options is a list of maps with a "text" key
+                    selectedOptions = emptySet(), // Assuming a way to determine which options are initially selected
+                    onOptionSelected = { _, _ -> /* Handle selection */ }
+                )
+                "matching" -> DynamicDragAndDrop(
+                    optionsA = currentQuestion.options.map { it["text"] ?: "" }, // Assuming options is a list of maps with a "text" key
+                    optionsB = currentQuestion.options.map { it["text"] ?: "" }, // Assuming options is a list of maps with a "text" key
+                    //correctAnswers = currentQuestion.correctAnswers.subList(0, currentQuestion.options.size), // Assuming correctAnswers is a list of maps with a "text" key
+                )
+                "fill_in_the_blanks" -> FillInTheBlanks(
+                    question = currentQuestion,
+                    onAnswerSelected = { /* Handle answer change */ }
+                )
+                else -> Text("Unsupported question type")
             }
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -61,19 +83,4 @@ fun QuizLayout(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun TestLayoutPreview() {
-    QuizLayout(
-        questionNumber = 1,
-        totalQuestions = 10,
-        remainingTime = "10:00",
-        questionLayout = {
-            Text("What is the capital of France?")
-        },
-        onNextClick = {},
-        onHelpClick = {}
-    )
 }
