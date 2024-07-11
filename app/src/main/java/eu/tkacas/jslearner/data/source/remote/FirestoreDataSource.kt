@@ -32,7 +32,8 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
             .collection("lessons").document(lessonId)
             .collection("questions").get().await()
         return result.map { document ->
-            val questionType = document.getString("question_type")?.let { QuestionType.valueOf(it) }
+            val questionTypeStr = document.getString("question_type") ?: ""
+            val questionType = QuestionType.valueOf(questionTypeStr)
             val hint = document.getString("hint") ?: ""
             val questionDescription = document.getString("question_description") ?: ""
             val options = document.get("options") as? List<String> ?: emptyList()
