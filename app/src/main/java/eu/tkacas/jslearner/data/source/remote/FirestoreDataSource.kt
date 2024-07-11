@@ -1,10 +1,13 @@
 package eu.tkacas.jslearner.data.source.remote
 
+import com.google.firebase.database.GenericTypeIndicator
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.data.model.Course
 import eu.tkacas.jslearner.data.model.CourseLevel
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.Question
+import eu.tkacas.jslearner.data.model.QuestionType
 import eu.tkacas.jslearner.data.model.UserFirestore
 import kotlinx.coroutines.tasks.await
 
@@ -29,7 +32,19 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
             .collection("lessons").document(lessonId)
             .collection("questions").get().await()
         return result.map { document ->
-            document.toObject(Question::class.java).copy()
+            val questionType = document.getString("question_type")?.let { QuestionType.valueOf(it) }
+            val hint = document.getString("hint") ?: ""
+            val questionDescription = document.getString("question_description") ?: ""
+            val options = document.get("options") as? List<String> ?: emptyList()
+            val correctAnswers = document.get("correct_answers") as? List<String> ?: emptyList()
+
+            Question(
+                questionType = questionType,
+                hint = hint,
+                questionDescription = questionDescription,
+                options = options,
+                correctAnswers = correctAnswers
+            )
         }
     }
 
@@ -78,7 +93,7 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         val documentSnapshot = db.collection("courses").document(courseId)
             .collection("lessons").document(lessonId).get().await()
         val lesson = documentSnapshot.toObject(Lesson::class.java)!!
-        lesson.id = documentSnapshot.id // Set the id of the lesson
+        lesson.id = documentSnapshot.id
         return lesson
     }
 }
