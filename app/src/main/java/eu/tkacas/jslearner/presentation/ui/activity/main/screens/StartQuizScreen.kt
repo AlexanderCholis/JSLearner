@@ -29,12 +29,10 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
-import eu.tkacas.jslearner.presentation.viewmodel.main.StartQuizViewModel
 
 @Composable
 fun StartQuizScreen(
     navController: NavController,
-    viewModel: StartQuizViewModel,
     sharedViewModel: MainSharedViewModel
 ) {
 

@@ -21,7 +21,6 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
-import eu.tkacas.jslearner.presentation.viewmodel.main.StartQuizViewModel
 
 @Composable
 internal fun MainNavigation(
@@ -29,7 +28,6 @@ internal fun MainNavigation(
     startCourseViewModel: StartCourseViewModel,
     startLessonViewModel: StartLessonViewModel,
     lessonViewModel: LessonViewModel,
-    startQuizViewModel: StartQuizViewModel,
     accountViewModel: AccountViewModel,
     quizViewModel: QuizViewModel
 ) {
@@ -94,7 +92,6 @@ internal fun MainNavigation(
         composable("startQuiz") {
             StartQuizScreen(
                 navController = navController,
-                viewModel = startQuizViewModel,
                 sharedViewModel = sharedViewModel
             )
         }
