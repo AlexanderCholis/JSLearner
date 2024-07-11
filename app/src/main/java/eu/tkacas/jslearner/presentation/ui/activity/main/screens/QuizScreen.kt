@@ -30,9 +30,9 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
-import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
+import eu.tkacas.jslearner.domain.model.Quiz
 
 @Composable
 fun QuizScreen(
@@ -40,13 +40,13 @@ fun QuizScreen(
     viewModel: QuizViewModel,
     sharedViewModel: MainSharedViewModel
 ) {
-    val id = sharedViewModel.selectedQuizId.value
     val uiState by viewModel.uiState.collectAsState()
     val previousRoute = navController.previousBackStackEntry?.destination?.route
 
-    LaunchedEffect(id) {
-        if (id != null) {
-            viewModel.loadQuiz(id)
+    LaunchedEffect(Unit) {
+        val lessonId = sharedViewModel.selectedLessonId.value
+        if (lessonId != null) {
+            viewModel.loadQuiz(lessonId)
         }
     }
 
@@ -56,11 +56,11 @@ fun QuizScreen(
         }
 
         is Result.Success -> {
-            val quiz = (uiState as Result.Success<Quiz>).result //TODO: Add Quiz model
-            var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startQuiz") 0 else /* quiz.size - 1 */) } //TODO: Add quiz size
+            val quiz = (uiState as Result.Success<Quiz>).result
+            var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startQuiz") 0 else quiz.questions.size) }
 
             val progress by animateFloatAsState(
-                targetValue = (currentIndex + 1) / (/*quiz.size.toFloat()*/), label = "" //TODO: Add quiz size
+                targetValue = (currentIndex + 1) / (quiz.questions.size.toFloat()), label = ""
             )
 
             Scaffold(
@@ -84,12 +84,11 @@ fun QuizScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color.White)
-                        .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
+                        .padding(innerPadding)
                 ) {
                     Column {
-                        BoldText(text = quiz.title) //TODO: Add Quiz title
                         Spacer(modifier = Modifier.padding(10.dp))
-                        NormalText(text = quiz.list[currentIndex]) //TODO: Add Quiz list
+                        NormalText(text = quiz.questions[currentIndex].questionDescription)
                         Spacer(modifier = Modifier.weight(1f))
                         Column(
                             modifier = Modifier
@@ -100,7 +99,7 @@ fun QuizScreen(
                             LinearProgressIndicator(progress = progress)
                             Spacer(modifier = Modifier.padding(20.dp))
                             GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
-                                if (currentIndex < /* quiz.size */ - 1) { //TODO: Add quiz size
+                                if (currentIndex < quiz.questions.size - 1) {
                                     currentIndex++
                                 } else {
                                     navController.navigate("") //TODO: Add destination
