@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.theme.GrayColor
+import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 
 @Composable
 fun AuthHeadingTextComponent(value: String) {
@@ -98,5 +100,19 @@ fun ErrorMessageText(errorMessage: String?) {
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.error
+    )
+}
+
+@Composable
+fun CenteredAboutText() {
+    val context = LocalContext.current
+    val about = stringResource(id = R.string.jslearner_welcome_description, context)
+
+    androidx.compose.material.Text(
+        text = about,
+        style = androidx.compose.material.MaterialTheme.typography.body1,
+        textAlign = TextAlign.Left,
+        color = PrussianBlue,
+        modifier = Modifier.fillMaxWidth()
     )
 }
