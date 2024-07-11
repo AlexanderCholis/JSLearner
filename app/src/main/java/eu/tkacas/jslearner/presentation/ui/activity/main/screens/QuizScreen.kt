@@ -102,7 +102,8 @@ fun QuizScreen(
                                 if (currentIndex < quiz.questions.size - 1) {
                                     currentIndex++
                                 } else {
-                                    navController.navigate("") //TODO: Add destination
+                                    //navController.navigate("") //TODO: Add destination
+                                    null
                                 }
                             })
                         }
