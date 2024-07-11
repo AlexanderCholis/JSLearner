@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.domain.usecase.main.roadmap
 
-import eu.tkacas.jslearner.data.model.Question
 import eu.tkacas.jslearner.domain.model.Quiz
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 
