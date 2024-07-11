@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -33,12 +34,14 @@ import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import eu.tkacas.jslearner.data.model.Question
 import eu.tkacas.jslearner.presentation.ui.theme.GreenLightPal
 import eu.tkacas.jslearner.presentation.ui.theme.GreenPal
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
@@ -181,7 +184,7 @@ fun DraggableWordCard(text: String) {
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(4.dp)
-            .background(GreenLightPal)
+            .background(Color.LightGray)
             .dragAndDropSource {
                 detectTapGestures(
                     onLongPress = {
@@ -202,15 +205,19 @@ fun DraggableWordCard(text: String) {
 @SuppressLint("RememberReturnType")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TargetWordBox(text: String) {
+fun TargetWordBox(
+    text: String,
+    onDrop: (String) -> Unit
+) {
     var textState by remember { mutableStateOf(text) }
-    var backgroundColor by remember { mutableStateOf(GreenPal) }
+    var backgroundColor by remember { mutableStateOf(Color.LightGray) }
     val dragAndDropTarget = remember {
         object : DragAndDropTarget {
             override fun onDrop(event: DragAndDropEvent): Boolean {
                 val draggedData = event.toAndroidDragEvent()
-                    .clipData.getItemAt(0).text
-                textState = draggedData.toString()
+                    .clipData.getItemAt(0).text.toString()
+                onDrop(draggedData)
+                textState = draggedData
                 return true
             }
 
@@ -219,14 +226,9 @@ fun TargetWordBox(text: String) {
                 backgroundColor = LightBeige
             }
 
-            override fun onEnded(event: DragAndDropEvent) {
-                super.onExited(event)
-                backgroundColor = GreenPal
-            }
-
             override fun onExited(event: DragAndDropEvent) {
                 super.onExited(event)
-                backgroundColor = GreenPal
+                backgroundColor = Color.LightGray
             }
         }
     }
@@ -239,7 +241,6 @@ fun TargetWordBox(text: String) {
             .dragAndDropTarget(
                 shouldStartDragAndDrop = { event ->
                     event.mimeTypes().contains("text/plain")
-
                 },
                 target = dragAndDropTarget
             )
@@ -247,3 +248,78 @@ fun TargetWordBox(text: String) {
         Text(text = textState, modifier = Modifier.padding(8.dp))
     }
 }
+
+@Composable
+fun DynamicDragAndDrop(
+    optionsA: List<String>,
+    optionsB: List<String>,
+    //correctAnswers: List<Map<String, String>>,
+    //onResults: (Boolean) -> Unit
+) {
+    val matches = remember { mutableStateOf(mapOf<String, String>()) }
+    var resultMessage by remember { mutableStateOf<String?>(null) }
+
+    Column {
+        Row {
+            Column {
+                optionsA.forEach { term ->
+                    Text(term, modifier = Modifier.padding(8.dp))
+                }
+            }
+            Column {
+                optionsB.forEach { definition ->
+                    TargetWordBox(
+                        text = matches.value[definition] ?: "Drop here",
+                        onDrop = { term ->
+                            val newMatches = matches.value.toMutableMap()
+                            newMatches[definition] = term
+                            matches.value = newMatches
+                        }
+                    )
+                }
+            }
+            Column {
+                optionsB.forEach { term ->
+                    DraggableWordCard(term)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FillInTheBlanks(
+    question: Question,
+    onAnswerSelected: (List<String>) -> Unit
+) {
+    val answers = remember { mutableStateOf<List<String>>(listOf()) }
+
+    Column {
+        // Display question description with blanks
+        Text(question.questionDescription.replace("____", "__________"))
+
+        // Display options as draggable cards
+        question.options.forEach { option ->
+            DraggableWordCard(text = option["text"] ?: "")
+        }
+
+        // Display blanks as target boxes
+        val blanksCount = "_".toRegex().findAll(question.questionDescription).count()
+        val userAnswers = remember { mutableStateListOf<String>().apply { repeat(blanksCount) { add("") } } }
+
+        userAnswers.forEachIndexed { index, _ ->
+            TargetWordBox(
+                text = userAnswers[index],
+                onDrop = { droppedText ->
+                    userAnswers[index] = droppedText
+                    answers.value = userAnswers.toList()
+                }
+            )
+        }
+
+        Button(onClick = { onAnswerSelected(answers.value) }) {
+            Text("Submit")
+        }
+    }
+}
+
