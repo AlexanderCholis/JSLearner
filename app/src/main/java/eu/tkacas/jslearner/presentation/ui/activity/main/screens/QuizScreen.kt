@@ -33,6 +33,7 @@ import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.domain.model.Quiz
+import eu.tkacas.jslearner.presentation.ui.component.quiz.QuizLayout
 
 @Composable
 fun QuizScreen(
@@ -90,6 +91,13 @@ fun QuizScreen(
                         Spacer(modifier = Modifier.padding(10.dp))
                         NormalText(text = quiz.questions[currentIndex].questionDescription)
                         Spacer(modifier = Modifier.weight(1f))
+                        QuizLayout(
+                            questionNumber = currentIndex + 1,
+                            totalQuestions = quiz.questions.size,
+                            questions = quiz.questions,
+                            currentIndex = currentIndex,
+                            onNextClick = { currentIndex++ },) {
+                        }
                         Column(
                             modifier = Modifier
                                 .fillMaxSize(),
