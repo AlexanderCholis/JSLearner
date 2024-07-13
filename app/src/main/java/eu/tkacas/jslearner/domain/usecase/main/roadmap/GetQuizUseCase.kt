@@ -9,7 +9,7 @@ class GetQuizUseCase(private val roadMapRepository: RoadMapRepository) {
     suspend fun execute(lessonId: String): Quiz {
         val courseId = lessonId.substring(0, 2)
         val questions = roadMapRepository.getQuestions(courseId, lessonId)
-        // Convert to List<QuestionFinal> assuming a conversion function exists
+        // Convert to List<QuestionUI> assuming a conversion function exists
         val questionsFinal = questions.map { convertToQuestionFinal(it) }
         // Shuffle the questions
         val shuffledQuestions = questionsFinal.shuffled()
