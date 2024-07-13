@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -267,9 +268,7 @@ fun FillInTheBlanks(
     question: QuestionUI,
     onAnswerSelected: (List<String>) -> Unit
 ) {
-    // Safely cast options to the expected type
     val options = question.options as List<String>
-    // Split the question description into parts
     val parts = question.questionDescription.split("____")
     val answers = remember { mutableStateListOf<String>().apply { repeat(parts.size - 1) { add("") } } }
 
@@ -279,6 +278,8 @@ fun FillInTheBlanks(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .heightIn(min = 60.dp),
+            verticalAlignment = Alignment.CenterVertically
         ){
             parts.forEachIndexed { index, part ->
                 // Display the text part
@@ -286,7 +287,6 @@ fun FillInTheBlanks(
                     text = part,
                     style = TextStyle(fontSize = 20.sp)
                 )
-                // Display a TargetWordBox for each blank, except after the last part
                 if (index < parts.size - 1) {
                     TargetWordBox(
                         text = answers[index],
@@ -301,7 +301,8 @@ fun FillInTheBlanks(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceEvenly
         ) {
             // Display options as draggable cards
             options.forEach { option ->
