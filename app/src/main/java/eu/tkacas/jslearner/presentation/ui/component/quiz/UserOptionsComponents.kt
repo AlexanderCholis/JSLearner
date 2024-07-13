@@ -192,7 +192,6 @@ fun DraggableWordCard(text: String) {
             .dragAndDropSource {
                 detectTapGestures(
                     onLongPress = {
-                        Log.d("Drag", "Dragged $text")
                         startTransfer(
                             DragAndDropTransferData(
                                 ClipData.newPlainText("text/plain", text)

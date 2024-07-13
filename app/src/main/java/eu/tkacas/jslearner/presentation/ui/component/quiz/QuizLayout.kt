@@ -35,6 +35,7 @@ import eu.tkacas.jslearner.presentation.ui.theme.GreenPal
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.RedPal
 import androidx.compose.foundation.layout.size
+import androidx.compose.ui.res.stringResource
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
@@ -61,7 +62,7 @@ fun QuizLayout(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Question $questionNumber of $totalQuestions",
+                    text = stringResource(id = R.string.question) + " $questionNumber " + stringResource(id = R.string.of) +" $totalQuestions",
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -97,7 +98,7 @@ fun QuizLayout(
                     onAnswerSelected = { /* Handle answer change */ }
                 )
 
-                else -> Text("Unsupported question type")
+                else -> Text(text = stringResource(id = R.string.unsupported_question_type))
             }
             Row {
                 Text(
@@ -111,16 +112,16 @@ fun QuizLayout(
             ) {
                 Button(onClick = onNextClick) {
                     if (currentIndex == questions.lastIndex)
-                        Text("Submit")
+                        Text(text = stringResource(id = R.string.submit))
                     else
-                        Text("Next")
+                        Text(text = stringResource(id = R.string.next))
                 }
                 Button(
                     onClick = {
                         showHint.value = !showHint.value
                     }
                 ) {
-                    Text("Hint")
+                    Text(text = stringResource(id = R.string.hint))
                 }
             }
         }
