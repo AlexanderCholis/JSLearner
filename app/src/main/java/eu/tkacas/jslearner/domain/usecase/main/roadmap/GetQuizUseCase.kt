@@ -21,14 +21,14 @@ class GetQuizUseCase(private val roadMapRepository: RoadMapRepository) {
         return Quiz(shuffledQuestions, 0)
     }
 
-private fun convertToQuestionFinal(question: Question): QuestionUI {
-    return QuestionUI(
-        questionType = question.questionType,
-        hint = question.hint,
-        questionDescription = question.questionDescription,
-        // Explicitly convert options to MutableList<String>
-        options = question.options.toMutableList(),
-        correctAnswers = question.correctAnswers
-    )
-}
+    private fun convertToQuestionFinal(question: Question): QuestionUI {
+        return QuestionUI(
+            questionType = question.questionType,
+            hint = question.hint,
+            questionDescription = question.questionDescription,
+            // Explicitly convert options to MutableList<String>
+            options = question.options.toMutableList(),
+            correctAnswers = question.correctAnswers
+        )
+    }
 }
