@@ -1,9 +1,12 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
@@ -12,15 +15,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.presentation.ui.component.ButtonWithImageComponent
 import eu.tkacas.jslearner.presentation.ui.component.CenteredAboutText
 import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
@@ -79,6 +85,46 @@ fun AboutScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     CenteredAboutText()
+                }
+                //add GitHub Links
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    val context = LocalContext.current
+
+                    val url1 = remember { Uri.parse("https://github.com/thkox") }
+                    ButtonWithImageComponent(onClick = {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                url1
+                            )
+                        )
+                    }, imageId = R.drawable.github_logo, buttonText = "thkox")
+
+                    val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
+                    ButtonWithImageComponent(onClick = {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                url2
+                            )
+                        )
+                    }, imageId = R.drawable.github_logo, buttonText = "ApostolisSiampanis")
+
+                    val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
+                    ButtonWithImageComponent(onClick = {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                url3
+                            )
+                        )
+                    }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
                 }
             }
         }

@@ -21,7 +21,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,7 +37,6 @@ import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.HyperLinkText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
-import eu.tkacas.jslearner.presentation.ui.theme.componentShapes
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 
 
@@ -102,7 +100,7 @@ fun StartLessonScreen(
                             )
                             Spacer(modifier = Modifier.height(100.dp))
                             Image(
-                                painter = painterResource(id = R.drawable.application),
+                                painter = painterResource(id = R.drawable.element_mobile_development),
                                 contentDescription = stringResource(id = R.string.simple_image),
                                 modifier = Modifier
                                     .size(240.dp)

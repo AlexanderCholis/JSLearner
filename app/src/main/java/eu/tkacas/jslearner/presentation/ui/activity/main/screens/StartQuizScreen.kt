@@ -81,7 +81,7 @@ fun StartQuizScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.application),
+                        painter = painterResource(id = R.drawable.element_questions),
                         contentDescription = stringResource(id = R.string.simple_image),
                         modifier = Modifier.size(240.dp)
                     )
