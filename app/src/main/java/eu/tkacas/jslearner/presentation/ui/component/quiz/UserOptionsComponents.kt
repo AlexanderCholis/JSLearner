@@ -11,8 +11,11 @@ import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -237,12 +240,21 @@ fun TargetWordBox(
             .padding(4.dp)
             .dragAndDropTarget(
                 shouldStartDragAndDrop = { event ->
-                    event.mimeTypes().contains("text/plain")
+                    event
+                        .mimeTypes()
+                        .contains("text/plain")
                 },
                 target = dragAndDropTarget
             )
     ) {
-        Text(text = textState, modifier = Modifier.padding(8.dp))
+        val textModifier = if (textState.isEmpty()) {
+            Modifier
+                .padding(8.dp)
+                .widthIn(min = 60.dp)
+        } else {
+            Modifier.padding(8.dp)
+        }
+        Text(text = if (textState.isEmpty()) " " else textState, modifier = textModifier)
     }
 }
 
@@ -295,27 +307,37 @@ fun FillInTheBlanks(
     val parts = question.questionDescription.split("____")
     val answers = remember { mutableStateListOf<String>().apply { repeat(parts.size - 1) { add("") } } }
 
-    Column {
-        parts.forEachIndexed { index, part ->
-            // Display the text part
-            Text(part)
-            // Display a TargetWordBox for each blank, except after the last part
-            if (index < parts.size - 1) {
-                TargetWordBox(
-                    text = answers[index],
-                    onDrop = { droppedText ->
-                        answers[index] = droppedText
-                        // Update the answers list whenever a drop occurs
-                        onAnswerSelected(answers.toList())
-                    }
-                )
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ){
+            parts.forEachIndexed { index, part ->
+                // Display the text part
+                Text(part)
+                // Display a TargetWordBox for each blank, except after the last part
+                if (index < parts.size - 1) {
+                    TargetWordBox(
+                        text = answers[index],
+                        onDrop = { droppedText ->
+                            answers[index] = droppedText
+                            // Update the answers list whenever a drop occurs
+                            onAnswerSelected(answers.toList())
+                        }
+                    )
+                }
             }
         }
-
-        // Display options as draggable cards
-        options.forEach { option ->
-            DraggableWordCard(text = option)
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            // Display options as draggable cards
+            options.forEach { option ->
+                DraggableWordCard(text = option)
+            }
         }
     }
 }
-
