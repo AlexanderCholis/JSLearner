@@ -110,7 +110,10 @@ fun QuizLayout(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(onClick = onNextClick) {
-                    Text("Next")
+                    if (currentIndex == questions.lastIndex)
+                        Text("Submit")
+                    else
+                        Text("Next")
                 }
                 Button(
                     onClick = {
@@ -120,48 +123,6 @@ fun QuizLayout(
                     Text("Hint")
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun QuestionItem(questionNumber: Int, isCorrect: Boolean) { // Show if the question is correct or not
-    Column(modifier = Modifier.padding(8.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Question $questionNumber", fontWeight = FontWeight.Bold, color = PrussianBlue)
-            Spacer(modifier = Modifier.width(8.dp))
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .background(color = if (isCorrect) GreenPal else RedPal, shape = RoundedCornerShape(8.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-            ) {
-                Text(
-                    text = if (isCorrect) "Correct" else "Incorrect",
-                    color = Color.White
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun DisplayScore(coursescore: Int) { // Display the score of the course
-    Column(
-        modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Your Score in this Course is:", fontWeight = FontWeight.Bold)
-        Text(text = "$coursescore", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(16.dp))
-        if (coursescore == 0) {
-            Image(painter = painterResource(id = R.drawable.element_teacher_fail), contentDescription = "Fail", modifier = Modifier.size(200.dp, 200.dp))
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "You can do better!", fontSize = 16.sp, color = SkyBlue)
-        } else {
-            Image(painter = painterResource(id = R.drawable.element_teacher_pass), contentDescription = "Pass", modifier = Modifier.size(200.dp, 200.dp))
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Great Job!", fontSize = 16.sp, color = SkyBlue)
         }
     }
 }
