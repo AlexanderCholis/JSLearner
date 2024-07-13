@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -16,6 +17,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,6 +37,7 @@ import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.domain.model.Quiz
 import eu.tkacas.jslearner.presentation.ui.component.quiz.QuizLayout
+import eu.tkacas.jslearner.presentation.ui.component.quiz.ResultLayout
 
 @Composable
 fun QuizScreen(
@@ -43,6 +47,7 @@ fun QuizScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val previousRoute = navController.previousBackStackEntry?.destination?.route
+    var showResult by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         val lessonId = sharedViewModel.selectedLessonId.value
@@ -71,7 +76,7 @@ fun QuizScreen(
                     BackAppTopBar(
                         color = Color.White,
                         onBackClick = {
-                            if (currentIndex > 0) {
+                            if (currentIndex > 0 && !showResult) {
                                 currentIndex--
                             } else {
                                 navController.navigateUp()
@@ -87,32 +92,38 @@ fun QuizScreen(
                         .background(Color.White)
                         .padding(innerPadding)
                 ) {
-                    Column {
-                        Spacer(modifier = Modifier.padding(10.dp))
-                        QuizLayout(
-                            questionNumber = currentIndex + 1,
-                            totalQuestions = quiz.questions.size,
-                            questions = quiz.questions,
-                            currentIndex = currentIndex,
-                            onNextClick = { currentIndex++ },
-                        )
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            verticalArrangement = Arrangement.Bottom,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
+                    Column (
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+
+                    ) {
+                        if (!showResult){
                             LinearProgressIndicator(progress = progress)
-                            Spacer(modifier = Modifier.padding(20.dp))
-                            GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
-                                if (currentIndex < quiz.questions.size - 1) {
-                                    currentIndex++
-                                } else {
-                                    //navController.navigate("") //TODO: Add destination
-                                    null
+                            Spacer(modifier = Modifier.height(16.dp))
+                            QuizLayout(
+                                questionNumber = currentIndex + 1,
+                                totalQuestions = quiz.questions.size,
+                                questions = quiz.questions,
+                                currentIndex = currentIndex,
+                                onNextClick = {
+                                    if (currentIndex < quiz.questions.size - 1) {
+                                        currentIndex++
+                                    } else {
+                                        showResult = true
+                                    }
                                 }
-                            })
+                            )
+                        } else {
+                            ResultLayout(
+                                questions = quiz.questions,
+                                totalScore = quiz.score,
+                                onQuestionSelected = { index ->
+                                    currentIndex = index
+                                    showResult = false
+                                }
+                            )
                         }
+
                     }
                 }
             }
