@@ -2,9 +2,7 @@ package eu.tkacas.jslearner.presentation.ui.component.quiz
 
 import android.annotation.SuppressLint
 import android.content.ClipData
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.draganddrop.dragAndDropSource
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -156,13 +153,18 @@ fun MultipleChoiceMultipleAnswers(
     val options = question.options as List<String>
 
     val safeSelectedOptions = selectedOptions ?: emptySet()
-
     Column {
         options.forEach { option ->
+            val key = "${question.questionDescription.hashCode()}$option"
+            val isSelected = remember(key) { mutableStateOf(option in safeSelectedOptions) }
+
             MultipleChoiceMultipleCard(
                 text = option,
-                isSelected = remember { mutableStateOf(option in safeSelectedOptions) },
-                onSelected = { onOptionSelected(option, option !in safeSelectedOptions) }
+                isSelected = isSelected,
+                onSelected = {
+                    isSelected.value = !isSelected.value
+                    onOptionSelected(option, isSelected.value)
+                }
             )
         }
     }
@@ -271,31 +273,22 @@ fun FillInTheBlanks(
     val parts = question.questionDescription.split("____")
     val answers = remember { mutableStateListOf<String>().apply { repeat(parts.size - 1) { add("") } } }
 
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 60.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            parts.forEachIndexed { index, part ->
-                // Display the text part
-                Text(
-                    text = part,
-                    style = TextStyle(fontSize = 20.sp)
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text(
+            text = question.questionDescription.replace("____", "_______"),
+            style = TextStyle(fontSize = 20.sp)
+        )
+        Spacer(modifier = Modifier.height(35.dp))
+        Text(text = "Your answer is:", style = TextStyle(fontSize = 16.sp))
+        parts.indices.forEach { index ->
+            if (index < parts.size - 1) {
+                TargetWordBox(
+                    text = answers[index],
+                    onDrop = { droppedText ->
+                        answers[index] = droppedText
+                        onAnswerSelected(answers.toList())
+                    }
                 )
-                if (index < parts.size - 1) {
-                    TargetWordBox(
-                        text = answers[index],
-                        onDrop = { droppedText ->
-                            answers[index] = droppedText
-                            // Update the answers list whenever a drop occurs
-                            onAnswerSelected(answers.toList())
-                        }
-                    )
-                }
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
