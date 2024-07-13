@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -41,9 +40,7 @@ import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
-import eu.tkacas.jslearner.data.model.Question
-import eu.tkacas.jslearner.presentation.ui.theme.GreenLightPal
-import eu.tkacas.jslearner.presentation.ui.theme.GreenPal
+import eu.tkacas.jslearner.domain.model.QuestionUI
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
 @Composable
@@ -289,7 +286,7 @@ fun DynamicDragAndDrop(
 
 @Composable
 fun FillInTheBlanks(
-    question: Question,
+    question: QuestionUI,
     onAnswerSelected: (List<String>) -> Unit
 ) {
     // Safely cast options to the expected type
