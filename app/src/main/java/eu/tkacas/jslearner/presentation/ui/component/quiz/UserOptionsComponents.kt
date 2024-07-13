@@ -43,6 +43,8 @@ import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.domain.model.QuestionUI
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
@@ -146,10 +148,12 @@ fun MultipleChoiceSingleAnswer(
 
 @Composable
 fun MultipleChoiceMultipleAnswers(
-    options: List<String>,
+    question: QuestionUI,
     selectedOptions: Set<String>?,
     onOptionSelected: (String, Boolean) -> Unit
 ) {
+    val options = question.options as List<String>
+
     val safeSelectedOptions = selectedOptions ?: emptySet()
 
     Column {
@@ -258,43 +262,6 @@ fun TargetWordBox(
     }
 }
 
-@Composable
-fun DynamicDragAndDrop(
-    optionsA: List<String>,
-    optionsB: List<String>,
-    //correctAnswers: List<Map<String, String>>,
-    //onResults: (Boolean) -> Unit
-) {
-    val matches = remember { mutableStateOf(mapOf<String, String>()) }
-    var resultMessage by remember { mutableStateOf<String?>(null) }
-
-    Column {
-        Row {
-            Column {
-                optionsA.forEach { term ->
-                    Text(term, modifier = Modifier.padding(8.dp))
-                }
-            }
-            Column {
-                optionsB.forEach { definition ->
-                    TargetWordBox(
-                        text = matches.value[definition] ?: "Drop here",
-                        onDrop = { term ->
-                            val newMatches = matches.value.toMutableMap()
-                            newMatches[definition] = term
-                            matches.value = newMatches
-                        }
-                    )
-                }
-            }
-            Column {
-                optionsB.forEach { term ->
-                    DraggableWordCard(term)
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun FillInTheBlanks(
@@ -316,7 +283,10 @@ fun FillInTheBlanks(
         ){
             parts.forEachIndexed { index, part ->
                 // Display the text part
-                Text(part)
+                Text(
+                    text = part,
+                    style = TextStyle(fontSize = 20.sp)
+                )
                 // Display a TargetWordBox for each blank, except after the last part
                 if (index < parts.size - 1) {
                     TargetWordBox(

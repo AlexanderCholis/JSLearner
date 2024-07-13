@@ -50,23 +50,32 @@ fun QuizLayout(
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
-            Text(
-                text = questions[currentIndex].questionDescription,
-                style = TextStyle(fontSize = 20.sp)
-            )
+
 
             val currentQuestion = questions[currentIndex]
             when (currentQuestion.questionType) {
-                QuestionType.TRUE_FALSE -> TrueFalse(
-                    isTrue = null,
-                    onTrueFalseSelected = { /* Handle selection */ }
-                )
+                QuestionType.TRUE_FALSE -> {
+                    Text(
+                        text = questions[currentIndex].questionDescription,
+                        style = TextStyle(fontSize = 20.sp)
+                    )
+                    TrueFalse(
+                        isTrue = null,
+                        onTrueFalseSelected = { /* Handle selection */ }
+                    )
+                }
 
-                QuestionType.MULTIPLE_CHOICE -> MultipleChoiceMultipleAnswers(
-                    options = (currentQuestion.options as List<String>),
-                    selectedOptions = emptySet(), // Correctly initialized as an empty Set
-                    onOptionSelected = { _, _ -> /* Handle selection */ }
-                )
+                QuestionType.MULTIPLE_CHOICE -> {
+                    Text(
+                        text = questions[currentIndex].questionDescription,
+                        style = TextStyle(fontSize = 20.sp)
+                    )
+                    MultipleChoiceMultipleAnswers(
+                        question = currentQuestion,
+                        selectedOptions = emptySet(), // Correctly initialized as an empty Set
+                        onOptionSelected = { _, _ -> /* Handle selection */ }
+                    )
+                }
 
                 QuestionType.FILL_IN_THE_BLANKS -> FillInTheBlanks(
                     question = currentQuestion,
