@@ -11,6 +11,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -27,8 +31,10 @@ fun QuizLayout(
     questions: List<Question>,
     currentIndex: Int,
     onNextClick: () -> Unit,
-    onHelpClick: () -> Unit
 ) {
+    val hint by rememberSaveable { mutableStateOf(questions[currentIndex].hint) }
+    val showHint = rememberSaveable { mutableStateOf(false) }
+
     Box {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -57,18 +63,26 @@ fun QuizLayout(
                     isTrue = null,
                     onTrueFalseSelected = { /* Handle selection */ }
                 )
+
                 QuestionType.MULTIPLE_CHOICE -> MultipleChoiceMultipleAnswers(
                     options = (currentQuestion.options as List<String>),
                     selectedOptions = emptySet(), // Correctly initialized as an empty Set
                     onOptionSelected = { _, _ -> /* Handle selection */ }
                 )
+
                 QuestionType.FILL_IN_THE_BLANKS -> FillInTheBlanks(
                     question = currentQuestion,
                     onAnswerSelected = { /* Handle answer change */ }
                 )
+
                 else -> Text("Unsupported question type")
             }
-
+            Row {
+                Text(
+                    text = if (showHint.value) hint else "",
+                    style = TextStyle(fontSize = 16.sp)
+                )
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -76,8 +90,12 @@ fun QuizLayout(
                 Button(onClick = onNextClick) {
                     Text("Next")
                 }
-                Button(onClick = onHelpClick) {
-                    Text("Help")
+                Button(
+                    onClick = {
+                        showHint.value = !showHint.value
+                    }
+                ) {
+                    Text("Hint")
                 }
             }
         }

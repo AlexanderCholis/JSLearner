@@ -94,8 +94,8 @@ fun QuizScreen(
                             totalQuestions = quiz.questions.size,
                             questions = quiz.questions,
                             currentIndex = currentIndex,
-                            onNextClick = { currentIndex++ },) {
-                        }
+                            onNextClick = { currentIndex++ },
+                        )
                         Column(
                             modifier = Modifier
                                 .fillMaxSize(),
