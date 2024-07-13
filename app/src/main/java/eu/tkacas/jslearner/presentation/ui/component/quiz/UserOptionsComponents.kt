@@ -290,33 +290,31 @@ fun FillInTheBlanks(
     onAnswerSelected: (List<String>) -> Unit
 ) {
     // Safely cast options to the expected type
-    val options = question.options as? List<Map<String, String>> ?: listOf()
-
-    val answers = remember { mutableStateOf<List<String>>(listOf()) }
+    val options = question.options as List<String>
+    // Split the question description into parts
+    val parts = question.questionDescription.split("____")
+    val answers = remember { mutableStateListOf<String>().apply { repeat(parts.size - 1) { add("") } } }
 
     Column {
-        // Display question description with blanks
-        Text(question.questionDescription.replace("____", "__________"))
-
-        // Display options as draggable cards
-        options.forEach { optionMap ->
-            optionMap["text"]?.let { text ->
-                DraggableWordCard(text = text)
+        parts.forEachIndexed { index, part ->
+            // Display the text part
+            Text(part)
+            // Display a TargetWordBox for each blank, except after the last part
+            if (index < parts.size - 1) {
+                TargetWordBox(
+                    text = answers[index],
+                    onDrop = { droppedText ->
+                        answers[index] = droppedText
+                        // Update the answers list whenever a drop occurs
+                        onAnswerSelected(answers.toList())
+                    }
+                )
             }
         }
 
-        // Correctly count the blanks in the question description
-        val blanksCount = "____".toRegex().findAll(question.questionDescription).count()
-        val userAnswers = remember { mutableStateListOf<String>().apply { repeat(blanksCount) { add("") } } }
-
-        userAnswers.forEachIndexed { index, _ ->
-            TargetWordBox(
-                text = userAnswers[index],
-                onDrop = { droppedText ->
-                    userAnswers[index] = droppedText
-                    answers.value = userAnswers.toList()
-                }
-            )
+        // Display options as draggable cards
+        options.forEach { option ->
+            DraggableWordCard(text = option)
         }
     }
 }
