@@ -66,7 +66,8 @@ fun AboutScreen(
                         }
                     },
                     title = stringResource(id = R.string.about),
-                    drawerState = drawerState
+                    drawerState = drawerState,
+                    showScore = false
                 )
             }
         ) { innerPadding ->
