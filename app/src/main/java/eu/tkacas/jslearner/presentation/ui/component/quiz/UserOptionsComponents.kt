@@ -188,7 +188,6 @@ fun DraggableWordCard(text: String) {
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(4.dp)
-            .background(Color.LightGray)
             .dragAndDropSource {
                 detectTapGestures(
                     onLongPress = {
