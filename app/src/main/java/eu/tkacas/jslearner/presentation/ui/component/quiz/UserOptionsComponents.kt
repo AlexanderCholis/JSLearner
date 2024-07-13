@@ -321,10 +321,6 @@ fun FillInTheBlanks(
                 }
             )
         }
-
-        Button(onClick = { onAnswerSelected(answers.value) }) {
-            Text("Submit")
-        }
     }
 }
 

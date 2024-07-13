@@ -89,8 +89,6 @@ fun QuizScreen(
                 ) {
                     Column {
                         Spacer(modifier = Modifier.padding(10.dp))
-                        NormalText(text = quiz.questions[currentIndex].questionDescription)
-                        Spacer(modifier = Modifier.weight(1f))
                         QuizLayout(
                             questionNumber = currentIndex + 1,
                             totalQuestions = quiz.questions.size,

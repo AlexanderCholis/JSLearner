@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.data.model.Question
 import eu.tkacas.jslearner.data.model.QuestionType
 
@@ -44,15 +46,19 @@ fun QuizLayout(
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
+            Text(
+                text = questions[currentIndex].questionDescription,
+                style = TextStyle(fontSize = 20.sp)
+            )
 
             val currentQuestion = questions[currentIndex]
             when (currentQuestion.questionType) {
                 QuestionType.TRUE_FALSE -> TrueFalse(
-                    isTrue = null, // Assuming a way to determine if the user has selected true or false
+                    isTrue = null,
                     onTrueFalseSelected = { /* Handle selection */ }
                 )
                 QuestionType.MULTIPLE_CHOICE -> MultipleChoiceMultipleAnswers(
-                    options = (currentQuestion.options as? List<Map<String, String>>)?.map { it["text"] ?: "" } ?: listOf(),
+                    options = (currentQuestion.options as List<String>),
                     selectedOptions = emptySet(), // Correctly initialized as an empty Set
                     onOptionSelected = { _, _ -> /* Handle selection */ }
                 )
