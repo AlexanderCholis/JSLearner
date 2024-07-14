@@ -41,8 +41,10 @@ import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
+import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.model.QuestionUI
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
@@ -274,21 +276,26 @@ fun FillInTheBlanks(
     val answers = remember { mutableStateListOf<String>().apply { repeat(parts.size - 1) { add("") } } }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(
-            text = question.questionDescription.replace("____", "_______"),
-            style = TextStyle(fontSize = 20.sp)
-        )
         Spacer(modifier = Modifier.height(35.dp))
-        Text(text = "Your answer is:", style = TextStyle(fontSize = 16.sp))
-        parts.indices.forEach { index ->
-            if (index < parts.size - 1) {
-                TargetWordBox(
-                    text = answers[index],
-                    onDrop = { droppedText ->
-                        answers[index] = droppedText
-                        onAnswerSelected(answers.toList())
-                    }
-                )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(id = R.string.your_answer_is),
+                style = TextStyle(fontSize = 16.sp)
+            )
+            parts.indices.forEach { index ->
+                if (index < parts.size - 1) {
+                    TargetWordBox(
+                        text = answers[index],
+                        onDrop = { droppedText ->
+                            answers[index] = droppedText
+                            onAnswerSelected(answers.toList())
+                        }
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.height(16.dp))

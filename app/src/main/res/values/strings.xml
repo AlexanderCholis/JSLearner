@@ -128,4 +128,5 @@
     <string name="hint">Hint</string>
     <string name="question">Question</string>
     <string name="of">of</string>
+    <string name="your_answer_is">Your answer is:</string>
 </resources>

@@ -67,14 +67,13 @@ fun QuizLayout(
                 )
             }
 
-
+            Text(
+                text = questions[currentIndex].questionDescription,
+                style = TextStyle(fontSize = 20.sp)
+            )
             val currentQuestion = questions[currentIndex]
             when (currentQuestion.questionType) {
                 QuestionType.TRUE_FALSE -> {
-                    Text(
-                        text = questions[currentIndex].questionDescription,
-                        style = TextStyle(fontSize = 20.sp)
-                    )
                     TrueFalse(
                         isTrue = null,
                         onTrueFalseSelected = { /* Handle selection */ }
@@ -82,10 +81,6 @@ fun QuizLayout(
                 }
 
                 QuestionType.MULTIPLE_CHOICE -> {
-                    Text(
-                        text = questions[currentIndex].questionDescription,
-                        style = TextStyle(fontSize = 20.sp)
-                    )
                     MultipleChoiceMultipleAnswers(
                         question = currentQuestion,
                         selectedOptions = emptySet(), // Correctly initialized as an empty Set
