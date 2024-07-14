@@ -45,7 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.model.QuestionUI
+import eu.tkacas.jslearner.domain.model.quiz.QuestionUI
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
 @Composable
