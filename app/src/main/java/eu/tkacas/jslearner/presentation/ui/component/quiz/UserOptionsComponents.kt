@@ -149,7 +149,7 @@ fun MultipleChoiceSingleAnswer(
 @Composable
 fun MultipleChoiceMultipleAnswers(
     question: QuestionUI,
-    selectedOptions: Set<String>?,
+    selectedOptions: List<String>?,
     onOptionSelected: (String, Boolean) -> Unit
 ) {
     val options = question.options as List<String>
