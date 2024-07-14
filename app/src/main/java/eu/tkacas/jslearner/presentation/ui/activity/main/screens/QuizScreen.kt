@@ -44,6 +44,7 @@ fun QuizScreen(
     val uiState by viewModel.uiState.collectAsState()
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var showResult by rememberSaveable { mutableStateOf(false) }
+    val selectedOptions = rememberSaveable { mutableStateOf(mutableMapOf<Int, List<String>>()) }
 
     LaunchedEffect(Unit) {
         val lessonId = sharedViewModel.selectedLessonId.value
@@ -101,10 +102,25 @@ fun QuizScreen(
                                 totalQuestions = quiz.questions.size,
                                 questions = quiz.questions,
                                 currentIndex = currentIndex,
+                                selectedOptions = selectedOptions.value,
+                                onOptionSelected = { index, options ->
+                                    selectedOptions.value[index] = options
+                                },
                                 onNextClick = {
                                     if (currentIndex < quiz.questions.size - 1) {
                                         currentIndex++
                                     } else {
+                                        // dummy score -> TODO
+                                        // Calculate results
+                                        var totalScore = 0
+                                        for ((index, question) in quiz.questions.withIndex()) {
+                                            val correctAnswers = question.correctAnswers
+                                            val userAnswers = selectedOptions.value[index] ?: emptyList()
+                                            if (userAnswers.sorted() == correctAnswers.sorted()) {
+                                                totalScore++
+                                            }
+                                        }
+                                        quiz.score = totalScore
                                         showResult = true
                                     }
                                 }
@@ -118,6 +134,8 @@ fun QuizScreen(
                                     showResult = false
                                 }
                             )
+                            Text(text = "Score: ${selectedOptions.value}")
+
                         }
 
                     }

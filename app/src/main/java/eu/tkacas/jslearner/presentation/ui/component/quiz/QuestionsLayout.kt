@@ -30,6 +30,8 @@ fun QuestionsLayout(
     totalQuestions: Int,
     questions: List<QuestionUI>,
     currentIndex: Int,
+    selectedOptions: MutableMap<Int, List<String>>,
+    onOptionSelected: (Int, List<String>) -> Unit,
     onNextClick: () -> Unit,
 ) {
     val hint by rememberSaveable { mutableStateOf(questions[currentIndex].hint) }
@@ -61,22 +63,35 @@ fun QuestionsLayout(
             when (currentQuestion.questionType) {
                 QuestionType.TRUE_FALSE -> {
                     TrueFalse(
-                        isTrue = null,
-                        onTrueFalseSelected = { /* Handle selection */ }
+                        isTrue = selectedOptions[currentIndex]?.firstOrNull() == "True",
+                        onTrueFalseSelected = { isTrue ->
+                            onOptionSelected(currentIndex, listOf(isTrue.toString()))
+                        }
                     )
                 }
 
                 QuestionType.MULTIPLE_CHOICE -> {
                     MultipleChoiceMultipleAnswers(
                         question = currentQuestion,
-                        selectedOptions = emptySet(), // Correctly initialized as an empty Set
-                        onOptionSelected = { _, _ -> /* Handle selection */ }
+                        selectedOptions = selectedOptions[currentIndex] ?: emptyList(),
+                        onOptionSelected = { option, isSelected ->
+                            val updatedOptions = selectedOptions[currentIndex]?.toMutableList() ?: mutableListOf()
+                            if (isSelected) {
+                                updatedOptions.add(option)
+                            } else {
+                                updatedOptions.remove(option)
+                            }
+                            onOptionSelected(currentIndex, updatedOptions)
+                        }
                     )
                 }
 
-                QuestionType.FILL_IN_THE_BLANKS -> FillInTheBlanks(
+                QuestionType.FILL_IN_THE_BLANKS -> FillInTheBlank(
                     question = currentQuestion,
-                    onAnswerSelected = { /* Handle answer change */ }
+                    selectedOptions = selectedOptions[currentIndex] ?: emptyList(),
+                    onAnswerSelected = { answers ->
+                        onOptionSelected(currentIndex, answers)
+                    }
                 )
 
                 else -> Text(text = stringResource(id = R.string.unsupported_question_type))
@@ -108,3 +123,4 @@ fun QuestionsLayout(
         }
     }
 }
+
