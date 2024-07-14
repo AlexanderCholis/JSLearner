@@ -2,7 +2,6 @@ package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +17,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,10 +31,8 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
-import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
-import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.domain.model.Quiz
-import eu.tkacas.jslearner.presentation.ui.component.quiz.QuizLayout
+import eu.tkacas.jslearner.presentation.ui.component.quiz.QuestionsLayout
 import eu.tkacas.jslearner.presentation.ui.component.quiz.ResultLayout
 
 @Composable
@@ -100,7 +96,7 @@ fun QuizScreen(
                         if (!showResult){
                             LinearProgressIndicator(progress = progress)
                             Spacer(modifier = Modifier.height(16.dp))
-                            QuizLayout(
+                            QuestionsLayout(
                                 questionNumber = currentIndex + 1,
                                 totalQuestions = quiz.questions.size,
                                 questions = quiz.questions,
