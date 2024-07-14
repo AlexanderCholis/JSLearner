@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.model.QuestionUI
+import eu.tkacas.jslearner.domain.model.quiz.QuestionUI
 import eu.tkacas.jslearner.presentation.ui.theme.GreenPal
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.RedPal
