@@ -141,11 +141,7 @@ fun StartLessonScreen(
                     BackAppTopBar(
                         color = MaterialTheme.colorScheme.primaryContainer,
                         onBackClick = {
-                            navController.popBackStack(
-                                navController.graph.startDestinationId,
-                                inclusive = false
-                            )
-                            navController.navigate("roadmap")
+                            navController.navigateUp()
                         }
                     )
                 }
