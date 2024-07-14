@@ -127,6 +127,8 @@
     <string name="submit">Submit</string>
     <string name="hint">Hint</string>
     <string name="question">Question</string>
+    <string name="questions">\u00A0Questions</string>
     <string name="of">of</string>
+    <string name="this_quiz_will_test_your_knowledge">This quiz will test your knowledge of the fundamentals of JavaScript.</string>
     <string name="your_answer_is">Your answer is:</string>
 </resources>
