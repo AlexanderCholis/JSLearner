@@ -269,7 +269,9 @@ fun FillInTheBlank(
     selectedOption: String?,
     onAnswerSelected: (String) -> Unit
 ) {
-    var answer by remember { mutableStateOf(selectedOption ?: "") }
+    val optionKey = options.joinToString(separator = "")
+    val key = optionKey.hashCode().toString()
+    var answer by remember(key) { mutableStateOf(selectedOption ?: "") }
 
     Column(modifier = Modifier.padding(16.dp)) {
         Spacer(modifier = Modifier.height(35.dp))
