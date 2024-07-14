@@ -268,8 +268,9 @@ fun TargetWordBox(
 
 
 @Composable
-fun FillInTheBlanks(
+fun FillInTheBlank(
     question: QuestionUI,
+    selectedOptions: List<String>?,
     onAnswerSelected: (List<String>) -> Unit
 ) {
     val options = question.options as List<String>
