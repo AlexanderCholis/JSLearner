@@ -1,4 +1,4 @@
-package eu.tkacas.jslearner.domain.model
+package eu.tkacas.jslearner.domain.model.quiz
 
 import eu.tkacas.jslearner.data.model.QuestionType
 

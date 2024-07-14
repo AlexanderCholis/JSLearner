@@ -1,8 +1,8 @@
-package eu.tkacas.jslearner.domain.usecase.main.roadmap
+package eu.tkacas.jslearner.domain.usecase.main.quiz
 
 import eu.tkacas.jslearner.data.model.Question
-import eu.tkacas.jslearner.domain.model.QuestionUI
-import eu.tkacas.jslearner.domain.model.Quiz
+import eu.tkacas.jslearner.domain.model.quiz.QuestionUI
+import eu.tkacas.jslearner.domain.model.quiz.Quiz
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 
 class GetQuizUseCase(private val roadMapRepository: RoadMapRepository) {

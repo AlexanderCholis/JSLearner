@@ -17,7 +17,7 @@ import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
-import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
+import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
