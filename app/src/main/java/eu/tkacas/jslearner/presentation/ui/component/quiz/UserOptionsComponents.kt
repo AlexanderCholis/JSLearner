@@ -46,7 +46,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.domain.model.quiz.QuestionUI
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
 @Composable
@@ -149,16 +148,14 @@ fun MultipleChoiceSingleAnswer(
 
 @Composable
 fun MultipleChoiceMultipleAnswers(
-    question: QuestionUI,
+    options: List<String>,
     selectedOptions: List<String>?,
     onOptionSelected: (String, Boolean) -> Unit
 ) {
-    val options = question.options as List<String>
-
     val safeSelectedOptions = selectedOptions ?: emptySet()
     Column {
         options.forEach { option ->
-            val key = "${question.questionDescription.hashCode()}$option"
+            val key = option.hashCode().toString()
             val isSelected = remember(key) { mutableStateOf(option in safeSelectedOptions) }
 
             MultipleChoiceMultipleCard(
@@ -266,16 +263,13 @@ fun TargetWordBox(
     }
 }
 
-
 @Composable
 fun FillInTheBlank(
-    question: QuestionUI,
-    selectedOptions: List<String>?,
-    onAnswerSelected: (List<String>) -> Unit
+    options: List<String>,
+    selectedOption: String?,
+    onAnswerSelected: (String) -> Unit
 ) {
-    val options = question.options as List<String>
-    val parts = question.questionDescription.split("____")
-    val answers = remember { mutableStateListOf<String>().apply { repeat(parts.size - 1) { add("") } } }
+    var answer by remember { mutableStateOf(selectedOption ?: "") }
 
     Column(modifier = Modifier.padding(16.dp)) {
         Spacer(modifier = Modifier.height(35.dp))
@@ -288,17 +282,13 @@ fun FillInTheBlank(
                 text = stringResource(id = R.string.your_answer_is),
                 style = TextStyle(fontSize = 16.sp)
             )
-            parts.indices.forEach { index ->
-                if (index < parts.size - 1) {
-                    TargetWordBox(
-                        text = answers[index],
-                        onDrop = { droppedText ->
-                            answers[index] = droppedText
-                            onAnswerSelected(answers.toList())
-                        }
-                    )
+            TargetWordBox(
+                text = answer,
+                onDrop = { droppedText ->
+                    answer = droppedText
+                    onAnswerSelected(droppedText)
                 }
-            }
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row(

@@ -72,7 +72,7 @@ fun QuestionsLayout(
 
                 QuestionType.MULTIPLE_CHOICE -> {
                     MultipleChoiceMultipleAnswers(
-                        question = currentQuestion,
+                        options = currentQuestion.options,
                         selectedOptions = selectedOptions[currentIndex] ?: emptyList(),
                         onOptionSelected = { option, isSelected ->
                             val updatedOptions = selectedOptions[currentIndex]?.toMutableList() ?: mutableListOf()
@@ -87,10 +87,10 @@ fun QuestionsLayout(
                 }
 
                 QuestionType.FILL_IN_THE_BLANKS -> FillInTheBlank(
-                    question = currentQuestion,
-                    selectedOptions = selectedOptions[currentIndex] ?: emptyList(),
-                    onAnswerSelected = { answers ->
-                        onOptionSelected(currentIndex, answers)
+                    options = currentQuestion.options,
+                    selectedOption = selectedOptions[currentIndex]?.firstOrNull(),
+                    onAnswerSelected = { answer ->
+                        onOptionSelected(currentIndex, listOf(answer))
                     }
                 )
 
