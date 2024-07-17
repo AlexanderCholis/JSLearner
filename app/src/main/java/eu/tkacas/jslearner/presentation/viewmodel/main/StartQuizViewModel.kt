@@ -2,20 +2,21 @@ package eu.tkacas.jslearner.presentation.viewmodel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.quiz.Quiz
 import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizUseCase
+import eu.tkacas.jslearner.domain.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class QuizViewModel (
+class StartQuizViewModel(
     private val getQuizUseCase: GetQuizUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<Result<Quiz>>(Result.Loading)
-    val uiState: StateFlow<Result<Quiz>> = _uiState
+    val uiState: StateFlow<Result<Quiz>> = _uiState.asStateFlow()
 
     fun loadQuiz(lessonId: String) {
         viewModelScope.launch(Dispatchers.IO) {
