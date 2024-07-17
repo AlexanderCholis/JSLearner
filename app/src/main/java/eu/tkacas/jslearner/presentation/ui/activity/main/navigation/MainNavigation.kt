@@ -15,6 +15,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScre
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
@@ -27,6 +28,7 @@ internal fun MainNavigation(
     roadMapViewModel: RoadMapViewModel,
     startCourseViewModel: StartCourseViewModel,
     startLessonViewModel: StartLessonViewModel,
+    lessonViewModel: LessonViewModel,
     startQuizViewModel: StartQuizViewModel,
     quizViewModel: QuizViewModel,
     accountViewModel: AccountViewModel
@@ -62,6 +64,7 @@ internal fun MainNavigation(
         composable("lesson") {
             LessonScreen(
                 navController = navController,
+                viewModel = lessonViewModel,
                 sharedViewModel = sharedViewModel
             )
         }

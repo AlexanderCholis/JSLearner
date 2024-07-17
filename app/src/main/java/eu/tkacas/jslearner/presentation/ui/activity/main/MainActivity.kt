@@ -12,6 +12,7 @@ import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigation
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
@@ -51,6 +52,13 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
+                    val lessonViewModel = viewModel<LessonViewModel>(
+                        factory = viewModelFactory {
+                            LessonViewModel(
+                                 getQuizExistanceUseCase = JSLearner.appModule.getQuizExistanceUseCase
+                            )
+                        }
+                    )
                     val accountViewModel = viewModel<AccountViewModel>(
                         factory = viewModelFactory {
                             AccountViewModel(
@@ -78,6 +86,7 @@ class MainActivity : ComponentActivity() {
                         roadMapViewModel = roadMapViewModel,
                         startCourseViewModel = startCourseViewModel,
                         startLessonViewModel = startLessonViewModel,
+                        lessonViewModel = lessonViewModel,
                         startQuizViewModel = startQuizViewModel,
                         quizViewModel = quizViewModel,
                         accountViewModel = accountViewModel
