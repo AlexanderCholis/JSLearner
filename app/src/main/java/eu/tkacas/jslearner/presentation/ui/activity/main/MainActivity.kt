@@ -12,11 +12,10 @@ import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigation
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
-import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
-import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartQuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.viewModelFactory
 
 class MainActivity : ComponentActivity() {
@@ -51,13 +50,6 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
-                    val lessonViewModel = viewModel<LessonViewModel>(
-                        factory = viewModelFactory {
-                            LessonViewModel(
-                                getLessonUseCase = JSLearner.appModule.getLessonUseCase
-                            )
-                        }
-                    )
                     val accountViewModel = viewModel<AccountViewModel>(
                         factory = viewModelFactory {
                             AccountViewModel(
@@ -67,9 +59,9 @@ class MainActivity : ComponentActivity() {
                         }
                     )
 
-                    val quizViewModel = viewModel<QuizViewModel>(
+                    val startQuizViewModel = viewModel<StartQuizViewModel>(
                         factory = viewModelFactory {
-                            QuizViewModel(
+                            StartQuizViewModel(
                                 getQuizUseCase = JSLearner.appModule.getQuizUseCase
                             )
                         }
@@ -78,9 +70,8 @@ class MainActivity : ComponentActivity() {
                         roadMapViewModel = roadMapViewModel,
                         startCourseViewModel = startCourseViewModel,
                         startLessonViewModel = startLessonViewModel,
-                        lessonViewModel = lessonViewModel,
-                        accountViewModel = accountViewModel,
-                        quizViewModel = quizViewModel
+                        startQuizViewModel = startQuizViewModel,
+                        accountViewModel = accountViewModel
                     )
                 }
             }

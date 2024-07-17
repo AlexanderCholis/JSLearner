@@ -15,21 +15,19 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScre
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
-import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
-import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartQuizViewModel
 
 @Composable
 internal fun MainNavigation(
     roadMapViewModel: RoadMapViewModel,
     startCourseViewModel: StartCourseViewModel,
     startLessonViewModel: StartLessonViewModel,
-    lessonViewModel: LessonViewModel,
-    accountViewModel: AccountViewModel,
-    quizViewModel: QuizViewModel
+    startQuizViewModel: StartQuizViewModel,
+    accountViewModel: AccountViewModel
 ) {
     val navController = rememberNavController()
     val sharedViewModel = MainSharedViewModel()
@@ -62,7 +60,6 @@ internal fun MainNavigation(
         composable("lesson") {
             LessonScreen(
                 navController = navController,
-                viewModel = lessonViewModel,
                 sharedViewModel = sharedViewModel
             )
         }
@@ -92,13 +89,13 @@ internal fun MainNavigation(
         composable("startQuiz") {
             StartQuizScreen(
                 navController = navController,
+                viewModel = startQuizViewModel,
                 sharedViewModel = sharedViewModel
             )
         }
         composable("quiz") {
             QuizScreen(
                 navController = navController,
-                viewModel = quizViewModel,
                 sharedViewModel = sharedViewModel
             )
         }
