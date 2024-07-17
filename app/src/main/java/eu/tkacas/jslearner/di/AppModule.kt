@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
@@ -67,7 +66,6 @@ interface AppModule {
     val getLessonsUseCase: GetLessonsUseCase
 
     // For the ExploringPathScreen
-    val exploringPathRepository: ExploringPathRepository
     val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase
 
     // For the NavigationDrawer
