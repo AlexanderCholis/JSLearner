@@ -35,7 +35,8 @@ fun CoursesPathScreen(
                 color = MaterialTheme.colorScheme.primaryContainer,
                 onBackClick = { navController.navigateUp() },
                 showScore = true,
-                score = sharedViewModel.user.value?.experienceScore ?: 0
+                score = sharedViewModel.user.value?.experienceScore ?: 0,
+                isCoursesPath = true
             )
         },
     ) { innerPadding ->
