@@ -31,6 +31,7 @@ import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.domain.model.quiz.Quiz
+import eu.tkacas.jslearner.domain.model.quiz.QuizResults
 import eu.tkacas.jslearner.presentation.ui.component.quiz.QuestionsLayout
 import eu.tkacas.jslearner.presentation.ui.component.quiz.ResultLayout
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
@@ -44,6 +45,7 @@ fun QuizScreen(
     val quiz = sharedViewModel.selectedQuiz.value
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var showResult by rememberSaveable { mutableStateOf(false) }
+    var quizResults by rememberSaveable { mutableStateOf<QuizResults?>(null) }
     val selectedOptions = rememberSaveable { mutableStateOf(mutableMapOf<Int, List<String>>()) }
 
     if (quiz != null) {
@@ -100,17 +102,17 @@ fun QuizScreen(
                                     // Convert selectedOptions to the expected format
                                     val userOptions = selectedOptions.value.values.toList()
                                     // Calculate results using GetQuizResultsUseCase
-                                    val quizResults = viewModel.getQuizResults(quiz, userOptions)
+                                    quizResults = viewModel.getQuizResults(quiz, userOptions)
                                     // Update UI with results
                                     showResult = true
                                     // Assuming Quiz model has a way to set its score directly
-                                    quiz.score = quizResults.score
+                                    quiz.score = quizResults!!.score
                                 }
                             }
                         )
                     } else {
                         ResultLayout(
-                            questions = quiz.questions,
+                            questions = quizResults!!.questionResults,
                             totalScore = quiz.score,
                             onQuestionSelected = { index ->
                                 currentIndex = index

@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
+import eu.tkacas.jslearner.domain.model.quiz.QuestionResult
 import eu.tkacas.jslearner.domain.model.quiz.QuestionUI
 import eu.tkacas.jslearner.presentation.ui.theme.GreenPal
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
@@ -32,7 +33,7 @@ import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
 fun ResultLayout(
-    questions: List<QuestionUI>,
+    questions: List<QuestionResult>,
     totalScore: Int,
     onQuestionSelected: (Int) -> Unit // Add this parameter
 ) {
@@ -40,10 +41,9 @@ fun ResultLayout(
         DisplayScore(totalScore)
         LazyColumn {
             itemsIndexed(questions) { index, question ->
-                val isCorrect = true // This logic should be replaced with actual correctness check
                 QuestionItem(
                     questionNumber = index + 1,
-                    isCorrect = isCorrect,
+                    isCorrect = question.score,
                     onQuestionSelected = { onQuestionSelected(index) } // Use the parameter here
                 )
             }
