@@ -116,6 +116,7 @@
     <string name="exclamation_mark">!</string>
     <string name="no_roadmap_nodes_available">No roadmap nodes available</string>
     <string name="error">Error:</string>
+    <string name="score">Score:</string>
     <string name="an_error_occurred">An error occurred</string>
     <string name="unknown">Unknown</string>
     <string name="user">User</string>
@@ -131,4 +132,6 @@
     <string name="of">of</string>
     <string name="this_quiz_will_test_your_knowledge">This quiz will test your knowledge of the fundamentals of JavaScript.</string>
     <string name="your_answer_is">Your answer is:</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
 </resources>

@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,16 +64,23 @@ fun QuestionItem(
             .clickable(onClick = onQuestionSelected)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Question $questionNumber", fontWeight = FontWeight.Bold, color = PrussianBlue)
+            Text(
+                text = stringResource(id = R.string.question) + " $questionNumber",
+                fontWeight = FontWeight.Bold,
+                color = PrussianBlue
+            )
             Spacer(modifier = Modifier.width(8.dp))
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .background(color = if (isCorrect) GreenPal else RedPal, shape = RoundedCornerShape(8.dp))
+                    .background(
+                        color = if (isCorrect) GreenPal else RedPal,
+                        shape = RoundedCornerShape(8.dp)
+                    )
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = if (isCorrect) "Correct" else "Incorrect",
+                    text = if (isCorrect) stringResource(id = R.string.correct) else stringResource(id = R.string.incorrect),
                     color = Color.White
                 )
             }

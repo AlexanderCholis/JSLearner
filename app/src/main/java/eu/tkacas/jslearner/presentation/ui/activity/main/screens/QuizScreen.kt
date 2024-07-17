@@ -114,7 +114,9 @@ fun QuizScreen(
                                 showResult = false
                             }
                         )
-                        Text(text = "Score: ${selectedOptions.value}")
+                        Text(
+                            text = stringResource(id = R.string.score) + " ${selectedOptions.value}"
+                        )
                     }
                 }
             }
