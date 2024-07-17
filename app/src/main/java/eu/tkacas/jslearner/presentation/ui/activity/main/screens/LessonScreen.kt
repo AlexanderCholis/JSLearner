@@ -33,15 +33,18 @@ import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
+import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 
 @Composable
 fun LessonScreen(
     navController: NavController,
+    viewModel: LessonViewModel,
     sharedViewModel: MainSharedViewModel
 ) {
     val lesson = sharedViewModel.selectedLesson.value
     val previousRoute = navController.previousBackStackEntry?.destination?.route
+
 
     if (lesson != null) {
         var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startLesson") 0 else lesson.theoriesList.size - 1) }
@@ -96,7 +99,13 @@ fun LessonScreen(
                             if (currentIndex < lesson.theoriesList.size - 1) {
                                 currentIndex++
                             } else {
-                                navController.navigate("startQuiz")
+                                viewModel.hasQuizForLesson(lesson.id) { hasQuiz ->
+                                    if (hasQuiz) {
+                                        navController.navigate("startQuiz")
+                                    } else {
+                                        navController.navigate("roadmap")
+                                    }
+                                }
                             }
                         })
                     }
