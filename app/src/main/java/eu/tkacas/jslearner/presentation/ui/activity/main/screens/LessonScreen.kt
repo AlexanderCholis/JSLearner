@@ -70,9 +70,13 @@ fun LessonScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
+                    .padding(innerPadding)
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 28.dp, end = 28.dp, top = 18.dp, bottom = 28.dp),
+                ) {
                     BoldText(text = lesson.title)
                     Spacer(modifier = Modifier.padding(10.dp))
                     NormalText(text = lesson.theoriesList[currentIndex])

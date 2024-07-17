@@ -51,10 +51,6 @@ fun QuizScreen(
     if (quiz != null) {
         var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startQuiz") 0 else quiz.questions.size) }
 
-        val progress by animateFloatAsState(
-            targetValue = (currentIndex + 1) / (quiz.questions.size.toFloat()), label = ""
-        )
-
         Scaffold(
             modifier = Modifier
                 .fillMaxSize(),
@@ -79,13 +75,12 @@ fun QuizScreen(
                     .padding(innerPadding)
             ) {
                 Column (
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 28.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
-
                 ) {
                     if (!showResult){
-                        LinearProgressIndicator(progress = progress)
-                        Spacer(modifier = Modifier.height(16.dp))
                         QuestionsLayout(
                             questionNumber = currentIndex + 1,
                             totalQuestions = quiz.questions.size,

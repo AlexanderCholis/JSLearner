@@ -273,7 +273,7 @@ fun FillInTheBlank(
     val key = optionKey.hashCode().toString()
     var answer by remember(key) { mutableStateOf(selectedOption ?: "") }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column {
         Spacer(modifier = Modifier.height(35.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),

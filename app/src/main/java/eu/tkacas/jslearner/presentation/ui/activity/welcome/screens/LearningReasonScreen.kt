@@ -70,12 +70,12 @@ fun LearningReasonScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(top = 70.dp, bottom = 28.dp)
+                    .padding(padding)
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = 32.dp, end = 32.dp),
+                        .padding(start = 32.dp, end = 32.dp, bottom = 28.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
@@ -89,7 +89,7 @@ fun LearningReasonScreen(
                     NormalText(text = stringResource(id = R.string.finding_your_path))
                     Spacer(modifier = Modifier.height(8.dp))
                     BoldText(text = stringResource(id = R.string.why_do_you_want_to_learn))
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     uiLearningReasons.forEachIndexed { index, item ->
                         LearningReasonCard(
                             image = item.image,

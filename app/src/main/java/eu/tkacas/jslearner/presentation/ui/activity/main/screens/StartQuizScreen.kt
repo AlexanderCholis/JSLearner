@@ -82,7 +82,7 @@ fun StartQuizScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(top = 16.dp, start = 12.dp, end = 12.dp, bottom = 16.dp)
+                            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 28.dp)
                     ) {
                         Text(
                             text = quiz.questions.size.toString() + stringResource(id = R.string.questions),

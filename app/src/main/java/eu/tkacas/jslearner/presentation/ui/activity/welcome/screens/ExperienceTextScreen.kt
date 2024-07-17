@@ -68,9 +68,13 @@ fun ExperienceTextScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
+                    .padding(padding)
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 28.dp, end = 28.dp, bottom = 28.dp)
+                ) {
                     BoldText(text = stringResource(id = texts[currentIndex].boldText))
                     Spacer(modifier = Modifier.padding(10.dp))
                     NormalText(text = stringResource(id = texts[currentIndex].normalText))
