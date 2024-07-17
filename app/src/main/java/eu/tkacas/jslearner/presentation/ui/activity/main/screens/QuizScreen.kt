@@ -33,10 +33,12 @@ import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.domain.model.quiz.Quiz
 import eu.tkacas.jslearner.presentation.ui.component.quiz.QuestionsLayout
 import eu.tkacas.jslearner.presentation.ui.component.quiz.ResultLayout
+import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 
 @Composable
 fun QuizScreen(
     navController: NavController,
+    viewModel: QuizViewModel,
     sharedViewModel: MainSharedViewModel
 ) {
     val quiz = sharedViewModel.selectedQuiz.value
@@ -95,18 +97,14 @@ fun QuizScreen(
                                 if (currentIndex < quiz.questions.size - 1) {
                                     currentIndex++
                                 } else {
-                                    // dummy score -> TODO
-                                    // Calculate results
-                                    var totalScore = 0
-                                    for ((index, question) in quiz.questions.withIndex()) {
-                                        val correctAnswers = question.correctAnswers
-                                        val userAnswers = selectedOptions.value[index] ?: emptyList()
-                                        if (userAnswers.sorted() == correctAnswers.sorted()) {
-                                            totalScore++
-                                        }
-                                    }
-                                    quiz.score = totalScore
+                                    // Convert selectedOptions to the expected format
+                                    val userOptions = selectedOptions.value.values.toList()
+                                    // Calculate results using GetQuizResultsUseCase
+                                    val quizResults = viewModel.getQuizResults(quiz, userOptions)
+                                    // Update UI with results
                                     showResult = true
+                                    // Assuming Quiz model has a way to set its score directly
+                                    quiz.score = quizResults.score
                                 }
                             }
                         )
@@ -120,9 +118,7 @@ fun QuizScreen(
                             }
                         )
                         Text(text = "Score: ${selectedOptions.value}")
-
                     }
-
                 }
             }
         }
