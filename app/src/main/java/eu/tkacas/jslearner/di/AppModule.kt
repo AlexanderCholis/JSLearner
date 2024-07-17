@@ -7,6 +7,7 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuestionResultUseCase
+import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizExistanceUseCase
 import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizResultsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
@@ -64,6 +65,7 @@ interface AppModule {
     val getCourseUseCase: GetCourseUseCase
     val getLessonUseCase: GetLessonUseCase
     val getLessonsUseCase: GetLessonsUseCase
+    val getQuizExistanceUseCase: GetQuizExistanceUseCase
     val getQuizUseCase: GetQuizUseCase
     val getQuestionResultUseCase: GetQuestionResultUseCase
     val getQuizResultsUseCase: GetQuizResultsUseCase
