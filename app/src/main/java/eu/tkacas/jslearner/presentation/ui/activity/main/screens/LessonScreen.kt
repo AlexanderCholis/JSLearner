@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -78,7 +79,7 @@ fun LessonScreen(
                         .padding(start = 28.dp, end = 28.dp, top = 18.dp, bottom = 28.dp),
                 ) {
                     BoldText(text = lesson.title)
-                    Spacer(modifier = Modifier.padding(10.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                     NormalText(text = lesson.theoriesList[currentIndex])
                     Spacer(modifier = Modifier.weight(1f))
                     Column(
@@ -90,7 +91,7 @@ fun LessonScreen(
                         if (lesson.theoriesList.size != 1) {
                             LinearProgressIndicator(progress = progress)
                         }
-                        Spacer(modifier = Modifier.padding(20.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
                         GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
                             if (currentIndex < lesson.theoriesList.size - 1) {
                                 currentIndex++

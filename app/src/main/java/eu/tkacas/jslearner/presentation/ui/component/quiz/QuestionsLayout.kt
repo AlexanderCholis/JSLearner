@@ -63,12 +63,12 @@ fun QuestionsLayout(
                     fontWeight = FontWeight.Bold
                 )
             }
-            Spacer(modifier = Modifier.padding(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = questions[currentIndex].questionDescription,
                 style = TextStyle(fontSize = 20.sp)
             )
-            Spacer(modifier = Modifier.padding(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             val currentQuestion = questions[currentIndex]
             when (currentQuestion.questionType) {
                 QuestionType.TRUE_FALSE -> {
@@ -119,9 +119,9 @@ fun QuestionsLayout(
                     text = if (showHint.value) hint else "",
                     style = TextStyle(fontSize = 16.sp)
                 )
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
                 LinearProgressIndicator(progress = progress)
-                Spacer(modifier = Modifier.padding(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly

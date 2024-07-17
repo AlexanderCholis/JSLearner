@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
@@ -92,14 +93,14 @@ fun ExploringPathScreen(
                         ) {
                             BoldText(text = stringResource(id = R.string.your_path))
                             NormalText(text = stringResource(id = R.string.your_path_description))
-                            Spacer(modifier = Modifier.padding(8.dp))
+                            Spacer(modifier = Modifier.height(8.dp))
                             LazyColumn {
                                 items(courseList.size) { index ->
                                     PathModuleCard(
                                         moduleTitleText = courseList[index].title,
                                         moduleDescriptionText = courseList[index].description
                                     )
-                                    Spacer(modifier = Modifier.padding(8.dp))
+                                    Spacer(modifier = Modifier.height(8.dp))
                                 }
                             }
                             Column(
