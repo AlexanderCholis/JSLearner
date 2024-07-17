@@ -6,6 +6,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuestionResultUseCase
+import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizResultsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
@@ -56,14 +58,15 @@ interface AppModule {
     val validatePassword: ValidatePassword
     val validateTerms: ValidateTerms
 
-
     // For the RoadMap
     val roadMapRepository: RoadMapRepository
     val getRoadMapUseCase: GetRoadMapUseCase
     val getCourseUseCase: GetCourseUseCase
     val getLessonUseCase: GetLessonUseCase
-    val getQuizUseCase: GetQuizUseCase
     val getLessonsUseCase: GetLessonsUseCase
+    val getQuizUseCase: GetQuizUseCase
+    val getQuestionResultUseCase: GetQuestionResultUseCase
+    val getQuizResultsUseCase: GetQuizResultsUseCase
 
     // For the ExploringPathScreen
     val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase
