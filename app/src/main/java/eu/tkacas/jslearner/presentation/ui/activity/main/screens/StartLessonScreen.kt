@@ -123,6 +123,7 @@ fun StartLessonScreen(
                                 GeneralButtonComponent(
                                     valueId = R.string.start_lesson,
                                     onButtonClicked = {
+                                        sharedViewModel.setSelectedLesson(lesson)
                                         navController.navigate("lesson")
                                     }
                                 )
