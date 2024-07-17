@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.data.repository
 
 import eu.tkacas.jslearner.data.model.Course
+import eu.tkacas.jslearner.data.model.CourseLevel
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.Question
 import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
@@ -26,5 +27,9 @@ class RoadMapRepositoryImpl(private val dataSource: FirestoreDataSource) : RoadM
 
     override suspend fun getQuestions(courseId: String, lessonId: String): List<Question> {
         return dataSource.getQuestions(courseId, lessonId)
+    }
+
+    override suspend fun getCoursesBasedOnLevel(courseLevel: CourseLevel): List<Course> {
+        return dataSource.getCoursesBasedOnLevel(courseLevel)
     }
 }
