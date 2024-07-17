@@ -77,9 +77,9 @@ fun QuizScreen(
                     .padding(innerPadding)
             ) {
                 Column (
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
-
                 ) {
                     if (!showResult){
                         LinearProgressIndicator(progress = progress)

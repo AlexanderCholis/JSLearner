@@ -76,7 +76,7 @@ fun ExploringPathScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(top = 30.dp, bottom = 28.dp)
+                    .padding(padding)
             ) {
                 when (exploringPathState) {
                     is Result.Loading -> {
@@ -88,7 +88,7 @@ fun ExploringPathScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(top = 30.dp, start = 32.dp, end = 32.dp),
+                                .padding(start = 32.dp, end = 32.dp, bottom = 28.dp)
                         ) {
                             BoldText(text = stringResource(id = R.string.your_path))
                             NormalText(text = stringResource(id = R.string.your_path_description))
