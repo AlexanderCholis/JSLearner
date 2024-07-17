@@ -16,6 +16,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScre
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
@@ -27,6 +28,7 @@ internal fun MainNavigation(
     startCourseViewModel: StartCourseViewModel,
     startLessonViewModel: StartLessonViewModel,
     startQuizViewModel: StartQuizViewModel,
+    quizViewModel: QuizViewModel,
     accountViewModel: AccountViewModel
 ) {
     val navController = rememberNavController()
@@ -96,6 +98,7 @@ internal fun MainNavigation(
         composable("quiz") {
             QuizScreen(
                 navController = navController,
+                viewModel = quizViewModel,
                 sharedViewModel = sharedViewModel
             )
         }
