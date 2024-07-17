@@ -87,7 +87,9 @@ fun LessonScreen(
                         verticalArrangement = Arrangement.Bottom,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        LinearProgressIndicator(progress = progress)
+                        if (lesson.theoriesList.size != 1) {
+                            LinearProgressIndicator(progress = progress)
+                        }
                         Spacer(modifier = Modifier.padding(20.dp))
                         GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
                             if (currentIndex < lesson.theoriesList.size - 1) {
