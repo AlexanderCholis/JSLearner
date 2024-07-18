@@ -36,16 +36,16 @@ import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 fun ResultLayout(
     questions: List<QuestionResult>,
     totalScore: Int,
-    onQuestionSelected: (Int) -> Unit // Add this parameter
+    onQuestionSelected: (Int) -> Unit
 ) {
     Column {
-        DisplayScore(totalScore)
+        DisplayScore(totalScore, questions)
         LazyColumn {
             itemsIndexed(questions) { index, question ->
                 QuestionItem(
                     questionNumber = index + 1,
                     isCorrect = question.score,
-                    onQuestionSelected = { onQuestionSelected(index) } // Use the parameter here
+                    onQuestionSelected = { onQuestionSelected(index) }
                 )
             }
         }
@@ -56,8 +56,8 @@ fun ResultLayout(
 fun QuestionItem(
     questionNumber: Int,
     isCorrect: Boolean,
-    onQuestionSelected: () -> Unit // Add this parameter
-) { // Show if the question is correct or not
+    onQuestionSelected: () -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(8.dp)
@@ -89,7 +89,11 @@ fun QuestionItem(
 }
 
 @Composable
-fun DisplayScore(courseScore: Int) { // Display the score of the course
+fun DisplayScore(
+    courseScore: Int,
+    questions: List<QuestionResult>
+) {
+    val correctAnswers = questions.count { it.score }
     Column(
         modifier = Modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -103,7 +107,7 @@ fun DisplayScore(courseScore: Int) { // Display the score of the course
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(16.dp))
-        if (courseScore == 0) {
+        if (correctAnswers >= questions.size / 2) {
             Image(
                 painter = painterResource(id = R.drawable.element_teacher_fail),
                 contentDescription = stringResource(id = R.string.fail),

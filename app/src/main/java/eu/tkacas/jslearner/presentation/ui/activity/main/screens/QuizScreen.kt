@@ -63,7 +63,8 @@ fun QuizScreen(
                         } else {
                             navController.navigateUp()
                         }
-                    }
+                    },
+                    isBackEnabled = currentIndex > 0 && !showResult
                 )
             }
         ) { innerPadding ->
