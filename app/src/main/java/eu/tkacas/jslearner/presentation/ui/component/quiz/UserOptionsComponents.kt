@@ -172,12 +172,12 @@ fun MultipleChoiceMultipleAnswers(
 
 @Composable
 fun TrueFalse(
-    isTrue: Boolean?,
+    selectedOption: Boolean?,
     onTrueFalseSelected: (Boolean) -> Unit
 ) {
     MultipleChoiceSingleAnswer(
         options = listOf("True", "False"),
-        initialSelectedOption = if (isTrue == true) "True" else if (isTrue == false) "False" else null,
+        initialSelectedOption = if (selectedOption == true) "True" else if (selectedOption == false) "False" else null,
         onOptionSelected = { option ->
             onTrueFalseSelected(option == "True")
         }
