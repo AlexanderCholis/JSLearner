@@ -1,12 +1,18 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -17,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -45,7 +52,7 @@ fun QuizScreen(
     val quiz = sharedViewModel.selectedQuiz.value
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var showResult by rememberSaveable { mutableStateOf(false) }
-    var quizResults by rememberSaveable { mutableStateOf<QuizResults?>(null) }
+    var quizResults by remember { mutableStateOf<QuizResults?>(null) }
     val selectedOptions = rememberSaveable { mutableStateOf(mutableMapOf<Int, List<String>>()) }
 
     if (quiz != null) {
@@ -118,6 +125,33 @@ fun QuizScreen(
                         Text(
                             text = stringResource(id = R.string.score) + " ${selectedOptions.value}"
                         )
+                        Spacer(modifier = Modifier.weight(1f))
+                        Column(
+                            modifier = Modifier
+                                .wrapContentSize(),
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly
+                            ) {
+                                Button(
+                                    onClick = {
+                                        navController.navigateUp()
+                                    }
+                                ) {
+                                    Text(text = stringResource(id = R.string.restart_quiz))
+                                }
+                                Button(
+                                    onClick = {
+                                        navController.navigate("roadmap")
+                                    }
+                                ) {
+                                    Text(text = stringResource(id = R.string.end_quiz))
+                                }
+                            }
+                        }
                     }
                 }
             }
