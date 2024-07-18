@@ -1,7 +1,5 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,17 +7,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
-import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -33,14 +28,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
-import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
-import eu.tkacas.jslearner.domain.model.quiz.Quiz
 import eu.tkacas.jslearner.domain.model.quiz.QuizResults
 import eu.tkacas.jslearner.presentation.ui.component.quiz.QuestionsLayout
 import eu.tkacas.jslearner.presentation.ui.component.quiz.ResultLayout
+import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 
 @Composable
@@ -139,14 +132,16 @@ fun QuizScreen(
                                 Button(
                                     onClick = {
                                         navController.navigateUp()
-                                    }
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = PrussianBlue)
                                 ) {
                                     Text(text = stringResource(id = R.string.restart_quiz))
                                 }
                                 Button(
                                     onClick = {
                                         navController.navigate("roadmap")
-                                    }
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = PrussianBlue)
                                 ) {
                                     Text(text = stringResource(id = R.string.end_quiz))
                                 }
