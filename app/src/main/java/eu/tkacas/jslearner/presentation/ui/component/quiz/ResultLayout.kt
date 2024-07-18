@@ -89,22 +89,46 @@ fun QuestionItem(
 }
 
 @Composable
-fun DisplayScore(coursescore: Int) { // Display the score of the course
+fun DisplayScore(courseScore: Int) { // Display the score of the course
     Column(
         modifier = Modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Your Score in this Course is:", fontWeight = FontWeight.Bold)
-        Text(text = "$coursescore", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text(
+            text = stringResource(id = R.string.your_score_in_this_course_is),
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "$courseScore", fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        if (coursescore == 0) {
-            Image(painter = painterResource(id = R.drawable.element_teacher_fail), contentDescription = "Fail", modifier = Modifier.size(200.dp, 200.dp))
+        if (courseScore == 0) {
+            Image(
+                painter = painterResource(id = R.drawable.element_teacher_fail),
+                contentDescription = stringResource(id = R.string.fail),
+                modifier = Modifier
+                    .size(200.dp, 200.dp)
+            )
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "You can do better!", fontSize = 16.sp, color = SkyBlue)
+            Text(
+                text = stringResource(id = R.string.you_can_do_better),
+                fontSize = 16.sp,
+                color = SkyBlue
+            )
         } else {
-            Image(painter = painterResource(id = R.drawable.element_teacher_pass), contentDescription = "Pass", modifier = Modifier.size(200.dp, 200.dp))
+            Image(
+                painter = painterResource(id = R.drawable.element_teacher_pass),
+                contentDescription = stringResource(id = R.string.pass),
+                modifier = Modifier
+                    .size(200.dp, 200.dp)
+            )
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Great Job!", fontSize = 16.sp, color = SkyBlue)
+            Text(
+                text = stringResource(id = R.string.great_job),
+                fontSize = 16.sp,
+                color = SkyBlue
+            )
         }
     }
 }

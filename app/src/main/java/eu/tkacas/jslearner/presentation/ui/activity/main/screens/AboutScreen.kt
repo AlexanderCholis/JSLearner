@@ -105,7 +105,7 @@ fun AboutScreen(
                                 url1
                             )
                         )
-                    }, imageId = R.drawable.github_logo, buttonText = "thkox")
+                    }, imageId = R.drawable.github_logo, buttonText = stringResource(id = R.string.thkox))
 
                     val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
                     ButtonWithImageComponent(onClick = {
@@ -115,7 +115,7 @@ fun AboutScreen(
                                 url2
                             )
                         )
-                    }, imageId = R.drawable.github_logo, buttonText = "ApostolisSiampanis")
+                    }, imageId = R.drawable.github_logo, buttonText = stringResource(id = R.string.apostolis_siampanis))
 
                     val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
                     ButtonWithImageComponent(onClick = {
@@ -125,7 +125,7 @@ fun AboutScreen(
                                 url3
                             )
                         )
-                    }, imageId = R.drawable.github_logo, buttonText = "AlexanderCholis")
+                    }, imageId = R.drawable.github_logo, buttonText = stringResource(id = R.string.alexander_cholis))
                 }
             }
         }

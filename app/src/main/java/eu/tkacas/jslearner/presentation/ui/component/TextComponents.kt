@@ -65,16 +65,6 @@ fun AuthDividerTextComponent(value: String) {
 }
 
 @Composable
-fun BulletText(value: String) {
-    Text(
-        text = "• $value",
-        style = TextStyle(
-            fontSize = 16.sp
-        )
-    )
-}
-
-@Composable
 fun NormalText(text: String) {
     Text(
         text = text,

@@ -134,4 +134,16 @@
     <string name="your_answer_is">Your answer is:</string>
     <string name="correct">Correct</string>
     <string name="incorrect">Incorrect</string>
+    <string name="your_score_in_this_course_is">Your Score in this Course is:</string>
+    <string name="you_can_do_better">You can do better!</string>
+    <string name="great_job">Great Job!</string>
+    <string name="fail">Fail</string>
+    <string name="pass">Pass</string>
+    <string name="thkox">thkox</string>
+    <string name="apostolis_siampanis">ApostolisSiampanis</string>
+    <string name="alexander_cholis">AlexanderCholis</string>
+    <string name="points">Points:</string>
+    <string name="days_in_a_row">Days in a row:</string>
+    <string name="correct_answers_in_a_row">Correct Answers in a row:</string>
+    <string name="navigation_header">Navigation Header</string>
 </resources>
