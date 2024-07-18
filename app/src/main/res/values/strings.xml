@@ -146,4 +146,6 @@
     <string name="days_in_a_row">Days in a row:</string>
     <string name="correct_answers_in_a_row">Correct Answers in a row:</string>
     <string name="navigation_header">Navigation Header</string>
+    <string name="restart_quiz">Restart Quiz</string>
+    <string name="end_quiz">End Quiz</string>
 </resources>
