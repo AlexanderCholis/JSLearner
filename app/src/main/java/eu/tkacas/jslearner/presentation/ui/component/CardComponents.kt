@@ -261,7 +261,7 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
             modifier = Modifier
                 .align(Alignment.TopStart),
         ) {
-            Text(text = stringResource(id = R.string.days_in_a_row))
+            Text(text = stringResource(id = R.string.correct_answers_in_a_row))
             Text(text = answers.toString(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
     }

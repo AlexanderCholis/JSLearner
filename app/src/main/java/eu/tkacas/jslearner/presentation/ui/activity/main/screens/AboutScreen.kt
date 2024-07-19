@@ -5,9 +5,12 @@ import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
@@ -78,54 +81,62 @@ fun AboutScreen(
                     .background(Color.White)
                     .padding(innerPadding)
             ) {
-                Column(
+                LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(top = 25.dp, start = 10.dp, end = 10.dp),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    CenteredAboutText()
-                }
-                //add GitHub Links
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 20.dp),
-                    verticalArrangement = Arrangement.Bottom,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    val context = LocalContext.current
+                    item {
+                        CenteredAboutText()
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //add GitHub Links
+                        val context = LocalContext.current
 
-                    val url1 = remember { Uri.parse("https://github.com/thkox") }
-                    ButtonWithImageComponent(onClick = {
-                        context.startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                url1
-                            )
+                        val url1 = remember { Uri.parse("https://github.com/thkox") }
+                        ButtonWithImageComponent(
+                            onClick = {
+                                context.startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        url1
+                                    )
+                                )
+                            },
+                            imageId = R.drawable.github_logo,
+                            buttonText = stringResource(id = R.string.thkox)
                         )
-                    }, imageId = R.drawable.github_logo, buttonText = stringResource(id = R.string.thkox))
 
-                    val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
-                    ButtonWithImageComponent(onClick = {
-                        context.startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                url2
-                            )
+                        val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
+                        ButtonWithImageComponent(
+                            onClick = {
+                                context.startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        url2
+                                    )
+                                )
+                            },
+                            imageId = R.drawable.github_logo,
+                            buttonText = stringResource(id = R.string.apostolis_siampanis)
                         )
-                    }, imageId = R.drawable.github_logo, buttonText = stringResource(id = R.string.apostolis_siampanis))
 
-                    val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
-                    ButtonWithImageComponent(onClick = {
-                        context.startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                url3
-                            )
+                        val url3 = remember { Uri.parse("https://github.com/AlexanderCholis") }
+                        ButtonWithImageComponent(
+                            onClick = {
+                                context.startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        url3
+                                    )
+                                )
+                            },
+                            imageId = R.drawable.github_logo,
+                            buttonText = stringResource(id = R.string.alexander_cholis)
                         )
-                    }, imageId = R.drawable.github_logo, buttonText = stringResource(id = R.string.alexander_cholis))
+
+                    }
                 }
             }
         }
