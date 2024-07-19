@@ -84,6 +84,7 @@ fun QuestionsLayout(
             when (currentQuestion.questionType) {
                 QuestionType.TRUE_FALSE -> {
                     TrueFalse(
+                        questionIndex = currentIndex,
                         selectedOption = selectedOptions[currentIndex]?.firstOrNull()?.let { it == "True" },
                         onTrueFalseSelected = { isTrue ->
                             onOptionSelected(currentIndex, listOf(isTrue.toString()))
@@ -93,6 +94,7 @@ fun QuestionsLayout(
 
                 QuestionType.MULTIPLE_CHOICE -> {
                     MultipleChoiceMultipleAnswers(
+                        questionIndex = currentIndex,
                         options = currentQuestion.options,
                         selectedOptions = selectedOptions[currentIndex] ?: emptyList(),
                         onOptionSelected = { option, isSelected ->

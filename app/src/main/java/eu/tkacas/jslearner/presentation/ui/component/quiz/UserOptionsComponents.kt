@@ -49,7 +49,7 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
 @Composable
-fun MultipleChoiceSingleCard(
+private fun MultipleChoiceSingleCard(
     text: String,
     isSelected: Boolean,
     onSelected: () -> Unit
@@ -87,7 +87,7 @@ fun MultipleChoiceSingleCard(
 }
 
 @Composable
-fun MultipleChoiceMultipleCard(
+private fun MultipleChoiceMultipleCard(
     text: String,
     isSelected: MutableState<Boolean>,
     onSelected: () -> Unit
@@ -126,11 +126,12 @@ fun MultipleChoiceMultipleCard(
 
 @Composable
 fun MultipleChoiceSingleAnswer(
+    questionIndex: Int,
     options: List<String>,
     initialSelectedOption: String?,
     onOptionSelected: (String) -> Unit
 ) {
-    var selectedOption by remember { mutableStateOf(initialSelectedOption) }
+    var selectedOption by remember("$questionIndex-${initialSelectedOption.hashCode()}") { mutableStateOf(initialSelectedOption) } // Use questionIndex in remember
 
     Column {
         options.forEach { option ->
@@ -148,14 +149,15 @@ fun MultipleChoiceSingleAnswer(
 
 @Composable
 fun MultipleChoiceMultipleAnswers(
+    questionIndex: Int,
     options: List<String>,
     selectedOptions: List<String>?,
     onOptionSelected: (String, Boolean) -> Unit
 ) {
-    val safeSelectedOptions = selectedOptions ?: emptySet()
+    val safeSelectedOptions = selectedOptions ?: emptyList()
     Column {
         options.forEach { option ->
-            val key = option.hashCode().toString()
+            val key = "$questionIndex-${option.hashCode()}" // Modify the key to include questionIndex
             val isSelected = remember(key) { mutableStateOf(option in safeSelectedOptions) }
 
             MultipleChoiceMultipleCard(
@@ -172,10 +174,12 @@ fun MultipleChoiceMultipleAnswers(
 
 @Composable
 fun TrueFalse(
+    questionIndex: Int,
     selectedOption: Boolean?,
     onTrueFalseSelected: (Boolean) -> Unit
 ) {
     MultipleChoiceSingleAnswer(
+        questionIndex = questionIndex,
         options = listOf("True", "False"),
         initialSelectedOption = if (selectedOption == true) "True" else if (selectedOption == false) "False" else null,
         onOptionSelected = { option ->
