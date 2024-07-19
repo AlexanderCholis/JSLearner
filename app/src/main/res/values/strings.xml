@@ -149,4 +149,6 @@
     <string name="restart_quiz">Restart Quiz</string>
     <string name="end_quiz">End Quiz</string>
     <string name="help">Help</string>
+    <string name="help_levels">Levels of difficulty</string>
+    <string name="difficulty_levels">• Beginner:\n Ideal for those with no previous experience with JavaScript.\n\n• Intermediate:\n Suitable for users with basic knowledge who want to deepen their skills.\n\n• Expert:\n For advanced users who want to learn advanced techniques and concepts.</string>
 </resources>
