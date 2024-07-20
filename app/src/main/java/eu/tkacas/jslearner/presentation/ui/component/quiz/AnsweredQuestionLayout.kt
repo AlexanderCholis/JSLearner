@@ -38,11 +38,11 @@ fun AnsweredQuestionLayout(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text =  question.questionDescription,
+                text = question.questionDescription,
                 style = TextStyle(fontSize = 20.sp)
             )
             Spacer(modifier = Modifier.height(8.dp))
-            when(question.questionType){
+            when (question.questionType) {
                 QuestionType.TRUE_FALSE -> {
 
                 }

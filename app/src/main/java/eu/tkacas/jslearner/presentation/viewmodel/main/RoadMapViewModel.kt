@@ -2,16 +2,15 @@ package eu.tkacas.jslearner.presentation.viewmodel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import eu.tkacas.jslearner.domain.repository.AuthRepository
+import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.domain.model.RoadMapWithUserStats
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import eu.tkacas.jslearner.domain.Result
-import eu.tkacas.jslearner.domain.model.RoadMapWithUserStats
-import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
 
 class RoadMapViewModel(
     private val getRoadMapUseCase: GetRoadMapUseCase,

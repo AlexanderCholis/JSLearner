@@ -11,7 +11,9 @@ class GetCoursesBasedOnExperienceUseCase(private val roadMapRepository: RoadMapR
         val courses = when (experienceLevel) {
             ExperienceLevel.NO_EXPERIENCE -> roadMapRepository.getCoursesBasedOnLevel(CourseLevel.BEGINNER)
             ExperienceLevel.SOME_EXPERIENCE -> roadMapRepository.getCoursesBasedOnLevel(CourseLevel.INTERMEDIATE)
-            ExperienceLevel.A_LOT_OF_EXPERIENCE -> roadMapRepository.getCoursesBasedOnLevel(CourseLevel.ADVANCED)
+            ExperienceLevel.A_LOT_OF_EXPERIENCE -> roadMapRepository.getCoursesBasedOnLevel(
+                CourseLevel.ADVANCED
+            )
         }
 
         val coursesList = mutableListOf<CourseShort>()

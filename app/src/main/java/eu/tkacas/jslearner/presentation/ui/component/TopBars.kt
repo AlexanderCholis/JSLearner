@@ -41,8 +41,12 @@ fun BackAppTopBar(
                     },
                     content = {
                         Image(
-                            painter = if(!isCoursesPath) painterResource(id = R.drawable.arrow_back) else painterResource(id = R.drawable.close),
-                            contentDescription = if(!isCoursesPath) stringResource(id = R.string.go_back) else stringResource(id = R.string.close_menu)
+                            painter = if (!isCoursesPath) painterResource(id = R.drawable.arrow_back) else painterResource(
+                                id = R.drawable.close
+                            ),
+                            contentDescription = if (!isCoursesPath) stringResource(id = R.string.go_back) else stringResource(
+                                id = R.string.close_menu
+                            )
                         )
                     }
                 )

@@ -11,13 +11,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.activity.welcome.navigation.WelcomeNavigation
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
-import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.viewModelFactory
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceLevelViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExperienceTextViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.ExploringPathViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.LearningReasonViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.SignUpViewModel
 
 class WelcomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

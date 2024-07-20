@@ -119,12 +119,12 @@ fun HelpScreen(
                     Spacer(modifier = Modifier.height(20.dp))
                     GeneralButtonComponent(valueId = if (currentIndex < texts.size - 1) R.string.next else R.string.done,
                         onButtonClicked = {
-                        if (currentIndex < texts.size - 1) {
-                            currentIndex++
-                        } else {
-                            navController.navigate("roadmap")
-                        }
-                    })
+                            if (currentIndex < texts.size - 1) {
+                                currentIndex++
+                            } else {
+                                navController.navigate("roadmap")
+                            }
+                        })
                 }
             }
         }

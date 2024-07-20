@@ -3,14 +3,13 @@ package eu.tkacas.jslearner.presentation.viewmodel.welcome
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.tkacas.jslearner.domain.Result
-import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
-import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import eu.tkacas.jslearner.domain.model.CourseShort
 import eu.tkacas.jslearner.domain.model.User
+import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
-import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.welcome.exploringpath.GetCoursesBasedOnExperienceUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
