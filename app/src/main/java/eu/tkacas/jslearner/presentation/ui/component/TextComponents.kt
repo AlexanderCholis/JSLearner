@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -69,7 +68,8 @@ fun NormalText(text: String) {
     Text(
         text = text,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
+        textAlign = TextAlign.Justify
     )
 }
 

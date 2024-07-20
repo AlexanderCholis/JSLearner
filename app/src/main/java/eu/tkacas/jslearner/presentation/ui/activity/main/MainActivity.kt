@@ -12,6 +12,7 @@ import eu.tkacas.jslearner.JSLearner
 import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigation
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.HelpViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
@@ -82,6 +83,8 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     )
+                    val helpViewModel = viewModel<HelpViewModel>()
+
                     MainNavigation(
                         roadMapViewModel = roadMapViewModel,
                         startCourseViewModel = startCourseViewModel,
@@ -89,7 +92,8 @@ class MainActivity : ComponentActivity() {
                         lessonViewModel = lessonViewModel,
                         startQuizViewModel = startQuizViewModel,
                         quizViewModel = quizViewModel,
-                        accountViewModel = accountViewModel
+                        accountViewModel = accountViewModel,
+                        helpViewModel = helpViewModel
                     )
                 }
             }

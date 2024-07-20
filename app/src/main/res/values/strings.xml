@@ -149,4 +149,14 @@
     <string name="restart_quiz">Restart Quiz</string>
     <string name="end_quiz">End Quiz</string>
     <string name="back_to_results">Back to Quiz results</string>
+    <string name="help">Help</string>
+    <string name="help_levels">Levels of difficulty</string>
+    <string name="help_difficulty_levels">• Beginner:\nIdeal for those with no previous experience with JavaScript.\n\n• Intermediate:\nSuitable for users with basic knowledge who want to deepen their skills.\n\n• Expert:\nFor advanced users who want to learn advanced techniques and concepts.</string>
+    <string name="help_progress_monitoring">Progress Monitoring</string>
+    <string name="help_points">• At the top of the screen, the user\'s points are displayed.\n\n• In the leaderboard, where the users of the application at the moment are displayed in order of success.</string>
+    <string name="help_points_system">Points System</string>
+    <string name="help_points_system_description">• The initial points range from 0 to 1400, depending on the user\'s chosen experience level.\n\n• Upgrading requires exceeding the limits, with upgrade limits at 600 and 1400 points.\n\n• Downgrading requires reducing points below the 300 or 1000 point limits, depending on the current level.\n\n• Reward points: +10 points for each correct answer, -5 points for each incorrect answer.</string>
+    <string name="help_self_assessment">Self-assessment</string>
+    <string name="help_quiz">Each level includes self-assessment tests to help you check your understanding of the topics. You can repeat the tests until you have answered all the questions correctly.</string>
+    <string name="done">Done</string>
 </resources>

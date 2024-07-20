@@ -10,6 +10,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AboutScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AnsweredQuestionScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.CoursesPathScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.HelpScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LeaderboardScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.QuizScreen
@@ -19,6 +20,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScre
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.HelpViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
@@ -35,7 +37,8 @@ internal fun MainNavigation(
     lessonViewModel: LessonViewModel,
     startQuizViewModel: StartQuizViewModel,
     quizViewModel: QuizViewModel,
-    accountViewModel: AccountViewModel
+    accountViewModel: AccountViewModel,
+    helpViewModel: HelpViewModel
 ) {
     val navController = rememberNavController()
     val sharedViewModel = MainSharedViewModel()
@@ -81,6 +84,12 @@ internal fun MainNavigation(
         composable("about") {
             AboutScreen(
                 navController = navController
+            )
+        }
+        composable("help") {
+            HelpScreen(
+                navController = navController,
+                viewModel = helpViewModel
             )
         }
         composable("leaderboard") {
