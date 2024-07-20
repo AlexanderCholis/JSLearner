@@ -15,7 +15,7 @@ class ValidatePassword {
             )
         }
         val containsLetterAndDigits =
-            password.any { it.isDigit() } && password.any() { it.isLetter() }
+            password.any { it.isDigit() } && password.any { it.isLetter() }
         if (!containsLetterAndDigits && !isLogin) {
             return ValidateResult(
                 successful = false,

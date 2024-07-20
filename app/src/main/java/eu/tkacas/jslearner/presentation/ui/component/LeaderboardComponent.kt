@@ -26,11 +26,14 @@ fun WinnersPodiumComponentWithLeaders(
     podiumUserList: List<PodiumUser>
 ) {
     val sortedPodiumUsers = podiumUserList.sortedBy { it.position }
-    val (firstname1, lastname1, userScore1) = sortedPodiumUsers.getOrNull(0)?.let { Triple(it.firstName, it.lastName, it.score) }
+    val (firstname1, lastname1, userScore1) = sortedPodiumUsers.getOrNull(0)
+        ?.let { Triple(it.firstName, it.lastName, it.score) }
         ?: Triple("", "", 0)
-    val (firstname2, lastname2, userScore2) = sortedPodiumUsers.getOrNull(1)?.let { Triple(it.firstName, it.lastName, it.score) }
+    val (firstname2, lastname2, userScore2) = sortedPodiumUsers.getOrNull(1)
+        ?.let { Triple(it.firstName, it.lastName, it.score) }
         ?: Triple("", "", 0)
-    val (firstname3, lastname3, userScore3) = sortedPodiumUsers.getOrNull(2)?.let { Triple(it.firstName, it.lastName, it.score) }
+    val (firstname3, lastname3, userScore3) = sortedPodiumUsers.getOrNull(2)
+        ?.let { Triple(it.firstName, it.lastName, it.score) }
         ?: Triple("", "", 0)
 
     Box(
@@ -99,7 +102,7 @@ fun WinnersPodiumComponentWithLeaders(
                 .fillMaxWidth()
                 .offset(y = 36.dp)
         ) {
-            Column() {
+            Column {
                 Box(
                     modifier = Modifier
                         .size(100.dp)
@@ -152,7 +155,7 @@ fun WinnersPodiumComponentWithLeaders(
                 .fillMaxWidth()
                 .offset(x = 0.dp, y = 36.dp)
         ) {
-            Column() {
+            Column {
                 Box(
                     modifier = Modifier
                         .size(100.dp)

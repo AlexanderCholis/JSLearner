@@ -1,16 +1,9 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,12 +21,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
-import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.domain.model.quiz.QuizResults
+import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.quiz.QuestionsLayout
-import eu.tkacas.jslearner.presentation.ui.component.quiz.ResultLayout
-import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
+import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 
 @Composable
@@ -74,7 +65,7 @@ fun QuizScreen(
                     .background(Color.White)
                     .padding(innerPadding)
             ) {
-                Column (
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(bottom = 28.dp),
@@ -103,8 +94,7 @@ fun QuizScreen(
                 }
             }
         }
-    }
-    else {
+    } else {
         Scaffold(
             modifier = Modifier
                 .fillMaxSize(),

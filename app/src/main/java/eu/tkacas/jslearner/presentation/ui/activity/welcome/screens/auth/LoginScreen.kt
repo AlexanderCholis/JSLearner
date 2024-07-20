@@ -29,19 +29,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
+import eu.tkacas.jslearner.domain.Result
+import eu.tkacas.jslearner.presentation.ui.activity.main.MainActivity
 import eu.tkacas.jslearner.presentation.ui.component.AuthHeadingTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.AuthTextFieldComponent
 import eu.tkacas.jslearner.presentation.ui.component.DividerTextComponent
+import eu.tkacas.jslearner.presentation.ui.component.ErrorMessageText
+import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.HaveAnAccountOrNotClickableTextComponent
 import eu.tkacas.jslearner.presentation.ui.component.PasswordTextFieldComponent
+import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.ui.events.auth.LoginFormEvent
 import eu.tkacas.jslearner.presentation.ui.state.auth.LoginFormState
 import eu.tkacas.jslearner.presentation.viewmodel.welcome.auth.LoginViewModel
-import eu.tkacas.jslearner.domain.Result
-import eu.tkacas.jslearner.presentation.ui.activity.main.MainActivity
-import eu.tkacas.jslearner.presentation.ui.component.ErrorMessageText
-import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 
 @Composable
 fun LoginScreen(

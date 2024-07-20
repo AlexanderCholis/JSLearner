@@ -1,7 +1,5 @@
 package eu.tkacas.jslearner.data.source.remote
 
-import com.google.firebase.database.GenericTypeIndicator
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.data.model.Course
 import eu.tkacas.jslearner.data.model.CourseLevel

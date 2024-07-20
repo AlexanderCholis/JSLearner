@@ -2,9 +2,9 @@ package eu.tkacas.jslearner.presentation.viewmodel.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.domain.model.quiz.Quiz
 import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizUseCase
-import eu.tkacas.jslearner.domain.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

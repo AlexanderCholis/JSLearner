@@ -1,7 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.welcome.screens
 
 import androidx.compose.foundation.background
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
-import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
 fun TermsAndConditionsScreen(

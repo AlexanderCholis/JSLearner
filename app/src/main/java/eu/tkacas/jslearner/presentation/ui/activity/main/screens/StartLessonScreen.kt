@@ -31,13 +31,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.data.model.Lesson
-import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
 import eu.tkacas.jslearner.domain.Result
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
 import eu.tkacas.jslearner.presentation.ui.component.HyperLinkText
 import eu.tkacas.jslearner.presentation.ui.component.ProgressIndicatorComponent
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
 
 
 @Composable

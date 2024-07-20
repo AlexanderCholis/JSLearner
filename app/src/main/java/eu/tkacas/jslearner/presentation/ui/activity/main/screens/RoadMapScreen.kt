@@ -189,6 +189,7 @@ internal fun RoadMapScreen(
                             )
                         }
                     }
+
                     is Result.Error -> {
                         Text(
                             text = stringResource(id = R.string.error) + " ${(uiState as Result.Error).exception.message}",

@@ -26,27 +26,26 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
-import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
+import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
+import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 @Composable
 private fun MultipleChoiceSingleCard(
@@ -66,7 +65,10 @@ private fun MultipleChoiceSingleCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(enabled = enableOption, onClick = onSelected) // Disable click when not enabled
+            .clickable(
+                enabled = enableOption,
+                onClick = onSelected
+            ) // Disable click when not enabled
             .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -111,7 +113,10 @@ private fun MultipleChoiceMultipleCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(enabled = enableOption, onClick = onSelected) // Disable click when not enabled
+            .clickable(
+                enabled = enableOption,
+                onClick = onSelected
+            ) // Disable click when not enabled
             .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -153,7 +158,11 @@ fun MultipleChoiceSingleAnswer(
     wrongOptions: List<String> = emptyList(),
     enableOptions: Boolean = true
 ) {
-    var selectedOption by remember("$questionIndex-${initialSelectedOption.hashCode()}") { mutableStateOf(initialSelectedOption) }
+    var selectedOption by remember("$questionIndex-${initialSelectedOption.hashCode()}") {
+        mutableStateOf(
+            initialSelectedOption
+        )
+    }
 
     Column {
         options.forEach { option ->
@@ -296,7 +305,9 @@ fun TargetWordBox(
             .padding(4.dp)
             .dragAndDropTarget(
                 shouldStartDragAndDrop = { event ->
-                    event.mimeTypes().contains("text/plain")
+                    event
+                        .mimeTypes()
+                        .contains("text/plain")
                 },
                 target = dragAndDropTarget
             )

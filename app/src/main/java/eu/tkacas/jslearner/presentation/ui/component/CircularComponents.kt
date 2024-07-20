@@ -1,12 +1,9 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -18,6 +15,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -60,7 +60,14 @@ fun CircularLeaderComponent(
                 .border(4.dp, borderColor, CircleShape)
                 .background(Color.White, CircleShape)
         ) {
-            UserInitialsCircle(firstName = firstName, lastName = lastName, backgroundColor = LightBeige, textColor = PrussianBlue, size = 100.dp, fontSize = 40.sp)
+            UserInitialsCircle(
+                firstName = firstName,
+                lastName = lastName,
+                backgroundColor = LightBeige,
+                textColor = PrussianBlue,
+                size = 100.dp,
+                fontSize = 40.sp
+            )
         }
         if (hasCrown) {
             Image(
@@ -108,7 +115,9 @@ fun UserInitialsCircle(
     size: Dp = 65.dp,
     fontSize: TextUnit = 24.sp
 ) {
-    val initials = "${firstName.firstOrNull()?.uppercaseChar() ?: ""}${lastName.firstOrNull()?.uppercaseChar() ?: ""}"
+    val initials = "${firstName.firstOrNull()?.uppercaseChar() ?: ""}${
+        lastName.firstOrNull()?.uppercaseChar() ?: ""
+    }"
 
     Box(
         contentAlignment = Alignment.Center,

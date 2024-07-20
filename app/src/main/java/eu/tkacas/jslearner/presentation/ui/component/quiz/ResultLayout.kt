@@ -88,7 +88,9 @@ fun QuestionItem(
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = if (isCorrect) stringResource(id = R.string.correct) else stringResource(id = R.string.incorrect),
+                    text = if (isCorrect) stringResource(id = R.string.correct) else stringResource(
+                        id = R.string.incorrect
+                    ),
                     color = Color.White
                 )
             }

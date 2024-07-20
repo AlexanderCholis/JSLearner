@@ -10,7 +10,7 @@ class GetQuestionResultUseCase {
         val userOptionsSet = userOptions.toSet()
 
         // Determine the score based on whether the user's selections match the correct answers
-        val score = if (userOptionsSet == correctOptionsSet) true else false
+        val score = userOptionsSet == correctOptionsSet
 
         // Determine wrong options: present in userOptions but not in correctAnswers
         val wrongOptions = userOptionsSet.subtract(correctOptionsSet).toList()
