@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
-import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 
 
@@ -51,28 +48,3 @@ fun ScoreComponent(userScore: Int) {
         }
     }
 }
-
-
-@Composable
-fun ScoreProgressBarComponent(userScore: Int, maxScore: Int) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(8.dp)
-            .width(200.dp)
-    ) {
-        LinearProgressIndicator(
-            progress = userScore.toFloat() / maxScore,
-            color = PrussianBlue,
-            modifier = Modifier
-                .weight(8f)
-                .padding(end = 16.dp)
-                .clip(RoundedCornerShape(35.dp))
-        )
-        Text(
-            text = "${(userScore / maxScore * 100).toInt()}%",
-            modifier = Modifier.weight(2f)
-        )
-    }
-}
-
