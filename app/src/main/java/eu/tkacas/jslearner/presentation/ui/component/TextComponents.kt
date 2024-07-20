@@ -1,6 +1,5 @@
 package eu.tkacas.jslearner.presentation.ui.component
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
