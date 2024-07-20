@@ -154,7 +154,7 @@
     <string name="help_progress_monitoring">Progress Monitoring</string>
     <string name="help_points">• At the top of the screen, the user\'s points are displayed.\n\n• In the leaderboard, where the users of the application at the moment are displayed in order of success.</string>
     <string name="help_points_system">Points System</string>
-    <string name="help_points_system_description">• Points range from 0 to 1400, with upgrade limits of 600 and 1400 points.\n\n• Upgrading requires exceeding the limits.\n\n• Downgrading requires reducing points below 300 or 1000, depending on the current level.\n\n• Reward points: +10 points for each correct answer, -5 points for each incorrect answer.</string>
+    <string name="help_points_system_description">• The initial points range from 0 to 1400, depending on the user\'s chosen experience level.\n\n• Upgrading requires exceeding the limits, with upgrade limits at 600 and 1400 points.\n\n• Downgrading requires reducing points below the 300 or 1000 point limits, depending on the current level.\n\n• Reward points: +10 points for each correct answer, -5 points for each incorrect answer.</string>
     <string name="help_self_assessment">Self-assessment</string>
     <string name="help_quiz">Each level includes self-assessment tests to help you check your understanding of the topics. You can repeat the tests until you have answered all the questions correctly.</string>
     <string name="done">Done</string>
