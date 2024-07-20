@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardDefaults.cardColors
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.Icon
@@ -32,7 +33,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.tkacas.jslearner.R
@@ -241,7 +244,7 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
             modifier = Modifier
                 .align(Alignment.BottomStart)
         ) {
-            Text(text = "Points:")
+            Text(text = stringResource(id = R.string.points))
             Text(text = points.toString(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
 
@@ -250,7 +253,7 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
                 .align(Alignment.BottomEnd),
             horizontalAlignment = Alignment.End
         ) {
-            Text(text = "Days in a row:")
+            Text(text = stringResource(id = R.string.days_in_a_row))
             Text(text = days.toString(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
 
@@ -258,7 +261,7 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
             modifier = Modifier
                 .align(Alignment.TopStart),
         ) {
-            Text(text = "Correct Answers in a row:")
+            Text(text = stringResource(id = R.string.correct_answers_in_a_row))
             Text(text = answers.toString(), fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
     }
@@ -306,6 +309,36 @@ fun LeaderboardCard(
                 text = userScore.toString(),
                 modifier = Modifier.padding(start = 8.dp)
             )
+        }
+    }
+}
+
+@Composable
+fun HintCard(
+    showHint: Boolean,
+    hint: String,
+    modifier: Modifier = Modifier
+) {
+    if (showHint && hint.isNotEmpty()) {
+        Card(
+            modifier = modifier
+                .padding(8.dp),
+            shape = RoundedCornerShape(16.dp),
+            elevation = cardElevation(defaultElevation = 4.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(LightBeige)
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = hint,
+                    style = TextStyle(fontSize = 16.sp),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

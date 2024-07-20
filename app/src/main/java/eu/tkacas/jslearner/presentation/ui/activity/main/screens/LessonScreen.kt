@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -41,100 +42,97 @@ fun LessonScreen(
     viewModel: LessonViewModel,
     sharedViewModel: MainSharedViewModel
 ) {
-    val id = sharedViewModel.selectedLessonId.value
-    val uiState by viewModel.uiState.collectAsState()
+    val lesson = sharedViewModel.selectedLesson.value
     val previousRoute = navController.previousBackStackEntry?.destination?.route
 
-    LaunchedEffect(id) {
-        if (id != null) {
-            viewModel.loadLesson(id)
-        }
-    }
 
-    when (uiState) {
-        is Result.Loading -> {
-            ProgressIndicatorComponent()
-        }
+    if (lesson != null) {
+        var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startLesson") 0 else lesson.theoriesList.size - 1) }
 
-        is Result.Success -> {
-            val lesson = (uiState as Result.Success<Lesson>).result
-            var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startLesson") 0 else lesson.theoriesList.size - 1) }
+        val progress by animateFloatAsState(
+            targetValue = (currentIndex + 1) / lesson.theoriesList.size.toFloat(), label = ""
+        )
 
-            val progress by animateFloatAsState(
-                targetValue = (currentIndex + 1) / lesson.theoriesList.size.toFloat(), label = ""
-            )
-
-            Scaffold(
-                modifier = Modifier
-                    .fillMaxSize(),
-                topBar = {
-                    BackAppTopBar(
-                        color = Color.White,
-                        onBackClick = {
-                            if (currentIndex > 0) {
-                                currentIndex--
-                            } else {
-                                navController.navigateUp()
-                            }
-                        }
-                    )
-                }
-            ) { innerPadding ->
-                Surface(
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize(),
+            topBar = {
+                BackAppTopBar(
                     color = Color.White,
+                    onBackClick = {
+                        if (currentIndex > 0) {
+                            currentIndex--
+                        } else {
+                            navController.navigateUp()
+                        }
+                    }
+                )
+            }
+        ) { innerPadding ->
+            Surface(
+                color = Color.White,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White)
+                    .padding(innerPadding)
+            ) {
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.White)
-                        .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
+                        .padding(start = 28.dp, end = 28.dp, top = 18.dp, bottom = 28.dp),
                 ) {
-                    Column {
-                        BoldText(text = lesson.title)
-                        Spacer(modifier = Modifier.padding(10.dp))
-                        NormalText(text = lesson.theoriesList[currentIndex])
-                        Spacer(modifier = Modifier.weight(1f))
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            verticalArrangement = Arrangement.Bottom,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
+                    BoldText(text = lesson.title)
+                    Spacer(modifier = Modifier.height(10.dp))
+                    NormalText(text = lesson.theoriesList[currentIndex])
+                    Spacer(modifier = Modifier.weight(1f))
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Bottom,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        if (lesson.theoriesList.size != 1) {
                             LinearProgressIndicator(progress = progress)
-                            Spacer(modifier = Modifier.padding(20.dp))
-                            GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
-                                if (currentIndex < lesson.theoriesList.size - 1) {
-                                    currentIndex++
-                                } else {
-                                    navController.navigate("startQuiz")
-                                }
-                            })
                         }
+                        Spacer(modifier = Modifier.height(20.dp))
+                        GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
+                            if (currentIndex < lesson.theoriesList.size - 1) {
+                                currentIndex++
+                            } else {
+                                viewModel.hasQuizForLesson(lesson.id) { hasQuiz ->
+                                    if (hasQuiz) {
+                                        navController.navigate("startQuiz")
+                                    } else {
+                                        navController.navigate("roadmap")
+                                    }
+                                }
+                            }
+                        })
                     }
                 }
             }
         }
-
-        is Result.Error -> {
-            Scaffold(
+    }
+    else {
+        Scaffold(
+            modifier = Modifier
+                .fillMaxSize(),
+            topBar = {
+                BackAppTopBar(
+                    color = Color.White,
+                    onBackClick = {
+                        navController.navigateUp()
+                    }
+                )
+            }
+        ) { innerPadding ->
+            Surface(
                 modifier = Modifier
-                    .fillMaxSize(),
-                topBar = {
-                    BackAppTopBar(
-                        color = Color.White,
-                        onBackClick = {
-                            navController.navigateUp()
-                        }
-                    )
-                }
-            ) { innerPadding ->
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.White)
-                        .padding(innerPadding)
-                ) {
-                    val error = (uiState as Result.Error).exception
-                    Text(text = error.message ?: stringResource(id = R.string.an_error_occurred))
-                }
+                    .fillMaxSize()
+                    .background(Color.White)
+                    .padding(innerPadding)
+            ) {
+                Text(text = stringResource(id = R.string.an_error_occurred))
             }
         }
     }

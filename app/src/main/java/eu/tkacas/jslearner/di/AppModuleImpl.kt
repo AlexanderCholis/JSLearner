@@ -5,19 +5,20 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import eu.tkacas.jslearner.data.repository.AuthRepositoryImpl
-import eu.tkacas.jslearner.data.repository.ExploringPathRepositoryImpl
 import eu.tkacas.jslearner.data.repository.RoadMapRepositoryImpl
 import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
 import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
 import eu.tkacas.jslearner.domain.model.NavigationDrawer
 import eu.tkacas.jslearner.domain.repository.AuthRepository
-import eu.tkacas.jslearner.domain.repository.ExploringPathRepository
 import eu.tkacas.jslearner.domain.repository.RoadMapRepository
 import eu.tkacas.jslearner.domain.usecase.main.GetNavigationDrawerItemsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuestionResultUseCase
+import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizExistanceUseCase
+import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizResultsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
-import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetQuizUseCase
+import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
@@ -124,19 +125,25 @@ class AppModuleImpl(
     override val getLessonUseCase: GetLessonUseCase by lazy {
         GetLessonUseCase(roadMapRepository)
     }
+    override val getQuizExistanceUseCase: GetQuizExistanceUseCase by lazy {
+        GetQuizExistanceUseCase(roadMapRepository)
+    }
     override val getQuizUseCase: GetQuizUseCase by lazy {
         GetQuizUseCase(roadMapRepository)
     }
     override val getLessonsUseCase: GetLessonsUseCase by lazy {
         GetLessonsUseCase(roadMapRepository)
     }
+    override val getQuestionResultUseCase: GetQuestionResultUseCase by lazy {
+        GetQuestionResultUseCase()
+    }
+    override val getQuizResultsUseCase: GetQuizResultsUseCase by lazy {
+        GetQuizResultsUseCase(getQuestionResultUseCase)
+    }
 
     // For the ExploringPathScreen
-    override val exploringPathRepository: ExploringPathRepository by lazy {
-        ExploringPathRepositoryImpl(firestoreDataSource)
-    }
     override val getCoursesBasedOnExperienceUseCase: GetCoursesBasedOnExperienceUseCase by lazy {
-        GetCoursesBasedOnExperienceUseCase(exploringPathRepository)
+        GetCoursesBasedOnExperienceUseCase(roadMapRepository)
     }
 
     // For the NavigationDrawer

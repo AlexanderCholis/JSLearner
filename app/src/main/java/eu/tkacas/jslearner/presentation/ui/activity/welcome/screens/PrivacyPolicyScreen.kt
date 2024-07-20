@@ -42,11 +42,12 @@ fun PrivacyPolicyScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(start = 28.dp, end = 28.dp, top = 88.dp, bottom = 28.dp)
+                    .padding(padding)
             ) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(start = 28.dp, end = 28.dp, top = 18.dp)
                 ) {
                     item {
                         Text(

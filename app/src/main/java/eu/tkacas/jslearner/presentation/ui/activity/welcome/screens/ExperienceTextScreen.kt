@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -68,13 +69,17 @@ fun ExperienceTextScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(start = 28.dp, end = 28.dp, top = 80.dp, bottom = 28.dp)
+                    .padding(padding)
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 28.dp, end = 28.dp, bottom = 28.dp)
+                ) {
                     BoldText(text = stringResource(id = texts[currentIndex].boldText))
-                    Spacer(modifier = Modifier.padding(10.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                     NormalText(text = stringResource(id = texts[currentIndex].normalText))
-                    Spacer(modifier = Modifier.padding(20.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
                     Spacer(modifier = Modifier.weight(1f))
                     Image(
                         painter = painterResource(id = texts[currentIndex].image),
@@ -87,7 +92,7 @@ fun ExperienceTextScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         LinearProgressIndicator(progress = progress)
-                        Spacer(modifier = Modifier.padding(20.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
                         GeneralButtonComponent(valueId = R.string.next, onButtonClicked = {
                             if (currentIndex < texts.size - 1) {
                                 currentIndex++

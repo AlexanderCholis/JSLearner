@@ -22,7 +22,9 @@ fun BackAppTopBar(
     color: Color,
     onBackClick: () -> Unit,
     showScore: Boolean = false,
-    score: Int = 0
+    score: Int = 0,
+    isCoursesPath: Boolean = false,
+    isBackEnabled: Boolean = true
 ) {
     TopAppBar(
         title = {
@@ -32,17 +34,19 @@ fun BackAppTopBar(
             )
         },
         navigationIcon = {
-            IconButton(
-                onClick = {
-                    onBackClick()
-                },
-                content = {
-                    Image(
-                        painter = painterResource(id = R.drawable.arrow_back),
-                        contentDescription = stringResource(id = R.string.go_back)
-                    )
-                }
-            )
+            if (isBackEnabled) {
+                IconButton(
+                    onClick = {
+                        onBackClick()
+                    },
+                    content = {
+                        Image(
+                            painter = if(!isCoursesPath) painterResource(id = R.drawable.arrow_back) else painterResource(id = R.drawable.close),
+                            contentDescription = if(!isCoursesPath) stringResource(id = R.string.go_back) else stringResource(id = R.string.close_menu)
+                        )
+                    }
+                )
+            }
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = color

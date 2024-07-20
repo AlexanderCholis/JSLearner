@@ -85,7 +85,7 @@ fun StartCourseScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Image(
-                            painter = painterResource(id = R.drawable.application),
+                            painter = painterResource(id = R.drawable.element_learning),
                             contentDescription = stringResource(id = R.string.simple_image),
                             modifier = Modifier
                                 .size(240.dp)
@@ -136,11 +136,7 @@ fun StartCourseScreen(
                     BackAppTopBar(
                         color = MaterialTheme.colorScheme.primaryContainer,
                         onBackClick = {
-                            navController.popBackStack(
-                                navController.graph.startDestinationId,
-                                inclusive = false
-                            )
-                            navController.navigate("roadmap")
+                            navController.navigateUp()
                         }
                     )
                 }

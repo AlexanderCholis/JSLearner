@@ -25,6 +25,12 @@ class NavigationDrawer : NavigationDrawerRepository {
             route = "leaderboard"
         ),
         NavigationDrawerUiItem(
+            name = "Help",
+            unselectedIcon = R.drawable.help,
+            selectedIcon = R.drawable.help_filled,
+            route = "help"
+        ),
+        NavigationDrawerUiItem(
             name = "About",
             unselectedIcon = R.drawable.info,
             selectedIcon = R.drawable.info_filled,

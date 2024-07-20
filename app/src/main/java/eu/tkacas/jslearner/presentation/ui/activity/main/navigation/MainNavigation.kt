@@ -1,21 +1,29 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AboutScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AnsweredQuestionScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.CoursesPathScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.HelpScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LeaderboardScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LessonScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.QuizScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.ResultsScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.HelpViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartCourseViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.StartLessonViewModel
@@ -28,13 +36,15 @@ internal fun MainNavigation(
     startLessonViewModel: StartLessonViewModel,
     lessonViewModel: LessonViewModel,
     startQuizViewModel: StartQuizViewModel,
-    accountViewModel: AccountViewModel
+    quizViewModel: QuizViewModel,
+    accountViewModel: AccountViewModel,
+    helpViewModel: HelpViewModel
 ) {
     val navController = rememberNavController()
     val sharedViewModel = MainSharedViewModel()
 
     NavHost(
-        navController,
+        navController = navController,
         startDestination = "roadmap"
     ) {
         composable("roadmap") {
@@ -76,6 +86,12 @@ internal fun MainNavigation(
                 navController = navController
             )
         }
+        composable("help") {
+            HelpScreen(
+                navController = navController,
+                viewModel = helpViewModel
+            )
+        }
         composable("leaderboard") {
             LeaderboardScreen(
                 navController = navController,
@@ -93,6 +109,30 @@ internal fun MainNavigation(
                 navController = navController,
                 viewModel = startQuizViewModel,
                 sharedViewModel = sharedViewModel
+            )
+        }
+        composable("quiz") {
+            QuizScreen(
+                navController = navController,
+                viewModel = quizViewModel,
+                sharedViewModel = sharedViewModel
+            )
+        }
+        composable("results") {
+            ResultsScreen(
+                navController = navController,
+                sharedViewModel = sharedViewModel
+            )
+        }
+        composable(
+            route = "answeredQuestion/{questionIndex}",
+            arguments = listOf(navArgument("questionIndex") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val questionIndex = backStackEntry.arguments?.getInt("questionIndex") ?: 0
+            AnsweredQuestionScreen(
+                navController = navController,
+                sharedViewModel = sharedViewModel,
+                questionIndex = questionIndex
             )
         }
     }

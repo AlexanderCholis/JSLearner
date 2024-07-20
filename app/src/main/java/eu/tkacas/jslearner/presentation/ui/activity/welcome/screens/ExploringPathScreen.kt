@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
@@ -76,7 +78,7 @@ fun ExploringPathScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
-                    .padding(top = 30.dp, bottom = 28.dp)
+                    .padding(padding)
             ) {
                 when (exploringPathState) {
                     is Result.Loading -> {
@@ -88,23 +90,26 @@ fun ExploringPathScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(top = 30.dp, start = 32.dp, end = 32.dp),
+                                .padding(start = 32.dp, end = 32.dp, bottom = 28.dp)
                         ) {
                             BoldText(text = stringResource(id = R.string.your_path))
                             NormalText(text = stringResource(id = R.string.your_path_description))
-                            Spacer(modifier = Modifier.padding(8.dp))
-                            LazyColumn {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            LazyColumn(
+                                modifier = Modifier.weight(1f)
+                            ) {
                                 items(courseList.size) { index ->
                                     PathModuleCard(
                                         moduleTitleText = courseList[index].title,
                                         moduleDescriptionText = courseList[index].description
                                     )
-                                    Spacer(modifier = Modifier.padding(8.dp))
+                                    Spacer(modifier = Modifier.height(8.dp))
                                 }
                             }
+                            Spacer (modifier = Modifier.height(10.dp))
                             Column(
                                 modifier = Modifier
-                                    .fillMaxSize(),
+                                    .fillMaxWidth(),
                                 verticalArrangement = Arrangement.Bottom,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {

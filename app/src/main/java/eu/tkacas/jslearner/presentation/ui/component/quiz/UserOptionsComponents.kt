@@ -1,18 +1,20 @@
-package eu.tkacas.jslearner.presentation.ui.component.test
+package eu.tkacas.jslearner.presentation.ui.component.quiz
 
 import android.annotation.SuppressLint
 import android.content.ClipData
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.draganddrop.dragAndDropSource
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,28 +35,38 @@ import androidx.compose.ui.unit.dp
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
-import eu.tkacas.jslearner.presentation.ui.theme.GreenLightPal
-import eu.tkacas.jslearner.presentation.ui.theme.GreenPal
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
+import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 
 @Composable
-fun MultipleChoiceSingleCard(
+private fun MultipleChoiceSingleCard(
     text: String,
     isSelected: Boolean,
-    onSelected: () -> Unit
+    onSelected: () -> Unit,
+    enableOption: Boolean,
+    isCorrect: Boolean
 ) {
-    val cardColor = if (isSelected) SkyBlue else Color.White
+    val cardColor = when {
+        isCorrect -> Color.Green // Mark correct options with green
+        !enableOption -> Color.LightGray // Locked options with light gray
+        isSelected -> SkyBlue
+        else -> Color.White
+    }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onSelected)
+            .clickable(enabled = enableOption, onClick = onSelected) // Disable click when not enabled
             .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -67,7 +79,7 @@ fun MultipleChoiceSingleCard(
         ) {
             RadioButton(
                 selected = isSelected,
-                onClick = onSelected,
+                onClick = if (enableOption) onSelected else null,
                 colors = RadioButtonDefaults.colors(
                     selectedColor = PrussianBlue
                 )
@@ -82,17 +94,24 @@ fun MultipleChoiceSingleCard(
 }
 
 @Composable
-fun MultipleChoiceMultipleCard(
+private fun MultipleChoiceMultipleCard(
     text: String,
     isSelected: MutableState<Boolean>,
-    onSelected: () -> Unit
+    onSelected: () -> Unit,
+    enableOption: Boolean,
+    isCorrect: Boolean
 ) {
-    val cardColor = if (isSelected.value) SkyBlue else Color.White
+    val cardColor = when {
+        isCorrect -> Color.Green // Mark correct options with green
+        !enableOption -> Color.LightGray // Locked options with light gray
+        isSelected.value -> SkyBlue
+        else -> Color.White
+    }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onSelected)
+            .clickable(enabled = enableOption, onClick = onSelected) // Disable click when not enabled
             .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -105,7 +124,11 @@ fun MultipleChoiceMultipleCard(
         ) {
             Checkbox(
                 checked = isSelected.value,
-                onCheckedChange = { isSelected.value = it },
+                onCheckedChange = if (enableOption) {
+                    { isSelected.value = it }
+                } else {
+                    null
+                },
                 colors = CheckboxDefaults.colors(
                     checkedColor = PrussianBlue
                 )
@@ -119,13 +142,18 @@ fun MultipleChoiceMultipleCard(
     }
 }
 
+
 @Composable
 fun MultipleChoiceSingleAnswer(
+    questionIndex: Int,
     options: List<String>,
     initialSelectedOption: String?,
-    onOptionSelected: (String) -> Unit
+    onOptionSelected: (String) -> Unit,
+    correctOptions: List<String> = emptyList(),
+    wrongOptions: List<String> = emptyList(),
+    enableOptions: Boolean = true
 ) {
-    var selectedOption by remember { mutableStateOf(initialSelectedOption) }
+    var selectedOption by remember("$questionIndex-${initialSelectedOption.hashCode()}") { mutableStateOf(initialSelectedOption) }
 
     Column {
         options.forEach { option ->
@@ -135,7 +163,9 @@ fun MultipleChoiceSingleAnswer(
                 onSelected = {
                     selectedOption = option
                     onOptionSelected(option)
-                }
+                },
+                enableOption = enableOptions,
+                isCorrect = option in correctOptions
             )
         }
     }
@@ -143,36 +173,66 @@ fun MultipleChoiceSingleAnswer(
 
 @Composable
 fun MultipleChoiceMultipleAnswers(
+    questionIndex: Int,
     options: List<String>,
-    selectedOptions: Set<String>?,
-    onOptionSelected: (String, Boolean) -> Unit
+    selectedOptions: List<String>?,
+    onOptionSelected: (String, Boolean) -> Unit,
+    correctOptions: List<String> = emptyList(),
+    wrongOptions: List<String> = emptyList(),
+    enableOptions: Boolean = true
 ) {
-    val safeSelectedOptions = selectedOptions ?: emptySet()
-
+    val safeSelectedOptions = selectedOptions ?: emptyList()
     Column {
         options.forEach { option ->
+            val key = "$questionIndex-${option.hashCode()}"
+            val isSelected = remember(key) { mutableStateOf(option in safeSelectedOptions) }
+
             MultipleChoiceMultipleCard(
                 text = option,
-                isSelected = remember { mutableStateOf(option in safeSelectedOptions) },
-                onSelected = { onOptionSelected(option, option !in safeSelectedOptions) }
+                isSelected = isSelected,
+                onSelected = {
+                    isSelected.value = !isSelected.value
+                    onOptionSelected(option, isSelected.value)
+                },
+                enableOption = enableOptions,
+                isCorrect = option in correctOptions
             )
         }
     }
 }
 
+
 @Composable
 fun TrueFalse(
-    isTrue: Boolean?,
-    onTrueFalseSelected: (Boolean) -> Unit
+    questionIndex: Int,
+    selectedOption: Boolean?,
+    onTrueFalseSelected: (Boolean) -> Unit,
+    correctOptions: List<String> = emptyList(),
+    wrongOptions: List<String> = emptyList(),
+    enableOptions: Boolean = true
 ) {
+    // Convert boolean values to "True" or "False" strings
+    val options = listOf("True", "False")
+    val initialSelectedOption = when (selectedOption) {
+        true -> "True"
+        false -> "False"
+        else -> null
+    }
+
+    // Call MultipleChoiceSingleAnswer with updated parameters
     MultipleChoiceSingleAnswer(
-        options = listOf("True", "False"),
-        initialSelectedOption = if (isTrue == true) "True" else if (isTrue == false) "False" else null,
+        questionIndex = questionIndex,
+        options = options,
+        initialSelectedOption = initialSelectedOption,
         onOptionSelected = { option ->
             onTrueFalseSelected(option == "True")
-        }
+        },
+        correctOptions = correctOptions,
+        wrongOptions = wrongOptions,
+        enableOptions = enableOptions
     )
 }
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -181,11 +241,9 @@ fun DraggableWordCard(text: String) {
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(4.dp)
-            .background(GreenLightPal)
             .dragAndDropSource {
                 detectTapGestures(
                     onLongPress = {
-                        Log.d("Drag", "Dragged $text")
                         startTransfer(
                             DragAndDropTransferData(
                                 ClipData.newPlainText("text/plain", text)
@@ -202,15 +260,20 @@ fun DraggableWordCard(text: String) {
 @SuppressLint("RememberReturnType")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TargetWordBox(text: String) {
-    var textState by remember { mutableStateOf(text) }
-    var backgroundColor by remember { mutableStateOf(GreenPal) }
-    val dragAndDropTarget = remember {
+fun TargetWordBox(
+    questionIndex: Int,
+    text: String,
+    onDrop: (String) -> Unit
+) {
+    var textState by remember(questionIndex) { mutableStateOf(text) }
+    var backgroundColor by remember(questionIndex) { mutableStateOf(Color.LightGray) }
+    val dragAndDropTarget = remember(questionIndex) {
         object : DragAndDropTarget {
             override fun onDrop(event: DragAndDropEvent): Boolean {
                 val draggedData = event.toAndroidDragEvent()
-                    .clipData.getItemAt(0).text
-                textState = draggedData.toString()
+                    .clipData.getItemAt(0).text.toString()
+                onDrop(draggedData)
+                textState = draggedData
                 return true
             }
 
@@ -219,14 +282,9 @@ fun TargetWordBox(text: String) {
                 backgroundColor = LightBeige
             }
 
-            override fun onEnded(event: DragAndDropEvent) {
-                super.onExited(event)
-                backgroundColor = GreenPal
-            }
-
             override fun onExited(event: DragAndDropEvent) {
                 super.onExited(event)
-                backgroundColor = GreenPal
+                backgroundColor = Color.LightGray
             }
         }
     }
@@ -239,11 +297,62 @@ fun TargetWordBox(text: String) {
             .dragAndDropTarget(
                 shouldStartDragAndDrop = { event ->
                     event.mimeTypes().contains("text/plain")
-
                 },
                 target = dragAndDropTarget
             )
     ) {
-        Text(text = textState, modifier = Modifier.padding(8.dp))
+        val textModifier = if (textState.isEmpty()) {
+            Modifier
+                .padding(8.dp)
+                .widthIn(min = 60.dp)
+        } else {
+            Modifier.padding(8.dp)
+        }
+        Text(text = if (textState.isEmpty()) " " else textState, modifier = textModifier)
+    }
+}
+
+@Composable
+fun FillInTheBlank(
+    questionIndex: Int,
+    options: List<String>,
+    selectedOption: String?,
+    onAnswerSelected: (String) -> Unit
+) {
+    val optionKey = options.joinToString(separator = "")
+    val key = optionKey.hashCode().toString()
+    var answer by remember(key) { mutableStateOf(selectedOption ?: "") }
+
+
+    Column {
+        Spacer(modifier = Modifier.height(35.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(id = R.string.your_answer_is),
+                style = TextStyle(fontSize = 16.sp)
+            )
+            TargetWordBox(
+                questionIndex = questionIndex,
+                text = answer,
+                onDrop = { droppedText ->
+                    answer = droppedText
+                    onAnswerSelected(droppedText)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            // Display options as draggable cards
+            options.forEach { option ->
+                DraggableWordCard(text = option)
+            }
+        }
     }
 }

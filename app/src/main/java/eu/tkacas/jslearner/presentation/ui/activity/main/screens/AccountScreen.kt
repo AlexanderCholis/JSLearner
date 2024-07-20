@@ -135,7 +135,7 @@ fun AccountScreen(
 
                     is Result.Error -> {
                         Text(
-                            "Error: ${(uiState as Result.Error).exception.message}",
+                            text = stringResource(id = R.string.error) + " ${(uiState as Result.Error).exception.message}",
                             color = MaterialTheme.colorScheme.error
                         )
                     }

@@ -69,8 +69,7 @@ fun NavigationDrawer(
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.element_all_the_data),
-                    contentDescription = "Navigation Header",
-                    //modifier = Modifier.size(120.dp)
+                    contentDescription = stringResource(id = R.string.navigation_header)
                 )
             }
 
@@ -91,7 +90,9 @@ fun NavigationDrawer(
         }
 
         Column(
-            Modifier.fillMaxSize().padding(12.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(12.dp),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

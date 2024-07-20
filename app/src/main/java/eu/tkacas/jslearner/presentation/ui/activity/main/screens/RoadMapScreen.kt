@@ -173,13 +173,6 @@ internal fun RoadMapScreen(
                                                                     )
                                                                     navController.navigate("startCourse")
                                                                 }
-
-                                                                RoadMapNodeCategory.TEST -> {
-                                                                    sharedViewModel.setSelectedQuizId(
-                                                                        node.id
-                                                                    )
-                                                                    navController.navigate("startQuiz?testId=${node.id}")
-                                                                }
                                                             }
                                                         }
                                                     }
