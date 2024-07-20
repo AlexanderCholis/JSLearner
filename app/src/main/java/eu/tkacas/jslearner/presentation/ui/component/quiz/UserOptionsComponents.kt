@@ -102,11 +102,13 @@ private fun MultipleChoiceMultipleCard(
     onSelected: () -> Unit,
     enableOption: Boolean,
     isCorrect: Boolean,
+    isWrong: Boolean
 ) {
     val cardColor = when {
         isCorrect -> Color.Green // Mark correct options with green
+        isWrong -> Color.Red // Mark incorrect options with red
         !enableOption -> Color.LightGray // Locked options with light gray
-        isSelected.value -> SkyBlue
+        isSelected.value -> SkyBlue // Selected options with SkyBlue
         else -> Color.White
     }
 
@@ -116,7 +118,7 @@ private fun MultipleChoiceMultipleCard(
             .clickable(
                 enabled = enableOption,
                 onClick = onSelected
-            ) // Disable click when not enabled
+            )
             .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -205,6 +207,7 @@ fun MultipleChoiceMultipleAnswers(
                 },
                 enableOption = enableOptions,
                 isCorrect = isCorrect, // Pass the dynamically determined isCorrect value,
+                isWrong = !isCorrect && option in safeSelectedOptions
             )
         }
     }
