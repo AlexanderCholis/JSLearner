@@ -53,7 +53,7 @@ private fun MultipleChoiceSingleCard(
     isSelected: Boolean,
     onSelected: () -> Unit,
     enableOption: Boolean,
-    isCorrect: Boolean
+    isCorrect: Boolean,
 ) {
     val cardColor = when {
         isCorrect -> Color.Green // Mark correct options with green
@@ -101,7 +101,7 @@ private fun MultipleChoiceMultipleCard(
     isSelected: MutableState<Boolean>,
     onSelected: () -> Unit,
     enableOption: Boolean,
-    isCorrect: Boolean
+    isCorrect: Boolean,
 ) {
     val cardColor = when {
         isCorrect -> Color.Green // Mark correct options with green
@@ -155,7 +155,6 @@ fun MultipleChoiceSingleAnswer(
     initialSelectedOption: String?,
     onOptionSelected: (String) -> Unit,
     correctOptions: List<String> = emptyList(),
-    wrongOptions: List<String> = emptyList(),
     enableOptions: Boolean = true
 ) {
     var selectedOption by remember("$questionIndex-${initialSelectedOption.hashCode()}") {
@@ -187,7 +186,6 @@ fun MultipleChoiceMultipleAnswers(
     selectedOptions: List<String>?,
     onOptionSelected: (String, Boolean) -> Unit,
     correctOptions: List<String> = emptyList(),
-    wrongOptions: List<String> = emptyList(),
     enableOptions: Boolean = true
 ) {
     val safeSelectedOptions = selectedOptions ?: emptyList()
@@ -195,6 +193,8 @@ fun MultipleChoiceMultipleAnswers(
         options.forEach { option ->
             val key = "$questionIndex-${option.hashCode()}"
             val isSelected = remember(key) { mutableStateOf(option in safeSelectedOptions) }
+            // Determine if the option is correct based on its selected state and presence in correctOptions
+            val isCorrect = isSelected.value && option in correctOptions
 
             MultipleChoiceMultipleCard(
                 text = option,
@@ -204,7 +204,7 @@ fun MultipleChoiceMultipleAnswers(
                     onOptionSelected(option, isSelected.value)
                 },
                 enableOption = enableOptions,
-                isCorrect = option in correctOptions
+                isCorrect = isCorrect, // Pass the dynamically determined isCorrect value,
             )
         }
     }
@@ -217,7 +217,6 @@ fun TrueFalse(
     selectedOption: Boolean?,
     onTrueFalseSelected: (Boolean) -> Unit,
     correctOptions: List<String> = emptyList(),
-    wrongOptions: List<String> = emptyList(),
     enableOptions: Boolean = true
 ) {
     // Convert boolean values to "True" or "False" strings
@@ -237,7 +236,6 @@ fun TrueFalse(
             onTrueFalseSelected(option == "True")
         },
         correctOptions = correctOptions,
-        wrongOptions = wrongOptions,
         enableOptions = enableOptions
     )
 }

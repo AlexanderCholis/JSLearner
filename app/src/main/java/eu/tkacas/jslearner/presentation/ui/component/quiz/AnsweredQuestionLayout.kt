@@ -51,13 +51,19 @@ fun AnsweredQuestionLayout(
                         selectedOption = selectedOptions?.get(questionIndex)?.firstOrNull().toBoolean(),
                         onTrueFalseSelected = {  },
                         correctOptions = questionResult.correctOptions,
-                        wrongOptions = questionResult.wrongOptions,
                         enableOptions = false
                     )
                 }
 
                 QuestionType.MULTIPLE_CHOICE -> {
-
+                    MultipleChoiceMultipleAnswers(
+                        questionIndex = questionIndex,
+                        options = question.options,
+                        selectedOptions = selectedOptions?.get(questionIndex),
+                        onOptionSelected = {_, _ -> },
+                        correctOptions = questionResult.correctOptions,
+                        enableOptions = false
+                    )
                 }
 
                 QuestionType.FILL_IN_THE_BLANKS -> {
