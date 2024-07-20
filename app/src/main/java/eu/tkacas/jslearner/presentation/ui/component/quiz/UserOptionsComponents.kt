@@ -52,14 +52,21 @@ import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 private fun MultipleChoiceSingleCard(
     text: String,
     isSelected: Boolean,
-    onSelected: () -> Unit
+    onSelected: () -> Unit,
+    enableOption: Boolean,
+    isCorrect: Boolean
 ) {
-    val cardColor = if (isSelected) SkyBlue else Color.White
+    val cardColor = when {
+        isCorrect -> Color.Green // Mark correct options with green
+        !enableOption -> Color.LightGray // Locked options with light gray
+        isSelected -> SkyBlue
+        else -> Color.White
+    }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onSelected)
+            .clickable(enabled = enableOption, onClick = onSelected) // Disable click when not enabled
             .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -72,7 +79,7 @@ private fun MultipleChoiceSingleCard(
         ) {
             RadioButton(
                 selected = isSelected,
-                onClick = onSelected,
+                onClick = if (enableOption) onSelected else null,
                 colors = RadioButtonDefaults.colors(
                     selectedColor = PrussianBlue
                 )
@@ -90,14 +97,21 @@ private fun MultipleChoiceSingleCard(
 private fun MultipleChoiceMultipleCard(
     text: String,
     isSelected: MutableState<Boolean>,
-    onSelected: () -> Unit
+    onSelected: () -> Unit,
+    enableOption: Boolean,
+    isCorrect: Boolean
 ) {
-    val cardColor = if (isSelected.value) SkyBlue else Color.White
+    val cardColor = when {
+        isCorrect -> Color.Green // Mark correct options with green
+        !enableOption -> Color.LightGray // Locked options with light gray
+        isSelected.value -> SkyBlue
+        else -> Color.White
+    }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onSelected)
+            .clickable(enabled = enableOption, onClick = onSelected) // Disable click when not enabled
             .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -110,7 +124,11 @@ private fun MultipleChoiceMultipleCard(
         ) {
             Checkbox(
                 checked = isSelected.value,
-                onCheckedChange = { isSelected.value = it },
+                onCheckedChange = if (enableOption) {
+                    { isSelected.value = it }
+                } else {
+                    null
+                },
                 colors = CheckboxDefaults.colors(
                     checkedColor = PrussianBlue
                 )
@@ -124,14 +142,18 @@ private fun MultipleChoiceMultipleCard(
     }
 }
 
+
 @Composable
 fun MultipleChoiceSingleAnswer(
     questionIndex: Int,
     options: List<String>,
     initialSelectedOption: String?,
-    onOptionSelected: (String) -> Unit
+    onOptionSelected: (String) -> Unit,
+    correctOptions: List<String> = emptyList(),
+    wrongOptions: List<String> = emptyList(),
+    enableOptions: Boolean = true
 ) {
-    var selectedOption by remember("$questionIndex-${initialSelectedOption.hashCode()}") { mutableStateOf(initialSelectedOption) } // Use questionIndex in remember
+    var selectedOption by remember("$questionIndex-${initialSelectedOption.hashCode()}") { mutableStateOf(initialSelectedOption) }
 
     Column {
         options.forEach { option ->
@@ -141,7 +163,9 @@ fun MultipleChoiceSingleAnswer(
                 onSelected = {
                     selectedOption = option
                     onOptionSelected(option)
-                }
+                },
+                enableOption = enableOptions,
+                isCorrect = option in correctOptions
             )
         }
     }
@@ -152,12 +176,15 @@ fun MultipleChoiceMultipleAnswers(
     questionIndex: Int,
     options: List<String>,
     selectedOptions: List<String>?,
-    onOptionSelected: (String, Boolean) -> Unit
+    onOptionSelected: (String, Boolean) -> Unit,
+    correctOptions: List<String> = emptyList(),
+    wrongOptions: List<String> = emptyList(),
+    enableOptions: Boolean = true
 ) {
     val safeSelectedOptions = selectedOptions ?: emptyList()
     Column {
         options.forEach { option ->
-            val key = "$questionIndex-${option.hashCode()}" // Modify the key to include questionIndex
+            val key = "$questionIndex-${option.hashCode()}"
             val isSelected = remember(key) { mutableStateOf(option in safeSelectedOptions) }
 
             MultipleChoiceMultipleCard(
@@ -166,27 +193,46 @@ fun MultipleChoiceMultipleAnswers(
                 onSelected = {
                     isSelected.value = !isSelected.value
                     onOptionSelected(option, isSelected.value)
-                }
+                },
+                enableOption = enableOptions,
+                isCorrect = option in correctOptions
             )
         }
     }
 }
 
+
 @Composable
 fun TrueFalse(
     questionIndex: Int,
     selectedOption: Boolean?,
-    onTrueFalseSelected: (Boolean) -> Unit
+    onTrueFalseSelected: (Boolean) -> Unit,
+    correctOptions: List<String> = emptyList(),
+    wrongOptions: List<String> = emptyList(),
+    enableOptions: Boolean = true
 ) {
+    // Convert boolean values to "True" or "False" strings
+    val options = listOf("True", "False")
+    val initialSelectedOption = when (selectedOption) {
+        true -> "True"
+        false -> "False"
+        else -> null
+    }
+
+    // Call MultipleChoiceSingleAnswer with updated parameters
     MultipleChoiceSingleAnswer(
         questionIndex = questionIndex,
-        options = listOf("True", "False"),
-        initialSelectedOption = if (selectedOption == true) "True" else if (selectedOption == false) "False" else null,
+        options = options,
+        initialSelectedOption = initialSelectedOption,
         onOptionSelected = { option ->
             onTrueFalseSelected(option == "True")
-        }
+        },
+        correctOptions = correctOptions,
+        wrongOptions = wrongOptions,
+        enableOptions = enableOptions
     )
 }
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -249,9 +295,7 @@ fun TargetWordBox(
             .padding(4.dp)
             .dragAndDropTarget(
                 shouldStartDragAndDrop = { event ->
-                    event
-                        .mimeTypes()
-                        .contains("text/plain")
+                    event.mimeTypes().contains("text/plain")
                 },
                 target = dragAndDropTarget
             )
