@@ -87,6 +87,7 @@ fun QuizScreen(
                                 val userOptions = selectedOptions.value.values.toList()
                                 quizResults = viewModel.getQuizResults(quiz, userOptions)
                                 sharedViewModel.setQuizResults(quizResults!!)
+                                sharedViewModel.setSelectedQuestionOptions(selectedOptions.value)
                                 navController.navigate("results")
                             }
                         }
