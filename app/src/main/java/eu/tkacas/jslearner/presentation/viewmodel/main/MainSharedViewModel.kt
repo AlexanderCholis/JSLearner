@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.domain.model.User
 import eu.tkacas.jslearner.domain.model.quiz.Quiz
+import eu.tkacas.jslearner.domain.model.quiz.QuizResults
 import eu.tkacas.jslearner.domain.model.roadmap.RoadMapNodeState
 
 class MainSharedViewModel : ViewModel() {
@@ -25,6 +26,9 @@ class MainSharedViewModel : ViewModel() {
 
     private val _coursesState = MutableLiveData<List<RoadMapNodeState>>()
     val coursesState = _coursesState
+
+    private val _quizResults = MutableLiveData<QuizResults>()
+    val quizResults = _quizResults
 
     fun setSelectedCourseId(courseId: String) {
         _selectedCourseId.value = courseId
@@ -48,5 +52,9 @@ class MainSharedViewModel : ViewModel() {
 
     fun setCoursesState(coursesState: List<RoadMapNodeState>) {
         _coursesState.value = coursesState
+    }
+
+    fun setQuizResults(quizResults: QuizResults) {
+        _quizResults.value = quizResults
     }
 }
