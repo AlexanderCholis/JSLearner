@@ -61,7 +61,7 @@ fun ResultsScreen(
                     questions = sharedViewModel.quizResults.value!!.questionResults,
                     totalScore = sharedViewModel.quizResults.value!!.score,
                     onQuestionSelected = { index ->
-                        // TODO: Implement navigation to the question
+                        navController.navigate("answeredQuestion/$index")
                     }
                 )
                 Spacer(modifier = Modifier.weight(1f))

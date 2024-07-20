@@ -1,11 +1,14 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AboutScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AnsweredQuestionScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.CoursesPathScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LeaderboardScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LessonScreen
@@ -110,6 +113,17 @@ internal fun MainNavigation(
             ResultsScreen(
                 navController = navController,
                 sharedViewModel = sharedViewModel
+            )
+        }
+        composable(
+            route = "answeredQuestion/{questionIndex}",
+            arguments = listOf(navArgument("questionIndex") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val questionIndex = backStackEntry.arguments?.getInt("questionIndex") ?: 0
+            AnsweredQuestionScreen(
+                navController = navController,
+                sharedViewModel = sharedViewModel,
+                questionIndex = questionIndex
             )
         }
     }
