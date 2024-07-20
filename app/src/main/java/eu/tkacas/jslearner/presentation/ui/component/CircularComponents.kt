@@ -140,7 +140,7 @@ fun ExperienceLevelComponent(user: User?) {
             modifier = Modifier
                 .size(50.dp)
                 .clip(CircleShape)
-                .background(SkyBlue),
+                .background(LightBeige),
             contentAlignment = Alignment.Center
         ) {
             Icon(
