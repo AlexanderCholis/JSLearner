@@ -130,7 +130,7 @@ fun ExperienceLevelComponent(user: User?) {
     val experienceText = when (user?.experienceLevel) {
         ExperienceLevel.SOME_EXPERIENCE -> "Intermediate"
         ExperienceLevel.NO_EXPERIENCE -> "Beginner"
-        ExperienceLevel.A_LOT_OF_EXPERIENCE -> "Expert"
+        ExperienceLevel.A_LOT_OF_EXPERIENCE -> "Advanced"
         else -> "Unknown"
     }
     Column(
