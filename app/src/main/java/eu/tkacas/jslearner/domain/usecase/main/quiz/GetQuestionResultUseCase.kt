@@ -19,7 +19,7 @@ class GetQuestionResultUseCase {
         return QuestionResult(
             correctOptions = question.correctAnswers,
             wrongOptions = wrongOptions,
-            score = score
+            isCorrect = score
         )
     }
 }

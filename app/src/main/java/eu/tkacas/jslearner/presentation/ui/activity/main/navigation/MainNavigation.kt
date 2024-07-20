@@ -1,16 +1,20 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AboutScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AccountScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.AnsweredQuestionScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.CoursesPathScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.HelpScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LeaderboardScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.LessonScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.QuizScreen
+import eu.tkacas.jslearner.presentation.ui.activity.main.screens.ResultsScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.RoadMapScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartCourseScreen
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScreen
@@ -40,7 +44,7 @@ internal fun MainNavigation(
     val sharedViewModel = MainSharedViewModel()
 
     NavHost(
-        navController,
+        navController = navController,
         startDestination = "roadmap"
     ) {
         composable("roadmap") {
@@ -112,6 +116,23 @@ internal fun MainNavigation(
                 navController = navController,
                 viewModel = quizViewModel,
                 sharedViewModel = sharedViewModel
+            )
+        }
+        composable("results") {
+            ResultsScreen(
+                navController = navController,
+                sharedViewModel = sharedViewModel
+            )
+        }
+        composable(
+            route = "answeredQuestion/{questionIndex}",
+            arguments = listOf(navArgument("questionIndex") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val questionIndex = backStackEntry.arguments?.getInt("questionIndex") ?: 0
+            AnsweredQuestionScreen(
+                navController = navController,
+                sharedViewModel = sharedViewModel,
+                questionIndex = questionIndex
             )
         }
     }

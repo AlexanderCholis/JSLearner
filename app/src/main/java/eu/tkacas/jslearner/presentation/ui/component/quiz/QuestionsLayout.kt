@@ -154,7 +154,6 @@ fun QuestionsLayout(
                         if (currentIndex == questions.lastIndex)
                             Text(text = stringResource(id = R.string.submit))
                         else
-                            //Text(text = stringResource(id = R.string.next))
                             Image(
                                 painter = painterResource(id = R.drawable.next),
                                 contentDescription = stringResource(id = R.string.next)

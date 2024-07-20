@@ -324,7 +324,7 @@ fun HintCard(
             modifier = modifier
                 .padding(8.dp),
             shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            elevation = cardElevation(defaultElevation = 4.dp)
         ) {
             Box(
                 modifier = Modifier
