@@ -148,4 +148,5 @@
     <string name="navigation_header">Navigation Header</string>
     <string name="restart_quiz">Restart Quiz</string>
     <string name="end_quiz">End Quiz</string>
+    <string name="back_to_results">Back to Quiz results</string>
 </resources>
