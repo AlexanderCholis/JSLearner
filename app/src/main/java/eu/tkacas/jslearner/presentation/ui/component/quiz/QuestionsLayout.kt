@@ -111,6 +111,7 @@ fun QuestionsLayout(
 
                 QuestionType.FILL_IN_THE_BLANKS -> {
                     FillInTheBlank(
+                        questionIndex = currentIndex,
                         options = currentQuestion.options,
                         selectedOption = selectedOptions[currentIndex]?.firstOrNull(),
                         onAnswerSelected = { answer ->

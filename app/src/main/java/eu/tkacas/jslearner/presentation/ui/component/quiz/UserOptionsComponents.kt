@@ -215,12 +215,13 @@ fun DraggableWordCard(text: String) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TargetWordBox(
+    questionIndex: Int,
     text: String,
     onDrop: (String) -> Unit
 ) {
-    var textState by remember { mutableStateOf(text) }
-    var backgroundColor by remember { mutableStateOf(Color.LightGray) }
-    val dragAndDropTarget = remember {
+    var textState by remember(questionIndex) { mutableStateOf(text) }
+    var backgroundColor by remember(questionIndex) { mutableStateOf(Color.LightGray) }
+    val dragAndDropTarget = remember(questionIndex) {
         object : DragAndDropTarget {
             override fun onDrop(event: DragAndDropEvent): Boolean {
                 val draggedData = event.toAndroidDragEvent()
@@ -269,6 +270,7 @@ fun TargetWordBox(
 
 @Composable
 fun FillInTheBlank(
+    questionIndex: Int,
     options: List<String>,
     selectedOption: String?,
     onAnswerSelected: (String) -> Unit
@@ -276,6 +278,7 @@ fun FillInTheBlank(
     val optionKey = options.joinToString(separator = "")
     val key = optionKey.hashCode().toString()
     var answer by remember(key) { mutableStateOf(selectedOption ?: "") }
+
 
     Column {
         Spacer(modifier = Modifier.height(35.dp))
@@ -289,6 +292,7 @@ fun FillInTheBlank(
                 style = TextStyle(fontSize = 16.sp)
             )
             TargetWordBox(
+                questionIndex = questionIndex,
                 text = answer,
                 onDrop = { droppedText ->
                     answer = droppedText
