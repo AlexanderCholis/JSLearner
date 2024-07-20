@@ -44,7 +44,6 @@ fun QuizScreen(
 ) {
     val quiz = sharedViewModel.selectedQuiz.value
     val previousRoute = navController.previousBackStackEntry?.destination?.route
-    var showResult by rememberSaveable { mutableStateOf(false) }
     var quizResults by remember { mutableStateOf<QuizResults?>(null) }
     val selectedOptions = rememberSaveable { mutableStateOf(mutableMapOf<Int, List<String>>()) }
 
@@ -58,13 +57,13 @@ fun QuizScreen(
                 BackAppTopBar(
                     color = Color.White,
                     onBackClick = {
-                        if (currentIndex > 0 && !showResult) {
+                        if (currentIndex > 0) {
                             currentIndex--
                         } else {
                             navController.navigateUp()
                         }
                     },
-                    isBackEnabled = currentIndex > 0 && !showResult
+                    isBackEnabled = currentIndex > 0
                 )
             }
         ) { innerPadding ->
@@ -81,73 +80,26 @@ fun QuizScreen(
                         .padding(bottom = 28.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    if (!showResult){
-                        QuestionsLayout(
-                            questionNumber = currentIndex + 1,
-                            totalQuestions = quiz.questions.size,
-                            questions = quiz.questions,
-                            currentIndex = currentIndex,
-                            selectedOptions = selectedOptions.value,
-                            onOptionSelected = { index, options ->
-                                selectedOptions.value[index] = options
-                            },
-                            onNextClick = {
-                                if (currentIndex < quiz.questions.size - 1) {
-                                    currentIndex++
-                                } else {
-                                    // Convert selectedOptions to the expected format
-                                    val userOptions = selectedOptions.value.values.toList()
-                                    // Calculate results using GetQuizResultsUseCase
-                                    quizResults = viewModel.getQuizResults(quiz, userOptions)
-                                    // Update UI with results
-                                    showResult = true
-                                    // Assuming Quiz model has a way to set its score directly
-                                    quiz.score = quizResults!!.score
-                                }
-                            }
-                        )
-                    } else {
-                        ResultLayout(
-                            questions = quizResults!!.questionResults,
-                            totalScore = quiz.score,
-                            onQuestionSelected = { index ->
-                                currentIndex = index
-                                showResult = false
-                            }
-                        )
-                        Text(
-                            text = stringResource(id = R.string.score) + " ${selectedOptions.value}"
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Column(
-                            modifier = Modifier
-                                .wrapContentSize(),
-                            verticalArrangement = Arrangement.Bottom,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceEvenly
-                            ) {
-                                Button(
-                                    onClick = {
-                                        navController.navigateUp()
-                                    },
-                                    colors = ButtonDefaults.buttonColors(containerColor = PrussianBlue)
-                                ) {
-                                    Text(text = stringResource(id = R.string.restart_quiz))
-                                }
-                                Button(
-                                    onClick = {
-                                        navController.navigate("roadmap")
-                                    },
-                                    colors = ButtonDefaults.buttonColors(containerColor = PrussianBlue)
-                                ) {
-                                    Text(text = stringResource(id = R.string.end_quiz))
-                                }
+                    QuestionsLayout(
+                        questionNumber = currentIndex + 1,
+                        totalQuestions = quiz.questions.size,
+                        questions = quiz.questions,
+                        currentIndex = currentIndex,
+                        selectedOptions = selectedOptions.value,
+                        onOptionSelected = { index, options ->
+                            selectedOptions.value[index] = options
+                        },
+                        onNextClick = {
+                            if (currentIndex < quiz.questions.size - 1) {
+                                currentIndex++
+                            } else {
+                                val userOptions = selectedOptions.value.values.toList()
+                                quizResults = viewModel.getQuizResults(quiz, userOptions)
+                                sharedViewModel.setQuizResults(quizResults!!)
+                                navController.navigate("results")
                             }
                         }
-                    }
+                    )
                 }
             }
         }
