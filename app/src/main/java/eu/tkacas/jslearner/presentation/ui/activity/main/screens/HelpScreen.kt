@@ -84,45 +84,47 @@ fun HelpScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = 28.dp, end = 28.dp, bottom = 28.dp)
+                        .padding(start = 28.dp, end = 28.dp, bottom = 56.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     BoldText(text = stringResource(id = texts[currentIndex].title))
                     Spacer(modifier = Modifier.height(10.dp))
                     NormalText(text = stringResource(id = texts[currentIndex].content))
-                    Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                     Image(
                         painter = painterResource(id = texts[currentIndex].image),
                         contentDescription = stringResource(id = R.string.simple_image),
                         modifier = Modifier
-                            .size(300.dp)
+                            .size(200.dp)
                             .align(Alignment.CenterHorizontally)
                     )
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Bottom,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        PageIndicator(
-                            numberOfPages = texts.size,
-                            selectedPage = currentIndex,
-                            selectedColor = PrussianBlue,
-                            defaultColor = LightBeige,
-                            defaultRadius = 8.dp,
-                            selectedLength = 24.dp,
-                            space = 12.dp,
-                            animationDurationInMillis = 300
-                        )
-                        Spacer(modifier = Modifier.height(20.dp))
-                        GeneralButtonComponent(valueId = if (currentIndex < texts.size - 1) R.string.next else R.string.done,
-                            onButtonClicked = {
-                            if (currentIndex < texts.size - 1) {
-                                currentIndex++
-                            } else {
-                                navController.navigate("roadmap")
-                            }
-                        })
-                    }
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 28.dp),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    PageIndicator(
+                        numberOfPages = texts.size,
+                        selectedPage = currentIndex,
+                        selectedColor = PrussianBlue,
+                        defaultColor = LightBeige,
+                        defaultRadius = 8.dp,
+                        selectedLength = 24.dp,
+                        space = 12.dp,
+                        animationDurationInMillis = 300
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    GeneralButtonComponent(valueId = if (currentIndex < texts.size - 1) R.string.next else R.string.done,
+                        onButtonClicked = {
+                        if (currentIndex < texts.size - 1) {
+                            currentIndex++
+                        } else {
+                            navController.navigate("roadmap")
+                        }
+                    })
                 }
             }
         }

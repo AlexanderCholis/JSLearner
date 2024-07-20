@@ -25,7 +25,7 @@ class HelpViewModel : ViewModel() {
         HelpTextUiItem(
             title = R.string.help_points_system,
             content = R.string.help_points_system_description,
-            image = R.drawable.element_progress_data
+            image = R.drawable.element_processing_thoughts
         ),
     )
 
