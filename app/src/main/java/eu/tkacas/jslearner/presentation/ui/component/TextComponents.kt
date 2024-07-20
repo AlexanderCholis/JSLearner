@@ -69,7 +69,8 @@ fun NormalText(text: String) {
     Text(
         text = text,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
+        textAlign = TextAlign.Justify
     )
 }
 
