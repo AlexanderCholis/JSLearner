@@ -88,7 +88,8 @@ class MainActivity : ComponentActivity() {
                     val quizViewModel = viewModel<QuizViewModel>(
                         factory = viewModelFactory {
                             QuizViewModel(
-                                getQuizResultsUseCase = JSLearner.appModule.getQuizResultsUseCase
+                                getQuizResultsUseCase = JSLearner.appModule.getQuizResultsUseCase,
+                                setUserScoreUseCase = JSLearner.appModule.setUserScoreUseCase
                             )
                         }
                     )

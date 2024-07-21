@@ -154,4 +154,9 @@ class AuthRepositoryImpl(
     override suspend fun getLeaderboard(): List<LeaderboardUser> {
         return firebaseDataSource.getLeaderboard()
     }
+
+    override suspend fun setUserScore(score: Int) {
+        val uid = currentUser?.uid ?: throw Exception("User not logged in.")
+        firebaseDataSource.setUserScore(uid, score)
+    }
 }
