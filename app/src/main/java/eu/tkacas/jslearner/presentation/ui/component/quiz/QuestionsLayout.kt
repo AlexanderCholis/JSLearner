@@ -98,21 +98,33 @@ fun QuestionsLayout(
                 }
 
                 QuestionType.MULTIPLE_CHOICE -> {
-                    MultipleChoiceMultipleAnswers(
-                        questionIndex = currentIndex,
-                        options = currentQuestion.options,
-                        selectedOptions = selectedOptions[currentIndex] ?: emptyList(),
-                        onOptionSelected = { option, isSelected ->
-                            val updatedOptions =
-                                selectedOptions[currentIndex]?.toMutableList() ?: mutableListOf()
-                            if (isSelected) {
-                                updatedOptions.add(option)
-                            } else {
-                                updatedOptions.remove(option)
+                    if (currentQuestion.correctAnswers.size > 1) {
+                        MultipleChoiceMultipleAnswers(
+                            questionIndex = currentIndex,
+                            options = currentQuestion.options,
+                            selectedOptions = selectedOptions[currentIndex] ?: emptyList(),
+                            onOptionSelected = { option, isSelected ->
+                                val updatedOptions =
+                                    selectedOptions[currentIndex]?.toMutableList() ?: mutableListOf()
+                                if (isSelected) {
+                                    updatedOptions.add(option)
+                                } else {
+                                    updatedOptions.remove(option)
+                                }
+                                onOptionSelected(currentIndex, updatedOptions)
                             }
-                            onOptionSelected(currentIndex, updatedOptions)
-                        }
-                    )
+                        )
+                    } else {
+                        MultipleChoiceSingleAnswer(
+                            questionIndex = currentIndex,
+                            options = currentQuestion.options,
+                            initialSelectedOption = selectedOptions[currentIndex]?.firstOrNull(),
+                            onOptionSelected = { option ->
+                                onOptionSelected(currentIndex, listOf(option))
+                            }
+                        )
+                    }
+
                 }
 
                 QuestionType.FILL_IN_THE_BLANKS -> {
