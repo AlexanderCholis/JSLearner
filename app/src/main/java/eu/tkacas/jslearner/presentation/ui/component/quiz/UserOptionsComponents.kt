@@ -46,6 +46,7 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
+import java.util.Locale
 
 @Composable
 private fun MultipleChoiceSingleCard(
@@ -233,6 +234,15 @@ fun TrueFalse(
         else -> null
     }
 
+    // Adjust correctOptions to match "True" or "False" capitalization
+    val adjustedCorrectOptions = correctOptions.map { option ->
+        when (option.lowercase()) {
+            "true" -> "True"
+            "false" -> "False"
+            else -> option
+        }
+    }
+
     // Call MultipleChoiceSingleAnswer with updated parameters
     MultipleChoiceSingleAnswer(
         questionIndex = questionIndex,
@@ -241,7 +251,7 @@ fun TrueFalse(
         onOptionSelected = { option ->
             onTrueFalseSelected(option == "True")
         },
-        correctOptions = correctOptions,
+        correctOptions = adjustedCorrectOptions,
         enableOptions = enableOptions
     )
 }
