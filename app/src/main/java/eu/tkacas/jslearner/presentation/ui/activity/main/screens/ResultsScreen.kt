@@ -78,7 +78,6 @@ fun ResultsScreen(
                         Button(
                             onClick = {
                                 navController.navigateUp()
-                                // TODO: Implement navigation to the quiz
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = PrussianBlue)
                         ) {

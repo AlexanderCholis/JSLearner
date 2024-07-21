@@ -56,7 +56,7 @@ fun QuizScreen(
                 sharedViewModel.setSelectedQuestionOptions(selectedOptions.value)
                 navController.navigate("results")
             } else if (!canSubmit) {
-                val unansweredQuestions = (0 until quiz.questions.size).filter { it !in selectedOptions.value.keys }
+                val unansweredQuestions = (1 until  quiz.questions.size + 1).filter { it !in selectedOptions.value.keys }
                 Toast.makeText(
                     context,
                     context.getString(R.string.unanswered_questions, unansweredQuestions.joinToString(", ")),
