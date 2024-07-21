@@ -54,9 +54,11 @@ private fun MultipleChoiceSingleCard(
     onSelected: () -> Unit,
     enableOption: Boolean,
     isCorrect: Boolean,
+    isWrong: Boolean
 ) {
     val cardColor = when {
-        isCorrect -> Color.Green // Mark correct options with green
+        !enableOption && isSelected && isCorrect -> Color.Green // Mark correct options with green
+        !enableOption && isSelected && isWrong -> Color.Red // Mark incorrect options with red
         !enableOption -> Color.LightGray // Locked options with light gray
         isSelected -> SkyBlue
         else -> Color.White
@@ -105,8 +107,8 @@ private fun MultipleChoiceMultipleCard(
     isWrong: Boolean
 ) {
     val cardColor = when {
-        isCorrect -> Color.Green // Mark correct options with green
-        isWrong -> Color.Red // Mark incorrect options with red
+        !enableOption && isCorrect -> Color.Green // Mark correct options with green
+        !enableOption && isWrong -> Color.Red // Mark incorrect options with red
         !enableOption -> Color.LightGray // Locked options with light gray
         isSelected.value -> SkyBlue // Selected options with SkyBlue
         else -> Color.White
@@ -175,7 +177,8 @@ fun MultipleChoiceSingleAnswer(
                     onOptionSelected(option)
                 },
                 enableOption = enableOptions,
-                isCorrect = option in correctOptions
+                isCorrect = option in correctOptions,
+                isWrong = option !in correctOptions
             )
         }
     }
