@@ -41,13 +41,13 @@ fun QuizScreen(
     val quiz = sharedViewModel.selectedQuiz.value
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var quizResults by remember { mutableStateOf<QuizResults?>(null) }
-    val selectedOptions = rememberSaveable { mutableStateOf(mutableMapOf<Int, List<String>>()) }
+    val selectedOptions = remember { mutableStateOf(mutableMapOf<Int, List<String>>()) }
     var canSubmit by remember { mutableStateOf(false) }
     var hasSubmitted by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
     if (quiz != null) {
-        var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startQuiz") 0 else quiz.questions.size) }
+        var currentIndex by remember { mutableIntStateOf(if (previousRoute == "startQuiz") 0 else quiz.questions.size) }
 
         val context = LocalContext.current
 
