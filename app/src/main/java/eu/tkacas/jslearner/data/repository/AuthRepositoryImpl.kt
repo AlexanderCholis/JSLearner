@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.data.repository
 
 import com.google.firebase.auth.FirebaseUser
+import eu.tkacas.jslearner.data.model.LeaderboardUser
 import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.data.model.UserFirestore
 import eu.tkacas.jslearner.data.source.remote.FirebaseDataSource
@@ -148,5 +149,9 @@ class AuthRepositoryImpl(
     override suspend fun getUserCompletedLessons(): List<String> {
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         return firestoreDataSource.getUserCompletedLessons(uid)
+    }
+
+    override suspend fun getLeaderboard(): List<LeaderboardUser> {
+        return firebaseDataSource.getLeaderboard()
     }
 }

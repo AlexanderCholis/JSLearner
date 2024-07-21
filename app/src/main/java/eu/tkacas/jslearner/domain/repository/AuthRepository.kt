@@ -1,6 +1,7 @@
 package eu.tkacas.jslearner.domain.repository
 
 import com.google.firebase.auth.FirebaseUser
+import eu.tkacas.jslearner.data.model.LeaderboardUser
 import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.data.model.UserFirestore
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
@@ -67,4 +68,6 @@ interface AuthRepository {
     suspend fun checkUserProfileCompletion(): Boolean
     fun logout()
     suspend fun getUserCompletedLessons(): List<String>
+
+    suspend fun getLeaderboard(): List<LeaderboardUser>
 }

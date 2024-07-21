@@ -4,6 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import eu.tkacas.jslearner.data.await
+import eu.tkacas.jslearner.data.model.LeaderboardUser
 import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 
@@ -63,5 +64,26 @@ class FirebaseDataSource(
         val userMap = user?.toMap()?.filterValues { it != null }?.mapValues { it.value!! }
         firebase.getReference("users").child(userId).updateChildren(userMap as Map<String, Any>)
             .await()
+    }
+
+    suspend fun getLeaderboard(): List<LeaderboardUser> {
+        val snapshot = firebase.getReference("leaderboard").get().await()
+        val leaderboardUsers = mutableListOf<LeaderboardUser>()
+        snapshot.children.forEach { dataSnapshot ->
+            val uid = dataSnapshot.key ?: ""
+            val firstname = dataSnapshot.child("firstname").getValue(String::class.java) ?: ""
+            val lastname = dataSnapshot.child("lastname").getValue(String::class.java) ?: ""
+            val experienceScore = dataSnapshot.child("score").getValue(Long::class.java) ?: 0L
+            leaderboardUsers.add(
+                LeaderboardUser(
+                    uid = uid,
+                    firstName = firstname,
+                    lastName = lastname,
+                    score = experienceScore.toInt(
+                    )
+                )
+            )
+        }
+        return leaderboardUsers
     }
 }
