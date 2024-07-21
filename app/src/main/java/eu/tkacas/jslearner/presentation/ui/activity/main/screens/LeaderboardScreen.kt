@@ -110,7 +110,7 @@ fun LeaderboardScreen(
 
                         is Result.Success -> {
                             val leaderboardUsers =
-                                (uiState as Result.Success<List<LeaderboardUser>>).result
+                                (uiState as Result.Success<List<LeaderboardUser>>).result.sortedByDescending { it.score }
 
                             // Extract the top 3 podium users
                             val podiumUsers = leaderboardUsers.take(3).mapIndexed { index, user ->
@@ -122,7 +122,7 @@ fun LeaderboardScreen(
                                 )
                             }
 
-                            val users = leaderboardUsers.sortedByDescending { it.score }.mapIndexed { index, user ->
+                            val users = leaderboardUsers.mapIndexed { index, user ->
                                 LeaderboardCardData(
                                     firstName = user.firstName,
                                     lastName = user.lastName,
@@ -130,6 +130,7 @@ fun LeaderboardScreen(
                                     position = index + 1
                                 )
                             }
+
 
                             LazyColumn(
                                 modifier = Modifier.padding(16.dp),
