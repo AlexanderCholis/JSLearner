@@ -24,6 +24,7 @@ fun AnsweredQuestionScreen(
 ) {
     val quiz = sharedViewModel.selectedQuiz.value
     val quizResults = sharedViewModel.quizResults.value
+    val selectedOptions = sharedViewModel.selectedQuestionOptions.value
 
     Scaffold(
         modifier = Modifier
@@ -50,6 +51,8 @@ fun AnsweredQuestionScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AnsweredQuestionLayout(
+                    questionIndex = questionIndex,
+                    selectedOptions = selectedOptions,
                     question = quiz!!.questions[questionIndex],
                     questionResult = quizResults!!.questionResults[questionIndex],
                     onButtonClick = {

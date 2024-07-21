@@ -26,6 +26,8 @@ import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 
 @Composable
 fun AnsweredQuestionLayout(
+    questionIndex: Int,
+    selectedOptions: Map<Int, List<String>>?,
     question: QuestionUI,
     questionResult: QuestionResult,
     onButtonClick: () -> Unit
@@ -44,15 +46,35 @@ fun AnsweredQuestionLayout(
             Spacer(modifier = Modifier.height(8.dp))
             when (question.questionType) {
                 QuestionType.TRUE_FALSE -> {
-
+                    TrueFalse(
+                        questionIndex = questionIndex,
+                        selectedOption = selectedOptions?.get(questionIndex)?.firstOrNull().toBoolean(),
+                        onTrueFalseSelected = {  },
+                        correctOptions = questionResult.correctOptions,
+                        enableOptions = false
+                    )
                 }
 
                 QuestionType.MULTIPLE_CHOICE -> {
-
+                    MultipleChoiceMultipleAnswers(
+                        questionIndex = questionIndex,
+                        options = question.options,
+                        selectedOptions = selectedOptions?.get(questionIndex),
+                        onOptionSelected = {_, _ -> },
+                        correctOptions = questionResult.correctOptions,
+                        enableOptions = false
+                    )
                 }
 
                 QuestionType.FILL_IN_THE_BLANKS -> {
-
+                    FillInTheBlank(
+                        questionIndex = questionIndex,
+                        options = question.options,
+                        selectedOption = selectedOptions?.get(questionIndex)?.firstOrNull(),
+                        onAnswerSelected = {},
+                        correctOptions = questionResult.correctOptions,
+                        enableInteraction = false
+                    )
                 }
 
                 else -> Text(text = stringResource(id = R.string.unsupported_question_type))

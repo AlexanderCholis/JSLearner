@@ -11,7 +11,7 @@ class GetQuizResultsUseCase(private val getQuestionResultUseCase: GetQuestionRes
             val userSelectedOptions = userOptions.getOrNull(index) ?: emptyList()
             getQuestionResultUseCase.execute(question, userSelectedOptions)
         }
-        val score = questionResults.count { it.isCorrect }
+        val score = questionResults.sumOf { if (it.isCorrect) 10 else -5 as Int }
         return QuizResults(questionResults, score)
     }
 }

@@ -1,5 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,9 +39,31 @@ fun QuizScreen(
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var quizResults by remember { mutableStateOf<QuizResults?>(null) }
     val selectedOptions = rememberSaveable { mutableStateOf(mutableMapOf<Int, List<String>>()) }
+    var canSubmit by remember { mutableStateOf(false) }
+    var hasSubmitted by remember { mutableStateOf(false) }
 
     if (quiz != null) {
         var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startQuiz") 0 else quiz.questions.size) }
+
+        val context = LocalContext.current
+
+        fun handleSubmit() {
+            if (canSubmit && !hasSubmitted) {
+                hasSubmitted = true
+                val userOptions = selectedOptions.value.values.toList()
+                quizResults = viewModel.getQuizResults(quiz, userOptions)
+                sharedViewModel.setQuizResults(quizResults!!)
+                sharedViewModel.setSelectedQuestionOptions(selectedOptions.value)
+                navController.navigate("results")
+            } else if (!canSubmit) {
+                val unansweredQuestions = (1 until  quiz.questions.size + 1).filter { it !in selectedOptions.value.keys }
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.unanswered_questions, unansweredQuestions.joinToString(", ")),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
         Scaffold(
             modifier = Modifier
@@ -79,15 +103,13 @@ fun QuizScreen(
                         selectedOptions = selectedOptions.value,
                         onOptionSelected = { index, options ->
                             selectedOptions.value[index] = options
+                            canSubmit = selectedOptions.value.size == quiz.questions.size
                         },
                         onNextClick = {
                             if (currentIndex < quiz.questions.size - 1) {
                                 currentIndex++
                             } else {
-                                val userOptions = selectedOptions.value.values.toList()
-                                quizResults = viewModel.getQuizResults(quiz, userOptions)
-                                sharedViewModel.setQuizResults(quizResults!!)
-                                navController.navigate("results")
+                                handleSubmit()
                             }
                         }
                     )

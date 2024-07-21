@@ -30,6 +30,9 @@ class MainSharedViewModel : ViewModel() {
     private val _quizResults = MutableLiveData<QuizResults>()
     val quizResults = _quizResults
 
+    private val _selectedQuestionOptions = MutableLiveData<Map<Int, List<String>>>()
+    val selectedQuestionOptions = _selectedQuestionOptions
+
     fun setSelectedCourseId(courseId: String) {
         _selectedCourseId.value = courseId
     }
@@ -56,5 +59,9 @@ class MainSharedViewModel : ViewModel() {
 
     fun setQuizResults(quizResults: QuizResults) {
         _quizResults.value = quizResults
+    }
+
+    fun setSelectedQuestionOptions(options: Map<Int, List<String>>) {
+        _selectedQuestionOptions.value = options
     }
 }

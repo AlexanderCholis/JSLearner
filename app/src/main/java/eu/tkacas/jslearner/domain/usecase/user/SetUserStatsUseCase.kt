@@ -8,8 +8,8 @@ class SetUserStatsUseCase(private val authRepository: AuthRepository) {
     suspend fun execute(user: User) {
         val stats = when (user.experienceLevel) {
             ExperienceLevel.NO_EXPERIENCE -> UserStats(0, "01", "01", 0, 0)
-            ExperienceLevel.SOME_EXPERIENCE -> UserStats(500, "06", "01", 0, 0)
-            ExperienceLevel.A_LOT_OF_EXPERIENCE -> UserStats(1000, "9", "01", 0, 0)
+            ExperienceLevel.SOME_EXPERIENCE -> UserStats(600, "10", "01", 0, 0)
+            ExperienceLevel.A_LOT_OF_EXPERIENCE -> UserStats(1400, "18", "01", 0, 0)
             else -> UserStats(
                 user.experienceScore,
                 user.currentCourseId,

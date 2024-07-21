@@ -159,4 +159,6 @@
     <string name="help_self_assessment">Self-assessment</string>
     <string name="help_quiz">Each level includes self-assessment tests to help you check your understanding of the topics. You can repeat the tests until you have answered all the questions correctly.</string>
     <string name="done">Done</string>
+    <string name="answer_all_questions">Please answer all questions before submitting.</string>
+    <string name="unanswered_questions">Please answer questions: %1$s</string>
 </resources>
