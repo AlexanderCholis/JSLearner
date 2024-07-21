@@ -246,22 +246,32 @@ fun TrueFalse(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DraggableWordCard(text: String) {
+fun DraggableWordCard(
+    text: String,
+    enableInteraction: Boolean = true
+) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(4.dp)
-            .dragAndDropSource {
-                detectTapGestures(
-                    onLongPress = {
-                        startTransfer(
-                            DragAndDropTransferData(
-                                ClipData.newPlainText("text/plain", text)
-                            )
+            .then(
+                (if (enableInteraction) {
+                    Modifier
+                        .dragAndDropSource {
+                        detectTapGestures(
+                            onLongPress = {
+                                startTransfer(
+                                    DragAndDropTransferData(
+                                        ClipData.newPlainText("text/plain", text)
+                                    )
+                                )
+                            }
                         )
                     }
-                )
-            }
+                } else {
+                    Modifier
+                })
+            )
     ) {
         Text(text = text, modifier = Modifier.padding(8.dp))
     }
@@ -273,11 +283,20 @@ fun DraggableWordCard(text: String) {
 fun TargetWordBox(
     questionIndex: Int,
     text: String,
-    onDrop: (String) -> Unit
+    onDrop: (String) -> Unit,
+    enableInteraction: Boolean = true,
+    correctOptions: List<String> = emptyList()
 ) {
     var textState by remember(questionIndex) { mutableStateOf(text) }
-    var backgroundColor by remember(questionIndex) { mutableStateOf(Color.LightGray) }
-    val dragAndDropTarget = remember(questionIndex) {
+    var backgroundColor by remember(questionIndex, textState, correctOptions) {
+        mutableStateOf(
+            if (textState in correctOptions && !enableInteraction) Color.Green
+            else if (textState.isNotEmpty() && !enableInteraction) Color.Red
+            else Color.LightGray
+        )
+    }
+
+    val dragAndDropTarget = if (enableInteraction) remember(questionIndex) {
         object : DragAndDropTarget {
             override fun onDrop(event: DragAndDropEvent): Boolean {
                 val draggedData = event.toAndroidDragEvent()
@@ -294,23 +313,27 @@ fun TargetWordBox(
 
             override fun onExited(event: DragAndDropEvent) {
                 super.onExited(event)
-                backgroundColor = Color.LightGray
+                backgroundColor = if (textState in correctOptions && !enableInteraction) Color.Green
+                else if (textState.isNotEmpty() && !enableInteraction) Color.Red
+                else Color.LightGray
             }
         }
-    }
+    } else null
 
     Surface(
         shape = RoundedCornerShape(8.dp),
         color = backgroundColor,
         modifier = Modifier
             .padding(4.dp)
-            .dragAndDropTarget(
-                shouldStartDragAndDrop = { event ->
-                    event
-                        .mimeTypes()
-                        .contains("text/plain")
-                },
-                target = dragAndDropTarget
+            .then(
+                dragAndDropTarget?.let { target ->
+                    Modifier.dragAndDropTarget(
+                        shouldStartDragAndDrop = { event ->
+                            event.mimeTypes().contains("text/plain")
+                        },
+                        target = target
+                    )
+                } ?: Modifier
             )
     ) {
         val textModifier = if (textState.isEmpty()) {
@@ -329,12 +352,13 @@ fun FillInTheBlank(
     questionIndex: Int,
     options: List<String>,
     selectedOption: String?,
-    onAnswerSelected: (String) -> Unit
+    onAnswerSelected: (String) -> Unit,
+    correctOptions: List<String> = emptyList(),
+    enableInteraction: Boolean = true
 ) {
     val optionKey = options.joinToString(separator = "")
     val key = optionKey.hashCode().toString()
     var answer by remember(key) { mutableStateOf(selectedOption ?: "") }
-
 
     Column {
         Spacer(modifier = Modifier.height(35.dp))
@@ -351,9 +375,13 @@ fun FillInTheBlank(
                 questionIndex = questionIndex,
                 text = answer,
                 onDrop = { droppedText ->
-                    answer = droppedText
-                    onAnswerSelected(droppedText)
-                }
+                    if (enableInteraction) {
+                        answer = droppedText
+                        onAnswerSelected(droppedText)
+                    }
+                },
+                enableInteraction = enableInteraction,
+                correctOptions = correctOptions
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -363,7 +391,7 @@ fun FillInTheBlank(
         ) {
             // Display options as draggable cards
             options.forEach { option ->
-                DraggableWordCard(text = option)
+                DraggableWordCard(text = option, enableInteraction = enableInteraction)
             }
         }
     }
