@@ -270,7 +270,6 @@ fun CourseTopCard(points: Int, days: Int, answers: Int) {
 fun LeaderboardCard(
     firstName: String,
     lastName: String,
-    userName: String,
     userScore: Int,
     position: Int
 ) {
@@ -291,15 +290,14 @@ fun LeaderboardCard(
                 modifier = Modifier.padding(end = 8.dp)
             )
             UserInitialsCircle(
-                firstName = firstName,
-                lastName = lastName,
+                initials = "${firstName.first()}${lastName.first()}",
                 backgroundColor = LightBeige,
                 textColor = PrussianBlue,
                 size = 35.dp,
                 fontSize = 15.sp
             )
             Text(
-                text = userName,
+                text = "$firstName $lastName",
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 8.dp)
