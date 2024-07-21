@@ -109,7 +109,7 @@ fun DisplayScore(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(id = R.string.your_score_in_this_course_is),
+            text = stringResource(id = R.string.your_score_in_this_lesson_is),
             fontWeight = FontWeight.Bold
         )
         Text(
