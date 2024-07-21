@@ -67,7 +67,14 @@ fun AnsweredQuestionLayout(
                 }
 
                 QuestionType.FILL_IN_THE_BLANKS -> {
-
+                    FillInTheBlank(
+                        questionIndex = questionIndex,
+                        options = question.options,
+                        selectedOption = selectedOptions?.get(questionIndex)?.firstOrNull(),
+                        onAnswerSelected = {},
+                        correctOptions = questionResult.correctOptions,
+                        enableInteraction = false
+                    )
                 }
 
                 else -> Text(text = stringResource(id = R.string.unsupported_question_type))
