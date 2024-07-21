@@ -1,7 +1,6 @@
 package eu.tkacas.jslearner.presentation.ui.activity.main.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -36,6 +35,11 @@ import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import eu.tkacas.jslearner.presentation.ui.component.WinnersPodiumComponentWithLeaders
 import eu.tkacas.jslearner.presentation.viewmodel.main.LeaderboardViewModel
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.foundation.layout.Box
 
 @Composable
 fun LeaderboardScreen(
@@ -85,9 +89,9 @@ fun LeaderboardScreen(
                     .background(Color.White)
                     .padding(innerPadding)
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(16.dp)
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
                     when (uiState) {
                         is Result.Loading -> {
@@ -99,7 +103,8 @@ fun LeaderboardScreen(
                             // Show an error message if something goes wrong
                             Text(
                                 text = stringResource(id = R.string.an_error_occurred),
-                                color = Color.Red
+                                color = Color.Red,
+                                textAlign = TextAlign.Center
                             )
                         }
 
@@ -117,29 +122,35 @@ fun LeaderboardScreen(
                                 )
                             }
 
-                            // Extract the remaining users for the leaderboard
-                            val otherUsers = leaderboardUsers.drop(3).mapIndexed { index, user ->
+                            val users = leaderboardUsers.sortedByDescending { it.score }.mapIndexed { index, user ->
                                 LeaderboardCardData(
                                     firstName = user.firstName,
                                     lastName = user.lastName,
                                     userScore = user.score,
-                                    position = index + 4 // positions start from 4 for other users
+                                    position = index + 1
                                 )
                             }
 
-                            // First 3 places on the podium
-                            WinnersPodiumComponentWithLeaders(podiumUsers)
-                            Spacer(modifier = Modifier.height(30.dp))
+                            LazyColumn(
+                                modifier = Modifier.padding(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                item {
+                                    // First 3 places on the podium
+                                    WinnersPodiumComponentWithLeaders(podiumUsers)
+                                    Spacer(modifier = Modifier.height(30.dp))
+                                }
 
-                            // Other users on the leaderboard
-                            otherUsers.forEach { user ->
-                                LeaderboardCard(
-                                    firstName = user.firstName,
-                                    lastName = user.lastName,
-                                    userScore = user.userScore,
-                                    position = user.position
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
+                                // Other users on the leaderboard
+                                items(users) { user ->
+                                    LeaderboardCard(
+                                        firstName = user.firstName,
+                                        lastName = user.lastName,
+                                        userScore = user.userScore,
+                                        position = user.position
+                                    )
+                                }
                             }
                         }
                     }
