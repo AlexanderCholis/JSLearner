@@ -20,6 +20,7 @@ import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
+import eu.tkacas.jslearner.domain.usecase.user.GetLeaderboardUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
@@ -139,6 +140,11 @@ class AppModuleImpl(
     }
     override val getQuizResultsUseCase: GetQuizResultsUseCase by lazy {
         GetQuizResultsUseCase(getQuestionResultUseCase)
+    }
+
+    // For the Leaderboard
+    override val getLeaderboardUseCase: GetLeaderboardUseCase by lazy {
+        GetLeaderboardUseCase(authRepository)
     }
 
     // For the ExploringPathScreen

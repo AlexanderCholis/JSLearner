@@ -166,7 +166,9 @@ fun NameFieldComponent(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        UserInitialsCircle(firstName = firstName, lastName = lastName)
+        UserInitialsCircle(
+            initials = "${firstName.first()}${lastName.first()}"
+        )
 
         Spacer(modifier = Modifier.width(20.dp))
 

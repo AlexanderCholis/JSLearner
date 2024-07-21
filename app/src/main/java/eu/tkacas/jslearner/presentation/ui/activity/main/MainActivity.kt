@@ -13,6 +13,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.navigation.MainNavigati
 import eu.tkacas.jslearner.presentation.ui.theme.JSLearnerTheme
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.HelpViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.LeaderboardViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.RoadMapViewModel
@@ -69,6 +70,14 @@ class MainActivity : ComponentActivity() {
                         }
                     )
 
+                    val leaderboardViewModel = viewModel<LeaderboardViewModel>(
+                        factory = viewModelFactory {
+                            LeaderboardViewModel(
+                                getLeaderboardUseCase = JSLearner.appModule.getLeaderboardUseCase
+                            )
+                        }
+                    )
+
                     val startQuizViewModel = viewModel<StartQuizViewModel>(
                         factory = viewModelFactory {
                             StartQuizViewModel(
@@ -90,6 +99,7 @@ class MainActivity : ComponentActivity() {
                         startCourseViewModel = startCourseViewModel,
                         startLessonViewModel = startLessonViewModel,
                         lessonViewModel = lessonViewModel,
+                        leaderboardViewModel = leaderboardViewModel,
                         startQuizViewModel = startQuizViewModel,
                         quizViewModel = quizViewModel,
                         accountViewModel = accountViewModel,

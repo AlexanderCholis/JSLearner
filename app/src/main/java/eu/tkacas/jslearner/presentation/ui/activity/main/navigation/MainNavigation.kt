@@ -21,6 +21,7 @@ import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartLessonScre
 import eu.tkacas.jslearner.presentation.ui.activity.main.screens.StartQuizScreen
 import eu.tkacas.jslearner.presentation.viewmodel.main.AccountViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.HelpViewModel
+import eu.tkacas.jslearner.presentation.viewmodel.main.LeaderboardViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.LessonViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
@@ -36,6 +37,7 @@ internal fun MainNavigation(
     startLessonViewModel: StartLessonViewModel,
     lessonViewModel: LessonViewModel,
     startQuizViewModel: StartQuizViewModel,
+    leaderboardViewModel: LeaderboardViewModel,
     quizViewModel: QuizViewModel,
     accountViewModel: AccountViewModel,
     helpViewModel: HelpViewModel
@@ -95,7 +97,7 @@ internal fun MainNavigation(
         composable("leaderboard") {
             LeaderboardScreen(
                 navController = navController,
-                viewModel = accountViewModel
+                viewModel = leaderboardViewModel
             )
         }
         composable("coursesPath") {
