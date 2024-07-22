@@ -91,8 +91,6 @@ class AuthRepositoryImpl(
     override suspend fun setUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
-        currentCourseId: String?,
-        currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     ) {
@@ -100,8 +98,6 @@ class AuthRepositoryImpl(
         val userStats = UserFirebase(
             experienceLevel = experienceLevel,
             experienceScore = experienceScore?.toLong(),
-            currentCourseId = currentCourseId,
-            currentLessonId = currentLessonId,
             highScoreDaysInARow = highScoreDaysInARow?.toLong(),
             highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow?.toLong()
         )
@@ -116,8 +112,6 @@ class AuthRepositoryImpl(
     override suspend fun updateUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
-        currentCourseId: String?,
-        currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     ) {
@@ -125,8 +119,6 @@ class AuthRepositoryImpl(
         val userStats = UserFirebase(
             experienceLevel = experienceLevel,
             experienceScore = experienceScore?.toLong(),
-            currentCourseId = currentCourseId,
-            currentLessonId = currentLessonId,
             highScoreDaysInARow = highScoreDaysInARow?.toLong(),
             highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow?.toLong()
         )

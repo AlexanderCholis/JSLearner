@@ -12,8 +12,6 @@ data class User(
     // Firebase
     val experienceLevel: ExperienceLevel? = null,
     val experienceScore: Int? = null,
-    val currentCourseId: String? = null,
-    val currentLessonId: String? = null,
     val highScoreDaysInARow: Int? = null,
     val highScoreCorrectAnswersInARow: Int? = null
 )

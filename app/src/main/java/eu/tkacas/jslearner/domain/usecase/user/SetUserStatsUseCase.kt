@@ -8,13 +8,11 @@ import eu.tkacas.jslearner.domain.repository.AuthRepository
 class SetUserStatsUseCase(private val authRepository: AuthRepository) {
     suspend fun execute(user: User) {
         val stats = when (user.experienceLevel) {
-            ExperienceLevel.NO_EXPERIENCE -> UserStats(0, "01", "0101", 0, 0)
-            ExperienceLevel.SOME_EXPERIENCE -> UserStats(600, "10", "1001", 0, 0)
-            ExperienceLevel.A_LOT_OF_EXPERIENCE -> UserStats(1400, "18", "1801", 0, 0)
+            ExperienceLevel.NO_EXPERIENCE -> UserStats(0, 0, 0)
+            ExperienceLevel.SOME_EXPERIENCE -> UserStats(600, 0, 0)
+            ExperienceLevel.A_LOT_OF_EXPERIENCE -> UserStats(1400, 0, 0)
             else -> UserStats(
                 user.experienceScore,
-                user.currentCourseId,
-                user.currentLessonId,
                 user.highScoreDaysInARow,
                 user.highScoreCorrectAnswersInARow
             )
@@ -23,8 +21,6 @@ class SetUserStatsUseCase(private val authRepository: AuthRepository) {
         return authRepository.setUserStats(
             experienceLevel = user.experienceLevel,
             experienceScore = stats.experienceScore,
-            currentCourseId = stats.currentCourseId,
-            currentLessonId = stats.currentLessonId,
             highScoreDaysInARow = stats.highScoreDaysInARow,
             highScoreCorrectAnswersInARow = stats.highScoreCorrectAnswersInARow
         )

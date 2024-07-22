@@ -46,8 +46,6 @@ class AccountViewModel(
             lessonsCompleted = userProfile?.lessonsCompleted ?: userStats?.lessonsCompleted,
             experienceLevel = userProfile?.experienceLevel ?: userStats?.experienceLevel,
             experienceScore = userProfile?.experienceScore ?: userStats?.experienceScore,
-            currentCourseId = userProfile?.currentCourseId ?: userStats?.currentCourseId,
-            currentLessonId = userProfile?.currentLessonId ?: userStats?.currentLessonId,
             highScoreDaysInARow = userProfile?.highScoreDaysInARow
                 ?: userStats?.highScoreDaysInARow,
             highScoreCorrectAnswersInARow = userProfile?.highScoreCorrectAnswersInARow

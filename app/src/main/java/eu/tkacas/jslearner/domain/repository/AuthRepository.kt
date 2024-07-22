@@ -49,8 +49,6 @@ interface AuthRepository {
     suspend fun setUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
-        currentCourseId: String?,
-        currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     )
@@ -59,8 +57,6 @@ interface AuthRepository {
     suspend fun updateUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
-        currentCourseId: String?,
-        currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     )

@@ -9,8 +9,6 @@ class GetUserStatsUseCase(private val authRepository: AuthRepository) {
         return User(
             experienceLevel = userFirebase.experienceLevel,
             experienceScore = userFirebase.experienceScore?.toInt(),
-            currentCourseId = userFirebase.currentCourseId,
-            currentLessonId = userFirebase.currentLessonId,
             highScoreDaysInARow = userFirebase.highScoreDaysInARow?.toInt(),
             highScoreCorrectAnswersInARow = userFirebase.highScoreCorrectAnswersInARow?.toInt()
         )
