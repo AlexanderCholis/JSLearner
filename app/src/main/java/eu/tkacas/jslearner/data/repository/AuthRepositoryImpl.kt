@@ -9,6 +9,7 @@ import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.domain.repository.AuthRepository
+import kotlinx.coroutines.flow.Flow
 
 class AuthRepositoryImpl(
     private val firebaseDataSource: FirebaseDataSource,
@@ -138,7 +139,7 @@ class AuthRepositoryImpl(
         firebaseDataSource.logout()
     }
 
-    override suspend fun getUserCompletedLessons(): List<String> {
+    override suspend fun getUserCompletedLessons(): Flow<List<String>> {
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         return firestoreDataSource.getUserCompletedLessons(uid)
     }

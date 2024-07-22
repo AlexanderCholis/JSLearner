@@ -6,6 +6,7 @@ import eu.tkacas.jslearner.data.model.UserFirebase
 import eu.tkacas.jslearner.data.model.UserFirestore
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
+import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
     val currentUser: FirebaseUser?
@@ -63,7 +64,7 @@ interface AuthRepository {
 
     suspend fun checkUserProfileCompletion(): Boolean
     fun logout()
-    suspend fun getUserCompletedLessons(): List<String>
+    suspend fun getUserCompletedLessons(): Flow<List<String>>
 
     suspend fun getLeaderboard(): List<LeaderboardUser>
 
