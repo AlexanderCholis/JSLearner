@@ -35,7 +35,8 @@ class MainActivity : ComponentActivity() {
                         factory = viewModelFactory {
                             RoadMapViewModel(
                                 getRoadMapUseCase = JSLearner.appModule.getRoadMapUseCase,
-                                getUserStatsUseCase = JSLearner.appModule.getUserStatsUseCase
+                                getUserStatsUseCase = JSLearner.appModule.getUserStatsUseCase,
+                                authRepository = JSLearner.appModule.authRepository
                             )
                         }
                     )
