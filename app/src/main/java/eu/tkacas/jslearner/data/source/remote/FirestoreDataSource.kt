@@ -7,9 +7,12 @@ import eu.tkacas.jslearner.data.model.Lesson
 import eu.tkacas.jslearner.data.model.Question
 import eu.tkacas.jslearner.data.model.QuestionType
 import eu.tkacas.jslearner.data.model.UserFirestore
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
-class FirestoreDataSource(private val db: FirebaseFirestore) {
+class FirestoreDataSource(val db: FirebaseFirestore) {
 
     suspend fun getCourses(): List<Course> {
         val result = db.collection("courses").get().await()
@@ -47,11 +50,17 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         }
     }
 
-    suspend fun getUserCompletedLessons(userId: String): List<String> {
-        val documentSnapshot = db.collection("users").document(userId).get().await()
-        val lessonsCompleted =
-            documentSnapshot.get("lessons_completed") as? List<String> ?: emptyList()
-        return lessonsCompleted
+    suspend fun getUserCompletedLessons(userId: String): Flow<List<String>> = callbackFlow {
+        val listenerRegistration = db.collection("users").document(userId)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    close(e)
+                    return@addSnapshotListener
+                }
+                val lessonsCompleted = snapshot?.get("lessons_completed") as? List<String> ?: emptyList()
+                trySend(lessonsCompleted)
+            }
+        awaitClose { listenerRegistration.remove() }
     }
 
     suspend fun getCoursesBasedOnLevel(courseLevel: CourseLevel): List<Course> {
@@ -95,4 +104,15 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         lesson.id = documentSnapshot.id
         return lesson
     }
+
+    suspend fun setCompletedLesson(userId: String, lessonId: String) {
+        val documentSnapshot = db.collection("users").document(userId).get().await()
+        val lessonsCompleted = documentSnapshot.get("lessons_completed") as? List<String> ?: emptyList()
+        if (!lessonsCompleted.contains(lessonId)) {
+            val updatedLessonsCompleted = lessonsCompleted.toMutableList().apply { add(lessonId) }
+            db.collection("users").document(userId).update("lessons_completed", updatedLessonsCompleted).await()
+        }
+    }
+
+
 }

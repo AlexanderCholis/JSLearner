@@ -35,7 +35,8 @@ class MainActivity : ComponentActivity() {
                         factory = viewModelFactory {
                             RoadMapViewModel(
                                 getRoadMapUseCase = JSLearner.appModule.getRoadMapUseCase,
-                                getUserStatsUseCase = JSLearner.appModule.getUserStatsUseCase
+                                getUserStatsUseCase = JSLearner.appModule.getUserStatsUseCase,
+                                authRepository = JSLearner.appModule.authRepository
                             )
                         }
                     )
@@ -57,7 +58,8 @@ class MainActivity : ComponentActivity() {
                     val lessonViewModel = viewModel<LessonViewModel>(
                         factory = viewModelFactory {
                             LessonViewModel(
-                                getQuizExistanceUseCase = JSLearner.appModule.getQuizExistanceUseCase
+                                getQuizExistanceUseCase = JSLearner.appModule.getQuizExistanceUseCase,
+                                setCompletedLessonUseCase = JSLearner.appModule.setCompletedLessonUseCase
                             )
                         }
                     )
@@ -88,7 +90,9 @@ class MainActivity : ComponentActivity() {
                     val quizViewModel = viewModel<QuizViewModel>(
                         factory = viewModelFactory {
                             QuizViewModel(
-                                getQuizResultsUseCase = JSLearner.appModule.getQuizResultsUseCase
+                                getQuizResultsUseCase = JSLearner.appModule.getQuizResultsUseCase,
+                                setUserScoreUseCase = JSLearner.appModule.setUserScoreUseCase,
+                                setCompletedLessonUseCase = JSLearner.appModule.setCompletedLessonUseCase
                             )
                         }
                     )

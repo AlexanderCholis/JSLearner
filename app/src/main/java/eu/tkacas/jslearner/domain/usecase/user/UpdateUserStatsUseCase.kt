@@ -8,8 +8,6 @@ class UpdateUserStatsUseCase(private val authRepository: AuthRepository) {
         return authRepository.updateUserStats(
             experienceLevel = user.experienceLevel,
             experienceScore = user.experienceScore,
-            currentCourseId = user.currentCourseId,
-            currentLessonId = user.currentLessonId,
             highScoreDaysInARow = user.highScoreDaysInARow,
             highScoreCorrectAnswersInARow = user.highScoreCorrectAnswersInARow
         )

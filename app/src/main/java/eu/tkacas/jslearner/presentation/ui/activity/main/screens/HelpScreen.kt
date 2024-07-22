@@ -17,6 +17,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,12 +32,14 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.BoldText
 import eu.tkacas.jslearner.presentation.ui.component.GeneralButtonComponent
+import eu.tkacas.jslearner.presentation.ui.component.MenuAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.NavigationDrawer
 import eu.tkacas.jslearner.presentation.ui.component.NormalText
 import eu.tkacas.jslearner.presentation.ui.component.PageIndicator
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.viewmodel.main.HelpViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun HelpScreen(
@@ -44,6 +47,7 @@ fun HelpScreen(
     viewModel: HelpViewModel,
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
     val texts = viewModel.getHelpTexts()
     var currentIndex by rememberSaveable { mutableStateOf(0) }
 
@@ -62,16 +66,30 @@ fun HelpScreen(
             modifier = Modifier
                 .fillMaxSize(),
             topBar = {
-                BackAppTopBar(
-                    color = Color.White,
-                    onBackClick = {
-                        if (currentIndex > 0) {
+                if (currentIndex > 0) {
+                    BackAppTopBar(
+                        color = Color.White,
+                        onBackClick = {
                             currentIndex--
-                        } else {
-                            navController.navigateUp()
                         }
-                    }
-                )
+                    )
+                } else {
+                    MenuAppTopBar(
+                        color = Color.White,
+                        onMenuClick = {
+                            scope.launch {
+                                if (drawerState.isOpen) {
+                                    drawerState.close()
+                                } else {
+                                    drawerState.open()
+                                }
+                            }
+                        },
+                        title = "",
+                        drawerState = drawerState,
+                        showScore = false
+                    )
+                }
             }
         ) { innerPadding ->
             Surface(

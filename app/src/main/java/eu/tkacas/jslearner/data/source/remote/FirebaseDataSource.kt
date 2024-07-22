@@ -38,8 +38,6 @@ class FirebaseDataSource(
     suspend fun getUserStats(userId: String): UserFirebase? {
         val snapshot = firebase.getReference("users").child(userId).get().await()
         if (snapshot.exists()) {
-            val currentLessonId = snapshot.child("current_lesson_id").getValue(String::class.java)
-            val currentCourseId = snapshot.child("current_course_id").getValue(String::class.java)
             val highScoreCorrectAnswersInARow =
                 snapshot.child("high_score_correct_answers_in_a_row").getValue(Long::class.java)
             val highScoreDaysInARow =
@@ -49,8 +47,6 @@ class FirebaseDataSource(
             val experienceScore = snapshot.child("experience_score").getValue(Long::class.java)
 
             return UserFirebase(
-                currentLessonId = currentLessonId,
-                currentCourseId = currentCourseId,
                 highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow,
                 highScoreDaysInARow = highScoreDaysInARow,
                 experienceLevel = experienceLevel,
@@ -85,5 +81,9 @@ class FirebaseDataSource(
             )
         }
         return leaderboardUsers
+    }
+
+    suspend fun setUserScore(userId: String, score: Int) {
+        firebase.getReference("users").child(userId).child("experience_score").setValue(score).await()
     }
 }

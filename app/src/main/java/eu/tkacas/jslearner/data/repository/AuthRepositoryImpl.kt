@@ -9,6 +9,7 @@ import eu.tkacas.jslearner.data.source.remote.FirestoreDataSource
 import eu.tkacas.jslearner.domain.model.experience.ExperienceLevel
 import eu.tkacas.jslearner.domain.model.learningreason.LearningReason
 import eu.tkacas.jslearner.domain.repository.AuthRepository
+import kotlinx.coroutines.flow.Flow
 
 class AuthRepositoryImpl(
     private val firebaseDataSource: FirebaseDataSource,
@@ -91,8 +92,6 @@ class AuthRepositoryImpl(
     override suspend fun setUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
-        currentCourseId: String?,
-        currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     ) {
@@ -100,8 +99,6 @@ class AuthRepositoryImpl(
         val userStats = UserFirebase(
             experienceLevel = experienceLevel,
             experienceScore = experienceScore?.toLong(),
-            currentCourseId = currentCourseId,
-            currentLessonId = currentLessonId,
             highScoreDaysInARow = highScoreDaysInARow?.toLong(),
             highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow?.toLong()
         )
@@ -116,8 +113,6 @@ class AuthRepositoryImpl(
     override suspend fun updateUserStats(
         experienceLevel: ExperienceLevel?,
         experienceScore: Int?,
-        currentCourseId: String?,
-        currentLessonId: String?,
         highScoreDaysInARow: Int?,
         highScoreCorrectAnswersInARow: Int?
     ) {
@@ -125,8 +120,6 @@ class AuthRepositoryImpl(
         val userStats = UserFirebase(
             experienceLevel = experienceLevel,
             experienceScore = experienceScore?.toLong(),
-            currentCourseId = currentCourseId,
-            currentLessonId = currentLessonId,
             highScoreDaysInARow = highScoreDaysInARow?.toLong(),
             highScoreCorrectAnswersInARow = highScoreCorrectAnswersInARow?.toLong()
         )
@@ -146,12 +139,22 @@ class AuthRepositoryImpl(
         firebaseDataSource.logout()
     }
 
-    override suspend fun getUserCompletedLessons(): List<String> {
+    override suspend fun getUserCompletedLessons(): Flow<List<String>> {
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         return firestoreDataSource.getUserCompletedLessons(uid)
     }
 
     override suspend fun getLeaderboard(): List<LeaderboardUser> {
         return firebaseDataSource.getLeaderboard()
+    }
+
+    override suspend fun setUserScore(score: Int) {
+        val uid = currentUser?.uid ?: throw Exception("User not logged in.")
+        firebaseDataSource.setUserScore(uid, score)
+    }
+
+    override suspend fun setCompletedLesson(lessonId: String) {
+        val uid = currentUser?.uid ?: throw Exception("User not logged in.")
+        firestoreDataSource.setCompletedLesson(uid, lessonId)
     }
 }

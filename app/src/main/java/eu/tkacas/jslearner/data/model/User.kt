@@ -25,8 +25,6 @@ data class UserFirestore(
 }
 
 data class UserFirebase(
-    @PropertyName("current_lesson_id") var currentLessonId: String? = null,
-    @PropertyName("current_course_id") var currentCourseId: String? = null,
     @PropertyName("high_score_correct_answers_in_a_row") var highScoreCorrectAnswersInARow: Long? = null,
     @PropertyName("high_score_days_in_a_row") var highScoreDaysInARow: Long? = null,
     @PropertyName("experience_level") var experienceLevel: ExperienceLevel? = null,
@@ -36,8 +34,6 @@ data class UserFirebase(
         return mapOf(
             "experience_level" to experienceLevel?.name,
             "experience_score" to experienceScore,
-            "current_course_id" to currentCourseId,
-            "current_lesson_id" to currentLessonId,
             "high_score_days_in_a_row" to highScoreDaysInARow,
             "high_score_correct_answers_in_a_row" to highScoreCorrectAnswersInARow,
         )

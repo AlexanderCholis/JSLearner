@@ -20,6 +20,7 @@ import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.SetCompletedLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetLeaderboardUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
@@ -27,6 +28,7 @@ import eu.tkacas.jslearner.domain.usecase.user.GetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LoginUseCase
 import eu.tkacas.jslearner.domain.usecase.user.LogoutUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserProfileUseCase
+import eu.tkacas.jslearner.domain.usecase.user.SetUserScoreUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserStatsUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SignUpUseCase
 import eu.tkacas.jslearner.domain.usecase.user.UpdateUserProfileUseCase
@@ -95,6 +97,9 @@ class AppModuleImpl(
     override val getProfileCompletionUseCase: GetProfileCompletionUseCase by lazy {
         GetProfileCompletionUseCase(authRepository)
     }
+    override val setCompletedLessonUseCase: SetCompletedLessonUseCase by lazy {
+        SetCompletedLessonUseCase(authRepository)
+    }
 
     // For the SignIn and SignUp screens
     override val validateFirstName: ValidateFirstName by lazy {
@@ -140,6 +145,9 @@ class AppModuleImpl(
     }
     override val getQuizResultsUseCase: GetQuizResultsUseCase by lazy {
         GetQuizResultsUseCase(getQuestionResultUseCase)
+    }
+    override val setUserScoreUseCase: SetUserScoreUseCase by lazy {
+        SetUserScoreUseCase(authRepository, getUserStatsUseCase)
     }
 
     // For the Leaderboard

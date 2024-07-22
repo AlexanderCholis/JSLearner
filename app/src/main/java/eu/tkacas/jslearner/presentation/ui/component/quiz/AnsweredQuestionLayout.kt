@@ -54,18 +54,27 @@ fun AnsweredQuestionLayout(
                         enableOptions = false
                     )
                 }
-
                 QuestionType.MULTIPLE_CHOICE -> {
-                    MultipleChoiceMultipleAnswers(
-                        questionIndex = questionIndex,
-                        options = question.options,
-                        selectedOptions = selectedOptions?.get(questionIndex),
-                        onOptionSelected = {_, _ -> },
-                        correctOptions = questionResult.correctOptions,
-                        enableOptions = false
-                    )
+                    if (question.correctAnswers.size > 1) {
+                        MultipleChoiceMultipleAnswers(
+                            questionIndex = questionIndex,
+                            options = question.options,
+                            selectedOptions = selectedOptions?.get(questionIndex),
+                            onOptionSelected = { _, _ -> },
+                            correctOptions = questionResult.correctOptions,
+                            enableOptions = false
+                        )
+                    } else {
+                        MultipleChoiceSingleAnswer(
+                            questionIndex = questionIndex,
+                            options = question.options,
+                            initialSelectedOption = selectedOptions?.get(questionIndex)?.firstOrNull(),
+                            onOptionSelected = { _ -> },
+                            correctOptions = questionResult.correctOptions,
+                            enableOptions = false
+                        )
+                    }
                 }
-
                 QuestionType.FILL_IN_THE_BLANKS -> {
                     FillInTheBlank(
                         questionIndex = questionIndex,

@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.model.quiz.QuizResults
@@ -28,6 +30,7 @@ import eu.tkacas.jslearner.presentation.ui.component.BackAppTopBar
 import eu.tkacas.jslearner.presentation.ui.component.quiz.QuestionsLayout
 import eu.tkacas.jslearner.presentation.viewmodel.main.MainSharedViewModel
 import eu.tkacas.jslearner.presentation.viewmodel.main.QuizViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun QuizScreen(
@@ -38,12 +41,13 @@ fun QuizScreen(
     val quiz = sharedViewModel.selectedQuiz.value
     val previousRoute = navController.previousBackStackEntry?.destination?.route
     var quizResults by remember { mutableStateOf<QuizResults?>(null) }
-    val selectedOptions = rememberSaveable { mutableStateOf(mutableMapOf<Int, List<String>>()) }
+    val selectedOptions = remember { mutableStateOf(mutableMapOf<Int, List<String>>()) }
     var canSubmit by remember { mutableStateOf(false) }
     var hasSubmitted by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
 
     if (quiz != null) {
-        var currentIndex by rememberSaveable { mutableIntStateOf(if (previousRoute == "startQuiz") 0 else quiz.questions.size) }
+        var currentIndex by remember { mutableIntStateOf(if (previousRoute == "startQuiz") 0 else quiz.questions.size) }
 
         val context = LocalContext.current
 
@@ -51,12 +55,16 @@ fun QuizScreen(
             if (canSubmit && !hasSubmitted) {
                 hasSubmitted = true
                 val userOptions = selectedOptions.value.values.toList()
-                quizResults = viewModel.getQuizResults(quiz, userOptions)
-                sharedViewModel.setQuizResults(quizResults!!)
-                sharedViewModel.setSelectedQuestionOptions(selectedOptions.value)
-                navController.navigate("results")
+                coroutineScope.launch {
+                    quizResults = viewModel.getQuizResults(quiz, userOptions)
+                    viewModel.setUserScore(quizResults!!.score)
+                    viewModel.addCompletedLesson(sharedViewModel.selectedLesson.value!!.id)
+                    sharedViewModel.setQuizResults(quizResults!!)
+                    sharedViewModel.setSelectedQuestionOptions(selectedOptions.value)
+                    navController.navigate("results")
+                }
             } else if (!canSubmit) {
-                val unansweredQuestions = (1 until  quiz.questions.size + 1).filter { it !in selectedOptions.value.keys }
+                val unansweredQuestions = (1 until quiz.questions.size + 1).filter { it !in selectedOptions.value.keys }
                 Toast.makeText(
                     context,
                     context.getString(R.string.unanswered_questions, unansweredQuestions.joinToString(", ")),
@@ -140,3 +148,4 @@ fun QuizScreen(
         }
     }
 }
+

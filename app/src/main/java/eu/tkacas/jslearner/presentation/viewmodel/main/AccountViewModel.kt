@@ -18,11 +18,7 @@ class AccountViewModel(
     private val _uiState = MutableStateFlow<Result<User?>>(Result.Loading)
     val uiState: StateFlow<Result<User?>> = _uiState
 
-    init {
-        loadUserData()
-    }
-
-    private fun loadUserData() {
+    fun loadUserData() {
         viewModelScope.launch {
             _uiState.value = Result.Loading
             try {
@@ -46,8 +42,6 @@ class AccountViewModel(
             lessonsCompleted = userProfile?.lessonsCompleted ?: userStats?.lessonsCompleted,
             experienceLevel = userProfile?.experienceLevel ?: userStats?.experienceLevel,
             experienceScore = userProfile?.experienceScore ?: userStats?.experienceScore,
-            currentCourseId = userProfile?.currentCourseId ?: userStats?.currentCourseId,
-            currentLessonId = userProfile?.currentLessonId ?: userStats?.currentLessonId,
             highScoreDaysInARow = userProfile?.highScoreDaysInARow
                 ?: userStats?.highScoreDaysInARow,
             highScoreCorrectAnswersInARow = userProfile?.highScoreCorrectAnswersInARow
