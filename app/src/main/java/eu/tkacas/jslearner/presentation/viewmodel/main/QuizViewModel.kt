@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModel
 import eu.tkacas.jslearner.domain.model.quiz.Quiz
 import eu.tkacas.jslearner.domain.model.quiz.QuizResults
 import eu.tkacas.jslearner.domain.usecase.main.quiz.GetQuizResultsUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.SetCompletedLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.user.SetUserScoreUseCase
 
 class QuizViewModel(
     private val getQuizResultsUseCase: GetQuizResultsUseCase,
-    private val setUserScoreUseCase: SetUserScoreUseCase
+    private val setUserScoreUseCase: SetUserScoreUseCase,
+    private val setCompletedLessonUseCase: SetCompletedLessonUseCase
 ) : ViewModel() {
     fun getQuizResults(quiz: Quiz, userOptions: List<List<String>>): QuizResults {
         return getQuizResultsUseCase.execute(quiz, userOptions)
@@ -16,5 +18,9 @@ class QuizViewModel(
 
     suspend fun setUserScore(score: Int) {
         return setUserScoreUseCase.execute(score)
+    }
+
+    suspend fun addCompletedLesson(id: String) {
+        return setCompletedLessonUseCase.execute(id)
     }
 }

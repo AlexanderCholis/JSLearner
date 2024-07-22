@@ -20,6 +20,7 @@ import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.SetCompletedLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetLeaderboardUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
@@ -95,6 +96,9 @@ class AppModuleImpl(
 
     override val getProfileCompletionUseCase: GetProfileCompletionUseCase by lazy {
         GetProfileCompletionUseCase(authRepository)
+    }
+    override val setCompletedLessonUseCase: SetCompletedLessonUseCase by lazy {
+        SetCompletedLessonUseCase(authRepository)
     }
 
     // For the SignIn and SignUp screens

@@ -58,6 +58,7 @@ fun QuizScreen(
                 coroutineScope.launch {
                     quizResults = viewModel.getQuizResults(quiz, userOptions)
                     viewModel.setUserScore(quizResults!!.score)
+                    viewModel.addCompletedLesson(sharedViewModel.selectedLesson.value!!.id)
                     sharedViewModel.setQuizResults(quizResults!!)
                     sharedViewModel.setSelectedQuestionOptions(selectedOptions.value)
                     navController.navigate("results")

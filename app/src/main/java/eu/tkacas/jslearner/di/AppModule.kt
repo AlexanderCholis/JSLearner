@@ -14,6 +14,7 @@ import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetCourseUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetLessonsUseCase
 import eu.tkacas.jslearner.domain.usecase.main.roadmap.GetRoadMapUseCase
+import eu.tkacas.jslearner.domain.usecase.main.roadmap.SetCompletedLessonUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetLeaderboardUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetProfileCompletionUseCase
 import eu.tkacas.jslearner.domain.usecase.user.GetUserProfileUseCase
@@ -54,6 +55,7 @@ interface AppModule {
     val updateUserStatsUseCase: UpdateUserStatsUseCase
     val getProfileCompletionUseCase: GetProfileCompletionUseCase
     val setUserScoreUseCase: SetUserScoreUseCase
+    val setCompletedLessonUseCase: SetCompletedLessonUseCase
 
     // For the SignIn and SignUp screens
     val validateFirstName: ValidateFirstName

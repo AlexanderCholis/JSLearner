@@ -151,4 +151,9 @@ class AuthRepositoryImpl(
         val uid = currentUser?.uid ?: throw Exception("User not logged in.")
         firebaseDataSource.setUserScore(uid, score)
     }
+
+    override suspend fun setCompletedLesson(lessonId: String) {
+        val uid = currentUser?.uid ?: throw Exception("User not logged in.")
+        firestoreDataSource.setCompletedLesson(uid, lessonId)
+    }
 }

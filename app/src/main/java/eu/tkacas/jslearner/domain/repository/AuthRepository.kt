@@ -68,4 +68,6 @@ interface AuthRepository {
     suspend fun getLeaderboard(): List<LeaderboardUser>
 
     suspend fun setUserScore(score: Int)
+
+    suspend fun setCompletedLesson(lessonId: String)
 }

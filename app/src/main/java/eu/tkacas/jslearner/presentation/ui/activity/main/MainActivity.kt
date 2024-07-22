@@ -89,7 +89,8 @@ class MainActivity : ComponentActivity() {
                         factory = viewModelFactory {
                             QuizViewModel(
                                 getQuizResultsUseCase = JSLearner.appModule.getQuizResultsUseCase,
-                                setUserScoreUseCase = JSLearner.appModule.setUserScoreUseCase
+                                setUserScoreUseCase = JSLearner.appModule.setUserScoreUseCase,
+                                setCompletedLessonUseCase = JSLearner.appModule.setCompletedLessonUseCase
                             )
                         }
                     )

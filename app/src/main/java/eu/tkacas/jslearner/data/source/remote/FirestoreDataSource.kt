@@ -96,5 +96,13 @@ class FirestoreDataSource(private val db: FirebaseFirestore) {
         return lesson
     }
 
+    suspend fun setCompletedLesson(userId: String, lessonId: String) {
+        val documentSnapshot = db.collection("users").document(userId).get().await()
+        val lessonsCompleted = documentSnapshot.get("lessons_completed") as? List<String> ?: emptyList()
+        val updatedLessonsCompleted = lessonsCompleted.toMutableList()
+        updatedLessonsCompleted.add(lessonId)
+        db.collection("users").document(userId).update("lessons_completed", updatedLessonsCompleted).await()
+    }
+
 
 }
