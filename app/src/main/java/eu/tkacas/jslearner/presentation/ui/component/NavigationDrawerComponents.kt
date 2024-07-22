@@ -52,7 +52,6 @@ fun NavigationDrawer(
         return screensInDrawer.indexOfFirst { it.route == currentRoute }
     }
 
-    // Use the function to get the current route index
     val selectedItemIndex = remember { mutableIntStateOf(getCurrentRouteIndex()) }
 
     ModalDrawerSheet {

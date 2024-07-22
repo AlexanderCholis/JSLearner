@@ -194,9 +194,7 @@ fun RoadMapNodePreview() {
                             modifier,
                             containerColor = node.status.getColor(),
                             text = it,
-                            onClick = {
-                                // No action in preview
-                            }
+                            onClick = {}
                         )
                     }
                 }

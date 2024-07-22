@@ -70,7 +70,7 @@ private fun MultipleChoiceSingleCard(
             .clickable(
                 enabled = enableOption,
                 onClick = onSelected
-            ) // Disable click when not enabled
+            )
             .padding(6.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -198,7 +198,6 @@ fun MultipleChoiceMultipleAnswers(
         options.forEach { option ->
             val key = "$questionIndex-${option.hashCode()}"
             val isSelected = remember(key) { mutableStateOf(option in safeSelectedOptions) }
-            // Determine if the option is correct based on its selected state and presence in correctOptions
             val isCorrect = isSelected.value && option in correctOptions
 
             MultipleChoiceMultipleCard(
@@ -225,7 +224,6 @@ fun TrueFalse(
     correctOptions: List<String> = emptyList(),
     enableOptions: Boolean = true
 ) {
-    // Convert boolean values to "True" or "False" strings
     val options = listOf("True", "False")
     val initialSelectedOption = when (selectedOption) {
         true -> "True"
@@ -242,7 +240,6 @@ fun TrueFalse(
         }
     }
 
-    // Call MultipleChoiceSingleAnswer with updated parameters
     MultipleChoiceSingleAnswer(
         questionIndex = questionIndex,
         options = options,
@@ -403,7 +400,6 @@ fun FillInTheBlank(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            // Display options as draggable cards
             options.forEach { option ->
                 DraggableWordCard(text = option, enableInteraction = enableInteraction)
             }

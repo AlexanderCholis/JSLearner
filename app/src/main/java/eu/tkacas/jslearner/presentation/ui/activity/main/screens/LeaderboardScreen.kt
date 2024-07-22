@@ -100,7 +100,6 @@ fun LeaderboardScreen(
                 ) {
                     when (uiState) {
                         is Result.Loading -> {
-                            // Show a loading indicator while data is being fetched
                             CircularProgressIndicator()
                         }
 
@@ -143,7 +142,6 @@ fun LeaderboardScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 item {
-                                    // First 3 places on the podium
                                     WinnersPodiumComponentWithLeaders(podiumUsers)
                                     Spacer(modifier = Modifier.height(30.dp))
                                 }

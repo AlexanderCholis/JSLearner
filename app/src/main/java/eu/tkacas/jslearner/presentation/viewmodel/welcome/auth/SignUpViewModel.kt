@@ -94,11 +94,11 @@ class SignUpViewModel(
             try {
                 val user = signUpUseCase.execute(firstName, lastName, email, password)
                 _signupFlow.value =
-                    Result.Success(user) // Assuming you still want to use Result for success indication
+                    Result.Success(user)
             } catch (e: Exception) {
                 _state = _state.copy(errorMessage = e.message)
                 _signupFlow.value =
-                    Result.Error(e) // Assuming you still want to use Result for error indication
+                    Result.Error(e)
             }
         }
 }

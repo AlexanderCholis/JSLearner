@@ -78,7 +78,7 @@ class LoginViewModel(
         return try {
             if (getProfileCompletionUseCase.execute()) "mainActivity" else "experienceLevel"
         } catch (e: Exception) {
-            "experienceLevel" // Or log the error if needed
+            "experienceLevel"
         }
     }
 }

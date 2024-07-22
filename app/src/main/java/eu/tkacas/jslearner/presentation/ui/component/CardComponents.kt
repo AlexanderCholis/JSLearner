@@ -211,7 +211,7 @@ fun CoursesPathCard(
             )
             Icon(
                 painter = painterResource(id = courseStatus.getIcon()),
-                contentDescription = stringResource(id = R.string.courses), // Adjust the description as needed or use null if not applicable
+                contentDescription = stringResource(id = R.string.courses),
                 tint = Color.Black
             )
         }

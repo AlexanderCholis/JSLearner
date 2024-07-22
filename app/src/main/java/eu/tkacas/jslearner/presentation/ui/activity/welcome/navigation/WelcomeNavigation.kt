@@ -116,13 +116,12 @@ suspend fun determineStartDestination(
     authRepository: AuthRepository,
     getProfileCompletionUseCase: GetProfileCompletionUseCase
 ): String {
-    // If the user is not logged in, navigate to the welcome screen
     authRepository.currentUser ?: return "welcome"
 
     // If the user's profile is completed, start the main activity
     // Otherwise, navigate to the experience level screen
     return if (determineActivity(context, getProfileCompletionUseCase)) {
-        "welcome" // Return "welcome" to prevent the NavHost from navigating to another destination
+        "welcome"
     } else {
         "experienceLevel"
     }

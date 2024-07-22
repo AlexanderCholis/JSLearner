@@ -89,7 +89,6 @@ fun AboutScreen(
                     item {
                         CenteredAboutText()
                         Spacer(modifier = Modifier.height(20.dp))
-                        //add GitHub Links
                         val context = LocalContext.current
 
                         val url1 = remember { Uri.parse("https://github.com/thkox") }

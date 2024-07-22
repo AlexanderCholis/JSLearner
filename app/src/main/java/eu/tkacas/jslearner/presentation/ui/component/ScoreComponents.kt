@@ -34,7 +34,7 @@ fun ScoreComponent(userScore: Int) {
     ) {
         Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
             Text(
-                text = userScore.toString(), //up to 4 digits no problem
+                text = userScore.toString(),
                 modifier = Modifier.padding(start = 2.dp),
                 fontSize = 20.sp
             )

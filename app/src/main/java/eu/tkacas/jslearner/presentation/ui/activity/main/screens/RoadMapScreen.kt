@@ -114,7 +114,7 @@ internal fun RoadMapScreen(
 
                     is Result.Success -> {
                         val nodes = (uiState as Result.Success).result.nodes
-                        if (nodes != null) {  // Handle nullability
+                        if (nodes != null) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
