@@ -18,11 +18,7 @@ class AccountViewModel(
     private val _uiState = MutableStateFlow<Result<User?>>(Result.Loading)
     val uiState: StateFlow<Result<User?>> = _uiState
 
-    init {
-        loadUserData()
-    }
-
-    private fun loadUserData() {
+    fun loadUserData() {
         viewModelScope.launch {
             _uiState.value = Result.Loading
             try {
