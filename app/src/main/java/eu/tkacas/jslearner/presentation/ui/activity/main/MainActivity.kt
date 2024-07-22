@@ -57,7 +57,8 @@ class MainActivity : ComponentActivity() {
                     val lessonViewModel = viewModel<LessonViewModel>(
                         factory = viewModelFactory {
                             LessonViewModel(
-                                getQuizExistanceUseCase = JSLearner.appModule.getQuizExistanceUseCase
+                                getQuizExistanceUseCase = JSLearner.appModule.getQuizExistanceUseCase,
+                                setCompletedLessonUseCase = JSLearner.appModule.setCompletedLessonUseCase
                             )
                         }
                     )

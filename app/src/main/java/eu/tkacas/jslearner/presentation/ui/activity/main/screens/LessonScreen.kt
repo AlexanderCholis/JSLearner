@@ -98,6 +98,7 @@ fun LessonScreen(
                                     if (hasQuiz) {
                                         navController.navigate("startQuiz")
                                     } else {
+                                        viewModel.addCompletedLesson(lesson.id)
                                         navController.navigate("roadmap")
                                     }
                                 }
