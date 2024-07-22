@@ -14,9 +14,8 @@ class GetRoadMapUseCase(
     private val authRepository: AuthRepository
 ) {
 
-    suspend fun execute(): List<RoadMapNodeState> {
+    suspend fun execute(completedLessons: List<String>): List<RoadMapNodeState> {
         val courses = roadMapRepository.getCourses()
-        val completedLessons = authRepository.getUserCompletedLessons().toSet()
         val userExperienceLevel = authRepository.getUserStats().experienceLevel
         val roadMapNodes = mutableListOf<RoadMapNodeState>()
 
