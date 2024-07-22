@@ -16,11 +16,7 @@ class LeaderboardViewModel(
     private val _uiState = MutableStateFlow<Result<List<LeaderboardUser>>>(Result.Loading)
     val uiState: StateFlow<Result<List<LeaderboardUser>>> = _uiState
 
-    init {
-        loadLeaderboardData()
-    }
-
-    private fun loadLeaderboardData() {
+    fun loadLeaderboardData() {
         viewModelScope.launch {
             _uiState.value = Result.Loading
             try {

@@ -40,6 +40,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun LeaderboardScreen(
@@ -49,6 +50,10 @@ fun LeaderboardScreen(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(true) {
+        viewModel.loadLeaderboardData()
+    }
 
     ModalNavigationDrawer(
         drawerContent = {
