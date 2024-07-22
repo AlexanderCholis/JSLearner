@@ -84,6 +84,7 @@ class FirebaseDataSource(
     }
 
     suspend fun setUserScore(userId: String, score: Int) {
-        firebase.getReference("users").child(userId).child("experience_score").setValue(score).await()
+        firebase.getReference("users").child(userId).child("experience_score").setValue(score)
+            .await()
     }
 }

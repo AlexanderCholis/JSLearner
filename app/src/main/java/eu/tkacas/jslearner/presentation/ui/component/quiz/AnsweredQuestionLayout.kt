@@ -48,12 +48,14 @@ fun AnsweredQuestionLayout(
                 QuestionType.TRUE_FALSE -> {
                     TrueFalse(
                         questionIndex = questionIndex,
-                        selectedOption = selectedOptions?.get(questionIndex)?.firstOrNull().toBoolean(),
-                        onTrueFalseSelected = {  },
+                        selectedOption = selectedOptions?.get(questionIndex)?.firstOrNull()
+                            .toBoolean(),
+                        onTrueFalseSelected = { },
                         correctOptions = questionResult.correctOptions,
                         enableOptions = false
                     )
                 }
+
                 QuestionType.MULTIPLE_CHOICE -> {
                     if (question.correctAnswers.size > 1) {
                         MultipleChoiceMultipleAnswers(
@@ -68,13 +70,15 @@ fun AnsweredQuestionLayout(
                         MultipleChoiceSingleAnswer(
                             questionIndex = questionIndex,
                             options = question.options,
-                            initialSelectedOption = selectedOptions?.get(questionIndex)?.firstOrNull(),
+                            initialSelectedOption = selectedOptions?.get(questionIndex)
+                                ?.firstOrNull(),
                             onOptionSelected = { _ -> },
                             correctOptions = questionResult.correctOptions,
                             enableOptions = false
                         )
                     }
                 }
+
                 QuestionType.FILL_IN_THE_BLANKS -> {
                     FillInTheBlank(
                         questionIndex = questionIndex,

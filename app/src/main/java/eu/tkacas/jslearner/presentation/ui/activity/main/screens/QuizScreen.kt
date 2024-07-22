@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.domain.model.quiz.QuizResults
@@ -64,10 +62,14 @@ fun QuizScreen(
                     navController.navigate("results")
                 }
             } else if (!canSubmit) {
-                val unansweredQuestions = (1 until quiz.questions.size + 1).filter { it !in selectedOptions.value.keys }
+                val unansweredQuestions =
+                    (1 until quiz.questions.size + 1).filter { it !in selectedOptions.value.keys }
                 Toast.makeText(
                     context,
-                    context.getString(R.string.unanswered_questions, unansweredQuestions.joinToString(", ")),
+                    context.getString(
+                        R.string.unanswered_questions,
+                        unansweredQuestions.joinToString(", ")
+                    ),
                     Toast.LENGTH_SHORT
                 ).show()
             }

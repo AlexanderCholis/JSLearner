@@ -57,7 +57,8 @@ class FirestoreDataSource(val db: FirebaseFirestore) {
                     close(e)
                     return@addSnapshotListener
                 }
-                val lessonsCompleted = snapshot?.get("lessons_completed") as? List<String> ?: emptyList()
+                val lessonsCompleted =
+                    snapshot?.get("lessons_completed") as? List<String> ?: emptyList()
                 trySend(lessonsCompleted)
             }
         awaitClose { listenerRegistration.remove() }
@@ -107,10 +108,12 @@ class FirestoreDataSource(val db: FirebaseFirestore) {
 
     suspend fun setCompletedLesson(userId: String, lessonId: String) {
         val documentSnapshot = db.collection("users").document(userId).get().await()
-        val lessonsCompleted = documentSnapshot.get("lessons_completed") as? List<String> ?: emptyList()
+        val lessonsCompleted =
+            documentSnapshot.get("lessons_completed") as? List<String> ?: emptyList()
         if (!lessonsCompleted.contains(lessonId)) {
             val updatedLessonsCompleted = lessonsCompleted.toMutableList().apply { add(lessonId) }
-            db.collection("users").document(userId).update("lessons_completed", updatedLessonsCompleted).await()
+            db.collection("users").document(userId)
+                .update("lessons_completed", updatedLessonsCompleted).await()
         }
     }
 

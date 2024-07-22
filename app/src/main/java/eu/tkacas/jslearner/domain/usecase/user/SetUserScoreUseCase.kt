@@ -2,7 +2,7 @@ package eu.tkacas.jslearner.domain.usecase.user
 
 import eu.tkacas.jslearner.domain.repository.AuthRepository
 
-class SetUserScoreUseCase (
+class SetUserScoreUseCase(
     private val authRepository: AuthRepository,
     private val getUserStatsUseCase: GetUserStatsUseCase
 ) {

@@ -46,7 +46,6 @@ import eu.tkacas.jslearner.R
 import eu.tkacas.jslearner.presentation.ui.theme.LightBeige
 import eu.tkacas.jslearner.presentation.ui.theme.PrussianBlue
 import eu.tkacas.jslearner.presentation.ui.theme.SkyBlue
-import java.util.Locale
 
 @Composable
 private fun MultipleChoiceSingleCard(
@@ -271,16 +270,16 @@ fun DraggableWordCard(
                 (if (enableInteraction) {
                     Modifier
                         .dragAndDropSource {
-                        detectTapGestures(
-                            onLongPress = {
-                                startTransfer(
-                                    DragAndDropTransferData(
-                                        ClipData.newPlainText("text/plain", text)
+                            detectTapGestures(
+                                onLongPress = {
+                                    startTransfer(
+                                        DragAndDropTransferData(
+                                            ClipData.newPlainText("text/plain", text)
+                                        )
                                     )
-                                )
-                            }
-                        )
-                    }
+                                }
+                            )
+                        }
                 } else {
                     Modifier
                 })
@@ -342,7 +341,9 @@ fun TargetWordBox(
                 dragAndDropTarget?.let { target ->
                     Modifier.dragAndDropTarget(
                         shouldStartDragAndDrop = { event ->
-                            event.mimeTypes().contains("text/plain")
+                            event
+                                .mimeTypes()
+                                .contains("text/plain")
                         },
                         target = target
                     )
