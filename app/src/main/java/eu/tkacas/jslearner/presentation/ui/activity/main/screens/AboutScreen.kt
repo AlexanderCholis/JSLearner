@@ -105,7 +105,7 @@ fun AboutScreen(
                             buttonText = stringResource(id = R.string.thkox)
                         )
 
-                        val url2 = remember { Uri.parse("https://github.com/Apostolis2002") }
+                        val url2 = remember { Uri.parse("https://github.com/ApostolisSiampanis") }
                         ButtonWithImageComponent(
                             onClick = {
                                 context.startActivity(
